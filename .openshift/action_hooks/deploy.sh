@@ -1,7 +1,8 @@
 #!/bin/bash
 set -x
 
-pwd
+DIR=$(pwd)
+echo $DIR
 
 if [ ! -d $OPENSHIFT_DATA_DIR/m2/repository ]
 then
