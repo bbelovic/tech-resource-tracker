@@ -3,6 +3,7 @@ set -x
 
 DIR=$(pwd)
 echo $DIR
+echo "@@@@"
 
 if [ ! -d $OPENSHIFT_DATA_DIR/m2/repository ]
 then
