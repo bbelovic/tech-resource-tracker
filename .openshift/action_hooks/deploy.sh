@@ -1,6 +1,8 @@
 #!/bin/bash
 set -x
 
+pwd
+
 if [ ! -d $OPENSHIFT_DATA_DIR/m2/repository ]
 then
    mkdir -p $OPENSHIFT_DATA_DIR/m2/repository
