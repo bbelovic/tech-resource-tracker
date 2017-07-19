@@ -26,7 +26,7 @@ public class TechResourceTrackerApplicationTests {
 
 	@Test
 	public void test() throws Exception {
-		mockMvc.perform(get("/tech-resources")
+		mockMvc.perform(get("/tech-resources1")
 				.accept("application/json;charset=UTF-8"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")));
