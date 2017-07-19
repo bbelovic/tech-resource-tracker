@@ -4,7 +4,6 @@ jdk:
 script: mvn clean package
 before_install:
   - rvm install 1.9.3
-  - travis_internal_ruby() { echo "$TRAVIS_RUBY_VERSION"; }
 deploy:
   provider: openshift
   user: bbelovic@gmail.com
