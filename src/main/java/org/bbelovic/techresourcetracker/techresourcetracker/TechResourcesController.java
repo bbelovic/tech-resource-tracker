@@ -10,7 +10,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 
 @RestController
 public class TechResourcesController {
-    @GetMapping(value = "/tech-resources1", produces = APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/tech-resources100", produces = APPLICATION_JSON_UTF8_VALUE)
     public Collection<TechnologyResource> resources() {
         return Collections.emptyList();
     }
