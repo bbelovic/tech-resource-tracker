@@ -5,6 +5,7 @@ rvm:
   - 1.9.3
 script: mvn clean package
 before_install:
+  - rvm install 1.9.3
   - travis_internal_ruby() { echo "1.9.3"; }
 deploy:
   provider: openshift
