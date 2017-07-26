@@ -16,4 +16,5 @@ deploy:
     master: techresourcetracker
   domain: domain1bbelovic
   on:
+    master
     repo: bbelovic/tech-resource-tracker
