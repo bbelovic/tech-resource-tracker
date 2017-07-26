@@ -19,3 +19,4 @@ deploy:
   on:
     repo: bbelovic/tech-resource-tracker
     branch: master
+    all_branches: true
