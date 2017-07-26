@@ -9,11 +9,12 @@ before_install:
   - travis_internal_ruby() { echo "1.9.3"; }
 deploy:
   provider: openshift
+  edge:
+    branch: openshift-deps
   user: bbelovic@gmail.com
   password:
     secure: FZMZ4lVZPO+8+R2Ds9qk5Q8LCDZpUEdDRGe84X483PVRUTF02nMeJMnMAa5Eh4FsDypO3da6ldLv2pbRpjg4AWg9nF2U0OJPkNPAZVN7jNV7RoUj3YzAbxPuljRUsrICt4STqQ/RVvBQvNKPRzhbqvd7CVevCXwYDiVK8HrggQ6NDUQ3/WIyIrluWnkPk3GRuBAoBTMaiKy/XvpD7yq+G21mNERmQ8ouy7LDghEEanVyPCyzA3vjuADwfOJMMZnnjuqjzwH/2zeuh8O5gRnPyLdFnOrHjs0zQ1EBVciwPBDQxgMozKggS2N6WNlZ8ecgbHEf0qBMszuWvWPEYK4ThgeXU58B/xlYu991MvpmM1Whhk/rXD9l9HhpzXc9mB2GR+MK09WCFv0MH41BtSIDyBe/Pyim6q3M2Z7FqrhE4KyAErqhFTYCcdGW2QBBHlgLHiH2q3fxLh2HfxY7QuL8KoR46wXkYnWTvCKTd4ONnksfTSROmq55k8wKRgKWzg2PdCIjL2iP9ViT6cr7XeHbRy8hnz65VoLKbSVI1JEHVGS33Ugobfiqadujc3GGd7o+v+YOZeAGAopWzrbQtKb02TKDhM4n1b528Mx+OYvXbGjrhg0/83VKrwt7mU/Ee+LQb7AzLUSBPawh4m45A3FJxEH//jaPHtJ55sqX8/Jtom4=
-  app:
-    master: techresourcetracker
+  app: techresourcetracker
   domain: domain1bbelovic
   on:
     repo: bbelovic/tech-resource-tracker
