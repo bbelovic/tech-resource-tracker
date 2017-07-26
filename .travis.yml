@@ -15,4 +15,5 @@ deploy:
   app: techresourcetracker
   domain: domain1bbelovic
   on:
+    branch: master
     repo: bbelovic/tech-resource-tracker
