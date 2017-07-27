@@ -1,7 +1,17 @@
 package org.bbelovic.techresourcetracker.techresourcetracker;
 
-/**
- * Created by bbelovic on 7/17/17.
- */
-public class TechnologyResource {
+import java.io.Serializable;
+
+public class TechnologyResource implements Serializable {
+
+    private long id;
+    public TechnologyResource() {}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }
