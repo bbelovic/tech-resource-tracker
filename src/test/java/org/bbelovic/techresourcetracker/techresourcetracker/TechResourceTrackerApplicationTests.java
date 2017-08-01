@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -27,6 +28,7 @@ public class TechResourceTrackerApplicationTests {
 	public void contextLoads() {
 	}
 
+    @IfProfileValue(name = "test.group", value = "integration")
 	@Test
 	public void should_return_all_tech_resources_on_get_request() throws Exception {
 		mockMvc.perform(get("/tech-resources")
