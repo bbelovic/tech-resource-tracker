@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@IfProfileValue(name = "test.group", value = "integration")
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -28,7 +29,6 @@ public class TechResourceTrackerApplicationTests {
 	public void contextLoads() {
 	}
 
-    @IfProfileValue(name = "test.group", value = "integration")
 	@Test
 	public void should_return_all_tech_resources_on_get_request() throws Exception {
 		mockMvc.perform(get("/tech-resources")
