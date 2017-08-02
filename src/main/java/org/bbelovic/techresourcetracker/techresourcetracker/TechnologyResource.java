@@ -6,7 +6,7 @@ import java.io.Serializable;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
-@Table(name = "technology_resources")
+@Table(name = "technology_resources", schema = "public")
 public class TechnologyResource implements Serializable {
 
     private static final String SEQ_NAME = "technology_resources_id_seq";
