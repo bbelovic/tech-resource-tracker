@@ -4,6 +4,6 @@ jdk:
 services:
   - postgresql
 before_script:
-  - psql -c 'CREATE DATABASE integration testing;' -U postgres
+  - psql -c 'CREATE DATABASE integration_testing;' -U postgres
   - psql -c 'CREATE TABLE technology_resources (id bigserial not null primary key);' -U postgres
 script: mvn clean test -Dtest.group=integration
