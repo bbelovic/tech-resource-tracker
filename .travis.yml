@@ -9,4 +9,6 @@ before_script:
   - psql -c 'INSERT INTO technology_resources (id) VALUES (1);' -U postgres
   - psql -c 'SELECT * FROM public.technology_resources;' -U postgres
   - psql -c '\d+ technology_resources;' -U postgres
-script: mvn clean test -Dtest.group=integration
+script:
+  - psql -c 'SELECT * FROM public.technology_resources;' -U postgres
+  - mvn clean test -Dtest.group=integration
