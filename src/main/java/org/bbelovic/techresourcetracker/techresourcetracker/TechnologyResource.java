@@ -12,7 +12,7 @@ public class TechnologyResource implements Serializable {
     private static final String SEQ_NAME = "technology_resources_id_seq";
     @Id
     @GeneratedValue(strategy = SEQUENCE, generator = SEQ_NAME)
-    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1)
+    @SequenceGenerator(name = SEQ_NAME, sequenceName = SEQ_NAME, allocationSize = 1, schema = "public")
     private Long id;
 
     public Long getId() {
