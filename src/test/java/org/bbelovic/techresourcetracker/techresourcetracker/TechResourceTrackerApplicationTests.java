@@ -19,7 +19,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@SpringBootTest(properties = "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing")
+@SpringBootTest(properties = {
+        "spring.datasource.username=postgres",
+        "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
 public class TechResourceTrackerApplicationTests {
 
 	@Autowired
