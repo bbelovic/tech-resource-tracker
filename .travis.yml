@@ -8,9 +8,7 @@ addons:
 before_script:
   - psql -c 'CREATE DATABASE integration_testing;' -U postgres
   - psql -c 'CREATE TABLE technology_resources (id bigserial not null primary key);' -U postgres -d integration_testing
-  - psql -c 'INSERT INTO technology_resources (id) VALUES (1);' -U postgres
-  - psql -c 'SELECT * FROM public.technology_resources;' -U postgres
-  - psql -c '\d+ technology_resources;' -U postgres
+  - psql -c 'INSERT INTO technology_resources (id) VALUES (1);' -U postgres -d integration_testing
+  - psql -c 'SELECT * FROM public.technology_resources;' -U postgres -d integration_testing
 script:
-  - psql -c 'SELECT * FROM public.technology_resources;' -U postgres
   - mvn clean test -Dtest.group=integration
