@@ -32,7 +32,7 @@ public class TechResourceTrackerApplicationTests {
 	public void contextLoads() {
 	}
 
-	@Test @Ignore
+	@Test
 	public void should_return_all_tech_resources_on_get_request() throws Exception {
 		mockMvc.perform(get("/tech-resources")
 				.accept("application/json;charset=UTF-8"))
