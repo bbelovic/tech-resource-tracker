@@ -27,4 +27,4 @@ cd $OPENSHIFT_REPO_DIR
 mvn -v
 mvn -s settings.xml clean install -DskipTests
 
-psql -c 'create table technology_resources (id bigserial primary key);' -d techresourcetracker -h $OPENSHIFT_POSTGRESQL_DB_HOST -p $OPENSHIFT_POSTGRESQL_DB_PORT -U $OPENSHIFT_POSTGRESQL_DB_USERNAME
+psql -c 'create table if not exists technology_resources (id bigserial primary key);' -d techresourcetracker -h $OPENSHIFT_POSTGRESQL_DB_HOST -p $OPENSHIFT_POSTGRESQL_DB_PORT -U $OPENSHIFT_POSTGRESQL_DB_USERNAME
