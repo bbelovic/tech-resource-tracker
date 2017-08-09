@@ -37,7 +37,7 @@ public class TechResourceTrackerApplicationTests {
 				.accept("application/json;charset=UTF-8"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))
-				.andExpect(content().string("[{\"id\":1}]"));
+				.andExpect(content().string("[{\"id\":1,\"title\":\"Some title\"}]"));
 	}
 
 }
