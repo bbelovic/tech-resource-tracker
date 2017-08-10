@@ -1,5 +1,6 @@
 package org.bbelovic.techresourcetracker.techresourcetracker;
 
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IfProfileValue(name = "test.group", value = "integration")
@@ -38,6 +41,17 @@ public class TechResourceTrackerApplicationTests {
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))
 				.andExpect(content().string("[{\"id\":1,\"title\":\"Some title\"}]"));
+	}
+
+	@Test
+	public void should_create_new_resource_post_request() throws Exception {
+	    String requestPayload = "{\"id\":0,\"title\":\"new title\"}";
+		mockMvc.perform(post("/tech-resources")
+                .content(requestPayload))
+				.andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", Matchers.greaterThan(0)))
+                .andExpect(jsonPath("$.title", Matchers.is("new title")));
+
 	}
 
 }
