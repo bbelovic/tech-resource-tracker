@@ -26,7 +26,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
 public class TechResourceTrackerApplicationTests {
 
-	@Autowired
+    private static final String TECH_RESOURCES_BASIC_URI = "/tech-resources";
+    @Autowired
 	private MockMvc mockMvc;
 
 	@Test
@@ -35,7 +36,7 @@ public class TechResourceTrackerApplicationTests {
 
 	@Test
 	public void should_return_all_tech_resources_on_get_request() throws Exception {
-		mockMvc.perform(get("/tech-resources")
+		mockMvc.perform(get(TECH_RESOURCES_BASIC_URI)
 				.accept("application/json;charset=UTF-8"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))
@@ -45,7 +46,7 @@ public class TechResourceTrackerApplicationTests {
 	@Test
 	public void should_create_new_resource_post_request() throws Exception {
 	    String requestPayload = "{\"id\":0,\"title\":\"new title\"}";
-		mockMvc.perform(post("/tech-resources")
+		mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .content(requestPayload))
 				.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", greaterThan(0)))
