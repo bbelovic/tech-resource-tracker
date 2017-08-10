@@ -1,6 +1,5 @@
 package org.bbelovic.techresourcetracker.techresourcetracker;
 
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,11 +11,11 @@ import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IfProfileValue(name = "test.group", value = "integration")
 @RunWith(SpringRunner.class)
@@ -49,8 +48,8 @@ public class TechResourceTrackerApplicationTests {
 		mockMvc.perform(post("/tech-resources")
                 .content(requestPayload))
 				.andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", Matchers.greaterThan(0)))
-                .andExpect(jsonPath("$.title", Matchers.is("new title")));
+                .andExpect(jsonPath("$.id", greaterThan(0)))
+                .andExpect(jsonPath("$.title", is("new title")));
 
 	}
 
