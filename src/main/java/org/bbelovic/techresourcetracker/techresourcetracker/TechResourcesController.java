@@ -27,8 +27,8 @@ public class TechResourcesController {
     @PostMapping(value = "/tech-resources")
     public ResponseEntity<TechnologyResource> createNewTechnologyResource() {
         TechnologyResource technologyResource = new TechnologyResource();
-        technologyResource.setId(1L);
         technologyResource.setTitle("new title");
-        return new ResponseEntity<>(technologyResource, CREATED);
+        TechnologyResource persistedResource = resourceRepository.save(technologyResource);
+        return new ResponseEntity<>(persistedResource, CREATED);
     }
 }
