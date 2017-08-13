@@ -7,6 +7,6 @@ addons:
   postgresql: "9.4"
 before_script:
   - psql -f db_setup.sql -U postgres
-  - psql -f .openshift/action_hooks/table_setup.sql -U postgres -d integration_testing
+  - psql -f table_setup.sql -U postgres -d integration_testing
 script:
   - mvn clean test -Dtest.group=integration
