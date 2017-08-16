@@ -26,5 +26,3 @@ cd $OPENSHIFT_REPO_DIR
 
 mvn -v
 mvn -s settings.xml clean install -DskipTests
-
-psql -f $OPENSHIFT_DATA_DIR/table_setup.sql -d techresourcetracker -h $OPENSHIFT_POSTGRESQL_DB_HOST -p $OPENSHIFT_POSTGRESQL_DB_PORT -U $OPENSHIFT_POSTGRESQL_DB_USERNAME
