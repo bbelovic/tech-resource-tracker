@@ -76,7 +76,7 @@
                 <configuration>
                     <nodeVersion>v7.10.1</nodeVersion>
                     <installDirectory>target</installDirectory>
-					<workingDirectory>src/main/resources/frontend</workingDirectory>
+					<workingDirectory>src/main/frontend</workingDirectory>
                 </configuration>
                 <executions>
                     <execution>
@@ -95,13 +95,22 @@
 							</goal>
 						</goals>
 						<configuration>
-							<arguments>install</arguments>
+							<arguments>run build</arguments>
 						</configuration>
 					</execution>
                 </executions>
 
             </plugin>
 		</plugins>
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/frontend/dist</directory>
+				<targetPath>static</targetPath>
+			</resource>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+			</resource>
+		</resources>
 	</build>
 
 
