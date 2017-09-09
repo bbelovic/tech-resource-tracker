@@ -9,7 +9,8 @@ target/
 .settings
 .springBeans
 
-node_modules/
+src/main/frontend/node_modules/
+src/main/frontend/dist/
 ### IntelliJ IDEA ###
 .idea
 *.iws
