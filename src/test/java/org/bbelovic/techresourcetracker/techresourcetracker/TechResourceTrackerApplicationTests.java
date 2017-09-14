@@ -58,6 +58,7 @@ public class TechResourceTrackerApplicationTests {
 	public void should_create_new_resource_post_request() throws Exception {
 	    String requestPayload = "{\"id\":0,\"title\":\"new title\"}";
 		mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
+				.header("Content-Type", "application/json;charset=UTF-8")
                 .content(requestPayload))
 				.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", greaterThan(0)))

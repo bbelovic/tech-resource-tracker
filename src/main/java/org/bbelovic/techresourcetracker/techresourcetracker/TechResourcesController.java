@@ -2,10 +2,7 @@ package org.bbelovic.techresourcetracker.techresourcetracker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,10 +23,10 @@ public class TechResourcesController {
         return resourceRepository.findAll();
     }
 
-    @PostMapping(value = "/tech-resources")
-    public ResponseEntity<TechnologyResource> createNewTechnologyResource() {
+    @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
+    public ResponseEntity<TechnologyResource> createNewTechnologyResource(@RequestBody TechnologyResource resource) {
         TechnologyResource technologyResource = new TechnologyResource();
-        technologyResource.setTitle("new title");
+        technologyResource.setTitle(resource.getTitle());
         TechnologyResource persistedResource = resourceRepository.save(technologyResource);
         return new ResponseEntity<>(persistedResource, CREATED);
     }
