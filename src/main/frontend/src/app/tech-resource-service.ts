@@ -15,4 +15,11 @@ export class TechResourceService {
             .then(data => data as TechResource[])
     }
 
+    postNewTechResource(resource: TechResource): Promise<TechResource> { 
+        console.log('JSON=' + JSON.stringify(resource));      
+        return this.http.post('http://localhost:8080/tech-resources', JSON.stringify(resource))
+        .toPromise()
+        .then(res => res as TechResource );
+    }
+
 }
