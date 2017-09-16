@@ -50,19 +50,21 @@ public class TechResourceTrackerApplicationTests {
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))
 				.andExpect(jsonPath("$.length()", is(1)))
 				.andExpect(jsonPath("$.[0].id", greaterThan(0)))
-				.andExpect(jsonPath("$.[0].title", equalTo("Some title")));
+				.andExpect(jsonPath("$.[0].title", equalTo("Some title")))
+				.andExpect(jsonPath("$.[0].link", equalTo("https://www.abc.com")));
 	}
 
 	@Test
 	@ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources.xml")
 	public void should_create_new_resource_post_request() throws Exception {
-	    String requestPayload = "{\"id\":0,\"title\":\"new title\"}";
+	    String requestPayload = "{\"id\":0,\"title\":\"new title\",\"link\":\"http://www.blabol.com\"}";
 		mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
 				.header("Content-Type", "application/json;charset=UTF-8")
                 .content(requestPayload))
 				.andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", greaterThan(0)))
-                .andExpect(jsonPath("$.title", is("new title")));
+                .andExpect(jsonPath("$.title", is("new title")))
+                .andExpect(jsonPath("$.link", is("http://www.blabol.com")));
 
 	}
 

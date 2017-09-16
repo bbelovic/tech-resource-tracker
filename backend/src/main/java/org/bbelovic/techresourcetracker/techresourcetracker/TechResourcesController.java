@@ -27,6 +27,7 @@ public class TechResourcesController {
     public ResponseEntity<TechnologyResource> createNewTechnologyResource(@RequestBody TechnologyResource resource) {
         TechnologyResource technologyResource = new TechnologyResource();
         technologyResource.setTitle(resource.getTitle());
+        technologyResource.setLink(resource.getLink());
         TechnologyResource persistedResource = resourceRepository.save(technologyResource);
         return new ResponseEntity<>(persistedResource, CREATED);
     }

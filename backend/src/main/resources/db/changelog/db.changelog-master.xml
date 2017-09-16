@@ -15,5 +15,13 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="2" author="bbelovic">
+        <addColumn tableName="technology_resources">
+
+            <column name="link" type="varchar(512)" defaultValue="">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>
