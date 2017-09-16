@@ -5,9 +5,10 @@
 <ul>
 <li *ngFor="let res of resources">
   <h2>
-    id: {{res.id}}, title: {{res.title}}
+    id: {{res.id}}, title: {{res.title}}, link: {{res.link}}
     </h2>
 </li>
 </ul>
-<input type="text" #resourceBox />
-<button (click)="createNewTechResource(resourceBox.value)" >POST</button>
+<input type="text" #titleInput />
+<input type="text" #linkInput />
+<button (click)="createNewTechResource(titleInput.value, linkInput.value)" >POST</button>

@@ -18,9 +18,8 @@ export class AppComponent implements OnInit {
     this.resourceService.getTechResource().then(result => this.resources = result);
   }
 
-  createNewTechResource(title: string): void {
-    console.log('title=' + title);
-    this.resourceService.postNewTechResource(new TechResource(0, title))
+  createNewTechResource(title: string, link: string): void {
+    this.resourceService.postNewTechResource(new TechResource(0, title, link))
       .then(resource => this.resources.push(resource));
   }
   
