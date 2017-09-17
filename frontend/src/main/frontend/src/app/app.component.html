@@ -5,7 +5,7 @@
 <ul>
 <li *ngFor="let res of resources">
   <h2>
-    id: {{res.id}}, title: {{res.title}}, link: {{res.link}}
+    <a href="{{res.link}}">{{res.title}}</a>
     </h2>
 </li>
 </ul>

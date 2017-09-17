@@ -9,7 +9,7 @@ import {TechResourceService} from './tech-resource-service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app works!';
+  title = 'Welcome to technology resource tracker';
   resources: TechResource[];
 
   constructor(private resourceService: TechResourceService) {}
