@@ -1,11 +1,16 @@
 language: java
 jdk:
-  - oraclejdk8
+- oraclejdk8
 services:
-  - postgresql
+- postgresql
 addons:
-  postgresql: "9.4"
+  postgresql: '9.4'
 before_script:
-  - psql -f db_setup.sql -U postgres
+- psql -f db_setup.sql -U postgres
 script:
-  - mvn clean test -Dtest.group=integration -DAPP_LOG_DIR=.
+- mvn clean test -Dtest.group=integration -DAPP_LOG_DIR=.
+deploy:
+  provider: heroku
+  api_key:
+    secure: V/u6yPfNDF/zn6aWDESPFgeawN05JLb0laXFDh89kRDUN071zka1XyNbqvy+qxbzfrYBxGauSnO0wOYFwpvrn9D480zZRKX8n05Ap0R4ULG3py/Y9sP5vyGaaGRIv2BZEKcsLtcqxqp0ZtcBquzIzhcvR7HY/Z1Ebg7/1Du1E604eNPHdepS/a18xxB9RF8J984m9xK+rOqjfiM4BNakozOzzbusYyh9kATEBJMaZv03dnSCxUVIVcjCPfPsuEd8qCW1tVwTkChZhC445JRoEQL9NhFtAKJfTH5008p+m67HyWAjmHP4APA63OnhsIFnQhwQQ/5pTtLRlDowIvZuGvXO/e2rcj9JptYMQejOzRoGzIH+1hCUXI0dF40kUswtaGNLuTO/VKu7YCO8Z9gKRjt3ixMXpM00K9ZcJdlcY0PRd+dW85pqBC+KnenDRiuX3hGgnzQpkqMaX8vpI0Tltj3TtNX0Z/qtTsiVsWQ8QqEDfR81a2aXFs7t/GPMqtZvXklCl0qNzJXOACR9jaU3gk7e5T7ti9uOKnroMVRp3W/MTpEK2hrrsGphTrMF4fBHEOgFNvanUf6RmsmE+RqJyZJtD4+7wzHv8HfvJA8mNe8jj2h5T0W2HixmhZD5gFIT9eXk4Cc3npNvjDR1HDw3Kg0Rgf9FMJvSTqYnAoD53fU=
+  app: tech-resource-tracker
