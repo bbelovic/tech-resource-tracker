@@ -8,7 +8,7 @@ addons:
 before_script:
 - psql -f db_setup.sql -U postgres
 script:
-- mvn clean test -Dtest.group=integration -DAPP_LOG_DIR=.
+- mvn clean test -Dtest.group=integration -DAPP_LOG_DIR=. -Pproduction
 deploy:
   provider: heroku
   api_key:

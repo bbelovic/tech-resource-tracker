@@ -13,15 +13,17 @@ export class TechResourceService {
     }
 
     getTechResource(): Promise<TechResource[]> {
-    url = this.apiUrl + '/tech-resources';
+    let url: string = this.apiUrl + '/tech-resources';
+    console.log("Getting all technology resources from: " + url);
     return this.http.get(url)
             .toPromise()
             .then(data => data as TechResource[])
     }
 
     postNewTechResource(resource: TechResource): Promise<TechResource> { 
-        console.log('JSON=' + JSON.stringify(resource));      
-        return this.http.post('http://localhost:8080/tech-resources', JSON.stringify(resource), 
+        let url: string = this.apiUrl + '/tech-resources';
+        console.log("Creating new resource [" + JSON.stringify(resource) + "] through "+ url);      
+        return this.http.post(url, JSON.stringify(resource), 
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise()
         .then(res => res as TechResource );
