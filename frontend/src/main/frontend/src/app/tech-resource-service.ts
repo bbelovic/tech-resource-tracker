@@ -14,7 +14,7 @@ export class TechResourceService {
 
     getTechResource(): Promise<TechResource[]> {
     let url: string = this.apiUrl + '/tech-resources';
-    console.log("Getting all technology resources from: " + url);
+    console.log("Getting all technology resources from: [" + url + "].");
     return this.http.get(url)
             .toPromise()
             .then(data => data as TechResource[])
