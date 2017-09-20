@@ -1,4 +1,4 @@
-package org.bbelovic.techresourcetracker.techresourcetracker;
+package org.bbelovic.techresourcetracker;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

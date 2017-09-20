@@ -1,4 +1,4 @@
-package org.bbelovic.techresourcetracker.techresourcetracker;
+package org.bbelovic.techresourcetracker;
 
 import javax.persistence.*;
 import java.io.Serializable;

@@ -1,4 +1,4 @@
-package org.bbelovic.techresourcetracker.techresourcetracker;
+package org.bbelovic.techresourcetracker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

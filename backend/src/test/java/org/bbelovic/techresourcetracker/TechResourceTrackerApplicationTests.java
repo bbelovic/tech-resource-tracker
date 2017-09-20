@@ -1,4 +1,4 @@
-package org.bbelovic.techresourcetracker.techresourcetracker;
+package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
