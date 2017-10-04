@@ -15,6 +15,8 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Base64;
+
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
 import static org.hamcrest.Matchers.*;
@@ -44,7 +46,11 @@ public class TechResourceTrackerApplicationTests {
 
 	@Test
 	public void should_return_all_tech_resources_on_get_request() throws Exception {
+		String encoded = Base64.getEncoder().encodeToString("user:passwd".getBytes());
+
+
 		mockMvc.perform(get(TECH_RESOURCES_BASIC_URI)
+				.header("Authorization", "Basic " + encoded)
 				.accept("application/json;charset=UTF-8"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")))

@@ -9,4 +9,6 @@ public class TechResourceTrackerApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TechResourceTrackerApplication.class, args);
 	}
+
+
 }
