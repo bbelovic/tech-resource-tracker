@@ -1,9 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, XSRFStrategy,  CookieXSRFStrategy} from '@angular/http';
+import { HttpModule} from '@angular/http';
 import { HttpClientModule} from '@angular/common/http';
-import { HttpClientXsrfModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { TechResourceService} from './tech-resource-service';
@@ -15,19 +14,9 @@ import { TechResourceService} from './tech-resource-service';
     BrowserModule,
     FormsModule,
     HttpModule,
-    HttpClientModule,
-    HttpClientXsrfModule.withOptions({
-      cookieName: 'XSRF-TOKEN',
-      headerName: 'X-XSRF-TOKEN'})
+    HttpClientModule
   ],
-  providers: [TechResourceService, {
-    provide: XSRFStrategy, useFactory: xsrfFactory
-  }],
+  providers: [TechResourceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-
-export function xsrfFactory() {
-  return new CookieXSRFStrategy('XSRF-TOKEN', 'X-XSRF-TOKEN');
-}
-
