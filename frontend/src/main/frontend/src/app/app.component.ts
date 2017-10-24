@@ -22,5 +22,9 @@ export class AppComponent implements OnInit {
     this.resourceService.postNewTechResource(new TechResource(0, title, link))
       .then(resource => this.resources.push(resource));
   }
+
+  logout(): void {
+    this.resourceService.logout();
+  }
   
 }

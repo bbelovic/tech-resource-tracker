@@ -26,4 +26,11 @@ export class TechResourceService {
         .then(res => res as TechResource );
     }
 
+    logout(): void {
+        let url: string = '/logout';
+        console.log("Logging out.");
+        this.http.post(url, "").toPromise();
+        console.log("Logged out.");
+    }
+
 }
