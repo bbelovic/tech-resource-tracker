@@ -10,12 +10,17 @@ import {TechResourceService} from './tech-resource-service';
 })
 export class AppComponent implements OnInit {
   title = 'Welcome to technology resource tracker';
+  tokenValue = '';
+  tokenName = '';
   resources: TechResource[];
 
   constructor(private resourceService: TechResourceService) {}
 
   ngOnInit(): void {
     this.resourceService.getTechResource().then(result => this.resources = result);
+    let v: string[] = document.cookie.split('=')
+    this.tokenValue = v[1];
+    this.tokenName = v[0];
   }
 
   createNewTechResource(title: string, link: string): void {
