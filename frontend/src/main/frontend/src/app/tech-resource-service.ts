@@ -1,6 +1,7 @@
 import {TechResource} from './tech-resource';
 import {Injectable} from '@angular/core';
 import {OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
@@ -29,7 +30,8 @@ export class TechResourceService {
     logout(): void {
         let url: string = '/logout';
         console.log("Logging out.");
-        this.http.post(url, "").toPromise();
+        this.http.post(url, {observe: 'response'}).subscribe(res => console.log(res), 
+            err=>console.log(err.url))
         console.log("Logged out.");
     }
 
