@@ -6,15 +6,15 @@ import { HttpClientModule} from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
-import { LoginComponent} from './login.component';
+//import { LoginComponent} from './login.component';
 import { TechResourceService} from './tech-resource-service';
 
-const routes: Routes = [{path: 'login', component: LoginComponent}];
+const routes: Routes = [{path: '', component: AppComponent}, {path: '**', component: AppComponent}];
 //const routes: Routes = [];
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +23,7 @@ const routes: Routes = [{path: 'login', component: LoginComponent}];
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [TechResourceService, Location, {provide: LocationStrategy, useClass: PathLocationStrategy}],
+  providers: [TechResourceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

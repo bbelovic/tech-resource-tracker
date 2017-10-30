@@ -27,12 +27,4 @@ export class TechResourceService {
         .then(res => res as TechResource );
     }
 
-    logout(): void {
-        let url: string = '/logout';
-        console.log("Logging out.");
-        this.http.post(url, {observe: 'response'}).subscribe(res => console.log(res), 
-            err=>console.log(err.url))
-        console.log("Logged out.");
-    }
-
 }

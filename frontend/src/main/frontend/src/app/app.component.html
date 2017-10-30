@@ -6,6 +6,12 @@
   {{tokenName}}
 </h2>
 
+<div *ngIf="!authenticated">
+  not authenticated, please login
+  <button (click)="login()">Toogle authenticated</button>
+</div>
+
+<div *ngIf="authenticated">
 <ul>
 <li *ngFor="let res of resources">
   <h2>
@@ -18,9 +24,4 @@ Link: <input type="text" #linkInput /><br/>
 <button (click)="createNewTechResource(titleInput.value, linkInput.value)" >Store</button>
 <br>
 <button (click)="logout()">Logout</button>
-
-<form method="POST" action="http://localhost:8080/logout">
-<input type="hidden" name="{{tokenName}}" value="{{tokenValue}}" />
-
-<button type="submit">logout2</button>
-</form>
+</div>
