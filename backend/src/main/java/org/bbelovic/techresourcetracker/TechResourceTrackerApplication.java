@@ -32,7 +32,8 @@ public class TechResourceTrackerApplication {
             protected void configure(HttpSecurity http) throws Exception {
                 http.httpBasic().and()
                         .authorizeRequests()
-                        .antMatchers("/", "/inline.bundle.js", "/styles.bundle.js", "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js").permitAll()
+                        .antMatchers("/", "/inline.bundle.js", "/styles.bundle.js",
+                                "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js", "/dummy").permitAll()
                         .anyRequest()
                         .authenticated()
                         .and()

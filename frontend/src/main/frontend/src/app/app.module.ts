@@ -6,15 +6,16 @@ import { HttpClientModule} from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
+import { DummyComponent} from './dummy.component';
 //import { LoginComponent} from './login.component';
 import { TechResourceService} from './tech-resource-service';
 
-const routes: Routes = [{path: '', component: AppComponent}, {path: '**', component: AppComponent}];
+const routes: Routes = [ {path: 'dummy', component: DummyComponent}];
 //const routes: Routes = [];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, DummyComponent
   ],
   imports: [
     BrowserModule,

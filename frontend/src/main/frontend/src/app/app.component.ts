@@ -31,7 +31,9 @@ export class AppComponent implements OnInit {
   login(): void {
     let url: string = '/tech-resources';
     console.log("Getting all technology resources from: [" + url + "].");
-    this.httpClient.get(url, {headers: new HttpHeaders().set('Authorization', 'Basic dXNlcjpwYXNzd2Q=')})
+
+    this.httpClient.get(url, {headers: new HttpHeaders()
+      .set('Authorization', 'Basic ' + btoa('user:passwd'))})
             .toPromise()
             .then(data => {this.resources = (data as TechResource[]); this.authenticated = true;})
 
@@ -46,8 +48,12 @@ export class AppComponent implements OnInit {
     let url: string = '/logout';
     console.log("Logging out.");
     this.httpClient.post(url, {observe: 'response'})
-      .subscribe(res => {this.authenticated = false; console.log('res=' + res); }, 
-                err=>console.log(err.url))
+      .subscribe(res => {
+        console.log('in success');
+        this.authenticated = false; 
+        this.router.navigateByUrl('/dummy');
+        console.log('res=' + res); }, 
+                err=>{console.log('error=' + err.url); this.router.navigateByUrl('/dummy');})
                 
     this.authenticated = false;
     console.log("Logged out.");
