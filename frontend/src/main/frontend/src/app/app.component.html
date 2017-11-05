@@ -7,8 +7,10 @@
 </h2>
 
 <div *ngIf="!authenticated">
-  not authenticated, please login
-  <button (click)="login()">Toogle authenticated</button>
+  not authenticated, please login <br/>
+  Username: <input type="text" #username/>
+  Password: <input type="text" #password/>
+  <button (click)="login(username.value, password.value)">Login</button>
   <br>
 
 </div>

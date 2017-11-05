@@ -28,12 +28,12 @@ export class AppComponent implements OnInit {
     this.resources = [];
   }
 
-  login(): void {
+  login(username: string, password: string): void {
     let url: string = '/tech-resources';
     console.log("Getting all technology resources from: [" + url + "].");
 
     this.httpClient.get(url, {headers: new HttpHeaders()
-      .set('Authorization', 'Basic ' + btoa('user:passwd'))})
+      .set('Authorization', 'Basic ' + btoa(username + ':' + password))})
             .toPromise()
             .then(data => {this.resources = (data as TechResource[]); this.authenticated = true;})
 
