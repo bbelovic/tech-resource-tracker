@@ -11,5 +11,9 @@ export class LoginComponent {
 
     }
 
+    login(username: string, password: string): void {
+        this.httpClient.get('user');
+    }
+
 
 }

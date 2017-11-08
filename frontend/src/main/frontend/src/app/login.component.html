@@ -4,9 +4,9 @@
     </head>
     <body>
         <form>
-            Username: <input type="text"/><br>
-            Password: <input type="text"/><br>
-            <button type="submit">Submit</button>
+            Username: <input type="text" #username/><br>
+            Password: <input type="password" #password/><br>
+            <button (click)="login(username.value, password.value)">Login</button>
         </form>
     </body>
 </html>
