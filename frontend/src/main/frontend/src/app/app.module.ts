@@ -6,16 +6,20 @@ import { HttpClientModule} from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
-import { DummyComponent} from './dummy.component';
-//import { LoginComponent} from './login.component';
+import { LoginComponent} from './login.component';
+import { DummyComponent } from './dummy.component';
 import { TechResourceService} from './tech-resource-service';
+import { AuthenticationService} from './authentication-service';
 
-const routes: Routes = [ {path: 'dummy', component: DummyComponent}];
-//const routes: Routes = [];
+const routes: Routes = [ 
+  {path: '', component: DummyComponent},
+  {path: 'dummy', component: DummyComponent},
+  {path: 'login', component: LoginComponent}
+];
 
 @NgModule({
   declarations: [
-    AppComponent, DummyComponent
+    AppComponent, LoginComponent, DummyComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +28,7 @@ const routes: Routes = [ {path: 'dummy', component: DummyComponent}];
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [TechResourceService],
+  providers: [TechResourceService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

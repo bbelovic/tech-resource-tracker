@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
@@ -30,5 +31,10 @@ public class TechResourcesController {
         technologyResource.setLink(resource.getLink());
         TechnologyResource persistedResource = resourceRepository.save(technologyResource);
         return new ResponseEntity<>(persistedResource, CREATED);
+    }
+
+    @GetMapping(value = "/user")
+    public Principal user(Principal user) {
+        return user;
     }
 }

@@ -1,6 +1,6 @@
-<html>
-    <head><title>dummy1</title></head>
-    <body>
-        {{message}}
-    </body>
-</html>
+<div *ngIf="!isAuthenticated()">
+    Not autheticated.
+</div>
+<div *ngIf="isAuthenticated()">
+        Autheticated.
+    </div>

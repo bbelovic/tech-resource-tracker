@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {AuthenticationService} from './authentication-service';
 @Component(
     {
         selector: 'dummy',
@@ -7,6 +8,10 @@ import {Component} from '@angular/core';
     }
 )
 export class DummyComponent {
-    message: string = 'Dummy';
+    authenticated: boolean = false;
+    constructor(private authenticationService: AuthenticationService) {}
 
+    isAuthenticated(): boolean {
+        return this.authenticationService.isAuthenticated();
+    }
 }

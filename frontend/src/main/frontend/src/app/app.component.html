@@ -1,19 +1,9 @@
-<h1>
-  {{title}}
-</h1><br>
-<h2>
-  {{tokenValue}} <br>
-  {{tokenName}}
-</h2>
-
-<div *ngIf="!authenticated">
-  not authenticated, please login <br/>
-  Username: <input type="text" #username/>
-  Password: <input type="text" #password/>
-  <button (click)="login(username.value, password.value)">Login</button>
-  <br>
-
-</div>
+<html><head>
+  </head>
+  <body>
+  <h1>{{title}}</h1>
+  <a routerLink='/login'>authentication</a>
+  <router-outlet></router-outlet>
 
 <div *ngIf="authenticated">
 <ul>
@@ -29,3 +19,5 @@ Link: <input type="text" #linkInput /><br/>
 <br>
 <button (click)="logout()">Logout</button>
 </div>
+</body>
+</html>
