@@ -21,7 +21,7 @@ export class LoginComponent {
             .toPromise()
             .then(res => {console.log("Get user succeded.");
                 this.authenticationService.setAuthenticated(true);
-                this.router.navigateByUrl('/dummy');
+                this.router.navigateByUrl('/tech-resource');
         });
     }
 
