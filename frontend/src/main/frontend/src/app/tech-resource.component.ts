@@ -5,12 +5,12 @@ import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 @Component(
     {
-        selector: 'dummy',
-        templateUrl: './dummy.component.html',
-        styleUrls: ['./dummy.component.css']
+        selector: 'tech-resource',
+        templateUrl: './tech-resource.component.html',
+        styleUrls: ['./tech-resource.component.css']
     }
 )
-export class DummyComponent implements OnInit {
+export class TechResourceComponent implements OnInit {
     techResources: TechResource[] = [];
     constructor(private authenticationService: AuthenticationService, 
         private resourceService: TechResourceService) {}

@@ -7,19 +7,19 @@ import { Routes, RouterModule} from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
 import { LoginComponent} from './login.component';
-import { DummyComponent } from './dummy.component';
+import { TechResourceComponent } from './tech-resource.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication-service';
 
 const routes: Routes = [ 
-  {path: '', component: DummyComponent},
-  {path: 'dummy', component: DummyComponent},
+  {path: '', component: TechResourceComponent},
+  {path: 'tech-resource', component: TechResourceComponent},
   {path: 'login', component: LoginComponent}
 ];
 
 @NgModule({
   declarations: [
-    AppComponent, LoginComponent, DummyComponent
+    AppComponent, LoginComponent, TechResourceComponent
   ],
   imports: [
     BrowserModule,
