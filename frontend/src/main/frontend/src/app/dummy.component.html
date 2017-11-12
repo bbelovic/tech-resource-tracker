@@ -2,5 +2,9 @@
     Not autheticated.
 </div>
 <div *ngIf="isAuthenticated()">
-        Autheticated.
-    </div>
+    <ul>
+        <li *ngFor="let resource of techResources">
+            <a href="{{resource.link}}" target="_blank">{{resource.title}}</a>
+        </li>
+    </ul>
+</div>
