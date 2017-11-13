@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AuthenticationService {
     private authenticated: boolean = false;
@@ -22,9 +22,21 @@ export class AuthenticationService {
 
     }
 
-    logoutAndReport(status: string, o: Object): Object {
+    private logoutAndReport(status: string, o: Object): Object {
         this.authenticated = false;
         console.log("Logout status: "+ status);
         return o;
+    }
+
+    login(username: string, password: string): Promise<Object> {
+        let authHeader: HttpHeaders = new HttpHeaders()
+            .set('Authorization', 'Basic ' + btoa(username + ':' + password));
+        return this.httpClient.get('user', {headers: authHeader})
+            .toPromise()
+            .then(res => {
+                console.log("Get user succeded.");
+                this.setAuthenticated(true);
+                return res;
+        });
     }
 }
