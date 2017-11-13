@@ -4,6 +4,7 @@ import {OnInit} from '@angular/core';
 import {TechResource} from './tech-resource';
 import {Router} from '@angular/router';
 import {TechResourceService} from './tech-resource-service';
+import { AuthenticationService } from './authentication-service';
 
 @Component({
   selector: 'app-root',
@@ -16,9 +17,10 @@ export class AppComponent implements OnInit {
   tokenName = '';
   authenticated: boolean = false;
   resources: TechResource[];
+  logoutAvailable: boolean = true;
 
-  constructor(private resourceService: TechResourceService, 
-    private httpClient: HttpClient, private router: Router) {}
+  constructor(private resourceService: TechResourceService,
+    private httpClient: HttpClient, private router: Router, private authService: AuthenticationService) {}
 
   ngOnInit(): void {
     /*this.resourceService.getTechResource().then(result => this.resources = result);
@@ -45,19 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    let url: string = '/logout';
-    console.log("Logging out.");
-    this.httpClient.post(url, {observe: 'response'})
-      .subscribe(res => {
-        console.log('in success');
-        this.authenticated = false; 
-        this.router.navigateByUrl('/dummy');
-        console.log('res=' + res); }, 
-                err=>{console.log('error=' + err.url); this.router.navigateByUrl('/dummy');})
-                
-    this.authenticated = false;
-    console.log("Logged out.");
-    
-  } 
-  
+    this.authService.logout().then(obj => this.router.navigateByUrl('/tech-resource'));
+  }
+
 }

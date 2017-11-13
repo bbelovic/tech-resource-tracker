@@ -3,6 +3,8 @@
   <body>
   <h1>{{title}}</h1>
   <a routerLink='/login'>authentication</a>
+  <a *ngIf="logoutAvailable" (click)="logout()">logout</a>
+  <a *ngIf="!logoutAvailable">not visible</a>
   <router-outlet></router-outlet>
 
 <div *ngIf="authenticated">
