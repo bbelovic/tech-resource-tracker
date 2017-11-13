@@ -4,22 +4,6 @@
   <h1>{{title}}</h1>
   <a routerLink='/login'>authentication</a>
   <a *ngIf="logoutAvailable" (click)="logout()">logout</a>
-  <a *ngIf="!logoutAvailable">not visible</a>
   <router-outlet></router-outlet>
-
-<div *ngIf="authenticated">
-<ul>
-<li *ngFor="let res of resources">
-  <h2>
-    <a href="{{res.link}}" target="_blank">{{res.title}}</a>
-    </h2>
-</li>
-</ul>
-Title:<input type="text" #titleInput /> <br/>
-Link: <input type="text" #linkInput /><br/>
-<button (click)="createNewTechResource(titleInput.value, linkInput.value)" >Store</button>
-<br>
-<button (click)="logout()">Logout</button>
-</div>
 </body>
 </html>
