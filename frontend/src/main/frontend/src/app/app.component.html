@@ -3,6 +3,7 @@
   <body>
   <h1>{{title}}</h1>
   <a routerLink='/login'>authentication</a>
+  <a *ngIf="authService.isAuthenticated()" routerLink='/add-tech-resource'>Add new resource</a>
   <a *ngIf="authService.isAuthenticated()" (click)="logout()">logout</a>
   <router-outlet></router-outlet>
 </body>
