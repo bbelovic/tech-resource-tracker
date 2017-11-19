@@ -10,7 +10,7 @@ import { LoginComponent} from './login.component';
 import { TechResourceComponent } from './tech-resource.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication-service';
-import { AddTechResourceComponent } from './add-tech-resource'; 
+import { AddTechResourceComponent } from './add-tech-resource.component'; 
 
 const routes: Routes = [ 
   {path: '', component: TechResourceComponent},

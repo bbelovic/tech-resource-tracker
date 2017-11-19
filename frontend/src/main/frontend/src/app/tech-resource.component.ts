@@ -3,6 +3,7 @@ import {AuthenticationService} from './authentication-service';
 import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
+
 @Component(
     {
         selector: 'tech-resource',
@@ -18,11 +19,13 @@ export class TechResourceComponent implements OnInit {
     ngOnInit(): void {
         if (this.authenticationService.isAuthenticated()) {
             console.log("Getting resources from remote server.")
-            this.resourceService.getTechResource().then(result => this.techResources = result);
+            this.resourceService.getTechResource()
+            .then(result => this.techResources = result);
         } else {
             console.log("Skipping getting  resources - not authenticated");
         }
     }
+
     isAuthenticated(): boolean {
         return this.authenticationService.isAuthenticated();
     }

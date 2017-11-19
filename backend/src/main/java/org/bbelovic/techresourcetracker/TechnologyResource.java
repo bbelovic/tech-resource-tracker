@@ -2,6 +2,7 @@ package org.bbelovic.techresourcetracker;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 
@@ -40,5 +41,25 @@ public class TechnologyResource implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TechnologyResource that = (TechnologyResource) o;
+        return Objects.equals(id, that.id) &&
+                Objects.equals(title, that.title) &&
+                Objects.equals(link, that.link);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, link);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("TechnologyResource[id=%d, title='%s', link='%s']", id, title, link);
     }
 }

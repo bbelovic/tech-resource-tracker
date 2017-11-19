@@ -1,5 +1,7 @@
 package org.bbelovic.techresourcetracker;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @CrossOrigin
 public class TechResourcesController {
+    private static final Logger log = LoggerFactory.getLogger(TechResourcesController.class);
     private TechnologyResourceRepository resourceRepository;
 
     @Autowired
@@ -21,11 +24,14 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources")
     public List<TechnologyResource> resources() {
-        return resourceRepository.findAll();
+        List<TechnologyResource> resources = resourceRepository.findAll();
+        log.info("Found resources :{}.", resources);
+        return resources;
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResource> createNewTechnologyResource(@RequestBody TechnologyResource resource) {
+        log.info("Persisting resource [{}].", resource);
         TechnologyResource technologyResource = new TechnologyResource();
         technologyResource.setTitle(resource.getTitle());
         technologyResource.setLink(resource.getLink());
