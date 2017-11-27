@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {AuthenticationService} from './authentication-service';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 
@@ -11,7 +10,7 @@ import { TechResource } from './tech-resource';
         styleUrls: ['./tech-resource.component.css']
     }
 )
-export class TechResourceComponent implements OnInit {
+export class TechResourceComponent {
     techResources: TechResource[] = [];
     constructor(private authenticationService: AuthenticationService, 
         private resourceService: TechResourceService) {}

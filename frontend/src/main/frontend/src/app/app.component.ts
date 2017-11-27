@@ -13,9 +13,6 @@ import { AuthenticationService } from './authentication-service';
 })
 export class AppComponent {
   title = 'Welcome to technology resource tracker';
-  authenticated: boolean = false;
-
-  logoutAvailable: boolean = true;
 
   constructor(private resourceService: TechResourceService,
     private httpClient: HttpClient, private router: Router, 

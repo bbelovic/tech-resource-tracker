@@ -39,12 +39,4 @@ export class AuthenticationService {
                 return res;
         });
     }
-
-    private isAuthenticated0(): void {
-        this.httpClient.get('/user')
-        .toPromise()
-        
-            .then(res => this.authenticated = true)
-            .catch(res => this.authenticated = false);
-    }
 }
