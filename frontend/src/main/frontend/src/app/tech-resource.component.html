@@ -1,10 +1,20 @@
-<div *ngIf="!isAuthenticated()">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Tracker</a>
+        </div>>
+    </div>
+
+</nav>
+<div class="jumbotron">
+<div *ngIf="!isAuthenticated()" class="container">
     Not authenticated. Please authenticate.
 </div>
-<div *ngIf="isAuthenticated()">
+<div *ngIf="isAuthenticated()" class="container">
     <ul>
         <li *ngFor="let resource of techResources">
             <a href="{{resource.link}}" target="_blank">{{resource.title}}</a>
         </li>
     </ul>
+</div>
 </div>
