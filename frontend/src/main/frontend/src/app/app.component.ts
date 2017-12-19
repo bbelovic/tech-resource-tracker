@@ -18,6 +18,11 @@ export class AppComponent {
     private httpClient: HttpClient, private router: Router, 
     private authService: AuthenticationService) {}
 
+  login(username: string, password: string): void {
+      this.authService.login(username, password)
+          .then(res => this.router.navigateByUrl('/tech-resource'));
+  }
+
   logout(): void {
     this.authService.logout().then(obj => this.router.navigateByUrl('/tech-resource'));
   }
