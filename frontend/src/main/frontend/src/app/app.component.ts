@@ -12,7 +12,7 @@ import { AuthenticationService } from './authentication-service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'Welcome to technology resource tracker';
+  brand = 'Tech resource tracker';
 
   constructor(private resourceService: TechResourceService,
     private httpClient: HttpClient, private router: Router, 
