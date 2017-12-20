@@ -1,4 +1,16 @@
-<br>
-Title: <input type="text" #title><br>
-Link: <input type="text" #link><br>
-<button (click)="addNewTechResource(title.value, link.value)">Add new resource</button>
+<div class="container-fluid">
+    <div class="col-xs-6 col-md-4">
+    <form>
+        <div class="form-group">
+            <label for="resourceTitle">Title</label>
+            <input type="text" class="form-control" id="resourceTitle" #title placeholder="Title"/>
+        </div>
+        <div class="form-group">
+            <label for="resourceLink">Resource link</label>
+            <input type="text" class="form-control" id="resourceLink" #link placeholder="Resource link"/>
+        </div>
+        <button (click)="addNewTechResource(title.value, link.value)">Add new resource</button>
+    </form>
+</div>
+</div>
+</div>
