@@ -2,9 +2,11 @@
     Not authenticated. Please authenticate.
 </div>
 <div *ngIf="isAuthenticated()" class="container">
-    <ul>
-        <li *ngFor="let resource of techResources">
-            <a href="{{resource.link}}" target="_blank">{{resource.title}}</a>
-        </li>
-    </ul>
+    <div class="row" *ngFor="let resource of techResources">
+        <div class="col-md-12">
+            <div class="thumbnail">
+                <a href="{{resource.link}}" target="_blank">{{resource.title}}</a>
+            </div>
+        </div>
+    </div>
 </div>
