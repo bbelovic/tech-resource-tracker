@@ -16,8 +16,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
+import static java.lang.String.format;
+import static java.time.ZoneOffset.UTC;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -61,11 +66,18 @@ public class TechResourceTrackerApplicationTests {
 
     private void assertReturnedJsonCollectionContents(ResultActions actions, int expectedSize) throws Exception {
         actions.andExpect(jsonPath("$.length()", is(expectedSize)));
+        LocalDateTime.of(2018, 1, 1, 0, 0, 0).toInstant(UTC);
         for (int i = 0; i < expectedSize; i++) {
-            actions.andExpect(jsonPath(String.format("$.[%d].id", i), greaterThan(0)))
-                .andExpect(jsonPath(String.format("$.[%d].title", i), equalTo("Some title " + i)))
-                .andExpect(jsonPath(String.format("$.[%d].link", i), equalTo("https://www.abc.com")));
+            actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
+                .andExpect(jsonPath(format("$.[%d].title", i), equalTo("Some title " + (2 + expectedSize - 1 - i))))
+                .andExpect(jsonPath(format("$.[%d].link", i), equalTo("https://www.abc.com")))
+                .andExpect(jsonPath(format("$.[%d].createdOn", i), startsWith(buildExpectedCreatedOnValue(expectedSize, i))));
         }
+    }
+
+    private String buildExpectedCreatedOnValue(int expectedSize, int i) {
+        return "" + LocalDateTime.of(2018, 1, 1, 0, (2 + expectedSize - 1 - i), 0)
+                .toInstant(ZoneOffset.of("+1")).getEpochSecond();
     }
 
     @Test

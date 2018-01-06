@@ -23,5 +23,12 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="3" author="bbelovic">
+        <addColumn tableName="technology_resources">
+            <column name="created_on" type="timestamp" defaultValueComputed="now()">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

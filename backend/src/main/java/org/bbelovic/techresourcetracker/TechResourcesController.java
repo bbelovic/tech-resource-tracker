@@ -24,7 +24,7 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources")
     public List<TechnologyResource> resources() {
-        List<TechnologyResource> resources = resourceRepository.findFirst10ByOrderByIdAsc();
+        List<TechnologyResource> resources = resourceRepository.findFirst10ByOrderByCreatedOnDesc();
         log.info("Found resources :{}.", resources);
         return resources;
     }

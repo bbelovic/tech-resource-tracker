@@ -1,9 +1,13 @@
 package org.bbelovic.techresourcetracker;
 
+import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
+import static java.lang.String.format;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -18,6 +22,9 @@ public class TechnologyResource implements Serializable {
 
     private String title;
     private String link;
+    @Convert(converter = Jsr310JpaConverters.InstantConverter.class)
+    @Column(name = "created_on")
+    private Instant createdOn;
 
     public Long getId() {
         return id;
@@ -43,6 +50,14 @@ public class TechnologyResource implements Serializable {
         this.link = link;
     }
 
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,16 +65,17 @@ public class TechnologyResource implements Serializable {
         TechnologyResource that = (TechnologyResource) o;
         return Objects.equals(id, that.id) &&
                 Objects.equals(title, that.title) &&
-                Objects.equals(link, that.link);
+                Objects.equals(link, that.link) &&
+                Objects.equals(createdOn, that.createdOn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, link);
+        return Objects.hash(id, title, link, createdOn);
     }
 
     @Override
     public String toString() {
-        return String.format("TechnologyResource[id=%d, title='%s', link='%s']", id, title, link);
+        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s']", id, title, link, createdOn);
     }
 }
