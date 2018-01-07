@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
@@ -71,19 +72,26 @@ public class TechResourceTrackerApplicationTests {
             actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
                 .andExpect(jsonPath(format("$.[%d].title", i), equalTo("Some title " + (2 + expectedSize - 1 - i))))
                 .andExpect(jsonPath(format("$.[%d].link", i), equalTo("https://www.abc.com")))
-                .andExpect(jsonPath(format("$.[%d].createdOn", i), startsWith(buildExpectedCreatedOnValue(expectedSize, i))));
+                .andExpect(jsonPath(format("$.[%d].createdOn", i), equalTo(buildExpectedCreatedOnValue(expectedSize, i))));
         }
     }
 
-    private String buildExpectedCreatedOnValue(int expectedSize, int i) {
-        return "" + LocalDateTime.of(2018, 1, 1, 0, (2 + expectedSize - 1 - i), 0)
+    private BigDecimal buildExpectedCreatedOnValue(int expectedSize, int i) {
+        String s = "" + LocalDateTime.of(2018, 1, 1, 0, (2 + expectedSize - 1 - i), 0)
                 .toInstant(ZoneOffset.of("+1")).getEpochSecond();
+        return new BigDecimal(s).setScale(9);
     }
 
     @Test
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources.xml")
     public void should_create_new_resource_post_request() throws Exception {
-        String requestPayload = "{\"id\":0,\"title\":\"new title\",\"link\":\"http://www.blabol.com\"}";
+
+        String s = "" + LocalDateTime.of(2018, 1, 1, 0, 0, 0)
+                .toInstant(ZoneOffset.of("+1")).getEpochSecond();
+
+        String requestPayload =
+                "{\"id\":0,\"title\":\"new title\"" +
+                        ",\"link\":\"http://www.blabol.com\", \"createdOn\":\"1514764800.000000000\"}";
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -92,7 +100,8 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.title", is("new title")))
-                .andExpect(jsonPath("$.link", is("http://www.blabol.com")));
+                .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
+                .andExpect(jsonPath("$.createdOn", equalTo(new BigDecimal("1514764800").setScale(9))));
 
     }
 

@@ -35,7 +35,9 @@ public class TechResourcesController {
         TechnologyResource technologyResource = new TechnologyResource();
         technologyResource.setTitle(resource.getTitle());
         technologyResource.setLink(resource.getLink());
+        technologyResource.setCreatedOn(resource.getCreatedOn());
         TechnologyResource persistedResource = resourceRepository.save(technologyResource);
+        log.info("Persisted entity: [{}]", persistedResource);
         return new ResponseEntity<>(persistedResource, CREATED);
     }
 
