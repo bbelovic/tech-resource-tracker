@@ -24,6 +24,7 @@ import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INS
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
 import static java.lang.String.format;
 import static java.time.ZoneOffset.UTC;
+import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -86,12 +87,11 @@ public class TechResourceTrackerApplicationTests {
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources.xml")
     public void should_create_new_resource_post_request() throws Exception {
 
-        String s = "" + LocalDateTime.of(2018, 1, 1, 0, 0, 0)
-                .toInstant(ZoneOffset.of("+1")).getEpochSecond();
+        LocalDateTime expected = LocalDateTime.parse("2018-01-01T10:20:30+0100", ISO_OFFSET_DATE_TIME);
 
         String requestPayload =
                 "{\"id\":0,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", \"createdOn\":\"1514764800.000000000\"}";
+                        ",\"link\":\"http://www.blabol.com\", \"createdOn\":\"2018-01-01T10:20:30+0100\"}";
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -101,7 +101,7 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.title", is("new title")))
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo(new BigDecimal("1514764800").setScale(9))));
+                .andExpect(jsonPath("$.createdOn", equalTo(expected)));
 
     }
 

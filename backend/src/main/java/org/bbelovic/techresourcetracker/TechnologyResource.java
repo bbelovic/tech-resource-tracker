@@ -4,7 +4,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static java.lang.String.format;
@@ -22,9 +22,9 @@ public class TechnologyResource implements Serializable {
 
     private String title;
     private String link;
-    @Convert(converter = Jsr310JpaConverters.InstantConverter.class)
+    @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
     @Column(name = "created_on")
-    private Instant createdOn;
+    private LocalDateTime createdOn;
 
     public Long getId() {
         return id;
@@ -50,11 +50,11 @@ public class TechnologyResource implements Serializable {
         this.link = link;
     }
 
-    public Instant getCreatedOn() {
+    public LocalDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Instant createdOn) {
+    public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
 
