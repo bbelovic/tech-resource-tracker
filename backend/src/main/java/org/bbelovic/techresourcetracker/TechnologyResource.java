@@ -1,5 +1,7 @@
 package org.bbelovic.techresourcetracker;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import javax.persistence.*;
@@ -22,6 +24,8 @@ public class TechnologyResource implements Serializable {
 
     private String title;
     private String link;
+    @JsonDeserialize(using = ISO8601LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = ISO8601LocalDateTimeSerializer.class)
     @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
     @Column(name = "created_on")
     private LocalDateTime createdOn;

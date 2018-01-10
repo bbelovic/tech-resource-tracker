@@ -3,6 +3,7 @@ package org.bbelovic.techresourcetracker;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.time.ZoneOffset;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
 import static java.lang.String.format;
 import static java.time.ZoneOffset.UTC;
-import static java.time.format.DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -77,31 +76,28 @@ public class TechResourceTrackerApplicationTests {
         }
     }
 
-    private BigDecimal buildExpectedCreatedOnValue(int expectedSize, int i) {
-        String s = "" + LocalDateTime.of(2018, 1, 1, 0, (2 + expectedSize - 1 - i), 0)
-                .toInstant(ZoneOffset.of("+1")).getEpochSecond();
-        return new BigDecimal(s).setScale(9);
+    private String buildExpectedCreatedOnValue(int expectedSize, int i) {
+        LocalDateTime localDateTime = LocalDateTime.of(2018, 1, 1, 0, (2 + expectedSize - 1 - i), 0);
+        return ISO_LOCAL_DATE_TIME.format(localDateTime);
     }
 
     @Test
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources.xml")
     public void should_create_new_resource_post_request() throws Exception {
-
-        LocalDateTime expected = LocalDateTime.parse("2018-01-01T10:20:30+0100", ISO_OFFSET_DATE_TIME);
-
         String requestPayload =
                 "{\"id\":0,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", \"createdOn\":\"2018-01-01T10:20:30+0100\"}";
+                        ",\"link\":\"http://www.blabol.com\", \"createdOn\":\"2018-01-01T10:20:30\"}";
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .content(requestPayload))
+                .andDo(result -> System.out.println("@@@" + result.getResponse().getContentAsString()))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.title", is("new title")))
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo(expected)));
+                .andExpect(jsonPath("$.createdOn", Matchers.equalTo("2018-01-01T10:20:30")));
 
     }
 
