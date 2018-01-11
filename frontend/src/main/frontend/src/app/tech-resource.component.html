@@ -1,6 +1,11 @@
-<div *ngIf="!isAuthenticated()" class="container">
-    Not authenticated. Please authenticate.
-</div>
+<div class="jumbotron">
+    <div *ngIf="!isAuthenticated()" class="container">
+        <h4>Not authenticated, please authenticate.</h4>
+    </div>
+    <div *ngIf="isAuthenticated()" class="container">
+        <h4>Showing 10 latest technology resources</h4>
+    </div>
+</div>    
 <div *ngIf="isAuthenticated()" class="container">
     <div class="row" *ngFor="let resource of techResources">
         <div class="col-md-12">
