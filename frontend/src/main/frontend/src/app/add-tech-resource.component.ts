@@ -11,9 +11,14 @@ export class AddTechResourceComponent {
     constructor(private techService: TechResourceService, private router: Router) {}
 
     addNewTechResource(title: string, link: string): void {
-        let techResource: TechResource = new TechResource(0, title, link);
+        let createdOn: string = this.buildCreatedOnDate()
+        let techResource: TechResource = new TechResource(0, title, link, createdOn);
         this.techService.postNewTechResource(techResource)
-            .then(result => this.router.navigateByUrl('/tech-resource'));
-        
+            .then(result => this.router.navigateByUrl('/tech-resource'));        
+    }
+
+    private buildCreatedOnDate(): string {
+        let now: string = new Date().toISOString();
+        return now.substring(0, now.indexOf('.'));
     }
 }
