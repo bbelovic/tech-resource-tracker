@@ -20,11 +20,11 @@ export class AppComponent {
 
   login(username: string, password: string): void {
       this.authService.login(username, password)
-          .then(res => this.router.navigateByUrl('/tech-resource'));
+          .then(res => this.router.navigateByUrl('/tech-resources'));
   }
 
   logout(): void {
-    this.authService.logout().then(obj => this.router.navigateByUrl('/tech-resource'));
+    this.authService.logout().then(obj => this.router.navigateByUrl('/tech-resources'));
   }
 
 }

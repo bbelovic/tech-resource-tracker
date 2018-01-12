@@ -6,20 +6,20 @@ import { HttpClientModule} from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
 import { Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { AppComponent } from './app.component';
-import { TechResourceComponent } from './tech-resource.component';
+import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication-service';
 import { AddTechResourceComponent } from './add-tech-resource.component'; 
 
 const routes: Routes = [ 
-  {path: '', component: TechResourceComponent},
-  {path: 'tech-resource', component: TechResourceComponent},
+  {path: '', component: TechResourcesComponent},
+  {path: 'tech-resources', component: TechResourcesComponent},
   {path: 'add-tech-resource', component: AddTechResourceComponent}
 ];
 
 @NgModule({
   declarations: [
-    AppComponent, TechResourceComponent, AddTechResourceComponent
+    AppComponent, TechResourcesComponent, AddTechResourceComponent
   ],
   imports: [
     BrowserModule,

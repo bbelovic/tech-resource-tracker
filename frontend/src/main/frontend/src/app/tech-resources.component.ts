@@ -5,12 +5,12 @@ import { TechResource } from './tech-resource';
 
 @Component(
     {
-        selector: 'tech-resource',
-        templateUrl: './tech-resource.component.html',
-        styleUrls: ['./tech-resource.component.css']
+        selector: 'tech-resources',
+        templateUrl: './tech-resources.component.html',
+        styleUrls: ['./tech-resources.component.css']
     }
 )
-export class TechResourceComponent {
+export class TechResourcesComponent {
     techResources: TechResource[] = [];
     constructor(private authenticationService: AuthenticationService, 
         private resourceService: TechResourceService) {}
