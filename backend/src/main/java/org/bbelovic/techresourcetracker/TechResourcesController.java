@@ -42,6 +42,13 @@ public class TechResourcesController {
         return new ResponseEntity<>(persistedResource, CREATED);
     }
 
+    @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
+    public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResource resource) {
+        log.info("Updating resource: [{}].", resource);
+        TechnologyResource persistedResource = resourceRepository.save(resource);
+        return new ResponseEntity<>(persistedResource, CREATED);
+    }
+
     @GetMapping(value = "/user")
     public Principal user(Principal user) {
         return user;

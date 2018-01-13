@@ -29,8 +29,7 @@ import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IfProfileValue(name = "test.group", value = "integration")
@@ -106,6 +105,29 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.status", equalTo("NEW")));
 
     }
+
+    @Test
+    @DatabaseSetup(type = CLEAN_INSERT, value="/setup-tech-resource-for-status-update.xml")
+    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value="/expected-tech-resource-after-status-update.xml")
+    public void should_mark_resource_as_processed() throws Exception{
+        String requestPayload =
+                "{\"id\":2,\"title\":\"new title\"" +
+                        ",\"link\":\"http://www.blabol.com\", " +
+                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"PROCESSED\"}";
+        mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
+                .with(csrf().asHeader())
+                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .header("Content-Type", "application/json;charset=UTF-8")
+                .content(requestPayload))
+                .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id", is(2)))
+                .andExpect(jsonPath("$.title", is("new title")))
+                .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
+                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
+                .andExpect(jsonPath("$.status", equalTo("PROCESSED")));
+    }
+
 
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {

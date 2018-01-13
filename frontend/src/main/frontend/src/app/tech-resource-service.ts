@@ -31,7 +31,7 @@ export class TechResourceService {
         let url: string = '/tech-resources';
         let updatedResource: TechResource = 
             new TechResource(resource.id, resource.title, resource.link, 
-                resource.createdOn, resource.status);
+                resource.createdOn, newStatus);
         console.log("Updating resource ["+ JSON.stringify(updatedResource) +"]."); 
         return this.http.put('/tech-resources', JSON.stringify(updatedResource), 
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
