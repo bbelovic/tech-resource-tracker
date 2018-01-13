@@ -12,7 +12,7 @@
             <div class="thumbnail">
                 <a href="{{resource.link}}" target="_blank">{{resource.title}}</a>
                 <p>
-                    <a href="#" role="button" class="btn btn-primary">
+                    <a href="#" (click)="markAsRead(resource)" role="button" class="btn btn-primary">
                         Mark as read
                     </a>
                 </p>

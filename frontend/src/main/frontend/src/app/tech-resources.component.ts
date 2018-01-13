@@ -25,6 +25,11 @@ export class TechResourcesComponent {
         }
     }
 
+    markAsRead(resource: TechResource): void {
+        console.log("Marking resource ["+ resource +"] as read.");
+        this.resourceService.updateResourceStatus(resource, "PROCESSED");
+    }
+
     isAuthenticated(): boolean {
         return this.authenticationService.isAuthenticated();
     }

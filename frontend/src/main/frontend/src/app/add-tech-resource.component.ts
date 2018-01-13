@@ -12,7 +12,8 @@ export class AddTechResourceComponent {
 
     addNewTechResource(title: string, link: string): void {
         let createdOn: string = this.buildCreatedOnDate()
-        let techResource: TechResource = new TechResource(0, title, link, createdOn);
+        let status: string = "NEW";
+        let techResource: TechResource = new TechResource(0, title, link, createdOn, status);
         this.techService.postNewTechResource(techResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));        
     }
