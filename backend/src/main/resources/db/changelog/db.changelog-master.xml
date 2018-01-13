@@ -30,5 +30,12 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="4" author="bbelovic">
+        <addColumn tableName="technology_resources">
+            <column name="status" type="varchar(64)" defaultValue="NEW">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
 
 </databaseChangeLog>

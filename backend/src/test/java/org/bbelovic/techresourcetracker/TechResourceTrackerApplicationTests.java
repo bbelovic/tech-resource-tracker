@@ -3,9 +3,10 @@ package org.bbelovic.techresourcetracker;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -42,6 +43,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources.xml")
 public class TechResourceTrackerApplicationTests {
+    private static final Logger log = LoggerFactory.getLogger(TechResourceTrackerApplicationTests.class);
 
     private static final String TECH_RESOURCES_BASIC_URI = "/tech-resources";
     private static final String TEST_USER = "user";
@@ -72,7 +74,9 @@ public class TechResourceTrackerApplicationTests {
             actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
                 .andExpect(jsonPath(format("$.[%d].title", i), equalTo("Some title " + (2 + expectedSize - 1 - i))))
                 .andExpect(jsonPath(format("$.[%d].link", i), equalTo("https://www.abc.com")))
-                .andExpect(jsonPath(format("$.[%d].createdOn", i), equalTo(buildExpectedCreatedOnValue(expectedSize, i))));
+                .andExpect(jsonPath(format("$.[%d].createdOn", i), equalTo(buildExpectedCreatedOnValue(expectedSize, i))))
+                .andExpect(jsonPath(format("$.[%d].status", i), equalTo("NEW")));
+
         }
     }
 
@@ -86,18 +90,20 @@ public class TechResourceTrackerApplicationTests {
     public void should_create_new_resource_post_request() throws Exception {
         String requestPayload =
                 "{\"id\":0,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", \"createdOn\":\"2018-01-01T10:20:30\"}";
+                        ",\"link\":\"http://www.blabol.com\", " +
+                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\"}";
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .content(requestPayload))
-                .andDo(result -> System.out.println("@@@" + result.getResponse().getContentAsString()))
+                .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.title", is("new title")))
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
-                .andExpect(jsonPath("$.createdOn", Matchers.equalTo("2018-01-01T10:20:30")));
+                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
+                .andExpect(jsonPath("$.status", equalTo("NEW")));
 
     }
 

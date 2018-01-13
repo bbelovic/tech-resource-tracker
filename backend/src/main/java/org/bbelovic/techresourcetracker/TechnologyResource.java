@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 import static java.lang.String.format;
+import static javax.persistence.EnumType.STRING;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
@@ -29,6 +30,8 @@ public class TechnologyResource implements Serializable {
     @Convert(converter = Jsr310JpaConverters.LocalDateTimeConverter.class)
     @Column(name = "created_on")
     private LocalDateTime createdOn;
+    @Enumerated(STRING)
+    private TechnologyResourceStatus status;
 
     public Long getId() {
         return id;
@@ -62,6 +65,14 @@ public class TechnologyResource implements Serializable {
         this.createdOn = createdOn;
     }
 
+    public TechnologyResourceStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(TechnologyResourceStatus status) {
+        this.status = status;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,16 +81,18 @@ public class TechnologyResource implements Serializable {
         return Objects.equals(id, that.id) &&
                 Objects.equals(title, that.title) &&
                 Objects.equals(link, that.link) &&
-                Objects.equals(createdOn, that.createdOn);
+                Objects.equals(createdOn, that.createdOn) &&
+                status == that.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, link, createdOn);
+        return Objects.hash(id, title, link, createdOn, status);
     }
 
     @Override
     public String toString() {
-        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s']", id, title, link, createdOn);
+        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s']",
+                id, title, link, createdOn, status);
     }
 }
