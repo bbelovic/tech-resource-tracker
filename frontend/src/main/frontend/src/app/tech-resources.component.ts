@@ -2,6 +2,7 @@ import {Component} from '@angular/core';
 import {AuthenticationService} from './authentication-service';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
+import { Router } from '@angular/router';
 
 @Component(
     {
@@ -13,7 +14,8 @@ import { TechResource } from './tech-resource';
 export class TechResourcesComponent {
     techResources: TechResource[] = [];
     constructor(private authenticationService: AuthenticationService, 
-        private resourceService: TechResourceService) {}
+        private resourceService: TechResourceService,
+        private router: Router) {}
 
     ngOnInit(): void {
         if (this.authenticationService.isAuthenticated()) {
@@ -27,10 +29,21 @@ export class TechResourcesComponent {
 
     markAsRead(resource: TechResource): void {
         console.log("Marking resource ["+ resource +"] as read.");
-        this.resourceService.updateResourceStatus(resource, "PROCESSED");
+        this.resourceService.updateResourceStatus(resource, "PROCESSED")
+
+            .then(res => this.router.navigateByUrl('/tech-resources'));
     }
 
     isAuthenticated(): boolean {
         return this.authenticationService.isAuthenticated();
+    }
+
+    private remove(resource: TechResource): void {
+         let idx: number = this.techResources.indexOf(resource);
+         console.log("idx: "+ idx);
+         if (idx > -1) {
+             console.log("Removing..")
+             this.techResources.splice(idx, 1);
+         }
     }
 }
