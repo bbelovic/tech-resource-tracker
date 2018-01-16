@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.TestExecutionListeners;
@@ -55,7 +56,7 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    public void should_return_all_tech_resources_on_get_request() throws Exception {
+    public void should_return_top_ten_new_tech_resources() throws Exception {
         final int expectedSize = 10;
         ResultActions actions = mockMvc.perform(get(TECH_RESOURCES_BASIC_URI)
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -109,7 +110,7 @@ public class TechResourceTrackerApplicationTests {
     @Test
     @DatabaseSetup(type = CLEAN_INSERT, value="/setup-tech-resource-for-status-update.xml")
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value="/expected-tech-resource-after-status-update.xml")
-    public void should_mark_resource_as_processed() throws Exception{
+    public void should_mark_resource_as_processed() throws Exception {
         String requestPayload =
                 "{\"id\":2,\"title\":\"new title\"" +
                         ",\"link\":\"http://www.blabol.com\", " +

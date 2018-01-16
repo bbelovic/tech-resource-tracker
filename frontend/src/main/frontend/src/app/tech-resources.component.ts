@@ -3,6 +3,7 @@ import {AuthenticationService} from './authentication-service';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 import { Router } from '@angular/router';
+import { $ } from 'protractor';
 
 @Component(
     {
@@ -30,8 +31,8 @@ export class TechResourcesComponent {
     markAsRead(resource: TechResource): void {
         console.log("Marking resource ["+ resource +"] as read.");
         this.resourceService.updateResourceStatus(resource, "PROCESSED")
-
-            .then(res => this.router.navigateByUrl('/tech-resources'));
+            .then(res => this.reload());
+            //.then(res => this.remove(res));
     }
 
     isAuthenticated(): boolean {
@@ -39,11 +40,19 @@ export class TechResourcesComponent {
     }
 
     private remove(resource: TechResource): void {
-         let idx: number = this.techResources.indexOf(resource);
-         console.log("idx: "+ idx);
-         if (idx > -1) {
-             console.log("Removing..")
-             this.techResources.splice(idx, 1);
-         }
+        let idx: number = 0;
+        for (idx = 0 ; idx < this.techResources.length; idx++) {
+            if (this.techResources[idx].id === resource.id) {
+                console.log("Found resource on position "+ idx);
+                this.techResources.splice(idx, 1);
+                break;
+            }
+        }
+    }
+
+    private reload(): void {
+        console.log("Reloading resource after update");
+        this.resourceService.getTechResource()
+        .then(result => this.techResources = result);
     }
 }

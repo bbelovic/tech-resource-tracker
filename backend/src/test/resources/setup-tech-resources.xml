@@ -9,7 +9,7 @@
     <technology_resources title="Some title 6" link="https://www.abc.com" created_on="2018-1-1 0:6:0" status="NEW"/>
     <technology_resources title="Some title 7" link="https://www.abc.com" created_on="2018-1-1 0:7:0" status="NEW"/>
     <technology_resources title="Some title 8" link="https://www.abc.com" created_on="2018-1-1 0:8:0" status="NEW"/>
-    <technology_resources title="Some title 9" link="https://www.abc.com" created_on="2018-1-1 0:9:0" status="NEW"/>
+    <technology_resources title="Some title 9" link="https://www.abc.com" created_on="2018-1-1 0:9:0" status="PROCESSED"/>
     <technology_resources title="Some title 10" link="https://www.abc.com" created_on="2018-1-1 0:10:0" status="NEW"/>
-    <technology_resources title="Some title 11" link="https://www.abc.com" created_on="2018-1-1 0:11:0" status="NEW"/>
+    <technology_resources title="Some title 11" link="https://www.abc.com" created_on="2018-1-1 0:11:0" status="PROCESSED"/>
 </dataset>
