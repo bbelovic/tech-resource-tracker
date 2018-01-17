@@ -7,5 +7,5 @@ import java.util.List;
 
 @Repository
 public interface TechnologyResourceRepository extends JpaRepository<TechnologyResource, Long> {
-    List<TechnologyResource> findFirst10ByOrderByCreatedOnDesc();
+    List<TechnologyResource> findFirst10ByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status);
 }

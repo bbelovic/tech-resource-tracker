@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.TestExecutionListeners;
@@ -25,7 +24,6 @@ import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INS
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
 import static java.lang.String.format;
 import static java.time.ZoneOffset.UTC;
-import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -72,17 +70,8 @@ public class TechResourceTrackerApplicationTests {
         LocalDateTime.of(2018, 1, 1, 0, 0, 0).toInstant(UTC);
         for (int i = 0; i < expectedSize; i++) {
             actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
-                .andExpect(jsonPath(format("$.[%d].title", i), equalTo("Some title " + (2 + expectedSize - 1 - i))))
-                .andExpect(jsonPath(format("$.[%d].link", i), equalTo("https://www.abc.com")))
-                .andExpect(jsonPath(format("$.[%d].createdOn", i), equalTo(buildExpectedCreatedOnValue(expectedSize, i))))
                 .andExpect(jsonPath(format("$.[%d].status", i), equalTo("NEW")));
-
         }
-    }
-
-    private String buildExpectedCreatedOnValue(int expectedSize, int i) {
-        LocalDateTime localDateTime = LocalDateTime.of(2018, 1, 1, 0, (2 + expectedSize - 1 - i), 0);
-        return ISO_LOCAL_DATE_TIME.format(localDateTime);
     }
 
     @Test

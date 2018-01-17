@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
+import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -24,7 +25,7 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources")
     public List<TechnologyResource> resources() {
-        List<TechnologyResource> resources = resourceRepository.findFirst10ByOrderByCreatedOnDesc();
+        List<TechnologyResource> resources = resourceRepository.findFirst10ByStatusOrderByCreatedOnDesc(NEW);
         log.info("Found resources :{}.", resources);
         return resources;
     }
