@@ -11,6 +11,7 @@ import java.util.List;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.NO_CONTENT;
 
 @RestController
 @CrossOrigin
@@ -46,8 +47,8 @@ public class TechResourcesController {
     @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResource resource) {
         log.info("Updating resource: [{}].", resource);
-        TechnologyResource persistedResource = resourceRepository.save(resource);
-        return new ResponseEntity<>(persistedResource, CREATED);
+        resourceRepository.save(resource);
+        return new ResponseEntity<>(NO_CONTENT);
     }
 
     @GetMapping(value = "/user")

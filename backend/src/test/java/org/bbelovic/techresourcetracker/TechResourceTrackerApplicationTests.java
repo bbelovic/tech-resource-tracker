@@ -110,12 +110,7 @@ public class TechResourceTrackerApplicationTests {
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .content(requestPayload))
                 .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.id", is(2)))
-                .andExpect(jsonPath("$.title", is("new title")))
-                .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
-                .andExpect(jsonPath("$.status", equalTo("PROCESSED")));
+                .andExpect(status().isNoContent());
     }
 
 
