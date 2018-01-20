@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
+import { TechResourceStatus } from './tech-resource-status';
 import { Router } from '@angular/router';
 @Component({
     selector: 'add-tech-resource',
@@ -11,9 +12,8 @@ export class AddTechResourceComponent {
     constructor(private techService: TechResourceService, private router: Router) {}
 
     addNewTechResource(title: string, link: string): void {
-        let createdOn: string = this.buildCreatedOnDate()
-        let status: string = "NEW";
-        let techResource: TechResource = new TechResource(0, title, link, createdOn, status);
+        let createdOn: string = this.buildCreatedOnDate();
+        let techResource: TechResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New);
         this.techService.postNewTechResource(techResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));        
     }

@@ -1,11 +1,13 @@
+import { TechResourceStatus } from "./tech-resource-status";
+
 export class TechResource {
     id: number;
     title: string;
     link: string;
     createdOn: string;
-    status: string
+    status: TechResourceStatus;
     constructor(id: number, title: string, link: string, 
-        createdOn: string, status: string) {
+        createdOn: string, status: TechResourceStatus) {
         this.id = id;
         this.title = title;
         this.link = link;

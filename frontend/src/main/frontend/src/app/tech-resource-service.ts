@@ -26,12 +26,9 @@ export class TechResourceService {
         .then(res => res as TechResource );
     }
 
-    updateResourceStatus(resource: TechResource, newStatus: string): Promise<TechResource> {
-        let updatedResource: TechResource = 
-            new TechResource(resource.id, resource.title, resource.link, 
-                resource.createdOn, newStatus);
-        console.log("Updating resource ["+ JSON.stringify(updatedResource) +"]."); 
-        return this.http.put(this.url, JSON.stringify(updatedResource), 
+    updateResourceStatus(resource: TechResource): Promise<TechResource> {
+        console.log("Updating resource ["+ JSON.stringify(resource) +"]."); 
+        return this.http.put(this.url, JSON.stringify(resource), 
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise()
         .then(res => res as TechResource);
