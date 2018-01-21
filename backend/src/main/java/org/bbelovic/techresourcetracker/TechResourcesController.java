@@ -27,19 +27,14 @@ public class TechResourcesController {
     @GetMapping(value = "/tech-resources")
     public List<TechnologyResource> resources() {
         List<TechnologyResource> resources = resourceRepository.findFirst10ByStatusOrderByCreatedOnDesc(NEW);
-        log.info("Found resources :{}.", resources);
+        log.info("Returning 10 newest technology resources: {}.", resources);
         return resources;
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResource> createNewTechnologyResource(@RequestBody TechnologyResource resource) {
         log.info("Persisting resource [{}].", resource);
-        TechnologyResource technologyResource = new TechnologyResource();
-        technologyResource.setTitle(resource.getTitle());
-        technologyResource.setLink(resource.getLink());
-        technologyResource.setCreatedOn(resource.getCreatedOn());
-        technologyResource.setStatus(resource.getStatus());
-        TechnologyResource persistedResource = resourceRepository.save(technologyResource);
+        TechnologyResource persistedResource = resourceRepository.save(resource);
         log.info("Persisted entity: [{}]", persistedResource);
         return new ResponseEntity<>(persistedResource, CREATED);
     }
