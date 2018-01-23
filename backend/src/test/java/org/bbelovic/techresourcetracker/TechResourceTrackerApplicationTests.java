@@ -97,19 +97,18 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value="/setup-tech-resource-for-status-update.xml")
-    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value="/expected-tech-resource-after-status-update.xml")
+    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-tech-resource-for-update.xml")
+    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resource-after-update.xml")
     public void should_mark_resource_as_processed() throws Exception {
         String requestPayload =
-                "{\"id\":2,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"PROCESSED\"}";
+                "{\"id\":2,\"title\":\"new title (updated)\"" +
+                        ",\"link\":\"http://www.updated.blabol.com\", " +
+                        "\"createdOn\":\"2018-02-02T20:00:00\", \"status\":\"PROCESSED\"}";
         mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header("Content-Type", "application/json;charset=UTF-8")
                 .content(requestPayload))
-                .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
                 .andExpect(status().isNoContent());
     }
 
