@@ -97,7 +97,7 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-tech-resource-for-update.xml")
+    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-single-tech-resource.xml")
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resource-after-update.xml")
     public void should_mark_resource_as_processed() throws Exception {
         String requestPayload =
@@ -113,7 +113,7 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resource-for-update.xml")
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-single-tech-resource.xml")
     public void should_return_technology_resource_by_its_id() throws Exception {
         mockMvc.perform(get("/tech-resources/2")
                 .with(csrf().asHeader())
