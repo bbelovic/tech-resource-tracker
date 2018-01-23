@@ -112,6 +112,20 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(status().isNoContent());
     }
 
+    @Test
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resource-for-update.xml")
+    public void should_return_technology_resource_by_its_id() throws Exception {
+        mockMvc.perform(get("/tech-resources/2")
+                .with(csrf().asHeader())
+                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .header("Content-Type", "application/json;charset=UTF-8"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", equalTo(2)))
+                .andExpect(jsonPath("$.title", equalTo("new title")))
+                .andExpect(jsonPath("$.link", equalTo("http://www.blabol.com")))
+                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
+                .andExpect(jsonPath("$.status", equalTo("NEW")));
+    }
 
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {
