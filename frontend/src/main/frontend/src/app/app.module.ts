@@ -10,16 +10,19 @@ import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication-service';
 import { AddTechResourceComponent } from './add-tech-resource.component'; 
+import { EditTechResourceComponent } from './edit-tech-resource.component';
 
 const routes: Routes = [ 
   {path: '', component: TechResourcesComponent},
   {path: 'tech-resources', component: TechResourcesComponent},
-  {path: 'add-tech-resource', component: AddTechResourceComponent}
+  {path: 'add-tech-resource', component: AddTechResourceComponent},
+  {path: 'edit-tech-resource/:id', component: EditTechResourceComponent}
 ];
 
 @NgModule({
   declarations: [
-    AppComponent, TechResourcesComponent, AddTechResourceComponent
+    AppComponent, TechResourcesComponent, AddTechResourceComponent,
+    EditTechResourceComponent
   ],
   imports: [
     BrowserModule,

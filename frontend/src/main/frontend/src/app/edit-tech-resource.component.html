@@ -1,0 +1,15 @@
+<div class="container-fluid">
+    <div class="col-xs-6 col-md-4">
+    <form>
+        <div class="form-group">
+            <label for="resourceTitle">Title</label>
+            <input type="text" class="form-control" id="resourceTitle" #title value="{{resource.title}}" placeholder="Title"/>
+        </div>
+        <div class="form-group">
+            <label for="resourceLink">Resource link</label>
+            <input type="text" class="form-control" id="resourceLink" #link value="{{resource.link}}" placeholder="Resource link"/>
+        </div>
+        <button (click)="updateTechResource(title.value, link.value)" class="btn btn-primary">Update</button>
+    </form>
+</div>
+</div>
