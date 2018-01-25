@@ -4,6 +4,7 @@ import { OnInit } from "@angular/core";
 import { TechResource } from "./tech-resource";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
+import { TechResourceStatus } from "./tech-resource-status";
 
 @Component({
     selector: 'edit-tech-resource',
@@ -21,9 +22,11 @@ export class EditTechResourceComponent implements OnInit {
             .then(res => this.resource = res);
     }
 
-    updateTechResource(title: string, link: string): void {
+    updateTechResource(title: string, link: string, status: string): void {
+        let updatedStatus: TechResourceStatus = 
+            status == "NEW" ? TechResourceStatus.New : TechResourceStatus.Processed;
         let updatedResource: TechResource = new TechResource(this.resource.id,
-            title, link, this.resource.createdOn, this.resource.status);
+            title, link, this.resource.createdOn, updatedStatus);
         this.techResourceService.updateResourceStatus(updatedResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));
     }
