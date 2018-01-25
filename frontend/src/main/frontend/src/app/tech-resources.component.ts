@@ -40,6 +40,10 @@ export class TechResourcesComponent {
         return this.authenticationService.isAuthenticated();
     }
 
+    navigateToEdit(resourceId: number): void {
+        this.router.navigateByUrl('/edit-tech-resource/' + resourceId);
+    }
+
     private updateTechResource(resource: TechResource): TechResource {
         let updatedResource: TechResource = 
             new TechResource(resource.id, resource.title, resource.link, 
