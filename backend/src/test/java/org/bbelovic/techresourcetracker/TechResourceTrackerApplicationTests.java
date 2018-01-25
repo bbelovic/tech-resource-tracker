@@ -47,6 +47,8 @@ public class TechResourceTrackerApplicationTests {
     private static final String TEST_USER = "user";
     private static final String TEST_PASSWORD = "passwd";
     private static final String TEST_ROLE = "admin";
+    private static final String CONTENT_TYPE_HEADER_NAME = "Content-Type";
+    private static final String CONTENT_TYPE_HEADER_VALUE = "application/json;charset=UTF-8";
     private MockMvc mockMvc;
 
     @Test
@@ -58,9 +60,9 @@ public class TechResourceTrackerApplicationTests {
         final int expectedSize = 10;
         ResultActions actions = mockMvc.perform(get(TECH_RESOURCES_BASIC_URI)
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .accept("application/json;charset=UTF-8"))
+                .accept(CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.parseMediaType("application/json;charset=UTF-8")));
+                .andExpect(content().contentType(MediaType.parseMediaType(CONTENT_TYPE_HEADER_VALUE)));
                 assertReturnedJsonCollectionContents(actions, expectedSize);
 
     }
@@ -84,7 +86,7 @@ public class TechResourceTrackerApplicationTests {
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .header("Content-Type", "application/json;charset=UTF-8")
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                 .content(requestPayload))
                 .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
                 .andExpect(status().isCreated())
@@ -107,7 +109,7 @@ public class TechResourceTrackerApplicationTests {
         mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .header("Content-Type", "application/json;charset=UTF-8")
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                 .content(requestPayload))
                 .andExpect(status().isNoContent());
     }
@@ -118,13 +120,23 @@ public class TechResourceTrackerApplicationTests {
         mockMvc.perform(get("/tech-resources/2")
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .header("Content-Type", "application/json;charset=UTF-8"))
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(2)))
                 .andExpect(jsonPath("$.title", equalTo("new title")))
                 .andExpect(jsonPath("$.link", equalTo("http://www.blabol.com")))
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
                 .andExpect(jsonPath("$.status", equalTo("NEW")));
+    }
+
+    @Test
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-single-tech-resource.xml")
+    public void should_return_404_not_found_status_when_resource_cant_be_found_by_id() throws Exception {
+        mockMvc.perform(get("/tech-resources/20")
+                .with(csrf().asHeader())
+                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
+                .andExpect(status().isNotFound());
     }
 
     @Autowired

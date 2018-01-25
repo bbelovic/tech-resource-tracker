@@ -10,9 +10,7 @@ import java.security.Principal;
 import java.util.List;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.NO_CONTENT;
-import static org.springframework.http.HttpStatus.OK;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @CrossOrigin
@@ -36,6 +34,9 @@ public class TechResourcesController {
     public ResponseEntity<TechnologyResource> getTechnologyResourceById(@PathVariable long id) {
         log.info("Getting technology resource with id [{}].", id);
         TechnologyResource resource = resourceRepository.findOne(id);
+        if (resource == null) {
+            return new ResponseEntity<>(NOT_FOUND);
+        }
         return new ResponseEntity<>(resource, OK);
     }
 
