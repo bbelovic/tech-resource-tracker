@@ -139,6 +139,17 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(status().isNotFound());
     }
 
+    @Test
+    public void
+    should_load_next_page_of_resources_upon_request() throws Exception {
+        mockMvc.perform(get("/tech-resources/page/1")
+                .with(csrf().asHeader())
+                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()", is(4)));
+    }
+
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {
         this.mockMvc = mockMvc;

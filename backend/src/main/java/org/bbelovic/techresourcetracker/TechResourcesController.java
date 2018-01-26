@@ -3,6 +3,8 @@ package org.bbelovic.techresourcetracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +40,12 @@ public class TechResourcesController {
             return new ResponseEntity<>(NOT_FOUND);
         }
         return new ResponseEntity<>(resource, OK);
+    }
+
+    @GetMapping(value = "/tech-resources/page/1")
+    public ResponseEntity<List<TechnologyResource>> getPagedTechnologyResources() {
+        Page<TechnologyResource> page = resourceRepository.findAll(new PageRequest(1, 4));
+        return new ResponseEntity<>(page.getContent(), OK);
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
