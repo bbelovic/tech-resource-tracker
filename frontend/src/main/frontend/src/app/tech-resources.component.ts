@@ -14,6 +14,7 @@ import { TechResourceStatus } from './tech-resource-status';
     }
 )
 export class TechResourcesComponent {
+    pageId: number = 1;
     techResources: TechResource[] = [];
     constructor(private authenticationService: AuthenticationService, 
         private resourceService: TechResourceService,
@@ -42,6 +43,20 @@ export class TechResourcesComponent {
 
     navigateToEdit(resourceId: number): void {
         this.router.navigateByUrl('/edit-tech-resource/' + resourceId);
+    }
+
+    loadMoreResources(): void {
+        this.resourceService.getPagedTechnologyResources(this.pageId)
+            .then(res => this.pushAll(res));
+        this.pageId = this.pageId + 1;
+
+    }
+
+    private pushAll(resourcePage: TechResource[]): void {
+        let idx: number = 0;
+        for (idx = 0; idx < resourcePage.length; idx++) {
+            this.techResources.push(resourcePage[idx]);
+        }
     }
 
     private updateTechResource(resource: TechResource): TechResource {

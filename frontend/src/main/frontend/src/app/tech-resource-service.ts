@@ -5,6 +5,7 @@ import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
+
 @Injectable()
 export class TechResourceService {
     private readonly url: string = '/tech-resources';
@@ -38,5 +39,12 @@ export class TechResourceService {
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise()
         .then(res => res as TechResource);
+    }
+
+    getPagedTechnologyResources(pageId: number): Promise<TechResource[]> {
+        return this.http.get(this.url + '/page/'+ pageId + '/pageSize/10')
+            .toPromise()
+            .then(res => res as TechResource[]);
+
     }
 }
