@@ -42,9 +42,10 @@ public class TechResourcesController {
         return new ResponseEntity<>(resource, OK);
     }
 
-    @GetMapping(value = "/tech-resources/page/1")
-    public ResponseEntity<List<TechnologyResource>> getPagedTechnologyResources() {
-        Page<TechnologyResource> page = resourceRepository.findAll(new PageRequest(1, 4));
+    @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
+    public ResponseEntity<List<TechnologyResource>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
+        log.info("Loading technology resource by page with pageId [{}] and page size [{}].", pageId, size);
+        Page<TechnologyResource> page = resourceRepository.findByStatusOrderByCreatedOnDesc(NEW, new PageRequest(pageId, size));
         return new ResponseEntity<>(page.getContent(), OK);
     }
 

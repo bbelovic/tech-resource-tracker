@@ -18,12 +18,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
 import static java.lang.String.format;
-import static java.time.ZoneOffset.UTC;
+import static java.util.Arrays.asList;
+import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -69,7 +70,6 @@ public class TechResourceTrackerApplicationTests {
 
     private void assertReturnedJsonCollectionContents(ResultActions actions, int expectedSize) throws Exception {
         actions.andExpect(jsonPath("$.length()", is(expectedSize)));
-        LocalDateTime.of(2018, 1, 1, 0, 0, 0).toInstant(UTC);
         for (int i = 0; i < expectedSize; i++) {
             actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
                 .andExpect(jsonPath(format("$.[%d].status", i), equalTo("NEW")));
@@ -142,12 +142,29 @@ public class TechResourceTrackerApplicationTests {
     @Test
     public void
     should_load_next_page_of_resources_upon_request() throws Exception {
-        mockMvc.perform(get("/tech-resources/page/1")
-                .with(csrf().asHeader())
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()", is(4)));
+        List<List<Integer>> expectedResourceTitleIds = asList(asList(10, 8, 7, 6),
+                asList(5, 4, 3, 2), asList(1, 0));
+        assertPagedResources(expectedResourceTitleIds);
+
+    }
+
+    private void assertPagedResources(List<List<Integer>> expectedResourceTitleIds) throws Exception {
+        for (int i = 0; i < expectedResourceTitleIds.size(); i++) {
+            List<Integer> titleIds = expectedResourceTitleIds.get(i);
+            String urlTemplate = format("/tech-resources/page/%d/pageSize/%d", i, 4);
+            ResultActions resultActions = mockMvc.perform(get(urlTemplate)
+                    .with(csrf().asHeader())
+                    .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                    .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
+                    .andDo(response -> log.info("Result: [{}]", response.getResponse().getContentAsString()))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.length()", is(titleIds.size())));
+            for (int j = 0; j < titleIds.size(); j++) {
+                resultActions.andExpect(jsonPath("$.["+ j +"].title", is("Some title " + titleIds.get(j))));
+                resultActions.andExpect(jsonPath("$.["+ j +"].status", is(NEW.name())));
+            }
+
+        }
     }
 
     @Autowired
