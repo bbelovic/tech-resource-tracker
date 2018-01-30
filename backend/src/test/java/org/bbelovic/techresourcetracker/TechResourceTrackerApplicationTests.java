@@ -25,6 +25,7 @@ import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_ST
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
+import static org.bbelovic.techresourcetracker.TechnologyResourceType.ARTICLE;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -72,7 +73,8 @@ public class TechResourceTrackerApplicationTests {
         actions.andExpect(jsonPath("$.length()", is(expectedSize)));
         for (int i = 0; i < expectedSize; i++) {
             actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
-                .andExpect(jsonPath(format("$.[%d].status", i), equalTo("NEW")));
+                .andExpect(jsonPath(format("$.[%d].status", i), equalTo("NEW")))
+                .andExpect(jsonPath(format("$.[%d].type", i), equalTo("ARTICLE")));
         }
     }
 
@@ -82,7 +84,7 @@ public class TechResourceTrackerApplicationTests {
         String requestPayload =
                 "{\"id\":0,\"title\":\"new title\"" +
                         ",\"link\":\"http://www.blabol.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\"}";
+                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\"}";
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -94,7 +96,8 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.title", is("new title")))
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
-                .andExpect(jsonPath("$.status", equalTo("NEW")));
+                .andExpect(jsonPath("$.status", equalTo("NEW")))
+                .andExpect(jsonPath("$.type", equalTo("PRESENTATION")));
 
     }
 
@@ -105,7 +108,7 @@ public class TechResourceTrackerApplicationTests {
         String requestPayload =
                 "{\"id\":2,\"title\":\"new title (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol.com\", " +
-                        "\"createdOn\":\"2018-02-02T20:00:00\", \"status\":\"PROCESSED\"}";
+                        "\"createdOn\":\"2018-02-02T20:00:00\", \"status\":\"PROCESSED\", \"type\":\"BLOG\"}";
         mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -126,7 +129,8 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.title", equalTo("new title")))
                 .andExpect(jsonPath("$.link", equalTo("http://www.blabol.com")))
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
-                .andExpect(jsonPath("$.status", equalTo("NEW")));
+                .andExpect(jsonPath("$.status", equalTo("NEW")))
+                .andExpect(jsonPath("$.type", equalTo(TechnologyResourceType.BLOG.name())));
     }
 
     @Test
@@ -161,6 +165,7 @@ public class TechResourceTrackerApplicationTests {
                     .andExpect(jsonPath("$.length()", is(titleIds.size())));
             for (int j = 0; j < titleIds.size(); j++) {
                 resultActions.andExpect(jsonPath("$.["+ j +"].title", is("Some title " + titleIds.get(j))));
+                resultActions.andExpect(jsonPath("$.["+ j +"].type", is(ARTICLE.name())));
                 resultActions.andExpect(jsonPath("$.["+ j +"].status", is(NEW.name())));
             }
 

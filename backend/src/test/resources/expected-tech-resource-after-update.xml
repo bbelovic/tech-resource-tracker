@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <technology_resources id="2" title="new title (updated)" link="http://www.updated.blabol.com" created_on="2018-02-02 20:00:00" status="PROCESSED"/>
+    <technology_resources id="2" title="new title (updated)" link="http://www.updated.blabol.com" created_on="2018-02-02 20:00:00" status="PROCESSED" type="BLOG"/>
 </dataset>

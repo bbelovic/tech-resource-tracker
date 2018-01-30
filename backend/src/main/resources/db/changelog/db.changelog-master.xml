@@ -37,5 +37,13 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="5" author="bbelovic">
+        <addColumn tableName="technology_resources">
+            <column name="type" type="varchar(64)" defaultValue="ARTICLE">
+                <constraints nullable="false"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
 
 </databaseChangeLog>

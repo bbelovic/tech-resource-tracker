@@ -7,11 +7,15 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 
+import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
+import static org.bbelovic.techresourcetracker.TechnologyResourceType.PRESENTATION;
+
 public class ISO8601LocalDateTimeDeserializerTest {
     @Test
     public void should_deserialize_local_date_time_from_json_string() throws Exception {
         String json = "{\"id\":10,\"title\":\"test title\"," +
-                "\"link\":\"www.blabol.com\",\"createdOn\":\"2018-01-01T10:20:30\"}";
+                "\"link\":\"www.blabol.com\",\"createdOn\":\"2018-01-01T10:20:30\", \"type\":\"PRESENTATION\", " +
+                "\"status\":\"NEW\"}";
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(LocalDateTime.class, new ISO8601LocalDateTimeDeserializer());
@@ -22,7 +26,8 @@ public class ISO8601LocalDateTimeDeserializerTest {
         expected.setTitle("test title");
         expected.setLink("www.blabol.com");
         expected.setCreatedOn(LocalDateTime.of(2018, 1, 1, 10, 20, 30));
-
+        expected.setStatus(NEW);
+        expected.setType(PRESENTATION);
         Object actual = mapper.readerFor(TechnologyResource.class).readValue(json);
         Assert.assertEquals(expected, actual);
 

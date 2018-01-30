@@ -32,6 +32,8 @@ public class TechnologyResource implements Serializable {
     private LocalDateTime createdOn;
     @Enumerated(STRING)
     private TechnologyResourceStatus status;
+    @Enumerated(STRING)
+    private TechnologyResourceType type;
 
     public Long getId() {
         return id;
@@ -73,6 +75,14 @@ public class TechnologyResource implements Serializable {
         this.status = status;
     }
 
+    public TechnologyResourceType getType() {
+        return type;
+    }
+
+    public void setType(TechnologyResourceType type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -82,17 +92,18 @@ public class TechnologyResource implements Serializable {
                 Objects.equals(title, that.title) &&
                 Objects.equals(link, that.link) &&
                 Objects.equals(createdOn, that.createdOn) &&
-                status == that.status;
+                status == that.status &&
+                type == that.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, link, createdOn, status);
+        return Objects.hash(id, title, link, createdOn, status, type);
     }
 
     @Override
     public String toString() {
-        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s']",
-                id, title, link, createdOn, status);
+        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s', type='%s']",
+                id, title, link, createdOn, status, type);
     }
 }
