@@ -25,7 +25,7 @@ import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_ST
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
-import static org.bbelovic.techresourcetracker.TechnologyResourceType.ARTICLE;
+import static org.bbelovic.techresourcetracker.TechnologyResourceType.*;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -73,8 +73,8 @@ public class TechResourceTrackerApplicationTests {
         actions.andExpect(jsonPath("$.length()", is(expectedSize)));
         for (int i = 0; i < expectedSize; i++) {
             actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
-                .andExpect(jsonPath(format("$.[%d].status", i), equalTo("NEW")))
-                .andExpect(jsonPath(format("$.[%d].type", i), equalTo("ARTICLE")));
+                .andExpect(jsonPath(format("$.[%d].status", i), equalTo(NEW.name())))
+                .andExpect(jsonPath(format("$.[%d].type", i), equalTo(ARTICLE.name())));
         }
     }
 
@@ -96,8 +96,8 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.title", is("new title")))
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
-                .andExpect(jsonPath("$.status", equalTo("NEW")))
-                .andExpect(jsonPath("$.type", equalTo("PRESENTATION")));
+                .andExpect(jsonPath("$.status", equalTo(NEW.name())))
+                .andExpect(jsonPath("$.type", equalTo(PRESENTATION.name())));
 
     }
 
@@ -129,8 +129,8 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.title", equalTo("new title")))
                 .andExpect(jsonPath("$.link", equalTo("http://www.blabol.com")))
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
-                .andExpect(jsonPath("$.status", equalTo("NEW")))
-                .andExpect(jsonPath("$.type", equalTo(TechnologyResourceType.BLOG.name())));
+                .andExpect(jsonPath("$.status", equalTo(NEW.name())))
+                .andExpect(jsonPath("$.type", equalTo(BLOG.name())));
     }
 
     @Test
