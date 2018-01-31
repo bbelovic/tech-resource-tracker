@@ -5,6 +5,7 @@ import { TechResource } from "./tech-resource";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 import { TechResourceStatus } from "./tech-resource-status";
+import { TechResourceType } from "./tech-resource-type";
 
 @Component({
     selector: 'edit-tech-resource',
@@ -22,12 +23,22 @@ export class EditTechResourceComponent implements OnInit {
             .then(res => this.resource = res);
     }
 
-    updateTechResource(title: string, link: string, status: string): void {
+    updateTechResource(title: string, link: string, status: string, resourceType: string): void {
         let updatedStatus: TechResourceStatus = 
             status == "NEW" ? TechResourceStatus.New : TechResourceStatus.Processed;
+        let type: TechResourceType = this.parseTechResourceType(resourceType);
         let updatedResource: TechResource = new TechResource(this.resource.id,
-            title, link, this.resource.createdOn, updatedStatus, null);
+            title, link, this.resource.createdOn, updatedStatus, type);
         this.techResourceService.updateResourceStatus(updatedResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));
+    }
+
+    private parseTechResourceType(type: string): TechResourceType {
+        switch (type) {
+            case "ARTICLE": return TechResourceType.Article;
+            case "PRESENTATION": return TechResourceType.Presentation;
+            case "BLOG": return TechResourceType.Blog;
+            default: return TechResourceType.Article;
+        }
     }
 }
