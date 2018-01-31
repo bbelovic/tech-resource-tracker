@@ -26,7 +26,7 @@ export class EditTechResourceComponent implements OnInit {
         let updatedStatus: TechResourceStatus = 
             status == "NEW" ? TechResourceStatus.New : TechResourceStatus.Processed;
         let updatedResource: TechResource = new TechResource(this.resource.id,
-            title, link, this.resource.createdOn, updatedStatus);
+            title, link, this.resource.createdOn, updatedStatus, null);
         this.techResourceService.updateResourceStatus(updatedResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));
     }

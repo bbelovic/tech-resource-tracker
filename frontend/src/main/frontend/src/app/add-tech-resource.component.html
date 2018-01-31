@@ -9,7 +9,14 @@
             <label for="resourceLink">Resource link</label>
             <input type="text" class="form-control" id="resourceLink" #link placeholder="Resource link"/>
         </div>
-        <button (click)="addNewTechResource(title.value, link.value)" class="btn btn-primary">Add new resource</button>
+        <div class="form-group">
+            <select #selectElem class="form-control">
+                <option value="ARTICLE">ARTICLE</option>
+                <option value="PRESENTATION">PRESENTATION</option>
+                <option value="BLOG">BLOG</option>
+            </select>
+        </div>
+        <button (click)="addNewTechResource(title.value, link.value, selectElem.value)" class="btn btn-primary">Add new resource</button>
     </form>
 </div>
 </div>

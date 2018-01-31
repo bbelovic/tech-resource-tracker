@@ -62,7 +62,7 @@ export class TechResourcesComponent {
     private updateTechResource(resource: TechResource): TechResource {
         let updatedResource: TechResource = 
             new TechResource(resource.id, resource.title, resource.link, 
-                resource.createdOn, TechResourceStatus.Processed);
+                resource.createdOn, TechResourceStatus.Processed, null);
         return updatedResource;
     }
 
