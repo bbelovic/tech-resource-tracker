@@ -33,7 +33,7 @@ export class TechResourceService {
         .then(res => res as TechResource );
     }
 
-    updateResourceStatus(resource: TechResource): Promise<TechResource> {
+    updateResource(resource: TechResource): Promise<TechResource> {
         console.log("Updating resource ["+ JSON.stringify(resource) +"]."); 
         return this.http.put(this.url, JSON.stringify(resource), 
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})

@@ -29,7 +29,7 @@ export class EditTechResourceComponent implements OnInit {
         let type: TechResourceType = this.parseTechResourceType(resourceType);
         let updatedResource: TechResource = new TechResource(this.resource.id,
             title, link, this.resource.createdOn, updatedStatus, type);
-        this.techResourceService.updateResourceStatus(updatedResource)
+        this.techResourceService.updateResource(updatedResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));
     }
 
