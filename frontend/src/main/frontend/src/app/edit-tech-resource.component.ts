@@ -26,19 +26,10 @@ export class EditTechResourceComponent implements OnInit {
     updateTechResource(title: string, link: string, status: string, resourceType: string): void {
         let updatedStatus: TechResourceStatus = 
             status == "NEW" ? TechResourceStatus.New : TechResourceStatus.Processed;
-        let type: TechResourceType = this.parseTechResourceType(resourceType);
+        let type: TechResourceType = TechResourceType[resourceType];
         let updatedResource: TechResource = new TechResource(this.resource.id,
             title, link, this.resource.createdOn, updatedStatus, type);
         this.techResourceService.updateResource(updatedResource)
             .then(result => this.router.navigateByUrl('/tech-resources'));
-    }
-
-    private parseTechResourceType(type: string): TechResourceType {
-        switch (type) {
-            case "ARTICLE": return TechResourceType.Article;
-            case "PRESENTATION": return TechResourceType.Presentation;
-            case "BLOG": return TechResourceType.Blog;
-            default: return TechResourceType.Article;
-        }
     }
 }
