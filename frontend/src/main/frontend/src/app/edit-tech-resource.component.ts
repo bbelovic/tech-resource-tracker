@@ -24,8 +24,7 @@ export class EditTechResourceComponent implements OnInit {
     }
 
     updateTechResource(title: string, link: string, status: string, resourceType: string): void {
-        let updatedStatus: TechResourceStatus = 
-            status == "NEW" ? TechResourceStatus.New : TechResourceStatus.Processed;
+        let updatedStatus: TechResourceStatus = TechResourceStatus[status];
         let type: TechResourceType = TechResourceType[resourceType];
         let updatedResource: TechResource = new TechResource(this.resource.id,
             title, link, this.resource.createdOn, updatedStatus, type);
