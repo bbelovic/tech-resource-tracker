@@ -13,13 +13,14 @@ export class TechResourceService {
     }
 
     getTechResource(): Promise<TechResource[]> {
-    console.log("Requesting 10 newest resources from: [" + this.url + "].");
+    console.log("Getting 10 newest resources from: [" + this.url + "].");
     return this.http.get(this.url)
             .toPromise()
             .then(data => data as TechResource[])
     }
 
     getTechResourceById(id: number): Promise<TechResource> {
+    console.log("Getting technology resource with id ["+ id +"]");
         return this.http.get(this.url + '/' + id)
             .toPromise()
             .then(data => data as TechResource);
@@ -42,6 +43,7 @@ export class TechResourceService {
     }
 
     getPagedTechnologyResources(pageId: number): Promise<TechResource[]> {
+        console.log("Getting tech resources page ["+ pageId +"] with size [10].");
         return this.http.get(this.url + '/page/'+ pageId + '/pageSize/10')
             .toPromise()
             .then(res => res as TechResource[]);
