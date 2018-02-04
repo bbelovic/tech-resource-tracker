@@ -17,9 +17,9 @@
         </div>
         <div class="form-group">
             <select #resourceType class="form-control">
-                <option value="Article">ARTICLE</option>
-                <option value="Presentation">PRESENTATION</option>
-                <option value="Blog">BLOG</option>
+                <option value="Article" [selected]="resource.type == 'ARTICLE'">ARTICLE</option>
+                <option value="Presentation" [selected]="resource.type == 'PRESENTATION'">PRESENTATION</option>
+                <option value="Blog" [selected]="resource.type == 'BLOG'">BLOG</option>
             </select>
         </div>
         <button (click)="updateTechResource(title.value, link.value, resourceStatus.value, resourceType.value)" class="btn btn-primary">Update</button>
