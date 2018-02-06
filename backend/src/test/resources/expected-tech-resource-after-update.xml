@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <technology_resources id="2" title="new title (updated)" link="http://www.updated.blabol.com" created_on="2018-02-02 20:00:00" status="PROCESSED" type="BLOG"/>
+    <tags id="1" name="java"/>
+    <technology_resources_tags resource_id="2" tag_id="1"/>
 </dataset>

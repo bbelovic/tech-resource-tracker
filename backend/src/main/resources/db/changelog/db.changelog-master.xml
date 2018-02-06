@@ -44,6 +44,27 @@
             </column>
         </addColumn>
     </changeSet>
+    <changeSet id="6" author="bbelovic">
+        <createTable tableName="tags">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(32)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="7" author="bbelovic">
+        <createTable tableName="technology_resources_tags">
+            <column name="resource_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 
 
 </databaseChangeLog>
