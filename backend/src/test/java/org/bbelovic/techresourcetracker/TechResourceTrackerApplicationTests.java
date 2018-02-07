@@ -84,7 +84,11 @@ public class TechResourceTrackerApplicationTests {
         String requestPayload =
                 "{\"id\":0,\"title\":\"new title\"" +
                         ",\"link\":\"http://www.blabol.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\"}";
+                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\", " +
+                        "\"tags\":[{\"id\":1, \"name\":\"java\"}]}";
+        Tag expectedTag = new Tag();
+        expectedTag.setId(1L);
+        expectedTag.setName("java");
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -97,8 +101,8 @@ public class TechResourceTrackerApplicationTests {
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
                 .andExpect(jsonPath("$.status", equalTo(NEW.name())))
-                .andExpect(jsonPath("$.type", equalTo(PRESENTATION.name())));
-
+                .andExpect(jsonPath("$.type", equalTo(PRESENTATION.name())))
+                .andExpect(jsonPath("$.tags", hasSize(1)));
     }
 
     @Test

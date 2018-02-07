@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 import static java.lang.String.format;
 import static javax.persistence.EnumType.STRING;
@@ -34,6 +35,12 @@ public class TechnologyResource implements Serializable {
     private TechnologyResourceStatus status;
     @Enumerated(STRING)
     private TechnologyResourceType type;
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "technology_resources_tags",
+            joinColumns = @JoinColumn(name = "resource_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
 
     public Long getId() {
         return id;
@@ -83,6 +90,14 @@ public class TechnologyResource implements Serializable {
         this.type = type;
     }
 
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,7 +118,7 @@ public class TechnologyResource implements Serializable {
 
     @Override
     public String toString() {
-        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s', type='%s']",
-                id, title, link, createdOn, status, type);
+        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s', type='%s', tags='%s']",
+                id, title, link, createdOn, status, type, tags);
     }
 }
