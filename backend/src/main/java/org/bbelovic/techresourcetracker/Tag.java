@@ -2,6 +2,7 @@ package org.bbelovic.techresourcetracker;
 
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 import static java.lang.String.format;
 import static javax.persistence.GenerationType.SEQUENCE;
@@ -17,6 +18,9 @@ public class Tag {
 
     private String name;
 
+    @ManyToMany(mappedBy = "tags")
+    private Set<TechnologyResource> technologyResources;
+
     public Long getId() {
         return id;
     }
@@ -31,6 +35,14 @@ public class Tag {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<TechnologyResource> getTechnologyResources() {
+        return technologyResources;
+    }
+
+    public void setTechnologyResources(Set<TechnologyResource> technologyResources) {
+        this.technologyResources = technologyResources;
     }
 
     @Override

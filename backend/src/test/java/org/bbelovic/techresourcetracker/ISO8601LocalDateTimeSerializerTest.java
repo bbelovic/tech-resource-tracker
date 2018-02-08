@@ -6,7 +6,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 
+import static java.util.Collections.emptySet;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.PROCESSED;
 import static org.bbelovic.techresourcetracker.TechnologyResourceType.ARTICLE;
 
@@ -15,7 +17,7 @@ public class ISO8601LocalDateTimeSerializerTest {
     public void should_serialize_local_date_time_to_json_string() throws Exception {
         String expected = "{\"id\":10,\"title\":\"test title\"," +
                 "\"link\":\"www.blabol.com\",\"createdOn\":\"2018-01-01T10:20:30\"," +
-                "\"status\":\"PROCESSED\",\"type\":\"ARTICLE\"}";
+                "\"status\":\"PROCESSED\",\"type\":\"ARTICLE\",\"tags\":[]}";
         ObjectMapper mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addSerializer(LocalDateTime.class, new ISO8601LocalDateTimeSerializer());
@@ -27,6 +29,7 @@ public class ISO8601LocalDateTimeSerializerTest {
         resource.setCreatedOn(LocalDateTime.of(2018, 1, 1, 10, 20, 30));
         resource.setStatus(PROCESSED);
         resource.setType(ARTICLE);
+        resource.setTags(emptySet());
         String actual = mapper.writeValueAsString(resource);
         Assert.assertEquals(expected, actual);
     }

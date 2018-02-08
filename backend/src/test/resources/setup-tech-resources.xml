@@ -12,5 +12,6 @@
     <technology_resources title="Some title 9" link="https://www.abc.com" created_on="2018-1-1 0:9:0" status="PROCESSED" type="ARTICLE"/>
     <technology_resources title="Some title 10" link="https://www.abc.com" created_on="2018-1-1 0:10:0" status="NEW" type="ARTICLE"/>
     <technology_resources title="Some title 11" link="https://www.abc.com" created_on="2018-1-1 0:11:0" status="PROCESSED" type="ARTICLE"/>
-    <tags id="1" name="java"/>
+    <tags />
+    <technology_resources_tags />
 </dataset>

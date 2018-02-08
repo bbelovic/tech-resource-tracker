@@ -85,7 +85,7 @@ public class TechResourceTrackerApplicationTests {
                 "{\"id\":0,\"title\":\"new title\"" +
                         ",\"link\":\"http://www.blabol.com\", " +
                         "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\", " +
-                        "\"tags\":[{\"id\":1, \"name\":\"java\"}]}";
+                        "\"tags\":[{\"id\":0, \"name\":\"java\"}]}";
         Tag expectedTag = new Tag();
         expectedTag.setId(1L);
         expectedTag.setName("java");
