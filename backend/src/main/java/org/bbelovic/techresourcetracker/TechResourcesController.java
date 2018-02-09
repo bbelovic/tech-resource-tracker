@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.springframework.http.HttpStatus.*;
@@ -52,7 +54,15 @@ public class TechResourcesController {
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResource> createNewTechnologyResource(@RequestBody TechnologyResource resource) {
         log.info("Persisting resource [{}].", resource);
-        TechnologyResource persistedResource = resourceRepository.save(resource);
+        TechnologyResource resourceToSave = new TechnologyResource();
+        resourceToSave.setId(resource.getId());
+        resourceToSave.setType(resource.getType());
+        resourceToSave.setStatus(resource.getStatus());
+        resourceToSave.setCreatedOn(resource.getCreatedOn());
+        resourceToSave.setLink(resource.getLink());
+        resourceToSave.setTitle(resource.getTitle());
+        resource.getTags().forEach(resourceToSave::addTag);
+        TechnologyResource persistedResource = resourceRepository.save(resourceToSave);
         log.info("Persisted entity: [{}]", persistedResource);
         return new ResponseEntity<>(persistedResource, CREATED);
     }

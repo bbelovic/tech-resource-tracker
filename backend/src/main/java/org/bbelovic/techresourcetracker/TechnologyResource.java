@@ -7,6 +7,7 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,11 +37,11 @@ public class TechnologyResource implements Serializable {
     @Enumerated(STRING)
     private TechnologyResourceType type;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "technology_resources_tags",
             joinColumns = @JoinColumn(name = "resource_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    private Set<Tag> tags;
+    private Set<Tag> tags = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -96,6 +97,11 @@ public class TechnologyResource implements Serializable {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public void addTag(Tag tag) {
+        tags.add(tag);
+        tag.getTechnologyResources().add(this);
     }
 
     @Override

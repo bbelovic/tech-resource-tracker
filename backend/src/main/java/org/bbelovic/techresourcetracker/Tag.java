@@ -1,6 +1,7 @@
 package org.bbelovic.techresourcetracker;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -18,8 +19,8 @@ public class Tag {
 
     private String name;
 
-    @ManyToMany(mappedBy = "tags")
-    private Set<TechnologyResource> technologyResources;
+    @ManyToMany(mappedBy = "tags", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<TechnologyResource> technologyResources = new HashSet<>();
 
     public Long getId() {
         return id;
