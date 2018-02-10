@@ -1,5 +1,6 @@
 package org.bbelovic.techresourcetracker;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
@@ -37,6 +38,7 @@ public class TechnologyResource implements Serializable {
     @Enumerated(STRING)
     private TechnologyResourceType type;
 
+    @JsonManagedReference
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "technology_resources_tags",
             joinColumns = @JoinColumn(name = "resource_id"),

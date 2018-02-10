@@ -1,5 +1,7 @@
 package org.bbelovic.techresourcetracker;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
@@ -19,6 +21,7 @@ public class Tag {
 
     private String name;
 
+    @JsonBackReference
     @ManyToMany(mappedBy = "tags", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<TechnologyResource> technologyResources = new HashSet<>();
 
