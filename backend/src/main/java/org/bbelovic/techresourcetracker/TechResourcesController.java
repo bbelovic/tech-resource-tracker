@@ -52,7 +52,7 @@ public class TechResourcesController {
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
-    public ResponseEntity<TechnologyResource> createNewTechnologyResource(@RequestBody TechnologyResource resource) {
+    public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resource) {
         log.info("Persisting resource [{}].", resource);
         TechnologyResource resourceToSave = new TechnologyResource();
         resourceToSave.setId(resource.getId());
@@ -61,10 +61,18 @@ public class TechResourcesController {
         resourceToSave.setCreatedOn(resource.getCreatedOn());
         resourceToSave.setLink(resource.getLink());
         resourceToSave.setTitle(resource.getTitle());
-        resource.getTags().forEach(resourceToSave::addTag);
+        resource.getTags().forEach(tagDTO -> {
+            Tag tag = new Tag();
+            tag.setId(tagDTO.getId());
+            tag.setName(tagDTO.getName());
+            resourceToSave.addTag(tag);
+        });
         TechnologyResource persistedResource = resourceRepository.save(resourceToSave);
         log.info("Persisted entity: [{}]", persistedResource);
-        return new ResponseEntity<>(persistedResource, CREATED);
+        TechnologyResourceDTO responseDTO = new TechnologyResourceDTO(persistedResource.getId(),
+                persistedResource.getTitle(), persistedResource.getLink(), persistedResource.getCreatedOn(),
+                persistedResource.getStatus(), persistedResource.getType(), resource.getTags());
+        return new ResponseEntity<>(responseDTO, CREATED);
     }
 
     @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
