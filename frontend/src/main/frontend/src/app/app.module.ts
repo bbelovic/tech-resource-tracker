@@ -11,6 +11,7 @@ import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication-service';
 import { AddTechResourceComponent } from './add-tech-resource.component'; 
 import { EditTechResourceComponent } from './edit-tech-resource.component';
+import { TagService } from './tag-service';
 
 const routes: Routes = [ 
   {path: '', component: TechResourcesComponent},
@@ -31,7 +32,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [TechResourceService, AuthenticationService],
+  providers: [TechResourceService, TagService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
