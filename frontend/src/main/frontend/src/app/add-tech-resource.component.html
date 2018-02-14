@@ -13,6 +13,8 @@
             <div *ngFor="let tag of existingTags">
                     <span class="label label-info" (click)="addTag(tag)">{{tag.name}}</span>    
             </div>
+            <input type="text" class="form-control" id="newTag" #newTag placeholder="Add new tag"/>
+            <button class="btn btn-primary" (click)="addTag(new Tag(0, newTag.value))">Add new tag</button>
         </div>
         <div class="form-group">
             <label for="resourceType">Resource type</label>
