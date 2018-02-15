@@ -2,8 +2,6 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.jayway.jsonpath.JsonPath;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,18 +13,15 @@ import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-
-import java.util.Base64;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IfProfileValue(name = "test.group", value = "integration")
 @RunWith(SpringRunner.class)
@@ -37,7 +32,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tags.xml")
-public class TagsControllerTest {
+public class TagControllerTest {
 
     private static final String TEST_USER = "user";
     private static final String TEST_PASSWORD = "passwd";
@@ -52,7 +47,11 @@ public class TagsControllerTest {
                 .accept(CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.parseMediaType(CONTENT_TYPE_HEADER_VALUE)))
-                .andExpect((jsonPath("$.length()", Matchers.is(2))));
+                .andExpect((jsonPath("$.length()", is(2))))
+                .andExpect(jsonPath("$.[0].name", equalTo("xml")))
+                .andExpect(jsonPath("$.[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.[1].name", equalTo("javascript")))
+                .andExpect(jsonPath("$.[1].id", equalTo(2)));
     }
 
     @Autowired
