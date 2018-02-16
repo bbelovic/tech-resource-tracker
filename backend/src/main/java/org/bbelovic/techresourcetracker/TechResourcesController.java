@@ -9,9 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.springframework.http.HttpStatus.*;
@@ -69,9 +69,13 @@ public class TechResourcesController {
         });
         TechnologyResource persistedResource = resourceRepository.save(resourceToSave);
         log.info("Persisted entity: [{}]", persistedResource);
+        Set<TagDTO> tagDTOS = persistedResource.getTags()
+                .stream()
+                .map(tag -> new TagDTO(tag.getId(), tag.getName()))
+                .collect(Collectors.toSet());
         TechnologyResourceDTO responseDTO = new TechnologyResourceDTO(persistedResource.getId(),
                 persistedResource.getTitle(), persistedResource.getLink(), persistedResource.getCreatedOn(),
-                persistedResource.getStatus(), persistedResource.getType(), resource.getTags());
+                persistedResource.getStatus(), persistedResource.getType(), tagDTOS);
         return new ResponseEntity<>(responseDTO, CREATED);
     }
 
