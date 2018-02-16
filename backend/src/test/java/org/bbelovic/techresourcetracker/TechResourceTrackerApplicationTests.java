@@ -120,6 +120,7 @@ public class TechResourceTrackerApplicationTests {
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                 .content(requestPayload))
+                .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
                 .andExpect(status().isNoContent());
     }
 

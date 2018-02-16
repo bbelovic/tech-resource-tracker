@@ -76,9 +76,23 @@ public class TechResourcesController {
     }
 
     @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
-    public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResource resource) {
-        log.info("Updating resource: [{}].", resource);
-        resourceRepository.save(resource);
+    public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
+        log.info("Updating resource: [{}].", resourceDto);
+        TechnologyResource resourceToUpdate = new TechnologyResource();
+        resourceToUpdate.setId(resourceDto.getId());
+        resourceToUpdate.setId(resourceDto.getId());
+        resourceToUpdate.setType(resourceDto.getType());
+        resourceToUpdate.setStatus(resourceDto.getStatus());
+        resourceToUpdate.setCreatedOn(resourceDto.getCreatedOn());
+        resourceToUpdate.setLink(resourceDto.getLink());
+        resourceToUpdate.setTitle(resourceDto.getTitle());
+        resourceDto.getTags().forEach(tagDTO -> {
+            Tag tag = new Tag();
+            tag.setId(tagDTO.getId());
+            tag.setName(tagDTO.getName());
+            resourceToUpdate.addTag(tag);
+        });
+        resourceRepository.save(resourceToUpdate);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
