@@ -52,36 +52,29 @@ public class TechResourcesController {
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
-    public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resource) {
-        log.info("Persisting resource [{}].", resource);
-        TechnologyResource resourceToSave = new TechnologyResource();
-        resourceToSave.setId(resource.getId());
-        resourceToSave.setType(resource.getType());
-        resourceToSave.setStatus(resource.getStatus());
-        resourceToSave.setCreatedOn(resource.getCreatedOn());
-        resourceToSave.setLink(resource.getLink());
-        resourceToSave.setTitle(resource.getTitle());
-        resource.getTags().forEach(tagDTO -> {
-            Tag tag = new Tag();
-            tag.setId(tagDTO.getId());
-            tag.setName(tagDTO.getName());
-            resourceToSave.addTag(tag);
-        });
+    public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
+        log.info("Persisting resource [{}].", resourceDto);
+        TechnologyResource resourceToSave = prepareTechnologyResource(resourceDto);
         TechnologyResource persistedResource = resourceRepository.save(resourceToSave);
         log.info("Persisted entity: [{}]", persistedResource);
-        Set<TagDTO> tagDTOS = persistedResource.getTags()
-                .stream()
-                .map(tag -> new TagDTO(tag.getId(), tag.getName()))
-                .collect(Collectors.toSet());
-        TechnologyResourceDTO responseDTO = new TechnologyResourceDTO(persistedResource.getId(),
-                persistedResource.getTitle(), persistedResource.getLink(), persistedResource.getCreatedOn(),
-                persistedResource.getStatus(), persistedResource.getType(), tagDTOS);
+        TechnologyResourceDTO responseDTO = prepareTechnologyResourceDTO(persistedResource);
         return new ResponseEntity<>(responseDTO, CREATED);
     }
 
     @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
         log.info("Updating resource: [{}].", resourceDto);
+        TechnologyResource resourceToUpdate = prepareTechnologyResource(resourceDto);
+        resourceRepository.save(resourceToUpdate);
+        return new ResponseEntity<>(NO_CONTENT);
+    }
+
+    @GetMapping(value = "/user")
+    public Principal user(Principal user) {
+        return user;
+    }
+
+    private TechnologyResource prepareTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
         TechnologyResource resourceToUpdate = new TechnologyResource();
         resourceToUpdate.setId(resourceDto.getId());
         resourceToUpdate.setId(resourceDto.getId());
@@ -96,12 +89,16 @@ public class TechResourcesController {
             tag.setName(tagDTO.getName());
             resourceToUpdate.addTag(tag);
         });
-        resourceRepository.save(resourceToUpdate);
-        return new ResponseEntity<>(NO_CONTENT);
+        return resourceToUpdate;
     }
 
-    @GetMapping(value = "/user")
-    public Principal user(Principal user) {
-        return user;
+    private TechnologyResourceDTO prepareTechnologyResourceDTO(TechnologyResource persistedResource) {
+        Set<TagDTO> tagDTOS = persistedResource.getTags()
+                .stream()
+                .map(tag -> new TagDTO(tag.getId(), tag.getName()))
+                .collect(Collectors.toSet());
+        return new TechnologyResourceDTO(persistedResource.getId(),
+                persistedResource.getTitle(), persistedResource.getLink(), persistedResource.getCreatedOn(),
+                persistedResource.getStatus(), persistedResource.getType(), tagDTOS);
     }
 }

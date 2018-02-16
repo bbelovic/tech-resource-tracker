@@ -108,7 +108,7 @@ public class TechResourceTrackerApplicationTests {
     @Test
     @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-single-tech-resource.xml")
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resource-after-update.xml")
-    public void should_mark_resource_as_processed() throws Exception {
+    public void should_existing_update_tech_resource() throws Exception {
         String requestPayload =
                 "{\"id\":2,\"title\":\"new title (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol.com\", " +
