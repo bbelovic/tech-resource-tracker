@@ -64,4 +64,18 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="8" author="bbelovic">
+        <addForeignKeyConstraint baseTableName="technology_resources_tags"
+                                 baseColumnNames="resource_id"
+                                 constraintName="fk_technology_resources"
+                                 referencedTableName="technology_resources"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <changeSet id="9" author="bbelovic">
+        <addForeignKeyConstraint baseTableName="technology_resources_tags"
+                                 baseColumnNames="tag_id"
+                                 constraintName="fk_tags"
+                                 referencedTableName="tags"
+                                 referencedColumnNames="id"/>
+    </changeSet>
 </databaseChangeLog>
