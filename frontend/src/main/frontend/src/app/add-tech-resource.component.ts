@@ -20,8 +20,14 @@ export class AddTechResourceComponent implements OnInit {
         private router: Router) {}
 
     public ngOnInit(): void {
-        this.tagService.getTags().then(result => this.existingTags = result);
+        this.tagService.getTags()
+        .then(this.convert.bind(this));
+        //.then(result => this.existingTags = result);
+    }
 
+    private convert(o: Object): void{
+        let arr: Array<Tag> =  (o as Tag[]);
+        this.existingTags = arr;
     }
 
     addNewTechResource(title: string, link: string, type: string): void {

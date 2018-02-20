@@ -7,10 +7,10 @@ export class TagService {
     private readonly tagsBaseUrl: string = '/tags';
     constructor(private httpClient: HttpClient) {}
 
-    getTags(): Promise<Tag[]> {
+    getTags(): Promise<Object> {
         console.log("Getting all tags defined in the system.");
         return this.httpClient.get(this.tagsBaseUrl)
-            .toPromise()
-            .then(data => data as Tag[]);
+            .toPromise();
+            
     }
 }
