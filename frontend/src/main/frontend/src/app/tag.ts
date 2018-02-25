@@ -1,12 +1,18 @@
 export class Tag {
+     id: number;
+     name: string;
 
-    constructor(private id: number, private name: string) {}
+    constructor(id: number, name: string) {
+        this.id = id;
+        this.name = name;
+    }
 
     getId(): number {
         return this.id;
     }
 
+    /*
     getName(): string {
         return this.name;
-    }
+    }*/
 }

@@ -44,7 +44,7 @@ export class AddTechResourceComponent implements OnInit {
         console.log("Added tag= "+ tag);
     }
 
-    addNewTag(id: number, name: string): void {
+    addNewTag0(id: number, name: string): void {
         let foundTag: Tag = this.checkTagForLoop(new Tag(id, name));
         if (foundTag === undefined) {
             console.log("Tag "+ name + " not yet defined");
@@ -58,8 +58,8 @@ export class AddTechResourceComponent implements OnInit {
 
     private checkTag(tag: Tag): Tag {
         return this.existingTags.find(function (value: Tag) {
-            let valueName: string = value.getName();
-            let tagName: string = tag.getName();
+            let valueName: string = value.name;
+            let tagName: string = tag.name;
             return valueName === tagName;
         });
     }
@@ -67,7 +67,7 @@ export class AddTechResourceComponent implements OnInit {
     private checkTagForLoop(tag: Tag): Tag {
         let i: number = 0;
         for (i = 0; i < this.existingTags.length; i++) {
-            if (this.existingTags[i].getName() === tag.getName()) {
+            if (this.existingTags[i].name === tag.name) {
                 return this.existingTags[i];
             }
         }
