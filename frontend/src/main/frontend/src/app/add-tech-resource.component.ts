@@ -21,13 +21,7 @@ export class AddTechResourceComponent implements OnInit {
 
     public ngOnInit(): void {
         this.tagService.getTags()
-        .then(this.convert.bind(this));
-        //.then(result => this.existingTags = result);
-    }
-
-    private convert(o: Object): void{
-        let arr: Array<Tag> =  (o as Tag[]);
-        this.existingTags = arr;
+        .then(result => this.existingTags = result);
     }
 
     addNewTechResource(title: string, link: string, type: string): void {
@@ -44,8 +38,8 @@ export class AddTechResourceComponent implements OnInit {
         console.log("Added tag= "+ tag);
     }
 
-    addNewTag0(id: number, name: string): void {
-        let foundTag: Tag = this.checkTagForLoop(new Tag(id, name));
+    addNewTag(id: number, name: string): void {
+        let foundTag: Tag = this.checkTag(new Tag(id, name));
         if (foundTag === undefined) {
             console.log("Tag "+ name + " not yet defined");
             this.addTag(new Tag(id, name));
@@ -63,16 +57,6 @@ export class AddTechResourceComponent implements OnInit {
             return valueName === tagName;
         });
     }
-
-    private checkTagForLoop(tag: Tag): Tag {
-        let i: number = 0;
-        for (i = 0; i < this.existingTags.length; i++) {
-            if (this.existingTags[i].name === tag.name) {
-                return this.existingTags[i];
-            }
-        }
-    }
-
 
     private buildCreatedOnDate(): string {
         let now: string = new Date().toISOString();
