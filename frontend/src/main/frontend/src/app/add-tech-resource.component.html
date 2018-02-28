@@ -10,16 +10,21 @@
             <input type="text" class="form-control" id="resourceLink" #link placeholder="Resource link"/>
         </div>
         <div class="form-group">
-            <div *ngFor="let tag of existingTags">
-                    <span class="label label-info" (click)="addTag(tag)">{{tag.name}}</span>    
-            </div>
+            <ul class="list-inline" *ngFor="let tag of existingTags">
+                    <li>
+                        <span class="label label-info" (click)="addTag(tag)">{{tag.name}}</span>
+                    </li>
+            </ul>
             <input type="text" class="form-control" id="addNewTag" #newTag placeholder="Add new tag"/>
             <button class="btn btn-primary" (click)="addNewTag(0, newTag.value); newTag.value=''">Add new tag</button>
         </div>
         <div class="form-group">
-            <div *ngFor="let tag of assignedTags">
-                <span class="label label-primary">{{tag.name}}</span>    
-            </div>
+            <ul class="list-inline" *ngFor="let tag of assignedTags">
+                <li>
+                    <span class="label label-primary">{{tag.name}}</span>
+                </li>
+                
+            </ul>
         </div>
         <div class="form-group">
             <label for="resourceType">Resource type</label>
