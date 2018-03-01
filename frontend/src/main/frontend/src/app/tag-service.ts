@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
 export class TagService {
     private readonly tagsBaseUrl: string = '/tags';
     constructor(private httpClient: HttpClient) {}
-
+    
     getTags(): Promise<Tag[]> {
         console.log("Getting all tags defined in the system.");
         return this.httpClient.get(this.tagsBaseUrl)

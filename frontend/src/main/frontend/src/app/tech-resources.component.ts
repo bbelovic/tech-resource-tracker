@@ -63,6 +63,7 @@ export class TechResourcesComponent {
         let updatedResource: TechResource = 
             new TechResource(resource.id, resource.title, resource.link, 
                 resource.createdOn, TechResourceStatus.Processed, resource.type);
+        updatedResource.tags = [];
         return updatedResource;
     }
 

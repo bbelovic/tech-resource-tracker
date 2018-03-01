@@ -113,7 +113,7 @@ public class TechResourceTrackerApplicationTests {
                 "{\"id\":2,\"title\":\"new title (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol.com\", " +
                         "\"createdOn\":\"2018-02-02T20:00:00\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":1, \"name\":\"java\"}]}";
+                        "\"tags\":[{\"id\":2,\"name\":\"js\"}]}";
         mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))

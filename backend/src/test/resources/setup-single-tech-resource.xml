@@ -2,5 +2,6 @@
 <dataset>
     <technology_resources id="2" title="new title" link="http://www.blabol.com" created_on="2018-01-01 10:20:30" status="NEW" type="BLOG"/>
     <tags id="1" name="java"/>
-    <technology_resources_tags/>
+    <tags id="2" name="js"/>
+    <technology_resources_tags resource_id="2" tag_id="1"/>
 </dataset>
