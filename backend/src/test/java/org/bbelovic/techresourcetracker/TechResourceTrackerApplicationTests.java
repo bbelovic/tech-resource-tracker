@@ -40,6 +40,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
         "spring.datasource.username=postgres",
+        "logging.level.org.hibernate.type.descriptor.sql=trace",
         "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources.xml")
