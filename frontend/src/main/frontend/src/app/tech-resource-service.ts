@@ -42,6 +42,13 @@ export class TechResourceService {
         .then(res => res as TechResource);
     }
 
+    markResourceAsRead(resourceId: number): Promise<Object> {
+        console.log("Marking resource ["+ resourceId +"] as read.");
+        return this.http.put('/markAsRead/' + resourceId, 
+        {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
+        .toPromise();
+    }
+
     getPagedTechnologyResources(pageId: number): Promise<TechResource[]> {
         console.log("Getting tech resources page ["+ pageId +"] with size [10].");
         return this.http.get(this.url + '/page/'+ pageId + '/pageSize/10')

@@ -3,7 +3,6 @@ import {AuthenticationService} from './authentication-service';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 import { Router } from '@angular/router';
-//import { $ } from 'protractor';
 import { TechResourceStatus } from './tech-resource-status';
 
 @Component(
@@ -32,8 +31,7 @@ export class TechResourcesComponent {
 
     markAsRead(resource: TechResource): void {
         console.log("Marking resource ["+ resource +"] as read.");
-        let resourceToUpdate: TechResource = this.updateTechResource(resource);
-        this.resourceService.updateResource(resourceToUpdate)
+        this.resourceService.markResourceAsRead(resource.id)
             .then(res => this.reload());
     }
 

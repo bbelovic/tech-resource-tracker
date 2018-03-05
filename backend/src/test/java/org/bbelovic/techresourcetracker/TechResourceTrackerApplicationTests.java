@@ -125,6 +125,22 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
+    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-mark-as-read-resource.xml")
+    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-mark-as-read-resource.xml")
+    public void should_mark_tech_resource_as_read() throws Exception {
+        String requestPayload =
+                "{\"id\":1,\"title\":\"new title\"" +
+                        ",\"link\":\"http://www.blabol.com\", " +
+                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
+                        "\"tags\":[]}";
+        mockMvc.perform(put("/markAsRead/1").with(csrf().asHeader())
+                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
+                .content(requestPayload))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
     @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-single-tech-resource.xml")
     public void should_return_technology_resource_by_its_id() throws Exception {
         mockMvc.perform(get("/tech-resources/2")
