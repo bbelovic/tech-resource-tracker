@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
-import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.PROCESSED;
 import static org.springframework.http.HttpStatus.*;
 
 @RestController
@@ -22,10 +21,12 @@ import static org.springframework.http.HttpStatus.*;
 public class TechResourcesController {
     private static final Logger log = LoggerFactory.getLogger(TechResourcesController.class);
     private TechnologyResourceRepository resourceRepository;
+    private TechResourceService techResourceService;
 
     @Autowired
-    public TechResourcesController(TechnologyResourceRepository resourceRepository) {
+    public TechResourcesController(TechnologyResourceRepository resourceRepository, TechResourceService techResourceService) {
         this.resourceRepository = resourceRepository;
+        this.techResourceService = techResourceService;
     }
 
     @GetMapping(value = "/tech-resources")
@@ -72,10 +73,7 @@ public class TechResourcesController {
 
     @PutMapping(value = "/markAsRead/{id}")
     public ResponseEntity<TechnologyResource> markAsRead(@PathVariable long id) {
-        log.info("Marking resource with id [{}] as read.", id);
-        TechnologyResource resource = resourceRepository.findOne(id);
-        resource.setStatus(PROCESSED);
-        resourceRepository.save(resource);
+        techResourceService.markTechResourceAsRead(id);
         return new ResponseEntity<>(NO_CONTENT);
     }
 
