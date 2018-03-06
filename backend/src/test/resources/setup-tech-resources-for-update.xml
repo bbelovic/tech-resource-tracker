@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+    <technology_resources id="2" title="title2" link="http://www.blabol2.com" created_on="2018-01-01 10:00:00" status="NEW" type="BLOG"/>
+    <technology_resources id="3" title="title3" link="http://www.blabol3.com" created_on="2018-02-02 20:00:00" status="NEW" type="PRESENTATION"/>
+    <tags id="1" name="java"/>
+    <tags id="2" name="js"/>
+    <tags id="3" name="jvm"/>
+    <technology_resources_tags resource_id="2" tag_id="1"/>
+    <technology_resources_tags resource_id="3" tag_id="1"/>
+</dataset>

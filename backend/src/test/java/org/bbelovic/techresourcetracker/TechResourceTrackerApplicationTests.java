@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
@@ -107,21 +108,35 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-single-tech-resource.xml")
-    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resource-after-update.xml")
-    public void should_update_existing_tech_resource() throws Exception {
-        String requestPayload =
-                "{\"id\":2,\"title\":\"new title (updated)\"" +
-                        ",\"link\":\"http://www.updated.blabol.com\", " +
-                        "\"createdOn\":\"2018-02-02T20:00:00\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":2,\"name\":\"js\"}]}";
-        mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
-                .with(csrf().asHeader())
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
-                .content(requestPayload))
-                .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
-                .andExpect(status().isNoContent());
+    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-tech-resources-for-update.xml")
+    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resources-after-update.xml")
+    public void should_update_existing_tech_resource() {
+        requestPayloads().forEach(requestPayload -> {
+            try {
+                mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
+                    .with(csrf().asHeader())
+                    .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                    .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
+                    .content(requestPayload))
+                    .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
+                    .andExpect(status().isNoContent());
+            } catch (Exception e) {
+                log.error("Unexpected exception in test.", e);
+            }
+        });
+    }
+
+    private List<String> requestPayloads() {
+        return Arrays.asList("{\"id\":2,\"title\":\"title2 (updated)\"" +
+                ",\"link\":\"http://www.updated.blabol2.com\", " +
+                "\"createdOn\":\"2018-01-01T10:10:10\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
+                "\"tags\":[{\"id\":2,\"name\":\"js\"}]}",
+
+                "{\"id\":3,\"title\":\"title3 (updated)\"" +
+                        ",\"link\":\"http://www.updated.blabol3.com\", " +
+                        "\"createdOn\":\"2018-02-02T20:20:20\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
+                        "\"tags\":[{\"id\":2,\"name\":\"js\"}, {\"id\":3,\"name\":\"jvm\"}]}"
+                );
     }
 
     @Test
@@ -141,7 +156,7 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-single-tech-resource.xml")
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-for-update.xml")
     public void should_return_technology_resource_by_its_id() throws Exception {
         mockMvc.perform(get("/tech-resources/2")
                 .with(csrf().asHeader())
@@ -149,15 +164,15 @@ public class TechResourceTrackerApplicationTests {
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", equalTo(2)))
-                .andExpect(jsonPath("$.title", equalTo("new title")))
-                .andExpect(jsonPath("$.link", equalTo("http://www.blabol.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
+                .andExpect(jsonPath("$.title", equalTo("title2")))
+                .andExpect(jsonPath("$.link", equalTo("http://www.blabol2.com")))
+                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:00:00")))
                 .andExpect(jsonPath("$.status", equalTo(NEW.name())))
                 .andExpect(jsonPath("$.type", equalTo(BLOG.name())));
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-single-tech-resource.xml")
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-for-update.xml")
     public void should_return_404_not_found_status_when_resource_cant_be_found_by_id() throws Exception {
         mockMvc.perform(get("/tech-resources/20")
                 .with(csrf().asHeader())
