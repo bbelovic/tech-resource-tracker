@@ -67,7 +67,7 @@ public class TechResourcesController {
     public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
         log.info("Updating resource: [{}].", resourceDto);
         TechnologyResource resourceToUpdate = prepareTechnologyResource(resourceDto);
-        resourceRepository.save(resourceToUpdate);
+        techResourceService.save(resourceToUpdate);
         return new ResponseEntity<>(NO_CONTENT);
     }
 

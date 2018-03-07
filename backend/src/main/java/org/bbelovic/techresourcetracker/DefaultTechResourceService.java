@@ -20,6 +20,13 @@ public class DefaultTechResourceService implements TechResourceService {
 
     @Override
     @Transactional
+    public void save(TechnologyResource technologyResource) {
+        log.info("Saving resource [{}].", technologyResource);
+        resourceRepository.save(technologyResource);
+    }
+
+    @Override
+    @Transactional
     public void markTechResourceAsRead(long id) {
         log.info("Marking resource with id [{}] as read.", id);
         TechnologyResource technologyResource = resourceRepository.findOne(id);
