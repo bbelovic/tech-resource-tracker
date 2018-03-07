@@ -12,7 +12,7 @@
         <div class="form-group">
             <ul class="list-inline">
                     <li *ngFor="let tag of existingTags">
-                        <span class="label label-info" (click)="addTag(tag)">{{tag.name}}</span>
+                        <span class="label label-info tag" (click)="addTag(tag)">{{tag.name}}</span>
                     </li>
             </ul>
         </div>
@@ -23,7 +23,7 @@
         <div class="form-group">
             <ul class="list-inline">
                 <li *ngFor="let tag of assignedTags">
-                    <span class="label label-primary">{{tag.name}}</span>
+                    <span class="label label-primary tag">{{tag.name}}</span>
                 </li>
                 
             </ul>
