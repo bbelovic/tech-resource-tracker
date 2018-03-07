@@ -65,17 +65,6 @@ export class TechResourcesComponent {
         return updatedResource;
     }
 
-    private remove(resource: TechResource): void {
-        let idx: number = 0;
-        for (idx = 0 ; idx < this.techResources.length; idx++) {
-            if (this.techResources[idx].id === resource.id) {
-                console.log("Found resource on position "+ idx);
-                this.techResources.splice(idx, 1);
-                break;
-            }
-        }
-    }
-
     private reload(): void {
         console.log("Reloading resource after update");
         this.resourceService.getTechResource()
