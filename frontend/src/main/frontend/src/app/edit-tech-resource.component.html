@@ -26,7 +26,7 @@
             <span class="help-block">Available tags:</span>
             <ul class="list-inline">
                 <li *ngFor="let tag of existingTags">
-                    <span class="label label-info" (click)="addTag(tag)">{{tag.name}}</span>
+                    <span class="label label-info tag" (click)="addTag(tag)">{{tag.name}}</span>
                 </li>
             </ul>
         </div>
@@ -34,7 +34,7 @@
             <span class="help-block">Tags assigned to resource:</span>
             <ul class="list-inline">
                 <li *ngFor="let tag of assignedTags">
-                    <span class="label label-primary" (click)="removeTag(tag)">{{tag.name}}</span>
+                    <span class="label label-primary tag" (click)="removeTag(tag)">{{tag.name}}</span>
                 </li>
             </ul>
         </div>
