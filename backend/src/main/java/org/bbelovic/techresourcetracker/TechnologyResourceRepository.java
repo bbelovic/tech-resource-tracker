@@ -10,9 +10,9 @@ import java.util.List;
 
 @Repository
 public interface TechnologyResourceRepository extends JpaRepository<TechnologyResource, Long> {
-    @Query(value = "SELECT new org.bbelovic.techresourcetracker.TechResourceDetails(tr) " +
-            "FROM TechnologyResource tr LEFT JOIN FETCH tr.tags t WHERE tr.status = 'NEW' ORDER BY tr.createdOn DESC")
-    Page<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc(Pageable pageable);
+//    @Query(value = "SELECT new org.bbelovic.techresourcetracker.TechResourceDetails(tr) " +
+//            "FROM TechnologyResource tr LEFT JOIN FETCH tr.tags t WHERE tr.status = 'NEW' ORDER BY tr.createdOn DESC")
+//    Page<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc(Pageable pageable);
     List<TechnologyResource> findFirst10ByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status);
 
     Page<TechnologyResource> findByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, Pageable pageable);

@@ -33,7 +33,7 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources")
     public ResponseEntity<List<TechResourceDetails>> resources() {
-        Page<TechResourceDetails> resources = resourceRepository.findFirst10ByStatusOrderByCreatedOnDesc(new PageRequest(0, 10));
+        List<TechResourceDetails> resources = techResourceService.findFirst10ByStatusOrderByCreatedOnDesc();
         log.info("Returning 10 newest technology resources: {}.", resources);
         List<TechResourceDetails> list = StreamSupport.stream(resources.spliterator(), false).collect(Collectors.toList());
         return new ResponseEntity<>(list, OK);

@@ -10,11 +10,10 @@ public class TechResourceDetails {
     private String link;
     private Set<Tag> tags;
 
-    public TechResourceDetails(TechnologyResource resource) {
-        this.id = resource.getId();
-        this.title = resource.getTitle();
-        this.link = resource.getLink();
-        this.tags = new HashSet<>(resource.getTags());
+    public TechResourceDetails(Long id, String title, String link) {
+        this.id = id;
+        this.title = title;
+        this.link = link;
     }
 
 
@@ -48,5 +47,9 @@ public class TechResourceDetails {
 
     public Set<Tag> getTags() {
         return new HashSet<>(tags);
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }
