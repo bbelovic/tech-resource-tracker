@@ -26,8 +26,12 @@ public class DefaultTechResourceService implements TechResourceService {
     }
 
     public List<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc() {
-        entityManager.createQuery("SELECT new org.bbelovic.techresourcetracker.TechResourceDetails(tr) " +
-                "FROM TechnologyResource tr LEFT JOIN FETCH tr.tags t WHERE tr.status = 'NEW' ORDER BY tr.createdOn DESC");
+        TechnologyResource technologyResource = new TechnologyResource();
+        technologyResource.setId(10L);
+        List list = entityManager.createQuery("select t.name from Tag t where :resource member of t.technologyResources")
+                .setParameter("resource", technologyResource)
+                .getResultList();
+        log.info("result={}", list);
         return Collections.emptyList();
     }
 
