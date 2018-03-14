@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,8 +28,12 @@ public class DefaultTechResourceService implements TechResourceService {
 
     public List<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc() {
         TechnologyResource technologyResource = new TechnologyResource();
-        technologyResource.setId(10L);
-        List list = entityManager.createQuery("select t.name from Tag t where :resource member of t.technologyResources")
+
+        List<TechResourceDetails> list0 = entityManager
+                .createQuery("select new org.bbelovic.techresourcetracker.TechResourceDetails(t.id, t.title, t.link) from TechnologyResource t where status = 'NEW' order by t.createdOn desc", TechResourceDetails.class)
+                .getResultList();
+        technologyResource.setId(list0.get(0).getId());
+        List list = entityManager.createQuery("select t from Tag t where :resource member of t.technologyResources")
                 .setParameter("resource", technologyResource)
                 .getResultList();
         log.info("result={}", list);
