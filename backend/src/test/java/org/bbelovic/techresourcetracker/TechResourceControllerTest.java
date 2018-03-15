@@ -2,6 +2,7 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,9 +46,9 @@ public class TechResourceControllerTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(jsonPath("$.length()", is(10)))
                 .andExpect(jsonPath("$.[0].id", greaterThan(0)))
-                .andExpect(jsonPath("$.[0].title", is("Some title 10")))
+                .andExpect(jsonPath("$.[0].title", is("Some title 12")))
                 .andExpect(jsonPath("$.[0].link", is("https://www.abc.com")))
-                .andExpect(jsonPath("$.[0].tags", hasSize(0)));
+                .andExpect(jsonPath("$.[0].tags", hasSize(2)));
     }
 
     @Autowired

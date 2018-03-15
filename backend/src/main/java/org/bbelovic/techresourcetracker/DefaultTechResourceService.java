@@ -32,12 +32,15 @@ public class DefaultTechResourceService implements TechResourceService {
         List<TechResourceDetails> list0 = entityManager
                 .createQuery("select new org.bbelovic.techresourcetracker.TechResourceDetails(t.id, t.title, t.link) from TechnologyResource t where status = 'NEW' order by t.createdOn desc", TechResourceDetails.class)
                 .getResultList();
-        technologyResource.setId(list0.get(0).getId());
-        List list = entityManager.createQuery("select t from Tag t where :resource member of t.technologyResources")
-                .setParameter("resource", technologyResource)
-                .getResultList();
-        log.info("result={}", list);
-        return Collections.emptyList();
+        for (TechResourceDetails detail: list0) {
+            technologyResource.setId(detail.getId());
+            List<Tag> list = entityManager
+                    .createQuery("select t from Tag t where :resource member of t.technologyResources", Tag.class)
+                    .setParameter("resource", technologyResource)
+                    .getResultList();
+            detail.addTags(list);
+        }
+        return list0;
     }
 
     @Override

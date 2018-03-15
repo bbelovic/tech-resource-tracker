@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.springframework.http.HttpStatus.*;
@@ -33,10 +31,9 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources")
     public ResponseEntity<List<TechResourceDetails>> resources() {
-        List<TechResourceDetails> resources = techResourceService.findFirst10ByStatusOrderByCreatedOnDesc();
-        log.info("Returning 10 newest technology resources: {}.", resources);
-        List<TechResourceDetails> list = StreamSupport.stream(resources.spliterator(), false).collect(Collectors.toList());
-        return new ResponseEntity<>(list, OK);
+        List<TechResourceDetails> details = techResourceService.findFirst10ByStatusOrderByCreatedOnDesc();
+        log.info("Returning 10 newest technology details: {}.", details);
+        return new ResponseEntity<>(details, OK);
     }
 
     @GetMapping(value = "/tech-resources/{id}")

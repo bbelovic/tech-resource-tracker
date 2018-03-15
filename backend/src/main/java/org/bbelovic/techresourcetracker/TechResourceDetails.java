@@ -1,16 +1,21 @@
 package org.bbelovic.techresourcetracker;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 public class TechResourceDetails {
     private Long id;
     private String title;
     private String link;
+    private List<Tag> tags;
 
     public TechResourceDetails(Long id, String title, String link) {
         this.id = id;
         this.title = title;
         this.link = link;
+        this.tags = new ArrayList<>();
     }
 
 
@@ -39,5 +44,13 @@ public class TechResourceDetails {
 
     public String getLink() {
         return link;
+    }
+
+    public List<Tag> getTags() {
+        return tags;
+    }
+
+    public void addTags(Collection<? extends Tag> tags) {
+        this.tags.addAll(tags);
     }
 }
