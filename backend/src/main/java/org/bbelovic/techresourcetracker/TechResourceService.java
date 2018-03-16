@@ -3,12 +3,12 @@ package org.bbelovic.techresourcetracker;
 import java.util.List;
 
 public interface TechResourceService {
-    List<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc();
+    List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize);
     /**
      * Persists resource into underlying persistent storage.
      * @param technologyResource resource to be persisted.
      */
-    void save(TechnologyResource technologyResource);
+    TechnologyResource save(TechnologyResource technologyResource);
     /**
      * Marks resource with given id as {@code PROCESSED}
      * @param id tech resource unique id

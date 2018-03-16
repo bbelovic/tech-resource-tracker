@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.PROCESSED;
 
 @Service
@@ -24,8 +23,8 @@ public class DefaultTechResourceService implements TechResourceService {
         this.tagRepository = tagRepository;
     }
 
-    public List<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc() {
-        final List<TechResourceDetails> detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(NEW, new PageRequest(0, 10));
+    public List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize) {
+        final List<TechResourceDetails> detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(status, new PageRequest(pageId, pageSize));
         for (final TechResourceDetails detail: detailsList) {
             final TechnologyResource technologyResource = new TechnologyResource();
             technologyResource.setId(detail.getId());
@@ -37,9 +36,9 @@ public class DefaultTechResourceService implements TechResourceService {
 
     @Override
     @Transactional
-    public void save(TechnologyResource technologyResource) {
+    public TechnologyResource save(TechnologyResource technologyResource) {
         log.info("Saving resource [{}].", technologyResource);
-        resourceRepository.save(technologyResource);
+        return resourceRepository.save(technologyResource);
     }
 
     @Override

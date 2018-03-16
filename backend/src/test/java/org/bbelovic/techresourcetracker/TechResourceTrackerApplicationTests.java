@@ -2,7 +2,6 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -204,9 +203,9 @@ public class TechResourceTrackerApplicationTests {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.length()", is(titleIds.size())));
             for (int j = 0; j < titleIds.size(); j++) {
+                resultActions.andExpect(jsonPath("$.["+ j +"].id", is(titleIds.get(j))));
                 resultActions.andExpect(jsonPath("$.["+ j +"].title", is("Some title " + titleIds.get(j))));
-                resultActions.andExpect(jsonPath("$.["+ j +"].type", is(ARTICLE.name())));
-                resultActions.andExpect(jsonPath("$.["+ j +"].status", is(NEW.name())));
+                resultActions.andExpect(jsonPath("$.["+ j +"].link", is("https://www.abc.com")));
             }
 
         }

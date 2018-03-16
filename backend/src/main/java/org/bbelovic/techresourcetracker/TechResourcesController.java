@@ -31,7 +31,7 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources")
     public ResponseEntity<List<TechResourceDetails>> resources() {
-        List<TechResourceDetails> details = techResourceService.findFirst10ByStatusOrderByCreatedOnDesc();
+        List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, 0, 10);
         log.info("Returning 10 newest technology details: {}.", details);
         return new ResponseEntity<>(details, OK);
     }
@@ -47,17 +47,18 @@ public class TechResourcesController {
     }
 
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
-    public ResponseEntity<List<TechnologyResource>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
+    public ResponseEntity<List<TechResourceDetails>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
         log.info("Loading technology resource by page with pageId [{}] and page size [{}].", pageId, size);
         Page<TechnologyResource> page = resourceRepository.findByStatusOrderByCreatedOnDesc(NEW, new PageRequest(pageId, size));
-        return new ResponseEntity<>(page.getContent(), OK);
+        List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, pageId, size);
+        return new ResponseEntity<>(details, OK);
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
         log.info("Persisting resource [{}].", resourceDto);
         TechnologyResource resourceToSave = prepareTechnologyResource(resourceDto);
-        TechnologyResource persistedResource = resourceRepository.save(resourceToSave);
+        TechnologyResource persistedResource = techResourceService.save(resourceToSave);
         log.info("Persisted entity: [{}]", persistedResource);
         TechnologyResourceDTO responseDTO = prepareTechnologyResourceDTO(persistedResource);
         return new ResponseEntity<>(responseDTO, CREATED);
