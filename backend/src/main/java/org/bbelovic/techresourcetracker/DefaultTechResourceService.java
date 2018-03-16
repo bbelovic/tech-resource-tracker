@@ -3,44 +3,36 @@ package org.bbelovic.techresourcetracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
-import java.util.Collections;
 import java.util.List;
 
+import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.PROCESSED;
 
 @Service
 public class DefaultTechResourceService implements TechResourceService {
     private static final Logger log = LoggerFactory.getLogger(DefaultTechResourceService.class);
     private final TechnologyResourceRepository resourceRepository;
+    private final TagRepository tagRepository;
 
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
-    public DefaultTechResourceService(TechnologyResourceRepository resourceRepository) {
+    public DefaultTechResourceService(TechnologyResourceRepository resourceRepository, TagRepository tagRepository) {
         this.resourceRepository = resourceRepository;
+        this.tagRepository = tagRepository;
     }
 
     public List<TechResourceDetails> findFirst10ByStatusOrderByCreatedOnDesc() {
-        TechnologyResource technologyResource = new TechnologyResource();
-
-        List<TechResourceDetails> list0 = entityManager
-                .createQuery("select new org.bbelovic.techresourcetracker.TechResourceDetails(t.id, t.title, t.link) from TechnologyResource t where status = 'NEW' order by t.createdOn desc", TechResourceDetails.class)
-                .getResultList();
-        for (TechResourceDetails detail: list0) {
+        final List<TechResourceDetails> detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(NEW, new PageRequest(0, 10));
+        for (final TechResourceDetails detail: detailsList) {
+            final TechnologyResource technologyResource = new TechnologyResource();
             technologyResource.setId(detail.getId());
-            List<Tag> list = entityManager
-                    .createQuery("select t from Tag t where :resource member of t.technologyResources", Tag.class)
-                    .setParameter("resource", technologyResource)
-                    .getResultList();
+            final List<Tag> list = tagRepository.findTagsByResource(technologyResource);
             detail.addTags(list);
         }
-        return list0;
+        return detailsList;
     }
 
     @Override
