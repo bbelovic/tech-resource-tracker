@@ -3,7 +3,6 @@ package org.bbelovic.techresourcetracker;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,14 +25,16 @@ import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_ST
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
-import static org.bbelovic.techresourcetracker.TechnologyResourceType.*;
+import static org.bbelovic.techresourcetracker.TechnologyResourceType.BLOG;
+import static org.bbelovic.techresourcetracker.TechnologyResourceType.PRESENTATION;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IfProfileValue(name = "test.group", value = "integration")
 @RunWith(SpringRunner.class)
@@ -59,27 +59,6 @@ public class TechResourceTrackerApplicationTests {
 
     @Test
     public void contextLoads() {
-    }
-
-    @Test @Ignore
-    public void should_return_top_ten_new_tech_resources() throws Exception {
-        final int expectedSize = 10;
-        ResultActions actions = mockMvc.perform(get(TECH_RESOURCES_BASIC_URI)
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
-                .accept(CONTENT_TYPE_HEADER_VALUE))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.parseMediaType(CONTENT_TYPE_HEADER_VALUE)));
-                assertReturnedJsonCollectionContents(actions, expectedSize);
-
-    }
-
-    private void assertReturnedJsonCollectionContents(ResultActions actions, int expectedSize) throws Exception {
-        actions.andExpect(jsonPath("$.length()", is(expectedSize)));
-        for (int i = 0; i < expectedSize; i++) {
-            actions.andExpect(jsonPath(format("$.[%d].id", i), greaterThan(0)))
-                .andExpect(jsonPath(format("$.[%d].status", i), equalTo(NEW.name())))
-                .andExpect(jsonPath(format("$.[%d].type", i), equalTo(ARTICLE.name())));
-        }
     }
 
     @Test

@@ -3,8 +3,6 @@ package org.bbelovic.techresourcetracker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +47,6 @@ public class TechResourcesController {
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
     public ResponseEntity<List<TechResourceDetails>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
         log.info("Loading technology resource by page with pageId [{}] and page size [{}].", pageId, size);
-        Page<TechnologyResource> page = resourceRepository.findByStatusOrderByCreatedOnDesc(NEW, new PageRequest(pageId, size));
         List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, pageId, size);
         return new ResponseEntity<>(details, OK);
     }
