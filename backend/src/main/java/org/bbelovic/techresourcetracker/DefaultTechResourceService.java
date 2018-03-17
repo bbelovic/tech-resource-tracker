@@ -23,6 +23,15 @@ public class DefaultTechResourceService implements TechResourceService {
         this.tagRepository = tagRepository;
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public TechnologyResource getTechResourceById(Long id) {
+        log.info("Loading technology resource with id [{}].", id);
+        return resourceRepository.findOne(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize) {
         final List<TechResourceDetails> detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(status, new PageRequest(pageId, pageSize));
         for (final TechResourceDetails detail: detailsList) {

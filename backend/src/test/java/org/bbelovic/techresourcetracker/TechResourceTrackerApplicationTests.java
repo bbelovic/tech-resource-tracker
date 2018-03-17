@@ -25,7 +25,7 @@ import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_ST
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
-import static org.bbelovic.techresourcetracker.TechnologyResourceType.BLOG;
+import static org.bbelovic.techresourcetracker.TechnologyResourceType.ARTICLE;
 import static org.bbelovic.techresourcetracker.TechnologyResourceType.PRESENTATION;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
@@ -88,7 +88,6 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-tech-resources-for-update.xml")
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resources-after-update.xml")
     public void should_update_existing_tech_resource() {
         requestPayloads().forEach(requestPayload -> {
@@ -110,12 +109,12 @@ public class TechResourceTrackerApplicationTests {
         return Arrays.asList("{\"id\":2,\"title\":\"title2 (updated)\"" +
                 ",\"link\":\"http://www.updated.blabol2.com\", " +
                 "\"createdOn\":\"2018-01-01T10:10:10\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                "\"tags\":[{\"id\":2,\"name\":\"js\"}]}",
+                "\"tags\":[{\"id\":2,\"name\":\"kotlin\"}]}",
 
                 "{\"id\":3,\"title\":\"title3 (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol3.com\", " +
                         "\"createdOn\":\"2018-02-02T20:20:20\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":2,\"name\":\"js\"}, {\"id\":3,\"name\":\"jvm\"}]}"
+                        "\"tags\":[{\"id\":2,\"name\":\"kotlin\"}, {\"id\":1,\"name\":\"java\"}]}"
                 );
     }
 
@@ -136,23 +135,24 @@ public class TechResourceTrackerApplicationTests {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-for-update.xml")
     public void should_return_technology_resource_by_its_id() throws Exception {
-        mockMvc.perform(get("/tech-resources/2")
+        mockMvc.perform(get("/tech-resources/12")
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", equalTo(2)))
-                .andExpect(jsonPath("$.title", equalTo("title2")))
-                .andExpect(jsonPath("$.link", equalTo("http://www.blabol2.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:00:00")))
+                .andExpect(jsonPath("$.id", equalTo(12)))
+                .andExpect(jsonPath("$.title", equalTo("Some title 12")))
+                .andExpect(jsonPath("$.link", equalTo("https://www.abc.com")))
+                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T00:12:00")))
                 .andExpect(jsonPath("$.status", equalTo(NEW.name())))
-                .andExpect(jsonPath("$.type", equalTo(BLOG.name())));
+                .andExpect(jsonPath("$.type", equalTo(ARTICLE.name())))
+                .andExpect(jsonPath("$.tags", hasSize(2)))
+                .andExpect(jsonPath("$.tags.[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.tags.[0].name", equalTo("java")));
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-for-update.xml")
     public void should_return_404_not_found_status_when_resource_cant_be_found_by_id() throws Exception {
         mockMvc.perform(get("/tech-resources/20")
                 .with(csrf().asHeader())

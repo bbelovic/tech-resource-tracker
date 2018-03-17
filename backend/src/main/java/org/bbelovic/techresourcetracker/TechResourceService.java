@@ -1,8 +1,13 @@
 package org.bbelovic.techresourcetracker;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 public interface TechResourceService {
+    @Transactional
+    TechnologyResource getTechResourceById(Long id);
+
     List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize);
     /**
      * Persists resource into underlying persistent storage.

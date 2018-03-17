@@ -35,13 +35,13 @@ public class TechResourcesController {
     }
 
     @GetMapping(value = "/tech-resources/{id}")
-    public ResponseEntity<TechnologyResource> getTechnologyResourceById(@PathVariable long id) {
-        log.info("Getting technology resource with id [{}].", id);
-        TechnologyResource resource = resourceRepository.findOne(id);
+    public ResponseEntity<TechnologyResourceDTO> getTechnologyResourceById(@PathVariable long id) {
+        TechnologyResource resource = techResourceService.getTechResourceById(id);
         if (resource == null) {
             return new ResponseEntity<>(NOT_FOUND);
         }
-        return new ResponseEntity<>(resource, OK);
+        TechnologyResourceDTO resourceDTO = prepareTechnologyResourceDTO(resource);
+        return new ResponseEntity<>(resourceDTO, OK);
     }
 
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
