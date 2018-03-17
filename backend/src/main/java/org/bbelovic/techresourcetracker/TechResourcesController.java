@@ -1,7 +1,5 @@
 package org.bbelovic.techresourcetracker;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +15,16 @@ import static org.springframework.http.HttpStatus.*;
 @RestController
 @CrossOrigin
 public class TechResourcesController {
-    private static final Logger log = LoggerFactory.getLogger(TechResourcesController.class);
-    private TechnologyResourceRepository resourceRepository;
-    private TechResourceService techResourceService;
+    private final TechResourceService techResourceService;
 
     @Autowired
-    public TechResourcesController(TechnologyResourceRepository resourceRepository, TechResourceService techResourceService) {
-        this.resourceRepository = resourceRepository;
+    public TechResourcesController(final TechResourceService techResourceService) {
         this.techResourceService = techResourceService;
     }
 
     @GetMapping(value = "/tech-resources")
     public ResponseEntity<List<TechResourceDetails>> resources() {
         List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, 0, 10);
-        log.info("Returning 10 newest technology details: {}.", details);
         return new ResponseEntity<>(details, OK);
     }
 
@@ -46,24 +40,20 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
     public ResponseEntity<List<TechResourceDetails>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
-        log.info("Loading technology resource by page with pageId [{}] and page size [{}].", pageId, size);
         List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, pageId, size);
         return new ResponseEntity<>(details, OK);
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
-        log.info("Persisting resource [{}].", resourceDto);
         TechnologyResource resourceToSave = prepareTechnologyResource(resourceDto);
         TechnologyResource persistedResource = techResourceService.save(resourceToSave);
-        log.info("Persisted entity: [{}]", persistedResource);
         TechnologyResourceDTO responseDTO = prepareTechnologyResourceDTO(persistedResource);
         return new ResponseEntity<>(responseDTO, CREATED);
     }
 
     @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResourceDTO resourceDto) {
-        log.info("Updating resource: [{}].", resourceDto);
         TechnologyResource resourceToUpdate = prepareTechnologyResource(resourceDto);
         techResourceService.save(resourceToUpdate);
         return new ResponseEntity<>(NO_CONTENT);

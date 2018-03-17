@@ -33,6 +33,7 @@ public class DefaultTechResourceService implements TechResourceService {
     @Override
     @Transactional(readOnly = true)
     public List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize) {
+        log.info("Getting [{}] resources on page [{}] with status [{}] ordered by creation date descending.", pageSize, pageId, status);
         final List<TechResourceDetails> detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(status, new PageRequest(pageId, pageSize));
         for (final TechResourceDetails detail: detailsList) {
             final TechnologyResource technologyResource = new TechnologyResource();
@@ -40,6 +41,7 @@ public class DefaultTechResourceService implements TechResourceService {
             final List<Tag> list = tagRepository.findTagsByResource(technologyResource);
             detail.addTags(list);
         }
+        log.trace("Retrieved resources: [{}].", detailsList);
         return detailsList;
     }
 
