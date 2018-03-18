@@ -69,7 +69,9 @@ public class TechResourceControllerTest {
                 .andExpect(jsonPath("$.[0].id", greaterThan(0)))
                 .andExpect(jsonPath("$.[0].title", is("Some title 12")))
                 .andExpect(jsonPath("$.[0].link", is("https://www.abc.com")))
-                .andExpect(jsonPath("$.[0].tags", hasSize(2)));
+                .andExpect(jsonPath("$.[0].tagDTOs", hasSize(2)))
+                .andExpect(jsonPath("$.[0].tagDTOs.[0].name", equalTo("java")))
+                .andExpect(jsonPath("$.[0].tagDTOs.[1].name", equalTo("kotlin")));
     }
 
     @Test

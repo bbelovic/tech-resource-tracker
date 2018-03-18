@@ -4,6 +4,7 @@ import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 import { Router } from '@angular/router';
 import { TechResourceStatus } from './tech-resource-status';
+import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 
 @Component(
     {
@@ -15,6 +16,7 @@ import { TechResourceStatus } from './tech-resource-status';
 export class TechResourcesComponent {
     pageId: number = 1;
     techResources: TechResource[] = [];
+    techResourcesDTOs: TechResourceDetailsDTO[] = [];
     constructor(private authenticationService: AuthenticationService, 
         private resourceService: TechResourceService,
         private router: Router) {}

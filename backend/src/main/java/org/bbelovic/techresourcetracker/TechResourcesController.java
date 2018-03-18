@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.springframework.http.HttpStatus.*;
 
@@ -23,9 +24,11 @@ public class TechResourcesController {
     }
 
     @GetMapping(value = "/tech-resources")
-    public ResponseEntity<List<TechResourceDetails>> resources() {
+    public ResponseEntity<List<TechResourceDetailsDTO>> resources() {
         List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, 0, 10);
-        return new ResponseEntity<>(details, OK);
+        List<TechResourceDetailsDTO> resourceDetailsDTOs = details.stream()
+                .map(this::convertToDetailsDTO).collect(toList());
+        return new ResponseEntity<>(resourceDetailsDTOs, OK);
     }
 
     @GetMapping(value = "/tech-resources/{id}")
@@ -96,5 +99,13 @@ public class TechResourcesController {
         return new TechnologyResourceDTO(persistedResource.getId(),
                 persistedResource.getTitle(), persistedResource.getLink(), persistedResource.getCreatedOn(),
                 persistedResource.getStatus(), persistedResource.getType(), tagDTOS);
+    }
+
+    private TechResourceDetailsDTO convertToDetailsDTO(TechResourceDetails details) {
+        List<TagDTO> tagDTOs = details.getTags()
+                .stream()
+                .map(tag -> new TagDTO(tag.getId(), tag.getName()))
+                .collect(toList());
+        return new TechResourceDetailsDTO(details.getId(), details.getTitle(), details.getLink(), tagDTOs);
     }
 }
