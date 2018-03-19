@@ -7,15 +7,20 @@
     </div>
 </div>    
 <div *ngIf="isAuthenticated()" class="container">
-    <div class="row" *ngFor="let resource of techResources">
+    <div class="row" *ngFor="let detailDto of techResourcesDetailsDTOs">
         <div class="col-md-12">
             <div class="thumbnail">
-                <a href="{{resource.link}}" target="_blank">{{resource.title}}</a>
+                <a href="{{detailDto.link}}" target="_blank">{{detailDto.title}}</a>
+                <ul class="list-inline">
+                    <li *ngFor="let tagDto of detailDto.tagDTOs">
+                        <span class="label label-info tag">{{tagDto.name}}</span>
+                    </li>
+                </ul>
                 <p>
-                    <button class="btn btn-primary" (click)="markAsRead(resource)">
+                    <button class="btn btn-primary" (click)="markAsRead(detailDto.id)">
                         Mark as read
                     </button>
-                    <button class="btn btn-primary" (click)="navigateToEdit(resource.id)">Edit</button>
+                    <button class="btn btn-primary" (click)="navigateToEdit(detailDto.id)">Edit</button>
                 </p>
             </div>
         </div>

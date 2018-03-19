@@ -5,6 +5,7 @@ import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import 'rxjs/add/operator/toPromise';
+import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 
 @Injectable()
 export class TechResourceService {
@@ -17,6 +18,13 @@ export class TechResourceService {
     return this.http.get(this.url)
             .toPromise()
             .then(data => data as TechResource[])
+    }
+
+    getTechResourceDetailsDTO(): Promise<TechResourceDetailsDTO[]> {
+        console.log("Getting 10 newest resources from: [" + this.url + "].");
+        return this.http.get(this.url)
+                .toPromise()
+                .then(data => data as TechResourceDetailsDTO[]);
     }
 
     getTechResourceById(id: number): Promise<TechResource> {
@@ -49,11 +57,11 @@ export class TechResourceService {
         .toPromise();
     }
 
-    getPagedTechnologyResources(pageId: number): Promise<TechResource[]> {
+    getPagedTechnologyResources(pageId: number): Promise<TechResourceDetailsDTO[]> {
         console.log("Getting tech resources page ["+ pageId +"] with size [10].");
         return this.http.get(this.url + '/page/'+ pageId + '/pageSize/10')
             .toPromise()
-            .then(res => res as TechResource[]);
+            .then(res => res as TechResourceDetailsDTO[]);
 
     }
 }

@@ -42,9 +42,10 @@ public class TechResourcesController {
     }
 
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
-    public ResponseEntity<List<TechResourceDetails>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
+    public ResponseEntity<List<TechResourceDetailsDTO>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
         List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, pageId, size);
-        return new ResponseEntity<>(details, OK);
+        List<TechResourceDetailsDTO> resourceDetailsDTOs = details.stream().map(this::convertToDetailsDTO).collect(toList());
+        return new ResponseEntity<>(resourceDetailsDTOs, OK);
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")

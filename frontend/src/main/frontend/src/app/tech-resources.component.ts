@@ -15,8 +15,7 @@ import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 )
 export class TechResourcesComponent {
     pageId: number = 1;
-    techResources: TechResource[] = [];
-    techResourcesDTOs: TechResourceDetailsDTO[] = [];
+    techResourcesDetailsDTOs: TechResourceDetailsDTO[] = [];
     constructor(private authenticationService: AuthenticationService, 
         private resourceService: TechResourceService,
         private router: Router) {}
@@ -24,16 +23,16 @@ export class TechResourcesComponent {
     ngOnInit(): void {
         if (this.authenticationService.isAuthenticated()) {
             console.log("Getting resources from remote server.")
-            this.resourceService.getTechResource()
-            .then(result => this.techResources = result);
+            this.resourceService.getTechResourceDetailsDTO()
+            .then(result => this.techResourcesDetailsDTOs = result);
         } else {
             console.log("Skipping getting  resources - not authenticated");
         }
     }
 
-    markAsRead(resource: TechResource): void {
-        console.log("Marking resource ["+ resource +"] as read.");
-        this.resourceService.markResourceAsRead(resource.id)
+    markAsRead(resourceId: number): void {
+        console.log("Marking resource ["+ resourceId +"] as read.");
+        this.resourceService.markResourceAsRead(resourceId)
             .then(res => this.reload());
     }
 
@@ -52,10 +51,10 @@ export class TechResourcesComponent {
 
     }
 
-    private pushAll(resourcePage: TechResource[]): void {
+    private pushAll(resourcePage: TechResourceDetailsDTO[]): void {
         let idx: number = 0;
         for (idx = 0; idx < resourcePage.length; idx++) {
-            this.techResources.push(resourcePage[idx]);
+            this.techResourcesDetailsDTOs.push(resourcePage[idx]);
         }
     }
 
@@ -69,7 +68,7 @@ export class TechResourcesComponent {
 
     private reload(): void {
         console.log("Reloading resource after update");
-        this.resourceService.getTechResource()
-        .then(result => this.techResources = result);
+        this.resourceService.getTechResourceDetailsDTO()
+        .then(result => this.techResourcesDetailsDTOs = result);
     }
 }
