@@ -48,7 +48,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources.xml")
 public class TechResourceControllerTest {
 
-    private static final Logger log = LoggerFactory.getLogger(TechResourceTrackerApplicationTests.class);
+    private static final Logger log = LoggerFactory.getLogger(TechResourceControllerTest.class);
     private static final String TECH_RESOURCES_BASIC_URI = "/tech-resources";
     private static final String TEST_USER = "user";
     private static final String TEST_PASSWORD = "passwd";
