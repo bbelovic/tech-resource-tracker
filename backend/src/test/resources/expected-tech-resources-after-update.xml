@@ -3,20 +3,10 @@
     <technology_resources id="1" title="Some title 1" link="https://www.abc.com" created_on="2018-1-1 0:1:0" status="NEW" type="ARTICLE"/>
     <technology_resources id="2" title="title2 (updated)" link="http://www.updated.blabol2.com" created_on="2018-01-01 10:10:10" status="PROCESSED" type="BLOG"/>
     <technology_resources id="3" title="title3 (updated)" link="http://www.updated.blabol3.com" created_on="2018-02-02 20:20:20" status="PROCESSED" type="BLOG"/>
-    <technology_resources id="4" title="Some title 4" link="https://www.abc.com" created_on="2018-1-1 0:4:0" status="NEW" type="ARTICLE"/>
-    <technology_resources id="5" title="Some title 5" link="https://www.abc.com" created_on="2018-1-1 0:5:0" status="NEW" type="ARTICLE"/>
-    <technology_resources id="6" title="Some title 6" link="https://www.abc.com" created_on="2018-1-1 0:6:0" status="NEW" type="ARTICLE"/>
-    <technology_resources id="7" title="Some title 7" link="https://www.abc.com" created_on="2018-1-1 0:7:0" status="NEW" type="ARTICLE"/>
-    <technology_resources id="8" title="Some title 8" link="https://www.abc.com" created_on="2018-1-1 0:8:0" status="NEW" type="ARTICLE"/>
-    <technology_resources id="9" title="Some title 9" link="https://www.abc.com" created_on="2018-1-1 0:9:0" status="PROCESSED" type="ARTICLE"/>
-    <technology_resources id="10" title="Some title 10" link="https://www.abc.com" created_on="2018-1-1 0:10:0" status="NEW" type="ARTICLE"/>
-    <technology_resources id="11" title="Some title 11" link="https://www.abc.com" created_on="2018-1-1 0:11:0" status="PROCESSED" type="ARTICLE"/>
-    <technology_resources id="12" title="Some title 12" link="https://www.abc.com" created_on="2018-1-1 0:12:0" status="NEW" type="ARTICLE"/>
-    <tags id="1" name="java"/>
-    <tags id="2" name="kotlin"/>
+    <tags id="1" name="kotlin"/>
+    <tags id="2" name="java"/>
+    <technology_resources_tags resource_id="1" tag_id="2"/>
     <technology_resources_tags resource_id="2" tag_id="2"/>
-    <technology_resources_tags resource_id="3" tag_id="2"/>
     <technology_resources_tags resource_id="3" tag_id="1"/>
-    <technology_resources_tags resource_id="12" tag_id="1"/>
-    <technology_resources_tags resource_id="12" tag_id="2"/>
+    <technology_resources_tags resource_id="3" tag_id="2"/>
 </dataset>

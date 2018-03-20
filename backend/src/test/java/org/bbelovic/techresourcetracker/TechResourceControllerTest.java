@@ -45,6 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "logging.level.org.hibernate.type.descriptor.sql=trace",
         "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
+@DatabaseSetup(type = CLEAN_INSERT, value = "/setup-technology-resources-tags.xml")
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources.xml")
 public class TechResourceControllerTest {
 
@@ -67,11 +68,9 @@ public class TechResourceControllerTest {
                 .andExpect(content().contentType(CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(jsonPath("$.length()", is(10)))
                 .andExpect(jsonPath("$.[0].id", greaterThan(0)))
-                .andExpect(jsonPath("$.[0].title", is("Some title 12")))
+                .andExpect(jsonPath("$.[0].title", is("Some title 13")))
                 .andExpect(jsonPath("$.[0].link", is("https://www.abc.com")))
-                .andExpect(jsonPath("$.[0].tagDTOs", hasSize(2)))
-                .andExpect(jsonPath("$.[0].tagDTOs.[0].name", equalTo("java")))
-                .andExpect(jsonPath("$.[0].tagDTOs.[1].name", equalTo("kotlin")));
+                .andExpect(jsonPath("$.[0].tagDTOs", hasSize(0)));
     }
 
     @Test
@@ -81,7 +80,7 @@ public class TechResourceControllerTest {
                 "{\"id\":0,\"title\":\"new title\"" +
                         ",\"link\":\"http://www.blabol.com\", " +
                         "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\", " +
-                        "\"tags\":[{\"id\":0, \"name\":\"javascript\"}]}";
+                        "\"tags\":[{\"id\":0, \"name\":\"kotlin\"}]}";
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -97,10 +96,11 @@ public class TechResourceControllerTest {
                 .andExpect(jsonPath("$.type", equalTo(PRESENTATION.name())))
                 .andExpect(jsonPath("$.tags", hasSize(1)))
                 .andExpect(jsonPath("$.tags.[0].id", greaterThan(0)))
-                .andExpect(jsonPath("$.tags.[0].name", equalTo("javascript")));
+                .andExpect(jsonPath("$.tags.[0].name", equalTo("kotlin")));
     }
 
     @Test
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-advanced.xml")
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resources-after-update.xml")
     public void should_update_existing_tech_resource() {
         requestPayloads().forEach(requestPayload -> {
@@ -122,12 +122,12 @@ public class TechResourceControllerTest {
         return Arrays.asList("{\"id\":2,\"title\":\"title2 (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol2.com\", " +
                         "\"createdOn\":\"2018-01-01T10:10:10\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":2,\"name\":\"kotlin\"}]}",
+                        "\"tags\":[{\"id\":2,\"name\":\"java\"}]}",
 
                 "{\"id\":3,\"title\":\"title3 (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol3.com\", " +
                         "\"createdOn\":\"2018-02-02T20:20:20\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":2,\"name\":\"kotlin\"}, {\"id\":1,\"name\":\"java\"}]}"
+                        "\"tags\":[{\"id\":1,\"name\":\"kotlin\"}, {\"id\":2,\"name\":\"java\"}]}"
         );
     }
 
@@ -148,20 +148,21 @@ public class TechResourceControllerTest {
     }
 
     @Test
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-advanced.xml")
     public void should_return_technology_resource_by_its_id() throws Exception {
-        mockMvc.perform(get("/tech-resources/12")
+        mockMvc.perform(get("/tech-resources/1")
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", equalTo(12)))
-                .andExpect(jsonPath("$.title", equalTo("Some title 12")))
+                .andExpect(jsonPath("$.id", equalTo(1)))
+                .andExpect(jsonPath("$.title", equalTo("Some title 1")))
                 .andExpect(jsonPath("$.link", equalTo("https://www.abc.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T00:12:00")))
+                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T00:01:00")))
                 .andExpect(jsonPath("$.status", equalTo(NEW.name())))
                 .andExpect(jsonPath("$.type", equalTo(ARTICLE.name())))
-                .andExpect(jsonPath("$.tags", hasSize(2)))
-                .andExpect(jsonPath("$.tags.[0].id", equalTo(1)))
+                .andExpect(jsonPath("$.tags", hasSize(1)))
+                .andExpect(jsonPath("$.tags.[0].id", equalTo(2)))
                 .andExpect(jsonPath("$.tags.[0].name", equalTo("java")));
     }
 
@@ -177,8 +178,8 @@ public class TechResourceControllerTest {
     @Test
     public void
     should_load_next_page_of_resources_upon_request() throws Exception {
-        List<List<Integer>> expectedResourceTitleIds = asList(asList(12, 10, 8, 7),
-                asList(6, 5, 4, 3), asList(2, 1));
+        List<List<Integer>> expectedResourceTitleIds = asList(asList(13, 12, 10, 8),
+                asList(7, 6, 5, 4), asList(3, 2));
         assertPagedResources(expectedResourceTitleIds);
 
     }
@@ -195,11 +196,9 @@ public class TechResourceControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.length()", is(titleIds.size())));
             for (int j = 0; j < titleIds.size(); j++) {
-                resultActions.andExpect(jsonPath("$.["+ j +"].id", is(titleIds.get(j))));
                 resultActions.andExpect(jsonPath("$.["+ j +"].title", is("Some title " + titleIds.get(j))));
                 resultActions.andExpect(jsonPath("$.["+ j +"].link", is("https://www.abc.com")));
             }
-
         }
     }
 
