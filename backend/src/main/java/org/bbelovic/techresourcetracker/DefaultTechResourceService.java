@@ -41,7 +41,7 @@ public class DefaultTechResourceService implements TechResourceService {
             final List<Tag> list = tagRepository.findTagsByResource(technologyResource);
             detail.addTags(list);
         }
-        log.trace("Retrieved resources: [{}].", detailsList);
+        log.trace("Retrieved resources: [{}]", detailsList);
         return detailsList;
     }
 
