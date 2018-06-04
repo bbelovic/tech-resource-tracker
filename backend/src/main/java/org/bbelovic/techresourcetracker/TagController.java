@@ -25,9 +25,9 @@ public class TagController {
     @GetMapping("/tags")
     public ResponseEntity<List<TagDTO>> tags() {
         logger.info("Retrieving all defined tags.");
-        List<TagDTO> dtos = tagRepository.findAll().stream()
+        var tagDTOs = tagRepository.findAll().stream()
                 .map(tag -> new TagDTO(tag.getId(), tag.getName()))
                 .collect(toList());
-        return new ResponseEntity<>(dtos, OK);
+        return new ResponseEntity<>(tagDTOs, OK);
     }
 }

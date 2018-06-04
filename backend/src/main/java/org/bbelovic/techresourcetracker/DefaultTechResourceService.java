@@ -34,12 +34,12 @@ public class DefaultTechResourceService implements TechResourceService {
     @Transactional(readOnly = true)
     public List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize) {
         log.info("Getting [{}] resources on page [{}] with status [{}] ordered by creation date descending.", pageSize, pageId, status);
-        final List<TechResourceDetails> detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(status, new PageRequest(pageId, pageSize));
-        for (final TechResourceDetails detail: detailsList) {
-            final TechnologyResource technologyResource = new TechnologyResource();
-            technologyResource.setId(detail.getId());
-            final List<Tag> list = tagRepository.findTagsByResource(technologyResource);
-            detail.addTags(list);
+        final var detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(status, new PageRequest(pageId, pageSize));
+        for (final var detail: detailsList) {
+            final var newResource = new TechnologyResource();
+            newResource.setId(detail.getId());
+            final var tagsByResource = tagRepository.findTagsByResource(newResource);
+            detail.addTags(tagsByResource);
         }
         log.trace("Retrieved resources: [{}]", detailsList);
         return detailsList;
@@ -56,8 +56,8 @@ public class DefaultTechResourceService implements TechResourceService {
     @Transactional
     public void markTechResourceAsRead(long id) {
         log.info("Marking resource with id [{}] as read.", id);
-        TechnologyResource technologyResource = resourceRepository.findOne(id);
-        technologyResource.setStatus(PROCESSED);
-        resourceRepository.save(technologyResource);
+        var resourceById = resourceRepository.findOne(id);
+        resourceById.setStatus(PROCESSED);
+        resourceRepository.save(resourceById);
     }
 }
