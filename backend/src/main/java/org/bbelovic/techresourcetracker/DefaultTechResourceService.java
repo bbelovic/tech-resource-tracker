@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.PROCESSED;
 
@@ -25,9 +26,9 @@ public class DefaultTechResourceService implements TechResourceService {
 
     @Override
     @Transactional(readOnly = true)
-    public TechnologyResource getTechResourceById(Long id) {
+    public Optional<TechnologyResource> getTechResourceById(Long id) {
         log.info("Loading technology resource with id [{}].", id);
-        return resourceRepository.findOne(id);
+        return resourceRepository.findById(id);
     }
 
     @Override
@@ -56,8 +57,10 @@ public class DefaultTechResourceService implements TechResourceService {
     @Transactional
     public void markTechResourceAsRead(long id) {
         log.info("Marking resource with id [{}] as read.", id);
-        var resourceById = resourceRepository.findOne(id);
-        resourceById.setStatus(PROCESSED);
-        resourceRepository.save(resourceById);
+        var resourceOptional = resourceRepository.findById(id);
+        resourceOptional.ifPresent(technologyResource -> {
+            technologyResource.setStatus(PROCESSED);
+            resourceRepository.save(technologyResource);
+        });
     }
 }

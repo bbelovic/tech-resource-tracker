@@ -3,10 +3,11 @@ package org.bbelovic.techresourcetracker;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TechResourceService {
-    @Transactional
-    TechnologyResource getTechResourceById(Long id);
+    @Transactional(readOnly = true)
+    Optional<TechnologyResource> getTechResourceById(Long id);
 
     List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize);
     /**

@@ -33,12 +33,10 @@ public class TechResourcesController {
 
     @GetMapping(value = "/tech-resources/{id}")
     public ResponseEntity<TechnologyResourceDTO> getTechnologyResourceById(@PathVariable long id) {
-        var resourceById = techResourceService.getTechResourceById(id);
-        if (resourceById == null) {
-            return new ResponseEntity<>(NOT_FOUND);
-        }
-        var resourceDTO = convertTechnologyResourceToDTO(resourceById);
-        return new ResponseEntity<>(resourceDTO, OK);
+        var resourceOptional = techResourceService.getTechResourceById(id);
+        return resourceOptional.map(this::convertTechnologyResourceToDTO)
+                .map(dto -> new ResponseEntity<>(dto, OK))
+                .orElse(new ResponseEntity<>(NOT_FOUND));
     }
 
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
