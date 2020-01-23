@@ -101,7 +101,7 @@ public class TechResourceControllerTest {
 
     @Test
     @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources-advanced.xml")
-    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-tech-resources-after-update.xml")
+    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources-after-update.xml")
     public void should_update_existing_tech_resource() {
         requestPayloads().forEach(requestPayload -> {
             try {
@@ -132,14 +132,13 @@ public class TechResourceControllerTest {
     }
 
     @Test
-    @DatabaseSetup(type = CLEAN_INSERT, value= "/setup-mark-as-read-resource.xml")
-    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value= "/expected-mark-as-read-resource.xml")
+    @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-mark-as-read-resource.xml")
+    @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-mark-as-read-resource.xml")
     public void should_mark_tech_resource_as_read() throws Exception {
-        String requestPayload =
-                "{\"id\":1,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[]}";
+        var requestPayload = """
+                {"id":1,"title":"new title","link":"http://www.blabol.com",
+                "createdOn":"2018-01-01T10:20:30", "status":"PROCESSED", "type":"BLOG", "tags":[]}"
+                """;
         mockMvc.perform(put("/markAsRead/1").with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
@@ -196,8 +195,8 @@ public class TechResourceControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(jsonPath("$.length()", is(titleIds.size())));
             for (int j = 0; j < titleIds.size(); j++) {
-                resultActions.andExpect(jsonPath("$.["+ j +"].title", is("Some title " + titleIds.get(j))));
-                resultActions.andExpect(jsonPath("$.["+ j +"].link", is("https://www.abc.com")));
+                resultActions.andExpect(jsonPath("$.[" + j + "].title", is("Some title " + titleIds.get(j))));
+                resultActions.andExpect(jsonPath("$.[" + j + "].link", is("https://www.abc.com")));
             }
         }
     }

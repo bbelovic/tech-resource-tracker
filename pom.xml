@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.bbelovic.techresourcetracker</groupId>
-	<artifactId>tech-resource-tracker-parent</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-	<packaging>pom</packaging>
+    <groupId>org.bbelovic.techresourcetracker</groupId>
+    <artifactId>tech-resource-tracker-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
-	<name>tech-resource-tracker-parent</name>
-	<description>Technology resources tracker</description>
+    <name>tech-resource-tracker-parent</name>
+    <description>Technology resources tracker</description>
 
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.2.3.RELEASE</version>
-		<relativePath/>
-	</parent>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.3.RELEASE</version>
+        <relativePath/>
+    </parent>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>13</java.version>
-	</properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>13</java.version>
+    </properties>
 
 
-	<modules>
+    <modules>
         <module>backend</module>
-		<module>frontend</module>
+        <module>frontend</module>
     </modules>
 
     <build>
@@ -37,6 +37,9 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.21.0</version>
+                    <configuration>
+                        <argLine>--enable-preview</argLine>
+                    </configuration>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
@@ -47,6 +50,12 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
+                    <configuration>
+                        <compilerArgs>
+                            <arg>--enable-preview</arg>
+                            <arg>-Xlint:preview</arg>
+                        </compilerArgs>
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
