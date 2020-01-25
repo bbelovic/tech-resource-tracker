@@ -15,16 +15,13 @@ import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED;
 import static java.lang.String.format;
-import static java.util.Arrays.asList;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
 import static org.bbelovic.techresourcetracker.TechnologyResourceType.ARTICLE;
 import static org.bbelovic.techresourcetracker.TechnologyResourceType.PRESENTATION;
@@ -119,7 +116,12 @@ public class TechResourceControllerTest {
     }
 
     private List<String> requestPayloads() {
-        return Arrays.asList("{\"id\":2,\"title\":\"title2 (updated)\"" +
+        return List.of(
+                """
+                  {"id":2,"title":"title2 (updated)","link":"http://www.updated.blabol2.com"
+                   "createdOn":"2018-01-01T10:10:10", "status":"PROCESSED", "type":"BLOG", "tags":[{"id":2,"name":"java"}]}
+                """,
+                "{\"id\":2,\"title\":\"title2 (updated)\"" +
                         ",\"link\":\"http://www.updated.blabol2.com\", " +
                         "\"createdOn\":\"2018-01-01T10:10:10\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
                         "\"tags\":[{\"id\":2,\"name\":\"java\"}]}",
@@ -137,7 +139,7 @@ public class TechResourceControllerTest {
     public void should_mark_tech_resource_as_read() throws Exception {
         var requestPayload = """
                 {"id":1,"title":"new title","link":"http://www.blabol.com",
-                "createdOn":"2018-01-01T10:20:30", "status":"PROCESSED", "type":"BLOG", "tags":[]}"
+                "createdOn":"2018-01-01T10:20:30", "status":"PROCESSED", "type":"BLOG", "tags":[]}
                 """;
         mockMvc.perform(put("/markAsRead/1").with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
@@ -177,17 +179,17 @@ public class TechResourceControllerTest {
     @Test
     public void
     should_load_next_page_of_resources_upon_request() throws Exception {
-        List<List<Integer>> expectedResourceTitleIds = asList(asList(13, 12, 10, 8),
-                asList(7, 6, 5, 4), asList(3, 2));
+        var expectedResourceTitleIds = List.of(List.of(13, 12, 10, 8),
+                List.of(7, 6, 5, 4), List.of(3, 2));
         assertPagedResources(expectedResourceTitleIds);
 
     }
 
     private void assertPagedResources(List<List<Integer>> expectedResourceTitleIds) throws Exception {
         for (int i = 0; i < expectedResourceTitleIds.size(); i++) {
-            List<Integer> titleIds = expectedResourceTitleIds.get(i);
-            String urlTemplate = format("/tech-resources/page/%d/pageSize/%d", i, 4);
-            ResultActions resultActions = mockMvc.perform(get(urlTemplate)
+            var titleIds = expectedResourceTitleIds.get(i);
+            var urlTemplate = format("/tech-resources/page/%d/pageSize/%d", i, 4);
+            var resultActions = mockMvc.perform(get(urlTemplate)
                     .with(csrf().asHeader())
                     .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                     .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
