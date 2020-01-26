@@ -3,8 +3,7 @@ package org.bbelovic.techresourcetracker;
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.ExpectedDatabase;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.IfProfileValue;
 import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -34,7 +32,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IfProfileValue(name = "test.group", value = "integration")
-@RunWith(SpringRunner.class)
+//@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
@@ -121,15 +119,15 @@ public class TechResourceControllerTest {
                   {"id":2,"title":"title2 (updated)","link":"http://www.updated.blabol2.com"
                    "createdOn":"2018-01-01T10:10:10", "status":"PROCESSED", "type":"BLOG", "tags":[{"id":2,"name":"java"}]}
                 """,
-                "{\"id\":2,\"title\":\"title2 (updated)\"" +
-                        ",\"link\":\"http://www.updated.blabol2.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:10:10\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":2,\"name\":\"java\"}]}",
-
-                "{\"id\":3,\"title\":\"title3 (updated)\"" +
-                        ",\"link\":\"http://www.updated.blabol3.com\", " +
-                        "\"createdOn\":\"2018-02-02T20:20:20\", \"status\":\"PROCESSED\", \"type\":\"BLOG\", " +
-                        "\"tags\":[{\"id\":1,\"name\":\"kotlin\"}, {\"id\":2,\"name\":\"java\"}]}"
+                """
+                   {"id":2,"title":"title2 (updated)","link":"http://www.updated.blabol2.com",
+                    "createdOn":"2018-01-01T10:10:10", "status":"PROCESSED", "type":"BLOG", "tags":[{"id":2,"name":"java"}]},
+                """,
+                """
+                        {"id":3,"title":"title3 (updated)","link":"http://www.updated.blabol3.com",
+                         "createdOn":"2018-02-02T20:20:20", "status":"PROCESSED", "type":"BLOG",
+                         "tags":[{"id":1,"name":"kotlin"}, {"id":2,"name":"java"}]}"
+                """
         );
     }
 
