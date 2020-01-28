@@ -116,7 +116,7 @@ public class TechResourceControllerTest {
     private List<String> requestPayloads() {
         return List.of(
                 """
-                  {"id":2,"title":"title2 (updated)","link":"http://www.updated.blabol2.com"
+                  {"id":2,"title":"title2 (updated)","link":"http://www.updated.blabol2.com",
                    "createdOn":"2018-01-01T10:10:10", "status":"PROCESSED", "type":"BLOG", "tags":[{"id":2,"name":"java"}]}
                 """,
                 """
