@@ -15,7 +15,7 @@ export class AppComponent {
   brand = 'Tech resource tracker';
 
   constructor(private resourceService: TechResourceService,
-    private httpClient: HttpClient, private router: Router, 
+    private httpClient: HttpClient, private router: Router,
     private authService: AuthenticationService) {}
 
   login(username: string, password: string): void {

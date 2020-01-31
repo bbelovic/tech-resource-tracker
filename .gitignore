@@ -1,7 +1,7 @@
 target/
 !.mvn/wrapper/maven-wrapper.jar
 *.log
-
+.mvn/
 ### STS ###
 .apt_generated
 .classpath
@@ -12,6 +12,7 @@ target/
 
 src/main/frontend/node_modules/
 src/main/frontend/dist/
+frontend/src/main/frontend/package-lock.json
 ### IntelliJ IDEA ###
 .idea
 *.iws
