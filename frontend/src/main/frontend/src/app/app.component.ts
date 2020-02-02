@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 
-import {TechResource} from './tech-resource';
 import {Router} from '@angular/router';
-import {TechResourceService} from './tech-resource-service';
 import { AuthenticationService } from './authentication-service';
 
 @Component({
@@ -14,17 +12,16 @@ import { AuthenticationService } from './authentication-service';
 export class AppComponent {
   brand = 'Tech resource tracker';
 
-  constructor(private resourceService: TechResourceService,
-    private httpClient: HttpClient, private router: Router,
+  constructor(private router: Router,
     private authService: AuthenticationService) {}
 
   login(username: string, password: string): void {
       this.authService.login(username, password)
-          .then(res => this.router.navigateByUrl('/tech-resources'));
+          .then(() => this.router.navigateByUrl('/tech-resources'));
   }
 
   logout(): void {
-    this.authService.logout().then(obj => this.router.navigateByUrl('/tech-resources'));
+    this.authService.logout().then(() => this.router.navigateByUrl('/tech-resources'));
   }
 
 }

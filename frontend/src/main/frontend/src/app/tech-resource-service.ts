@@ -4,7 +4,7 @@ import {OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
-import 'rxjs/add/operator/toPromise';
+
 import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 
 @Injectable()
