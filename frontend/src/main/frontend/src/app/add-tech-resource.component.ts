@@ -25,41 +25,40 @@ export class AddTechResourceComponent implements OnInit {
     }
 
     addNewTechResource(title: string, link: string, type: string): void {
-        let createdOn: string = this.buildCreatedOnDate();
-        let resourceType: TechResourceType = TechResourceType[type];
-        let techResource: TechResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, resourceType);
+        const createdOn: string = this.buildCreatedOnDate();
+        const resourceType: TechResourceType = TechResourceType[type];
+        const techResource: TechResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, resourceType);
         techResource.tags = this.assignedTags;
         this.techService.postNewTechResource(techResource)
-            .then(result => this.router.navigateByUrl('/tech-resources'));        
+            .then(result => this.router.navigateByUrl('/tech-resources'));
     }
 
     addTag(tag: Tag): void {
         this.assignedTags.push(tag);
-        console.log("Added tag= "+ tag);
+        console.log('Added tag= ' + tag);
     }
 
     addNewTag(id: number, name: string): void {
-        let foundTag: Tag = this.checkTag(new Tag(id, name));
+        const foundTag: Tag = this.checkTag(new Tag(id, name));
         if (foundTag === undefined) {
-            console.log("Tag "+ name + " not yet defined");
+            console.log('Tag ' + name + ' not yet defined');
             this.addTag(new Tag(id, name));
         } else {
-            console.log("Tag "+ name + " already defined");
+            console.log('Tag ' + name + ' already defined');
             this.addTag(foundTag);
         }
-        
     }
 
     private checkTag(tag: Tag): Tag {
         return this.existingTags.find(function (value: Tag) {
-            let valueName: string = value.name;
-            let tagName: string = tag.name;
+            const valueName: string = value.name;
+            const tagName: string = tag.name;
             return valueName === tagName;
         });
     }
 
     private buildCreatedOnDate(): string {
-        let now: string = new Date().toISOString();
+        const now: string = new Date().toISOString();
         return now.substring(0, now.indexOf('.'));
     }
 }

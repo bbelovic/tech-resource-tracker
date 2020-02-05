@@ -1,13 +1,20 @@
 import { TestBed, async } from '@angular/core/testing';
-
+import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component';
+import { AuthenticationService } from './authentication-service';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
+    const authServiceStub = {
+      isAuthenticated: function() {return true}
+    }
+
     TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes([])],
       declarations: [
         AppComponent
       ],
+      providers: [{provide: AuthenticationService, useValue: authServiceStub}]
     }).compileComponents();
   }));
 
@@ -17,10 +24,10 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   }));
 
-  it(`should have as title 'app works!'`, async(() => {
+  it(`should have as brand element 'Tech resource tracker'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('app works!');
+    expect(app.brand).toEqual('Tech resource tracker');
   }));
 
   it('should render title in a h1 tag', async(() => {

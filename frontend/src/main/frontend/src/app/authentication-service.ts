@@ -2,23 +2,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 @Injectable()
 export class AuthenticationService {
-    private authenticated: boolean = false;
+    private authenticated = false;
     constructor(private httpClient: HttpClient) {}
 
     isAuthenticated(): boolean {
-        console.log("Return authenticated: "+ this.authenticated);
+        console.log('Return authenticated: ' + this.authenticated);
         return this.authenticated;
     }
 
     setAuthenticated(authenticated: boolean): void {
-        console.log("Setting authenticated flag to:" + authenticated);
+        console.log('Setting authenticated flag to:' + authenticated);
         this.authenticated = authenticated;
     }
 
     logout(): Promise<Object> {
         return this.httpClient.post('/logout', null)
-            .toPromise().then(obj => this.logoutAndReport("ok", obj), 
-            obj => this.logoutAndReport("error", obj));
+            .toPromise().then(obj => this.logoutAndReport('ok', obj),
+            obj => this.logoutAndReport('error', obj));
 
     }
 

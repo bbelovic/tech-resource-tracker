@@ -12,7 +12,7 @@ import { AddTechResourceComponent } from './add-tech-resource.component';
 import { EditTechResourceComponent } from './edit-tech-resource.component';
 import { TagService } from './tag-service';
 
-const routes: Routes = [ 
+const routes: Routes = [
   {path: '', component: TechResourcesComponent},
   {path: 'tech-resources', component: TechResourcesComponent},
   {path: 'add-tech-resource', component: AddTechResourceComponent},

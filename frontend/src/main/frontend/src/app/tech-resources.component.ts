@@ -14,19 +14,19 @@ import { TechResourceDetailsDTO } from './tech-resource-details-dto';
     }
 )
 export class TechResourcesComponent {
-    pageId: number = 1;
+    pageId = 1;
     techResourcesDetailsDTOs: TechResourceDetailsDTO[] = [];
-    constructor(private authenticationService: AuthenticationService, 
+    constructor(private authenticationService: AuthenticationService,
         private resourceService: TechResourceService,
         private router: Router) {}
 
     ngOnInit(): void {
         if (this.authenticationService.isAuthenticated()) {
-            console.log("Getting resources from remote server.")
+            console.log('Getting resources from remote server.')
             this.resourceService.getTechResourceDetailsDTO()
             .then(result => this.techResourcesDetailsDTOs = result);
         } else {
-            console.log("Skipping getting  resources - not authenticated");
+            console.log('Skipping getting  resources - not authenticated');
         }
     }
 
