@@ -5,6 +5,7 @@ services:
 - postgresql
 addons:
   postgresql: '9.4'
+  chrome: stable
 before_script:
 - psql -f db_setup.sql -U postgres
 script:
