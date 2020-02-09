@@ -1,13 +1,12 @@
-import { Component } from "@angular/core";
-import { TechResourceService } from "./tech-resource-service";
-import { OnInit } from "@angular/core";
-import { TechResource } from "./tech-resource";
-import { ActivatedRoute } from "@angular/router";
-import { Router } from "@angular/router";
-import { TechResourceStatus } from "./tech-resource-status";
-import { TechResourceType } from "./tech-resource-type";
-import { Tag } from "./tag";
-import { TagService } from "./tag-service";
+import { Component, OnInit } from '@angular/core';
+import { TechResourceService } from './tech-resource-service';
+import { TechResource } from './tech-resource';
+import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { TechResourceStatus } from './tech-resource-status';
+import { TechResourceType } from './tech-resource-type';
+import { Tag } from './tag';
+import { TagService } from './tag-service';
 
 @Component({
     selector: 'edit-tech-resource',
@@ -36,14 +35,14 @@ export class EditTechResourceComponent implements OnInit {
     }
 
     removeTag(tag: Tag): void {
-        let idx: number = this.assignedTags.indexOf(tag);
+        const idx: number = this.assignedTags.indexOf(tag);
         this.assignedTags.splice(idx, 1);
     }
 
     updateTechResource(title: string, link: string, status: string, resourceType: string): void {
-        let updatedStatus: TechResourceStatus = TechResourceStatus[status];
-        let type: TechResourceType = TechResourceType[resourceType];
-        let updatedResource: TechResource = new TechResource(this.resource.id,
+        const updatedStatus: TechResourceStatus = TechResourceStatus[status];
+        const type: TechResourceType = TechResourceType[resourceType];
+        const updatedResource: TechResource = new TechResource(this.resource.id,
             title, link, this.resource.createdOn, updatedStatus, type);
         updatedResource.tags = this.assignedTags;
         this.techResourceService.updateResource(updatedResource)

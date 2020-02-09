@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 import { TechResourceStatus } from './tech-resource-status';
 import { Router } from '@angular/router';
 import { TechResourceType } from './tech-resource-type';
 import { Tag } from './tag';
-import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 import { TagService } from './tag-service';
 @Component({
     selector: 'add-tech-resource',

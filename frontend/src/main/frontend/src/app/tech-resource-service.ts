@@ -1,7 +1,5 @@
 import {TechResource} from './tech-resource';
 import {Injectable} from '@angular/core';
-import {OnInit} from '@angular/core';
-import {Location} from '@angular/common';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 
@@ -14,21 +12,21 @@ export class TechResourceService {
     }
 
     getTechResource(): Promise<TechResource[]> {
-    console.log("Getting 10 newest resources from: [" + this.url + "].");
+    console.log('Getting 10 newest resources from: [' + this.url + '].');
     return this.http.get(this.url)
             .toPromise()
             .then(data => data as TechResource[])
     }
 
     getTechResourceDetailsDTO(): Promise<TechResourceDetailsDTO[]> {
-        console.log("Getting 10 newest resources from: [" + this.url + "].");
+        console.log('Getting 10 newest resources from: [' + this.url + '].');
         return this.http.get(this.url)
                 .toPromise()
                 .then(data => data as TechResourceDetailsDTO[]);
     }
 
     getTechResourceById(id: number): Promise<TechResource> {
-    console.log("Getting technology resource with id ["+ id +"]");
+    console.log('Getting technology resource with id [' + id + ']');
         return this.http.get(this.url + '/' + id)
             .toPromise()
             .then(data => data as TechResource);
