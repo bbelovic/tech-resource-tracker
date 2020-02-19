@@ -2,6 +2,7 @@ package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -41,7 +42,8 @@ public class TechResourceTrackerApplication {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.httpBasic().and()
-                    .authorizeRequests()
+                    .requestMatcher(EndpointRequest.toAnyEndpoint()).
+                    authorizeRequests().anyRequest().permitAll()
                     .antMatchers("/", "/inline.bundle.js", "/styles.bundle.js", "/scripts.bundle.js",
                             "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js").permitAll()
                     .anyRequest()
