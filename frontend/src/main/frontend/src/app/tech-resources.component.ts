@@ -31,7 +31,7 @@ export class TechResourcesComponent {
     }
 
     markAsRead(resourceId: number): void {
-        console.log("Marking resource ["+ resourceId +"] as read.");
+        console.log('Marking resource [' + resourceId + '] as read.');
         this.resourceService.markResourceAsRead(resourceId)
             .then(res => this.reload());
     }
@@ -52,22 +52,22 @@ export class TechResourcesComponent {
     }
 
     private pushAll(resourcePage: TechResourceDetailsDTO[]): void {
-        let idx: number = 0;
+        let idx = 0;
         for (idx = 0; idx < resourcePage.length; idx++) {
             this.techResourcesDetailsDTOs.push(resourcePage[idx]);
         }
     }
 
     private updateTechResource(resource: TechResource): TechResource {
-        let updatedResource: TechResource = 
-            new TechResource(resource.id, resource.title, resource.link, 
+        const updatedResource: TechResource =
+            new TechResource(resource.id, resource.title, resource.link,
                 resource.createdOn, TechResourceStatus.Processed, resource.type);
         updatedResource.tags = [];
         return updatedResource;
     }
 
     private reload(): void {
-        console.log("Reloading resource after update");
+        console.log('Reloading resource after update');
         this.resourceService.getTechResourceDetailsDTO()
         .then(result => this.techResourcesDetailsDTOs = result);
     }
