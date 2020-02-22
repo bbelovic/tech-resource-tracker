@@ -3,6 +3,8 @@ package org.bbelovic.techresourcetracker;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
+import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
+import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,10 @@ public class TechResourceTrackerApplication {
         SpringApplication.run(TechResourceTrackerApplication.class, args);
     }
 
+    @Bean
+    public HttpTraceRepository httpTraceRepository() {
+        return new InMemoryHttpTraceRepository();
+    }
 
     @Bean
     public SimpleModule iso8601Serializers() {
@@ -42,8 +48,7 @@ public class TechResourceTrackerApplication {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.httpBasic().and()
-                    .requestMatcher(EndpointRequest.toAnyEndpoint()).
-                    authorizeRequests().anyRequest().permitAll()
+                    .authorizeRequests()
                     .antMatchers("/", "/inline.bundle.js", "/styles.bundle.js", "/scripts.bundle.js",
                             "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js").permitAll()
                     .anyRequest()
