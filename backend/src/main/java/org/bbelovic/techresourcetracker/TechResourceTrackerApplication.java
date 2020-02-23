@@ -50,7 +50,8 @@ public class TechResourceTrackerApplication {
             http.httpBasic().and()
                     .authorizeRequests()
                     .antMatchers("/", "/inline.bundle.js", "/styles.bundle.js", "/scripts.bundle.js",
-                            "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js").permitAll()
+                            "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js", "/login2")
+                    .permitAll()
                     .anyRequest()
                     .authenticated()
                     .and()
