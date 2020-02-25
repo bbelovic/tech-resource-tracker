@@ -6,6 +6,8 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointR
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -36,6 +38,18 @@ public class TechResourceTrackerApplication {
         module.addDeserializer(LocalDateTime.class, new ISO8601LocalDateTimeDeserializer());
         return module;
     }
+
+//    @Bean
+//    public ConfigurableServletWebServerFactory webServerFactory() {
+//        var rule = """
+//                RewriteCond %{REQUEST_PATH} !-f
+//                RewriteRule ^(.*) /index.html
+//                """;
+//        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+//        factory.addContextValves(new LazyRewriteValve(rule));
+//        return factory;
+//    }
+
 
     @Configuration
     public static class SecurityAdapter extends WebSecurityConfigurerAdapter {
