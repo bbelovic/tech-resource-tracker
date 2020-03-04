@@ -39,16 +39,21 @@ public class TechResourceTrackerApplication {
         return module;
     }
 
-//    @Bean
-//    public ConfigurableServletWebServerFactory webServerFactory() {
-//        var rule = """
-//                RewriteCond %{REQUEST_PATH} !-f
-//                RewriteRule ^(.*) /index.html
-//                """;
-//        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-//        factory.addContextValves(new LazyRewriteValve(rule));
-//        return factory;
-//    }
+    @Bean
+    public ConfigurableServletWebServerFactory webServerFactory() {
+//        RewriteCond %{REQUEST_URI} -f
+//        RewriteRule ^ - [L]
+        var rule = """
+                RewriteCond %{REQUEST_URI} -f
+                RewriteRule ^(.*)$ - [L]
+
+                RewriteCond %{REQUEST_URI} !-f
+                RewriteRule ^(.*)$ /index.html [L]
+                """;
+        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+        factory.addContextValves(new LazyRewriteValve(rule));
+        return factory;
+    }
 
 
     @Configuration
