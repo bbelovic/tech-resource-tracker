@@ -43,12 +43,18 @@ public class TechResourceTrackerApplication {
     public ConfigurableServletWebServerFactory webServerFactory() {
 //        RewriteCond %{REQUEST_URI} -f
 //        RewriteRule ^ - [L]
+//        RewriteCond %{REQUEST_URI} -f
+//        RewriteRule ^(.*)$ - [T=application/javascript]
+//
+//        RewriteCond %{REQUEST_URI} !-f
+//        RewriteRule ^(.*)$ /index.html [L]
         var rule = """
-                RewriteCond %{REQUEST_URI} -f
-                RewriteRule ^(.*)$ - [L]
+                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+                RewriteRule ^(.*)$ - [L,T=application/javascript]
 
-                RewriteCond %{REQUEST_URI} !-f
-                RewriteRule ^(.*)$ /index.html [L]
+                RewriteRule ^(.*.js)$ - [T=application/javascript]
+                RewriteRule ^(.*)$ /index.html
                 """;
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         factory.addContextValves(new LazyRewriteValve(rule));
