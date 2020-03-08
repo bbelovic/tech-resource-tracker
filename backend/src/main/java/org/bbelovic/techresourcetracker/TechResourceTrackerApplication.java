@@ -53,7 +53,6 @@ public class TechResourceTrackerApplication {
                 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
                 RewriteRule ^(.*)$ - [L,T=application/javascript]
 
-                RewriteRule ^(.*.js)$ - [T=application/javascript]
                 RewriteRule ^(.*)$ /index.html
                 """;
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
