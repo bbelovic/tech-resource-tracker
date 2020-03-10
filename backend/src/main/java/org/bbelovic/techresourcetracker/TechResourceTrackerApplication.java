@@ -48,15 +48,19 @@ public class TechResourceTrackerApplication {
 //
 //        RewriteCond %{REQUEST_URI} !-f
 //        RewriteRule ^(.*)$ /index.html [L]
+
+//        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+//        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
         var rule = """
-                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
-                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+                RewriteCond %{SERVER_ADDR}:%{SERVER_PORT}/%{REQUEST_URI} -f [OR]
+                RewriteCond %{SERVER_ADDR}:%{SERVER_PORT}/%{REQUEST_URI} -d [OR]
                 RewriteRule ^(.*)$ - [L,T=application/javascript]
 
                 RewriteRule ^(.*)$ /index.html
                 """;
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         factory.addContextValves(new LazyRewriteValve(rule));
+//        factory.addContextCustomizers(context -> );
         return factory;
     }
 
