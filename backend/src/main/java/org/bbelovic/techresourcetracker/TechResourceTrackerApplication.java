@@ -1,8 +1,8 @@
 package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.apache.catalina.webresources.StandardRoot;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -49,18 +49,21 @@ public class TechResourceTrackerApplication {
 //        RewriteCond %{REQUEST_URI} !-f
 //        RewriteRule ^(.*)$ /index.html [L]
 
-//        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
-//        RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
         var rule = """
-                RewriteCond %{SERVER_ADDR}:%{SERVER_PORT}/%{REQUEST_URI} -f [OR]
-                RewriteCond %{SERVER_ADDR}:%{SERVER_PORT}/%{REQUEST_URI} -d [OR]
+                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
                 RewriteRule ^(.*)$ - [L,T=application/javascript]
 
                 RewriteRule ^(.*)$ /index.html
                 """;
         TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
         factory.addContextValves(new LazyRewriteValve(rule));
-//        factory.addContextCustomizers(context -> );
+        factory.addContextCustomizers(context -> {
+            StandardRoot standardRoot = new StandardRoot(context);
+            standardRoot.setCacheMaxSize(256 * 1024);
+            standardRoot.setCachingAllowed(false);
+            context.setResources(standardRoot);
+        });
         return factory;
     }
 
