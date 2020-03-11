@@ -1,13 +1,10 @@
 package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.apache.catalina.webresources.StandardRoot;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
-import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.springframework.security.web.csrf.CookieCsrfTokenRepository.withHttpOnlyFalse;
 
@@ -39,35 +37,6 @@ public class TechResourceTrackerApplication {
         return module;
     }
 
-    @Bean
-    public ConfigurableServletWebServerFactory webServerFactory() {
-//        RewriteCond %{REQUEST_URI} -f
-//        RewriteRule ^ - [L]
-//        RewriteCond %{REQUEST_URI} -f
-//        RewriteRule ^(.*)$ - [T=application/javascript]
-//
-//        RewriteCond %{REQUEST_URI} !-f
-//        RewriteRule ^(.*)$ /index.html [L]
-
-        var rule = """
-                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
-                RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
-                RewriteRule ^(.*)$ - [L,T=application/javascript]
-
-                RewriteRule ^(.*)$ /index.html
-                """;
-        TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
-        factory.addContextValves(new LazyRewriteValve(rule));
-        factory.addContextCustomizers(context -> {
-            StandardRoot standardRoot = new StandardRoot(context);
-            standardRoot.setCacheMaxSize(256 * 1024);
-            standardRoot.setCachingAllowed(false);
-            context.setResources(standardRoot);
-        });
-        return factory;
-    }
-
-
     @Configuration
     public static class SecurityAdapter extends WebSecurityConfigurerAdapter {
         @Override
@@ -80,8 +49,8 @@ public class TechResourceTrackerApplication {
         protected void configure(HttpSecurity http) throws Exception {
             http.httpBasic().and()
                     .authorizeRequests()
-                    .antMatchers("/", "/inline.bundle.js", "/styles.bundle.js", "/scripts.bundle.js",
-                            "/main.bundle.js", "/vendor.bundle.js", "/polyfills.bundle.js", "/login2")
+                    .antMatchers("/", "/runtime-es2015.js", "/polyfills-es2015.js", "/styles-es2015.js",
+                            "/vendor-es2015.js", "/main-es2015.js", "/scripts.js", "/favicon.ico")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
