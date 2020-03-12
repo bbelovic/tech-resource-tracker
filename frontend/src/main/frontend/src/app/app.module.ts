@@ -10,8 +10,7 @@ import { AuthenticationService} from './authentication-service';
 import { AddTechResourceComponent } from './add-tech-resource.component';
 import { EditTechResourceComponent } from './edit-tech-resource.component';
 import { TagService } from './tag-service';
-import { LoggingInterceptor } from './logging-interceptor';
-import { LoginComponent } from './login/login.component'; 
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -33,8 +32,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [TechResourceService, TagService, AuthenticationService,
-    {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true}],
+  providers: [TechResourceService, TagService, AuthenticationService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
