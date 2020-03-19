@@ -32,13 +32,13 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @IfProfileValue(name = "test.group", value = "integration")
-//@RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
+        "spring.datasource.password=postgres",
         "spring.datasource.username=postgres",
         "logging.level.org.hibernate.type.descriptor.sql=trace",
-        "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
+        "spring.datasource.url=jdbc:postgresql://localhost:6432/integration_testing"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-technology-resources-tags.xml")
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources.xml")

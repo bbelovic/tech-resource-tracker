@@ -17,6 +17,7 @@ import static org.springframework.test.context.TestExecutionListeners.MergeMode.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
+        "spring.datasource.password=",
         "spring.datasource.username=postgres",
         "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)

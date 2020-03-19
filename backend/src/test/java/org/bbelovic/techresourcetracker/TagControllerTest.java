@@ -25,8 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
+        "spring.datasource.password=postgres",
         "spring.datasource.username=postgres",
-        "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
+        "spring.datasource.url=jdbc:postgresql://localhost:6432/integration_testing"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-technology-resources-tags.xml")
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tags.xml")
