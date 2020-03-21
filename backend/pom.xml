@@ -21,6 +21,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.xml.bind.version>2.3.1</java.xml.bind.version>
         <postgresql.version>42.2.11</postgresql.version>
+        <liquibase.version>3.6.3</liquibase.version>
     </properties>
 
     <dependencies>
