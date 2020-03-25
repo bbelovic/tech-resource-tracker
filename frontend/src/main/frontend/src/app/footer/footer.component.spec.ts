@@ -19,7 +19,8 @@ describe('FooterComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should contain runtime information', () => {
+    const componentEl: HTMLElement = fixture.nativeElement
+    expect(componentEl.textContent).toContain('Dummy footer works!');
   });
 });
