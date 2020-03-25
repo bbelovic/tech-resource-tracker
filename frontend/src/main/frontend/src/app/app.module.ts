@@ -11,6 +11,7 @@ import { AddTechResourceComponent } from './add-tech-resource.component';
 import { EditTechResourceComponent } from './edit-tech-resource.component';
 import { TagService } from './tag-service';
 import { LoginComponent } from './login/login.component';
+import { FooterComponent } from './footer/footer.component';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -24,7 +25,8 @@ const routes: Routes = [
   declarations: [
     AppComponent, TechResourcesComponent, AddTechResourceComponent,
     EditTechResourceComponent,
-    LoginComponent
+    LoginComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -2,6 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './authentication-service';
+import { FooterComponent } from './footer/footer.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -12,7 +13,7 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([])],
       declarations: [
-        AppComponent
+        AppComponent, FooterComponent
       ],
       providers: [{provide: AuthenticationService, useValue: authServiceStub}]
     }).compileComponents();
