@@ -3,6 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component';
 import { AuthenticationService } from './authentication-service';
 import { FooterComponent } from './footer/footer.component';
+import { RuntimeInformationService } from './services/runtime-information.service';
+import { RuntimeInformationServiceStub } from './shared/runtime-information-service-stub';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -15,7 +17,9 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent, FooterComponent
       ],
-      providers: [{provide: AuthenticationService, useValue: authServiceStub}]
+      providers: [{provide: AuthenticationService, useValue: authServiceStub},
+        {provide: RuntimeInformationService, useValue: new RuntimeInformationServiceStub()}
+      ]
     }).compileComponents();
   }));
 
