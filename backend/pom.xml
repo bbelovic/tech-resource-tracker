@@ -125,8 +125,6 @@
                                 <spring-framework.version>${spring-framework.version}</spring-framework.version>
                                 <parent.version>${parent.version}</parent.version>
                                 <pom.version>${pom.version}</pom.version>
-                                <springboot.version>${springboot.version}</springboot.version>
-
                             </additionalProperties>
                         </configuration>
                     </execution>
