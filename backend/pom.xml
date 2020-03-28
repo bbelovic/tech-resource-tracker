@@ -110,6 +110,27 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-info</goal>
+                        </goals>
+                        <configuration>
+                            <additionalProperties>
+                                <java.version>${java.version}</java.version>
+                                <java.runtime.version>${java.runtime.version}</java.runtime.version>
+                                <java.vm.version>${java.vm.version}</java.vm.version>
+                                <java.vendor>${java.vendor}</java.vendor>
+                                <java.vm.name>${java.vm.name}</java.vm.name>
+                                <spring-framework.version>${spring-framework.version}</spring-framework.version>
+                                <parent.version>${parent.version}</parent.version>
+                                <pom.version>${pom.version}</pom.version>
+                                <springboot.version>${springboot.version}</springboot.version>
+
+                            </additionalProperties>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
         <resources>
