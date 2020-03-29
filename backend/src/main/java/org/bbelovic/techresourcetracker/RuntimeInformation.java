@@ -2,6 +2,6 @@ package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record RuntimeInformation(@JsonProperty("vendorName") String vendorName,
+public record RuntimeInformation(@JsonProperty("runtimeName") String runtimeName,
                                  @JsonProperty("feature") int feature) {
 }

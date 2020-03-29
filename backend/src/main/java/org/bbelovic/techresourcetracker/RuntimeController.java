@@ -10,8 +10,8 @@ public class RuntimeController {
 
     @GetMapping(value = "/runtime", produces = APPLICATION_JSON_VALUE)
     public RuntimeInformation getRuntimeInformation() {
-        var vendorName = System.getProperty("java.vendor");
+        var runtimeName = System.getProperty("java.runtime.name");
         int featureVersion = Runtime.version().feature();
-        return new RuntimeInformation(vendorName, featureVersion);
+        return new RuntimeInformation(runtimeName, featureVersion);
     }
 }

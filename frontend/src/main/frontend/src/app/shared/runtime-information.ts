@@ -1,9 +1,9 @@
 export class RuntimeInformation {
-    vendorName: string;
+    runtimeName: string;
     feature: number
 
-    constructor(vendorName: string, feature: number) {
-        this.vendorName = vendorName
+    constructor(runtimeName: string, feature: number) {
+        this.runtimeName = runtimeName
         this.feature = feature
     }
 }

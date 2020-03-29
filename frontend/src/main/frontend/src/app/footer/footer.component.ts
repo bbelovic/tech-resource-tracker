@@ -19,7 +19,7 @@ export class FooterComponent implements OnInit {
   }
 
   private formatRuntimeInformation(runtimeInformation: RuntimeInformation) {
-    this.runtimeInformation = runtimeInformation.vendorName + ' - ' + runtimeInformation.feature
+    this.runtimeInformation = runtimeInformation.runtimeName + ' - ' + runtimeInformation.feature
 
   }
 }

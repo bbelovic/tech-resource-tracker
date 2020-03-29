@@ -2,9 +2,6 @@ package org.bbelovic.techresourcetracker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.OverrideAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,11 +21,11 @@ public class RuntimeControllerTest {
 
     @Test
     public void should_return_vendor_information() throws Exception {
-        var expected = new RuntimeInformation(System.getProperty("java.vendor"), Runtime.version().feature());
+        var expected = new RuntimeInformation(System.getProperty("java.runtime.name"), Runtime.version().feature());
         mockMvc.perform(get("/runtime"))
                 .andExpect(status().isOk())
                 .andExpect(header().string("Content-Type", APPLICATION_JSON_VALUE))
-                .andExpect(jsonPath("$.vendorName", equalTo(expected.vendorName())))
+                .andExpect(jsonPath("$.runtimeName", equalTo(expected.runtimeName())))
                 .andExpect(jsonPath("$.feature", equalTo(expected.feature())));
     }
 
