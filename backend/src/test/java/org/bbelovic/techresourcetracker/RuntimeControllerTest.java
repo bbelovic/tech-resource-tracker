@@ -1,7 +1,6 @@
 package org.bbelovic.techresourcetracker;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -9,12 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
+import java.time.OffsetDateTime;
 
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -31,9 +28,9 @@ public class RuntimeControllerTest {
 
     @Test
     public void should_return_vendor_information() throws Exception {
-        Instant parse = Instant.parse("2020-01-01T15:30:00.00Z");
+        var buildTime = OffsetDateTime.parse("2020-01-01T15:30:00+00:00");
 
-        Mockito.when(buildProperties.getTime()).thenReturn(parse);
+        when(buildProperties.getTime()).thenReturn(buildTime.toInstant());
 
         var expected = new RuntimeInformation(System.getProperty("java.runtime.name"),
                 Runtime.version().feature(), "1-1-2020 @ 15:30");

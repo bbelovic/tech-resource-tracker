@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 
@@ -29,7 +30,7 @@ public class RuntimeController {
 
     private String formatBuildTime() {
         var buildTimeInstant = buildProperties.getTime();
-        var buildTime = LocalDateTime.ofInstant(buildTimeInstant, ZoneId.systemDefault());
+        var buildTime = OffsetDateTime.ofInstant(buildTimeInstant, ZoneId.of("UTC"));
         return DateTimeFormatter.ofPattern(DATE_TIME_FORMAT).format(buildTime);
     }
 }
