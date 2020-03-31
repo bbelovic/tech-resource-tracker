@@ -19,7 +19,8 @@ export class FooterComponent implements OnInit {
   }
 
   private formatRuntimeInformation(runtimeInformation: RuntimeInformation) {
-    this.runtimeInformation = runtimeInformation.runtimeName + ' - ' + runtimeInformation.feature
-
+    this.runtimeInformation = `Runs on ${runtimeInformation.runtimeName} version ` +
+    `${runtimeInformation.feature}, build on: ${runtimeInformation.formattedBuildTime}`
   }
+
 }
