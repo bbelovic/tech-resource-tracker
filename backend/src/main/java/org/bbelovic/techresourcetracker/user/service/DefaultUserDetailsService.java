@@ -1,5 +1,6 @@
 package org.bbelovic.techresourcetracker.user.service;
 
+import org.bbelovic.techresourcetracker.user.entity.User;
 import org.bbelovic.techresourcetracker.user.repository.UserDetailsRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,7 +17,8 @@ public class DefaultUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        userDetailsRepository.findByUsername(username);
-        return null;
+        User user = userDetailsRepository.findByUsername(username);
+
+        return user;
     }
 }
