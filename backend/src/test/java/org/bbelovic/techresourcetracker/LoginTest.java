@@ -2,13 +2,17 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Base64;
 
@@ -37,7 +41,9 @@ public class LoginTest {
     private static final byte[] AUTHORIZATION_HEADER_VALUE_BYTES = format("%s:%s", TEST_USERNAME, TEST_PASSWORD).getBytes();
     private static final String AUTHORIZATION_HEADER_VALUE = "Basic "+ Base64.getEncoder().encodeToString(AUTHORIZATION_HEADER_VALUE_BYTES);
     public static final String USER_URI = "/user";
+
     private MockMvc mockMvc;
+    private PasswordEncoder passwordEncoder;
 
     @Test
     public void should_authenticate_user() throws Exception {
@@ -45,12 +51,26 @@ public class LoginTest {
                 .header(AUTHORIZATION_HEADER_NAME, AUTHORIZATION_HEADER_VALUE))
                 .andExpect(jsonPath("$.authenticated", is(true)))
                 .andExpect(jsonPath("$.principal.username", is(equalTo(TEST_USERNAME))))
-                .andExpect(jsonPath("$.principal.password", is(equalTo(TEST_PASSWORD))))
+                .andExpect(jsonPath("$.principal.password", is(equalTo(passwordEncoder.encode(TEST_PASSWORD)))))
                 .andExpect(jsonPath("$.authorities.[0].authority", is(equalTo("admin"))));
     }
 
     @Autowired
     public void setMockMvc(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
+
+    @Test
+    public void test() {
+        String encode = passwordEncoder.encode(TEST_PASSWORD);
+        System.out.println(encode);
+        boolean matches = passwordEncoder.matches(TEST_PASSWORD, encode);
+        Assertions.assertTrue(matches);
+        ResultMatcher
     }
 }
