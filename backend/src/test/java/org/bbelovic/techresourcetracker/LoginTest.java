@@ -2,7 +2,9 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import org.hamcrest.Matchers;
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +14,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Base64;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static java.lang.String.format;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -51,7 +53,7 @@ public class LoginTest {
                 .header(AUTHORIZATION_HEADER_NAME, AUTHORIZATION_HEADER_VALUE))
                 .andExpect(jsonPath("$.authenticated", is(true)))
                 .andExpect(jsonPath("$.principal.username", is(equalTo(TEST_USERNAME))))
-                .andExpect(jsonPath("$.principal.password", is(equalTo(passwordEncoder.encode(TEST_PASSWORD)))))
+                .andExpect(jsonPath("$.principal.password", BCryptMatcher.bcrypt(TEST_PASSWORD, passwordEncoder)))
                 .andExpect(jsonPath("$.authorities.[0].authority", is(equalTo("admin"))));
     }
 
@@ -71,6 +73,35 @@ public class LoginTest {
         System.out.println(encode);
         boolean matches = passwordEncoder.matches(TEST_PASSWORD, encode);
         Assertions.assertTrue(matches);
-        ResultMatcher
+//        ResultMatcher
+    }
+
+    private static final class BCryptMatcher extends BaseMatcher<CharSequence> {
+        private final String expectedValue;
+        private final PasswordEncoder passwordEncoder;
+
+        public BCryptMatcher(String expectedValue, PasswordEncoder passwordEncoder) {
+            this.expectedValue = expectedValue;
+            this.passwordEncoder = passwordEncoder;
+        }
+
+        public static Matcher<CharSequence> bcrypt(String expectedValue, PasswordEncoder passwordEncoder) {
+            return new BCryptMatcher(expectedValue, passwordEncoder);
+        }
+
+        @Override
+        public boolean matches(Object actual) {
+            return passwordEncoder.matches(expectedValue, (String) actual);
+        }
+
+        @Override
+        public void describeMismatch(Object item, Description description) {
+            super.describeMismatch(item, description);
+        }
+
+        @Override
+        public void describeTo(Description description) {
+
+        }
     }
 }
