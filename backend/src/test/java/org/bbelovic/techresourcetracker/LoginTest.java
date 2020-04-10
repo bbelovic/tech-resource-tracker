@@ -19,6 +19,7 @@ import java.util.Base64;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static java.lang.String.format;
+import static org.bbelovic.techresourcetracker.LoginTest.BCryptMatcher.bcrypt;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
@@ -53,7 +54,7 @@ public class LoginTest {
                 .header(AUTHORIZATION_HEADER_NAME, AUTHORIZATION_HEADER_VALUE))
                 .andExpect(jsonPath("$.authenticated", is(true)))
                 .andExpect(jsonPath("$.principal.username", is(equalTo(TEST_USERNAME))))
-                .andExpect(jsonPath("$.principal.password", BCryptMatcher.bcrypt(TEST_PASSWORD, passwordEncoder)))
+                .andExpect(jsonPath("$.principal.password", is(bcrypt(TEST_PASSWORD, passwordEncoder))))
                 .andExpect(jsonPath("$.authorities.[0].authority", is(equalTo("admin"))));
     }
 
@@ -73,10 +74,9 @@ public class LoginTest {
         System.out.println(encode);
         boolean matches = passwordEncoder.matches(TEST_PASSWORD, encode);
         Assertions.assertTrue(matches);
-//        ResultMatcher
     }
 
-    private static final class BCryptMatcher extends BaseMatcher<CharSequence> {
+     static final class BCryptMatcher extends BaseMatcher<CharSequence> {
         private final String expectedValue;
         private final PasswordEncoder passwordEncoder;
 
