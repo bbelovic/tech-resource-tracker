@@ -2,9 +2,10 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import org.hamcrest.BaseMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.Base64;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
@@ -22,6 +24,7 @@ import static java.lang.String.format;
 import static org.bbelovic.techresourcetracker.LoginTest.BCryptMatcher.bcrypt;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.number.BigDecimalCloseTo.closeTo;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -54,7 +57,7 @@ public class LoginTest {
                 .header(AUTHORIZATION_HEADER_NAME, AUTHORIZATION_HEADER_VALUE))
                 .andExpect(jsonPath("$.authenticated", is(true)))
                 .andExpect(jsonPath("$.principal.username", is(equalTo(TEST_USERNAME))))
-                .andExpect(jsonPath("$.principal.password", is(bcrypt(TEST_PASSWORD, passwordEncoder))))
+                .andExpect(jsonPath("$.principal.password", bcrypt(TEST_PASSWORD + "1", passwordEncoder)))
                 .andExpect(jsonPath("$.authorities.[0].authority", is(equalTo("admin"))));
     }
 
@@ -74,34 +77,37 @@ public class LoginTest {
         System.out.println(encode);
         boolean matches = passwordEncoder.matches(TEST_PASSWORD, encode);
         Assertions.assertTrue(matches);
+
+        MatcherAssert.assertThat(BigDecimal.TEN, is(closeTo(BigDecimal.ZERO, BigDecimal.ONE)));
     }
 
-     static final class BCryptMatcher extends BaseMatcher<CharSequence> {
-        private final String expectedValue;
+     static final class BCryptMatcher extends TypeSafeMatcher<String> {
+        private final String rawValue;
         private final PasswordEncoder passwordEncoder;
 
-        public BCryptMatcher(String expectedValue, PasswordEncoder passwordEncoder) {
-            this.expectedValue = expectedValue;
+        public BCryptMatcher(String rawValue, PasswordEncoder passwordEncoder) {
+            this.rawValue = rawValue;
             this.passwordEncoder = passwordEncoder;
         }
 
-        public static Matcher<CharSequence> bcrypt(String expectedValue, PasswordEncoder passwordEncoder) {
-            return new BCryptMatcher(expectedValue, passwordEncoder);
+        public static Matcher<String> bcrypt(String rawValue, PasswordEncoder passwordEncoder) {
+            return new BCryptMatcher(rawValue, passwordEncoder);
         }
 
-        @Override
-        public boolean matches(Object actual) {
-            return passwordEncoder.matches(expectedValue, (String) actual);
-        }
-
-        @Override
-        public void describeMismatch(Object item, Description description) {
-            super.describeMismatch(item, description);
-        }
+         @Override
+         protected boolean matchesSafely(String item) {
+             return passwordEncoder.matches(rawValue, item);
+         }
 
         @Override
         public void describeTo(Description description) {
-
+            description.appendText("BCrypt hash does not match for raw value ")
+                    .appendValue(rawValue);
         }
-    }
+
+         @Override
+         protected void describeMismatchSafely(String item, Description mismatchDescription) {
+             super.describeMismatchSafely(item, mismatchDescription);
+         }
+     }
 }
