@@ -78,7 +78,7 @@ public class LoginTest {
         boolean matches = passwordEncoder.matches(TEST_PASSWORD, encode);
         Assertions.assertTrue(matches);
 
-        MatcherAssert.assertThat(BigDecimal.TEN, is(closeTo(BigDecimal.ZERO, BigDecimal.ONE)));
+        MatcherAssert.assertThat(BigDecimal.TEN, is(closeTo(new BigDecimal("2"), BigDecimal.ONE)));
     }
 
      static final class BCryptMatcher extends TypeSafeMatcher<String> {
@@ -101,12 +101,13 @@ public class LoginTest {
 
         @Override
         public void describeTo(Description description) {
-            description.appendText("BCrypt hash does not match for raw value ")
+            description.appendText("BCrypt hashes do not match for raw value ")
                     .appendValue(rawValue);
         }
 
          @Override
          protected void describeMismatchSafely(String item, Description mismatchDescription) {
+            // bcrypt hash computed for raw value does not match bcrypt hash value from storage
              super.describeMismatchSafely(item, mismatchDescription);
          }
      }
