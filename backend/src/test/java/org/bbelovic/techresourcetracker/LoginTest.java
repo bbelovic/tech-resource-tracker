@@ -2,11 +2,6 @@ package org.bbelovic.techresourcetracker;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import org.hamcrest.Description;
-import org.hamcrest.Matcher;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.TypeSafeMatcher;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -16,15 +11,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
 import java.util.Base64;
 
 import static com.github.springtestdbunit.annotation.DatabaseOperation.CLEAN_INSERT;
 import static java.lang.String.format;
-import static org.bbelovic.techresourcetracker.LoginTest.BCryptMatcher.bcrypt;
+import static org.bbelovic.techresourcetracker.BCryptMatcher.bcryptHash;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.number.BigDecimalCloseTo.closeTo;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -45,7 +38,7 @@ public class LoginTest {
     private static final String TEST_USERNAME = "user";
     private static final String TEST_PASSWORD = "passwd";
     private static final byte[] AUTHORIZATION_HEADER_VALUE_BYTES = format("%s:%s", TEST_USERNAME, TEST_PASSWORD).getBytes();
-    private static final String AUTHORIZATION_HEADER_VALUE = "Basic "+ Base64.getEncoder().encodeToString(AUTHORIZATION_HEADER_VALUE_BYTES);
+    private static final String AUTHORIZATION_HEADER_VALUE = "Basic " + Base64.getEncoder().encodeToString(AUTHORIZATION_HEADER_VALUE_BYTES);
     public static final String USER_URI = "/user";
 
     private MockMvc mockMvc;
@@ -57,7 +50,7 @@ public class LoginTest {
                 .header(AUTHORIZATION_HEADER_NAME, AUTHORIZATION_HEADER_VALUE))
                 .andExpect(jsonPath("$.authenticated", is(true)))
                 .andExpect(jsonPath("$.principal.username", is(equalTo(TEST_USERNAME))))
-                .andExpect(jsonPath("$.principal.password", bcrypt(TEST_PASSWORD + "1", passwordEncoder)))
+                .andExpect(jsonPath("$.principal.password", bcryptHash(TEST_PASSWORD, passwordEncoder)))
                 .andExpect(jsonPath("$.authorities.[0].authority", is(equalTo("admin"))));
     }
 
@@ -71,44 +64,4 @@ public class LoginTest {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Test
-    public void test() {
-        String encode = passwordEncoder.encode(TEST_PASSWORD);
-        System.out.println(encode);
-        boolean matches = passwordEncoder.matches(TEST_PASSWORD, encode);
-        Assertions.assertTrue(matches);
-
-        MatcherAssert.assertThat(BigDecimal.TEN, is(closeTo(new BigDecimal("2"), BigDecimal.ONE)));
-    }
-
-     static final class BCryptMatcher extends TypeSafeMatcher<String> {
-        private final String rawValue;
-        private final PasswordEncoder passwordEncoder;
-
-        public BCryptMatcher(String rawValue, PasswordEncoder passwordEncoder) {
-            this.rawValue = rawValue;
-            this.passwordEncoder = passwordEncoder;
-        }
-
-        public static Matcher<String> bcrypt(String rawValue, PasswordEncoder passwordEncoder) {
-            return new BCryptMatcher(rawValue, passwordEncoder);
-        }
-
-         @Override
-         protected boolean matchesSafely(String item) {
-             return passwordEncoder.matches(rawValue, item);
-         }
-
-        @Override
-        public void describeTo(Description description) {
-            description.appendText("BCrypt hashes do not match for raw value ")
-                    .appendValue(rawValue);
-        }
-
-         @Override
-         protected void describeMismatchSafely(String item, Description mismatchDescription) {
-            // bcrypt hash computed for raw value does not match bcrypt hash value from storage
-             super.describeMismatchSafely(item, mismatchDescription);
-         }
-     }
 }
