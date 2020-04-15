@@ -29,7 +29,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         "spring.datasource.username=postgres",
         "logging.level.org.hibernate.type.descriptor.sql=trace",
         "logging.level.org.hibernate.SQL=debug",
-        "spring.datasource.url=jdbc:postgresql://localhost:5432/integration_testing"})
+        "spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver",
+        "spring.datasource.url=jdbc:tc:postgresql:9.6://localhost:5432/integration_testing?TC_INITSCRIPT=file:src/test/resources/init_database.sql"})
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-users.xml")
 public class LoginTest {
