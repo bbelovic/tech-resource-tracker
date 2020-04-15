@@ -78,4 +78,17 @@
                                  referencedTableName="tags"
                                  referencedColumnNames="id"/>
     </changeSet>
+    <changeSet id="10" author="bbelovic">
+        <createTable tableName="user_details">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(512)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
 </databaseChangeLog>

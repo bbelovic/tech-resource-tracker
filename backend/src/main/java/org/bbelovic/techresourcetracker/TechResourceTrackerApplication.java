@@ -1,6 +1,7 @@
 package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.trace.http.HttpTraceRepository;
 import org.springframework.boot.actuate.trace.http.InMemoryHttpTraceRepository;
@@ -10,7 +11,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
 
@@ -29,6 +32,11 @@ public class TechResourceTrackerApplication {
     }
 
     @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Bean
     public SimpleModule iso8601Serializers() {
         SimpleModule module = new SimpleModule();
         module.addSerializer(LocalDateTime.class, new ISO8601LocalDateTimeSerializer());
@@ -38,10 +46,12 @@ public class TechResourceTrackerApplication {
 
     @Configuration
     public static class SecurityAdapter extends WebSecurityConfigurerAdapter {
+        private UserDetailsService defaultUserDetailsService;
+        private PasswordEncoder passwordEncoder;
         @Override
         protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance())
-                    .withUser("user").password("passwd").roles("admin");
+            auth.userDetailsService(defaultUserDetailsService)
+                    .passwordEncoder(passwordEncoder);
         }
 
         @Override
@@ -58,6 +68,16 @@ public class TechResourceTrackerApplication {
                     .and()
                     .csrf()
                     .csrfTokenRepository(withHttpOnlyFalse());
+        }
+
+        @Autowired
+        public void setDefaultUserDetailsService(UserDetailsService defaultUserDetailsService) {
+            this.defaultUserDetailsService = defaultUserDetailsService;
+        }
+
+        @Autowired
+        public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+            this.passwordEncoder = passwordEncoder;
         }
     }
 }
