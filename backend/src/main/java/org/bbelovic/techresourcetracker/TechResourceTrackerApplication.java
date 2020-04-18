@@ -59,7 +59,8 @@ public class TechResourceTrackerApplication {
             http.httpBasic().and()
                     .authorizeRequests()
                     .antMatchers("/", "/runtime-es2015.js", "/polyfills-es2015.js", "/styles-es2015.js",
-                            "/vendor-es2015.js", "/main-es2015.js", "/scripts.js", "/favicon.ico", "/runtime")
+                            "/vendor-es2015.js", "/main-es2015.js", "/scripts.js", "/favicon.ico",
+                            "/runtime", "/register")
                     .permitAll()
                     .anyRequest()
                     .authenticated()
