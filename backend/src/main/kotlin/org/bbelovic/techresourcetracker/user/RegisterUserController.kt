@@ -1,7 +1,5 @@
 package org.bbelovic.techresourcetracker.user
 
-import com.fasterxml.jackson.annotation.JsonCreator
-import com.fasterxml.jackson.annotation.JsonProperty
 import org.bbelovic.techresourcetracker.user.entity.User
 import org.bbelovic.techresourcetracker.user.service.DefaultUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,4 +24,4 @@ class RegisterUserController {
     }
 }
 
-data class UserDTO(@JsonProperty("username") val username: String, val password: String, val passwordRepeated: String)
+data class UserDTO(val username: String, val password: String, val passwordRepeated: String)
