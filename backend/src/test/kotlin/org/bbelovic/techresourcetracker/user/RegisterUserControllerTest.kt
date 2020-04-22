@@ -41,4 +41,19 @@ class RegisterUserControllerTest {
             status { isCreated }
         }
     }
+
+    @Test
+    @ExpectedDatabase(value = "/expected-empty-users.xml", assertionMode = NON_STRICT_UNORDERED)
+    fun `should reject user registration when password and confirmed password don't match` () {
+        val payload = """
+            {"username":"jdoe", "password":"secret", "confirmedPassword":"blabol"}
+            """.trimIndent()
+        mockMvc.post("/register") {
+            with(csrf().asHeader())
+            contentType = APPLICATION_JSON
+            content = payload
+        }.andExpect {
+            status { isBadRequest }
+        }
+    }
 }

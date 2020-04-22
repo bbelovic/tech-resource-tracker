@@ -6,22 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
+import org.springframework.validation.BindingResult
+import org.springframework.validation.annotation.Validated
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-class RegisterUserController {
-    @Autowired
-    lateinit var userDetailsService: DefaultUserDetailsService
+class RegisterUserController(@Autowired val userDetailsService: DefaultUserDetailsService) {
+
     @PostMapping("/register", produces = [APPLICATION_JSON_VALUE])
-    fun registerUser(@RequestBody userDTO: UserDTO): ResponseEntity<String> {
+    fun registerUser(@Validated @RequestBody userDTO: UserDTO, result: BindingResult): ResponseEntity<String> {
         val user = User()
         user.username = userDTO.username
         user.password = userDTO.password
+        if (result.hasErrors()) {
+            return ResponseEntity("", HttpStatus.BAD_REQUEST)
+        }
         userDetailsService.registerUser(user)
         return ResponseEntity("xxx",HttpStatus.CREATED)
     }
 }
 
-data class UserDTO(val username: String, val password: String, val passwordRepeated: String)
+data class UserDTO(val username: String, val password: String, val confirmedPassword: String)
