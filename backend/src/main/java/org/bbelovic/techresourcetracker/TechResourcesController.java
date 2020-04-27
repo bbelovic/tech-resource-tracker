@@ -74,17 +74,16 @@ public class TechResourcesController {
 
     private TechnologyResource convertTechnologyResourceFromDTO(@RequestBody TechnologyResourceDTO resourceDTO) {
         var technologyResource = new TechnologyResource();
-        technologyResource.setId(resourceDTO.getId());
-        technologyResource.setId(resourceDTO.getId());
-        technologyResource.setType(resourceDTO.getType());
-        technologyResource.setStatus(resourceDTO.getStatus());
-        technologyResource.setCreatedOn(resourceDTO.getCreatedOn());
-        technologyResource.setLink(resourceDTO.getLink());
-        technologyResource.setTitle(resourceDTO.getTitle());
-        resourceDTO.getTags().forEach(tagDTO -> {
+        technologyResource.setId(resourceDTO.id());
+        technologyResource.setType(resourceDTO.type());
+        technologyResource.setStatus(resourceDTO.status());
+        technologyResource.setCreatedOn(resourceDTO.createdOn());
+        technologyResource.setLink(resourceDTO.link());
+        technologyResource.setTitle(resourceDTO.title());
+        resourceDTO.tags().forEach(tagDTO -> {
             var tag = new Tag();
-            tag.setId(tagDTO.getId());
-            tag.setName(tagDTO.getName());
+            tag.setId(tagDTO.id());
+            tag.setName(tagDTO.name());
             technologyResource.addTag(tag);
         });
         return technologyResource;

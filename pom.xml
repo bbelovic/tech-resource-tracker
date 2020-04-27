@@ -43,7 +43,6 @@
     </dependencyManagement>
 
     <build>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -58,17 +57,17 @@
                     <artifactId>maven-jar-plugin</artifactId>
                     <version>3.0.2</version>
                 </plugin>
-                <plugin>
+                <!--<plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>3.8.1</version>
                     <configuration>
                         <compilerArgs>
-                            <arg>--enable-preview</arg>
+                            <arg>&#45;&#45;enable-preview</arg>
                             <arg>-Xlint:preview</arg>
                         </compilerArgs>
                     </configuration>
-                </plugin>
+                </plugin>-->
             </plugins>
         </pluginManagement>
     </build>
