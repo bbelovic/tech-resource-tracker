@@ -40,7 +40,7 @@ public class LoginTest {
     private static final String TEST_PASSWORD = "passwd";
     private static final byte[] AUTHORIZATION_HEADER_VALUE_BYTES = format("%s:%s", TEST_USERNAME, TEST_PASSWORD).getBytes();
     private static final String AUTHORIZATION_HEADER_VALUE = "Basic " + Base64.getEncoder().encodeToString(AUTHORIZATION_HEADER_VALUE_BYTES);
-    public static final String USER_URI = "/user";
+    private static final String USER_URI = "/user";
 
     private MockMvc mockMvc;
     private PasswordEncoder passwordEncoder;

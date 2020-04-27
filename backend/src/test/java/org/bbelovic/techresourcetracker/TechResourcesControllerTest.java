@@ -70,11 +70,11 @@ public class TechResourcesControllerTest {
     @Test
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources.xml")
     public void should_create_new_resource_post_request() throws Exception {
-        String requestPayload =
-                "{\"id\":0,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\", " +
-                        "\"tags\":[{\"id\":0, \"name\":\"kotlin\"}]}";
+        var requestPayload = """
+                {"id":0,"title":"new title","link":"http://www.blabol.com","createdOn":"2018-01-01T10:20:30",
+                 "status":"NEW","type":"PRESENTATION","tags":[{"id":0, "name":"kotlin"}]}";
+                """;
+
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
