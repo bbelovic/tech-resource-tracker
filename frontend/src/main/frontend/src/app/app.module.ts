@@ -13,6 +13,7 @@ import { TagService } from './tag-service';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
+import { RegisterUserComponent } from './register-user/register-user.component';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -27,7 +28,8 @@ const routes: Routes = [
     AppComponent, TechResourcesComponent, AddTechResourceComponent,
     EditTechResourceComponent,
     LoginComponent,
-    FooterComponent
+    FooterComponent,
+    RegisterUserComponent
   ],
   imports: [
     BrowserModule,

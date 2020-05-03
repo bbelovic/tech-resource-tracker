@@ -1,0 +1,16 @@
+<p>
+  <form class="navbar-form navbar-right" *ngIf="!authService.isAuthenticated()">
+    <div class="form-group">
+        <input type="text" placeholder="Username" #username class="form-control"/>
+    </div>
+    <div class="form-group">
+        <input type="password" placeholder="Password" #password class="form-control"/>
+    </div>
+    <div class="form-group">
+      <input type="password" placeholder="Confirmed password" #confirmedPassword class="form-control"/>
+  </div>
+    <div class="form-group">
+        <button class="btn btn-default" (click)="registerUser(username.value, password.value, confirmedPassword.value)">Register</button>
+    </div>
+</form>
+</p>
