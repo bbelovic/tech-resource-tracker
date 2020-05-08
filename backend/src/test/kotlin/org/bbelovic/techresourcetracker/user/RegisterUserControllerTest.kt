@@ -42,6 +42,7 @@ class RegisterUserControllerTest {
             content = payload
         }.andExpect {
             status { isCreated }
+            content { string("ok") }
         }
     }
 
@@ -57,6 +58,7 @@ class RegisterUserControllerTest {
             content = invalidPayload
         }.andExpect {
             status { isBadRequest }
+            content { string("error") }
         }
     }
 }

@@ -29,10 +29,10 @@ class RegisterUserController(@Autowired val userDetailsService: DefaultUserDetai
         user.username = userDTO.username
         user.password = userDTO.password
         if (result.hasErrors()) {
-            return ResponseEntity("", HttpStatus.BAD_REQUEST)
+            return ResponseEntity("error", HttpStatus.BAD_REQUEST)
         }
         userDetailsService.registerUser(user)
-        return ResponseEntity("xxx",HttpStatus.CREATED)
+        return ResponseEntity("ok",HttpStatus.CREATED)
     }
 }
 
