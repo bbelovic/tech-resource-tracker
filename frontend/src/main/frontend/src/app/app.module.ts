@@ -14,6 +14,7 @@ import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
 import { RegisterUserComponent } from './register-user/register-user.component';
+import { RegisterUserService } from './services/register-user.service';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -37,7 +38,8 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [TechResourceService, TagService, AuthenticationService, RuntimeInformationService],
+  providers: [TechResourceService, TagService, AuthenticationService,
+    RuntimeInformationService, RegisterUserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
