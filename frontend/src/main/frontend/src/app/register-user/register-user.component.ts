@@ -8,7 +8,7 @@ import { UserRegistration } from 'app/shared/user-registration';
   styleUrls: ['./register-user.component.css']
 })
 export class RegisterUserComponent implements OnInit {
-  private result: string
+   result = ''
 
   constructor(private registrationService: RegisterUserService) { }
 
