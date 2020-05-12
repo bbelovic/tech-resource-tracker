@@ -5,19 +5,17 @@ import { AuthenticationService } from './authentication-service';
 import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
 import { RuntimeInformationServiceStub } from './shared/runtime-information-service-stub';
+import { AuthenticationServiceStub } from './shared/authentication-service-stub';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
-    const authServiceStub = {
-      isAuthenticated: function() {return true}
-    }
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([])],
       declarations: [
         AppComponent, FooterComponent
       ],
-      providers: [{provide: AuthenticationService, useValue: authServiceStub},
+      providers: [{provide: AuthenticationService, useValue: new AuthenticationServiceStub()},
         {provide: RuntimeInformationService, useValue: new RuntimeInformationServiceStub()}
       ]
     }).compileComponents();
