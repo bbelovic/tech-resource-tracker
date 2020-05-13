@@ -24,24 +24,26 @@ describe('RegisterUserComponent', () => {
      fixture.detectChanges();
    });
 
-  it('should create', () => {
+  it('should create component', () => {
     fixture = TestBed.createComponent(RegisterUserComponent);
-    component = fixture.debugElement.componentInstance
+    component = fixture.debugElement.componentInstance;
     expect(component).toBeTruthy();
+    expect(component.result).toEqual('');
   });
 
   it('should display success message upon succesful user registration', () => {
     fixture = TestBed.createComponent(RegisterUserComponent);
     component = fixture.debugElement.componentInstance;
+    const resultMessage = 'success';
     const service = fixture.debugElement.injector.get(RegisterUserService);
-    const obs = new Observable<string>(subscriber => {subscriber.next('success')});
-    spyOn(service, 'registerNewUser').and.returnValue(obs)
+    const obs = new Observable<string>(subscriber => {subscriber.next(resultMessage)});
+    spyOn(service, 'registerNewUser').and.returnValue(obs);
 
 
-    const button = fixture.debugElement.query(By.css('button'))
-    button.triggerEventHandler('click', {})
+    const button = fixture.debugElement.query(By.css('button'));
+    button.triggerEventHandler('click', {});
 
-    fixture.detectChanges()
-    expect(component.result).toEqual('success')
+    fixture.detectChanges();
+    expect(component.result).toEqual(resultMessage);
   });
 });
