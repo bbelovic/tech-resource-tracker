@@ -21,7 +21,8 @@
                       </div>
                   </form>
                   <button *ngIf="authService.isAuthenticated()" (click)="logout()" class="btn btn-default navbar-btn">Logout</button>
-              </div>
+                  <a routerLink='/register-new-user'>Register</a>
+                </div>
           </div>
       </nav>
       <router-outlet></router-outlet>

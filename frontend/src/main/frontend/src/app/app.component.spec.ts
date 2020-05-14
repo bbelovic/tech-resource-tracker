@@ -6,6 +6,7 @@ import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
 import { RuntimeInformationServiceStub } from './shared/runtime-information-service-stub';
 import { AuthenticationServiceStub } from './shared/authentication-service-stub';
+import { By } from '@angular/platform-browser';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -39,4 +40,11 @@ describe('AppComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('a').textContent).toContain('Tech resource tracker');
   }));
+
+  it('should contain registration link', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const hyperlinks = fixture.debugElement.queryAll(By.css('a'))
+    const result = hyperlinks.find(el => el.nativeElement.innerText === 'Register')
+    expect(result).toBeTruthy()
+  });
 });

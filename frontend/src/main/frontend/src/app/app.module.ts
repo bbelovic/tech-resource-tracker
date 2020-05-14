@@ -21,7 +21,8 @@ const routes: Routes = [
   {path: 'login2', component: LoginComponent},
   {path: 'tech-resources', component: TechResourcesComponent},
   {path: 'add-tech-resource', component: AddTechResourceComponent},
-  {path: 'edit-tech-resource/:id', component: EditTechResourceComponent}
+  {path: 'edit-tech-resource/:id', component: EditTechResourceComponent},
+  {path: 'register-new-user', component: RegisterUserComponent}
 ];
 
 @NgModule({
