@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RegisterUserService } from 'app/services/register-user.service';
 import { UserRegistration } from 'app/shared/user-registration';
+import { RegistrationResponse } from 'app/shared/registration-response';
 
 @Component({
   selector: 'app-register-user',
@@ -9,6 +10,7 @@ import { UserRegistration } from 'app/shared/user-registration';
 })
 export class RegisterUserComponent implements OnInit {
    result = ''
+   formSubmitted = false;
 
   constructor(private registrationService: RegisterUserService) { }
 
@@ -18,6 +20,11 @@ export class RegisterUserComponent implements OnInit {
   createNewUser(username: string, password: string, confirmedPassword: string) {
     const user = new UserRegistration(username, password, confirmedPassword)
     this.registrationService.registerNewUser(user)
-      .subscribe(resp => this.result = resp.result)
+      .subscribe(resp => this.showAlert(resp))
+  }
+
+  private showAlert(response: RegistrationResponse) {
+    this.formSubmitted = response.result !== ''
+    this.result = response.result
   }
 }

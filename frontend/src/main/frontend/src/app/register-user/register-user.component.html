@@ -1,16 +1,26 @@
-<p>
-  {{result}}
-  <form class="navbar-form navbar-right">
-    <div class="form-group">
-        <input type="text" placeholder="Username" #username class="form-control"/>
+<div class="container">
+  <div class="alert alert-success" *ngIf="formSubmitted">
+    {{result}}
+  </div>
+  <form>
+    <h3>Register new user</h3>
+      <div class="form-group">
+        <label for="username">Username </label>
+        <input type="text" name="username" placeholder="Username" #username class="form-control"/>
     </div>
+
     <div class="form-group">
-        <input type="password" placeholder="Password" #password class="form-control"/>
+        <label for="password">Password </label>
+        <input type="password" name="password" placeholder="Password" #password class="form-control"/>
     </div>
+
     <div class="form-group">
-      <input type="password" placeholder="Confirmed password" #confirmedPassword class="form-control"/>
+      <label for="confirmedPassword">Confirm password </label>
+      <input type="password" name="confirmedPassword" placeholder="Confirmed password" #confirmedPassword class="form-control"/>
     </div>
+
     <div class="form-group">
         <button class="btn btn-default" (click)="createNewUser(username.value, password.value, confirmedPassword.value)">Register</button>
     </div>
   </form>
+</div>
