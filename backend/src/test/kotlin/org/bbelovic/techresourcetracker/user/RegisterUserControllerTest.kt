@@ -43,7 +43,8 @@ class RegisterUserControllerTest {
             content = payload
         }.andExpect {
             status { isCreated }
-            jsonPath("$.result", equalTo("ok"))
+            jsonPath("$.error", equalTo(false))
+            jsonPath("$.resultMessage", equalTo("New user [jdoe] registered."))
         }
     }
 
@@ -59,7 +60,8 @@ class RegisterUserControllerTest {
             content = invalidPayload
         }.andExpect {
             status { isBadRequest }
-            jsonPath("$.result", equalTo("error"))
+            jsonPath("$.error", equalTo(true))
+            jsonPath("$.resultMessage", equalTo("User registration failed."))
         }
     }
 }

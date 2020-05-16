@@ -11,11 +11,26 @@ describe('RegisterUserComponent', () => {
    let component: RegisterUserComponent;
    let fixture: ComponentFixture<RegisterUserComponent>;
 
+
+   function success() {
+     const result = new RegistrationResponse();
+     result.error = false;
+     result.resultMessage = 'registration succeeded';
+     return result
+   }
+
+   function failure() {
+    const result = new RegistrationResponse();
+    result.error = true;
+    result.resultMessage = 'registration failed';
+    return result
+   }
+
    const parameters = [
     {description: 'should display success message upon succesful user registration',
-      elementClass: '.alert-success', responseMessage: 'OK'},
+      elementClass: '.alert-success', registrationResponse: success()},
     {description: 'should display error message upon unsuccesful user registration',
-      elementClass: '.alert-danger', responseMessage: 'ERROR'}
+      elementClass: '.alert-danger', registrationResponse: failure()}
   ]
 
   beforeEach(async(() => {
@@ -47,8 +62,7 @@ describe('RegisterUserComponent', () => {
       fixture = TestBed.createComponent(RegisterUserComponent);
       component = fixture.debugElement.componentInstance;
 
-      const response = new RegistrationResponse();
-      response.result = parameter.responseMessage;
+      const response = parameter.registrationResponse;
       const service = fixture.debugElement.injector.get(RegisterUserService);
       const obs = new Observable<RegistrationResponse>(subscriber => {subscriber.next(response)});
       spyOn(service, 'registerNewUser').and.returnValue(obs);
@@ -59,7 +73,7 @@ describe('RegisterUserComponent', () => {
       fixture.detectChanges();
       const alert = fixture.debugElement.query(By.css(parameter.elementClass))
       expect(component.formSubmitted).toBeTrue()
-      expect(alert.nativeElement.innerText).toEqual(parameter.responseMessage)
+      expect(alert.nativeElement.innerText).toEqual(parameter.registrationResponse.resultMessage)
 
     });
   });

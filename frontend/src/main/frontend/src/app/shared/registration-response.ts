@@ -1,3 +1,4 @@
 export class RegistrationResponse {
-    result: string
+    error = false
+    resultMessage: string
 }

@@ -3,7 +3,8 @@ package org.bbelovic.techresourcetracker.user
 import org.bbelovic.techresourcetracker.user.entity.User
 import org.bbelovic.techresourcetracker.user.service.DefaultUserDetailsService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatus.BAD_REQUEST
+import org.springframework.http.HttpStatus.CREATED
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
 import org.springframework.validation.BindingResult
@@ -30,12 +31,14 @@ class RegisterUserController(@Autowired val userDetailsService: DefaultUserDetai
         user.password = userDTO.password
 
         if (result.hasErrors()) {
-            return ResponseEntity(RegistrationResponseDTO("error"), HttpStatus.BAD_REQUEST)
+            val message = "User registration failed."
+            return ResponseEntity(RegistrationResponseDTO(message, true), BAD_REQUEST)
         }
         userDetailsService.registerUser(user)
-        return ResponseEntity(RegistrationResponseDTO("ok"),HttpStatus.CREATED)
+        val message = "New user [${user.username}] registered."
+        return ResponseEntity(RegistrationResponseDTO(message, false), CREATED)
     }
 }
 
 data class UserDTO(val username: String, val password: String, val confirmedPassword: String)
-data class RegistrationResponseDTO(val result: String)
+data class RegistrationResponseDTO(val resultMessage: String, val error: Boolean)

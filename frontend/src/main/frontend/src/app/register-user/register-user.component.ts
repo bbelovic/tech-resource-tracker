@@ -25,8 +25,8 @@ export class RegisterUserComponent implements OnInit {
   }
 
   private showAlert(response: RegistrationResponse) {
-    this.formSubmitted = response.result !== ''
-    this.alertClass = response.result === 'OK' ? 'alert alert-success' : 'alert alert-danger'
-    this.result = response.result
+    this.formSubmitted = true
+    this.alertClass = response.error ? 'alert alert-danger' : 'alert alert-success'
+    this.result = response.resultMessage
   }
 }
