@@ -11,6 +11,13 @@ describe('RegisterUserComponent', () => {
    let component: RegisterUserComponent;
    let fixture: ComponentFixture<RegisterUserComponent>;
 
+   const parameters = [
+    {description: 'should display success message upon succesful user registration',
+      elementClass: '.alert-success', responseMessage: 'OK'},
+    {description: 'should display error message upon unsuccesful user registration',
+      elementClass: '.alert-danger', responseMessage: 'ERROR'}
+  ]
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ RegisterUserComponent ],
@@ -34,24 +41,26 @@ describe('RegisterUserComponent', () => {
     expect(alerts).toEqual([])
   });
 
-  it('should display success message upon succesful user registration', () => {
-    fixture = TestBed.createComponent(RegisterUserComponent);
-    component = fixture.debugElement.componentInstance;
-    const result = 'OK';
-    const response = new RegistrationResponse();
-    response.result = result;
-    const service = fixture.debugElement.injector.get(RegisterUserService);
-    const obs = new Observable<RegistrationResponse>(subscriber => {subscriber.next(response)});
-    spyOn(service, 'registerNewUser').and.returnValue(obs);
+  parameters.forEach((parameter) => {
+    it(parameter.description, () => {
+      fixture = TestBed.createComponent(RegisterUserComponent);
+      component = fixture.debugElement.componentInstance;
 
+      const response = new RegistrationResponse();
+      response.result = parameter.responseMessage;
+      const service = fixture.debugElement.injector.get(RegisterUserService);
+      const obs = new Observable<RegistrationResponse>(subscriber => {subscriber.next(response)});
+      spyOn(service, 'registerNewUser').and.returnValue(obs);
 
-    const button = fixture.debugElement.query(By.css('button'));
-    button.triggerEventHandler('click', {});
+      const button = fixture.debugElement.query(By.css('button'));
+      button.triggerEventHandler('click', {});
 
-    fixture.detectChanges();
-    const alert = fixture.debugElement.query(By.css('.alert-success'))
-    expect(component.formSubmitted).toBeTrue()
-    expect(alert.nativeElement.innerText).toEqual(result)
+      fixture.detectChanges();
+      const alert = fixture.debugElement.query(By.css(parameter.elementClass))
+      expect(component.formSubmitted).toBeTrue()
+      expect(alert.nativeElement.innerText).toEqual(parameter.responseMessage)
 
+    });
   });
+
 });

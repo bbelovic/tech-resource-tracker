@@ -11,6 +11,7 @@ import { RegistrationResponse } from 'app/shared/registration-response';
 export class RegisterUserComponent implements OnInit {
    result = ''
    formSubmitted = false;
+   alertClass = ''
 
   constructor(private registrationService: RegisterUserService) { }
 
@@ -25,6 +26,7 @@ export class RegisterUserComponent implements OnInit {
 
   private showAlert(response: RegistrationResponse) {
     this.formSubmitted = response.result !== ''
+    this.alertClass = response.result === 'OK' ? 'alert alert-success' : 'alert alert-danger'
     this.result = response.result
   }
 }
