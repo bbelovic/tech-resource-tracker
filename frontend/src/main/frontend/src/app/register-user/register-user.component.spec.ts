@@ -37,6 +37,7 @@ describe('RegisterUserComponent', () => {
     component = fixture.debugElement.componentInstance;
     expect(component).toBeTruthy();
     expect(component.result).toEqual('');
+    expect(component.alertClass).toEqual('');
     const alerts = fixture.debugElement.queryAll(By.css('alert'));
     expect(alerts).toEqual([])
   });
