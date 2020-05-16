@@ -5,6 +5,7 @@ import { RegisterUserService } from 'app/services/register-user.service';
 import { RegisterUserServiceStub } from 'app/shared/register-user-service-stub';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
+import { RegistrationResponse } from 'app/shared/registration-response';
 
 describe('RegisterUserComponent', () => {
    let component: RegisterUserComponent;
@@ -34,9 +35,10 @@ describe('RegisterUserComponent', () => {
   it('should display success message upon succesful user registration', () => {
     fixture = TestBed.createComponent(RegisterUserComponent);
     component = fixture.debugElement.componentInstance;
-    const resultMessage = 'success';
+    const response = new RegistrationResponse();
+    response.result = 'success';
     const service = fixture.debugElement.injector.get(RegisterUserService);
-    const obs = new Observable<string>(subscriber => {subscriber.next(resultMessage)});
+    const obs = new Observable<RegistrationResponse>(subscriber => {subscriber.next(response)});
     spyOn(service, 'registerNewUser').and.returnValue(obs);
 
 
@@ -44,6 +46,6 @@ describe('RegisterUserComponent', () => {
     button.triggerEventHandler('click', {});
 
     fixture.detectChanges();
-    expect(component.result).toEqual(resultMessage);
+    expect(component.result).toEqual('success');
   });
 });

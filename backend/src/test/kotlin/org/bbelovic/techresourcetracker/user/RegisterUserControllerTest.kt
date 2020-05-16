@@ -4,6 +4,7 @@ import com.github.springtestdbunit.DbUnitTestExecutionListener
 import com.github.springtestdbunit.annotation.DatabaseSetup
 import com.github.springtestdbunit.annotation.ExpectedDatabase
 import com.github.springtestdbunit.assertion.DatabaseAssertionMode.NON_STRICT_UNORDERED
+import org.hamcrest.Matchers.equalTo
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -42,7 +43,7 @@ class RegisterUserControllerTest {
             content = payload
         }.andExpect {
             status { isCreated }
-            content { string("ok") }
+            jsonPath("$.result", equalTo("ok"))
         }
     }
 
@@ -58,7 +59,7 @@ class RegisterUserControllerTest {
             content = invalidPayload
         }.andExpect {
             status { isBadRequest }
-            content { string("error") }
+            jsonPath("$.result", equalTo("error"))
         }
     }
 }

@@ -24,16 +24,18 @@ class RegisterUserController(@Autowired val userDetailsService: DefaultUserDetai
     }
 
     @PostMapping("/register", produces = [APPLICATION_JSON_VALUE])
-    fun registerUser(@Validated @RequestBody userDTO: UserDTO, result: BindingResult): ResponseEntity<String> {
+    fun registerUser(@Validated @RequestBody userDTO: UserDTO, result: BindingResult): ResponseEntity<RegistrationResponseDTO> {
         val user = User()
         user.username = userDTO.username
         user.password = userDTO.password
+
         if (result.hasErrors()) {
-            return ResponseEntity("error", HttpStatus.BAD_REQUEST)
+            return ResponseEntity(RegistrationResponseDTO("error"), HttpStatus.BAD_REQUEST)
         }
         userDetailsService.registerUser(user)
-        return ResponseEntity("ok",HttpStatus.CREATED)
+        return ResponseEntity(RegistrationResponseDTO("ok"),HttpStatus.CREATED)
     }
 }
 
 data class UserDTO(val username: String, val password: String, val confirmedPassword: String)
+data class RegistrationResponseDTO(val result: String)

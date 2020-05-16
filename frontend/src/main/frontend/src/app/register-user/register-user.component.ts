@@ -18,6 +18,6 @@ export class RegisterUserComponent implements OnInit {
   createNewUser(username: string, password: string, confirmedPassword: string) {
     const user = new UserRegistration(username, password, confirmedPassword)
     this.registrationService.registerNewUser(user)
-      .subscribe(resp => this.result = resp)
+      .subscribe(resp => this.result = resp.result)
   }
 }
