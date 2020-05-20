@@ -8,3 +8,8 @@ addons:
   chrome: stable
 script:
 - mvn clean test
+deploy:
+  provider: heroku
+  api_key:
+    secure: eUUJkoY0GutZMqrLbsm1poyMDlgFk6HbNZpUWbk1CFm/FniZR7tmdXEpC0kVFN0/SYiKmm6uTEnPiV0581EMltMfBJ4lGgPAT8RH5Gp4Ggz29oDK3l5rcszCfL/omxqF+Fm83kRpbechLQQn2R+htiJx3zdkUCuU1WE1ol1nIzL4OL+dYRejv2SlbzF1xuzRV3zDI83K//UvZP/9212FIsDQYRt8PTEVh2vgmPvkcpjVCh+m7DtQ3oMZoeIRDXF5ndaTdBB3v7Uz9hYZCBm76lgfTbLEzblaTPrrbiqAMcHWWiOApRQR3FUfr7MlW3APSJFhMDhQ73hCuK+h32Ht/G9L6mWuaNhQw/t8lbSXj1jdzYRFEF/5etftBh8EUjegwrwFEwwKXBUW0rxZx9yJAFqHlNI0BUBItanvBnFo/8jn9VZj1fOJVbt+sRcixlzgb/V40KAl2u0sJCKxtjxw8K1EnpNAPTiU5qyHB7xFoESxNsQPToboJ/oAnG6KAcKyOZRzc0C/sd8BarT0tDZCL0g/E4+WQebkR18Wlh11MSrMKwFByCBBr46GWF76TRhn+HRBClE0/kLj3XLSf1Y11SnzqsyMOBLeja5qGji0eDuuGX2CZkGBZiuo/ZFDvoV2lw4Uf128gUNlonYl+oqkWwPF+n91SznpdE1v8ovwSi8=
+  app: tech-resource-tracker
