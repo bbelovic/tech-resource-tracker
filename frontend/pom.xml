@@ -17,13 +17,9 @@
     </parent>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <frontend.plugin.version>1.9.1</frontend.plugin.version>
+        <node.version>v10.16.3</node.version>
     </properties>
-
-    <dependencies>
-
-    </dependencies>
 
     <build>
         <plugins>
@@ -34,9 +30,9 @@
             <plugin>
                 <groupId>com.github.eirslett</groupId>
                 <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.9.1</version>
+                <version>${frontend.plugin.version}</version>
                 <configuration>
-                    <nodeVersion>v10.16.3</nodeVersion>
+                    <nodeVersion>${node.version}</nodeVersion>
                     <installDirectory>target</installDirectory>
                     <workingDirectory>src/main/frontend</workingDirectory>
                 </configuration>

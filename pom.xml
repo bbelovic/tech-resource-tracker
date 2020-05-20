@@ -22,6 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>14</java.version>
+        <testcontainers.version>1.13.0</testcontainers.version>
     </properties>
 
 
@@ -35,7 +36,7 @@
             <dependency>
                 <groupId>org.testcontainers</groupId>
                 <artifactId>testcontainers-bom</artifactId>
-                <version>1.13.0</version>
+                <version>${testcontainers.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -43,7 +44,6 @@
     </dependencyManagement>
 
     <build>
-
         <pluginManagement>
             <plugins>
                 <plugin>
@@ -56,18 +56,6 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>3.0.2</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.8.1</version>
-                    <configuration>
-                        <compilerArgs>
-                            <arg>--enable-preview</arg>
-                            <arg>-Xlint:preview</arg>
-                        </compilerArgs>
-                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>

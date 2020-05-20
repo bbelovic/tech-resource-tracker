@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.bbelovic.techresourcetracker.TechnologyResourceStatus.NEW;
@@ -27,7 +27,7 @@ public class ISO8601LocalDateTimeDeserializerTest {
 
         var expected = new TechnologyResourceDTO(10L, "test title", "www.blabol.com",
                 LocalDateTime.of(2018, 1, 1, 10, 20, 30), NEW, PRESENTATION,
-                Collections.singleton(new TagDTO(1L, "java")));
+                Set.of(new TagDTO(1L, "java")));
         Object dtoValue = mapper.readerFor(TechnologyResourceDTO.class).readValue(json);
         assertThat(dtoValue).isEqualTo(expected);
     }

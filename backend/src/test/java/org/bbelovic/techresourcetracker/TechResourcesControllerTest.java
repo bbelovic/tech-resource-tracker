@@ -41,9 +41,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @TestExecutionListeners(mergeMode = MERGE_WITH_DEFAULTS, listeners = DbUnitTestExecutionListener.class)
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-technology-resources-tags.xml")
 @DatabaseSetup(type = CLEAN_INSERT, value = "/setup-tech-resources.xml")
-public class TechResourceControllerTest {
+public class TechResourcesControllerTest {
 
-    private static final Logger log = LoggerFactory.getLogger(TechResourceControllerTest.class);
+    private static final Logger log = LoggerFactory.getLogger(TechResourcesControllerTest.class);
     private static final String TECH_RESOURCES_BASIC_URI = "/tech-resources";
     private static final String TEST_USER = "user";
     private static final String TEST_PASSWORD = "passwd";
@@ -70,11 +70,11 @@ public class TechResourceControllerTest {
     @Test
     @ExpectedDatabase(assertionMode = NON_STRICT_UNORDERED, value = "/expected-tech-resources.xml")
     public void should_create_new_resource_post_request() throws Exception {
-        String requestPayload =
-                "{\"id\":0,\"title\":\"new title\"" +
-                        ",\"link\":\"http://www.blabol.com\", " +
-                        "\"createdOn\":\"2018-01-01T10:20:30\", \"status\":\"NEW\", \"type\":\"PRESENTATION\", " +
-                        "\"tags\":[{\"id\":0, \"name\":\"kotlin\"}]}";
+        var requestPayload = """
+                {"id":0,"title":"new title","link":"http://www.blabol.com","createdOn":"2018-01-01T10:20:30",
+                 "status":"NEW","type":"PRESENTATION","tags":[{"id":0, "name":"kotlin"}]}";
+                """;
+
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
                 .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
