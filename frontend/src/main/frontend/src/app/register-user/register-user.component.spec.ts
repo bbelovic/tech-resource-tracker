@@ -10,7 +10,6 @@ import { RegistrationResponse } from 'app/shared/registration-response';
 describe('RegisterUserComponent', () => {
    let component: RegisterUserComponent;
    let fixture: ComponentFixture<RegisterUserComponent>;
-   let registerUserService: jasmine.SpyObj<RegisterUserService>;
 
 
    function success() {
