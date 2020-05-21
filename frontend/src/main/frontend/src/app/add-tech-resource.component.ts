@@ -12,9 +12,9 @@ import { TagService } from './tag-service';
     styleUrls: ['./add-tech-resource.component.css']
 })
 export class AddTechResourceComponent implements OnInit {
-    private existingTags: Array<Tag> = [];
-    private assignedTags: Array<Tag> = [];
-    constructor(private techService: TechResourceService, 
+    public existingTags: Array<Tag> = [];
+    public assignedTags: Array<Tag> = [];
+    constructor(private techService: TechResourceService,
         private tagService: TagService,
         private router: Router) {}
 

@@ -14,15 +14,15 @@ import { TagService } from './tag-service';
     styleUrls: ['./edit-tech-resource.component.css']
 })
 export class EditTechResourceComponent implements OnInit {
-    private resource: TechResource;
-    private existingTags: Array<Tag> = [];
-    private assignedTags: Array<Tag> = [];
+    public resource: TechResource;
+    public existingTags: Array<Tag> = [];
+    public assignedTags: Array<Tag> = [];
     constructor(private techResourceService: TechResourceService,
             private tagService: TagService,
             private route: ActivatedRoute, private router: Router) {}
 
     ngOnInit(): void {
-        let id: number = +this.route.snapshot.paramMap.get('id');
+        const id: number = +this.route.snapshot.paramMap.get('id');
         this.tagService.getTags()
             .then(res => this.existingTags = res);
         this.techResourceService.getTechResourceById(id)

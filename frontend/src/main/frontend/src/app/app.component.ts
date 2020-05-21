@@ -12,7 +12,7 @@ export class AppComponent {
   brand = 'Tech resource tracker';
 
   constructor(private router: Router,
-    private authService: AuthenticationService) {}
+    public authService: AuthenticationService) {}
 
   login(username: string, password: string): void {
       this.authService.login(username, password)
