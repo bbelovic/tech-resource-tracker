@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterUserComponent } from './register-user.component';
 import { RegisterUserService } from 'app/services/register-user.service';
-import { RegisterUserServiceStub } from 'app/shared/register-user-service-stub';
 import { Observable } from 'rxjs';
 import { By } from '@angular/platform-browser';
 import { RegistrationResponse } from 'app/shared/registration-response';
@@ -10,23 +9,9 @@ import { RegistrationResponse } from 'app/shared/registration-response';
 describe('RegisterUserComponent', () => {
    let component: RegisterUserComponent;
    let fixture: ComponentFixture<RegisterUserComponent>;
+   let registerUserService: jasmine.SpyObj<RegisterUserService>;
 
-
-   function success() {
-     const result = new RegistrationResponse();
-     result.error = false;
-     result.resultMessage = 'registration succeeded';
-     return result
-   }
-
-   function failure() {
-    const result = new RegistrationResponse();
-    result.error = true;
-    result.resultMessage = 'registration failed';
-    return result
-   }
-
-   const parameters = [
+   const testParameters = [
     {description: 'should display success message upon succesful user registration',
       elementClass: '.alert-success', registrationResponse: success()},
     {description: 'should display error message upon unsuccesful user registration',
@@ -34,11 +19,13 @@ describe('RegisterUserComponent', () => {
   ]
 
   beforeEach(async(() => {
+    const spy = jasmine.createSpyObj('RegisterUserService', ['registerNewUser']);
     TestBed.configureTestingModule({
       declarations: [ RegisterUserComponent ],
-      providers: [{provide: RegisterUserService, useValue: new RegisterUserServiceStub()}]
+      providers: [{provide: RegisterUserService, useValue: spy}]
     })
     .compileComponents();
+    registerUserService = TestBed.inject(RegisterUserService) as jasmine.SpyObj<RegisterUserService>;
   }));
 
    beforeEach(() => {
@@ -57,15 +44,14 @@ describe('RegisterUserComponent', () => {
     expect(alerts).toEqual([])
   });
 
-  parameters.forEach((parameter) => {
+  testParameters.forEach((parameter) => {
     it(parameter.description, () => {
       fixture = TestBed.createComponent(RegisterUserComponent);
       component = fixture.debugElement.componentInstance;
 
       const response = parameter.registrationResponse;
-      const service = fixture.debugElement.injector.get(RegisterUserService);
       const obs = new Observable<RegistrationResponse>(subscriber => {subscriber.next(response)});
-      spyOn(service, 'registerNewUser').and.returnValue(obs);
+      registerUserService.registerNewUser.and.returnValue(obs);
 
       const button = fixture.debugElement.query(By.css('button'));
       button.triggerEventHandler('click', {});
@@ -82,9 +68,8 @@ describe('RegisterUserComponent', () => {
       component = fixture.debugElement.componentInstance;
 
       const response = success();
-      const service = fixture.debugElement.injector.get(RegisterUserService);
       const obs = new Observable<RegistrationResponse>(subscriber => {subscriber.next(response)});
-      spyOn(service, 'registerNewUser').and.returnValue(obs);
+      registerUserService.registerNewUser.and.returnValue(obs);
 
       const button = fixture.debugElement.query(By.css('button'));
       button.triggerEventHandler('click', {});
@@ -99,4 +84,19 @@ describe('RegisterUserComponent', () => {
       expect(component.formSubmitted).toBeFalse()
       expect(component.alertClass).toEqual('')
   });
+
+  function success() {
+    const result = new RegistrationResponse();
+    result.error = false;
+    result.resultMessage = 'registration succeeded';
+    return result
+  }
+
+  function failure() {
+   const result = new RegistrationResponse();
+   result.error = true;
+   result.resultMessage = 'registration failed';
+   return result
+  }
+
 });
