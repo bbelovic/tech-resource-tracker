@@ -5,8 +5,7 @@ import { AuthenticationService } from './authentication-service';
 import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
 import { By } from '@angular/platform-browser';
-import { RuntimeInformation } from './shared/runtime-information';
-import { Observable } from 'rxjs';
+import { runtimeInformationObservable } from './shared/runtime-information';
 
 describe('AppComponent', () => {
   let authService: jasmine.SpyObj<AuthenticationService>;
@@ -57,8 +56,9 @@ describe('AppComponent', () => {
     expect(result).toBeTruthy()
   });
 
+  /*
   function runtimeInformationObservable(): Observable<RuntimeInformation> {
     return new Observable<RuntimeInformation>(
       s => s.next(new RuntimeInformation('Dummy vendor', 50, '1-1-2020 @ 15:30')));
-  }
+  }*/
 });

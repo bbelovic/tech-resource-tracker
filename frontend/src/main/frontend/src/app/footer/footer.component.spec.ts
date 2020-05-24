@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
 import { RuntimeInformationService } from 'app/services/runtime-information.service';
-import { Observable } from 'rxjs';
-import { RuntimeInformation } from 'app/shared/runtime-information';
+import { runtimeInformationObservable } from 'app/shared/runtime-information';
 
 describe('FooterComponent', () => {
   let component: FooterComponent;
@@ -32,9 +31,4 @@ describe('FooterComponent', () => {
     component.ngOnInit();
     expect(componentEl.textContent).toContain(component.runtimeInformation);
   });
-
-  function runtimeInformationObservable(): Observable<RuntimeInformation> {
-    return new Observable<RuntimeInformation>(
-      s => s.next(new RuntimeInformation('Dummy vendor', 50, '1-1-2020 @ 15:30')));
-  }
 });
