@@ -4,22 +4,31 @@ import { AppComponent } from './app.component';
 import { AuthenticationService } from './authentication-service';
 import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
-import { RuntimeInformationServiceStub } from './shared/runtime-information-service-stub';
-import { AuthenticationServiceStub } from './shared/authentication-service-stub';
 import { By } from '@angular/platform-browser';
+import { RuntimeInformation } from './shared/runtime-information';
+import { Observable } from 'rxjs';
 
 describe('AppComponent', () => {
+  let authService: jasmine.SpyObj<AuthenticationService>;
+  let runtimeService: jasmine.SpyObj<RuntimeInformationService>;
+
   beforeEach(async(() => {
 
+    const authServiceSpy = jasmine.createSpyObj('AuthenticationService', ['isAuthenticated']);
+    const runtimeServiceSpy = jasmine.createSpyObj('RuntimeInformationService', ['getRuntimeInformation']);
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes([])],
       declarations: [
         AppComponent, FooterComponent
       ],
-      providers: [{provide: AuthenticationService, useValue: new AuthenticationServiceStub()},
-        {provide: RuntimeInformationService, useValue: new RuntimeInformationServiceStub()}
+      providers: [{provide: AuthenticationService, useValue: authServiceSpy},
+        {provide: RuntimeInformationService, useValue: runtimeServiceSpy}
       ]
     }).compileComponents();
+    authService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
+    runtimeService = TestBed.inject(RuntimeInformationService) as jasmine.SpyObj<RuntimeInformationService>;
+    authService.isAuthenticated.and.returnValue(true);
+    runtimeService.getRuntimeInformation.and.returnValue(runtimeInformationObservable());
   }));
 
   it('should create the app', async(() => {
@@ -47,4 +56,9 @@ describe('AppComponent', () => {
     const result = hyperlinks.find(el => el.nativeElement.innerText === 'Register')
     expect(result).toBeTruthy()
   });
+
+  function runtimeInformationObservable(): Observable<RuntimeInformation> {
+    return new Observable<RuntimeInformation>(
+      s => s.next(new RuntimeInformation('Dummy vendor', 50, '1-1-2020 @ 15:30')));
+  }
 });

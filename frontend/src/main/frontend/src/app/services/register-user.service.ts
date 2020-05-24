@@ -18,7 +18,7 @@ export class RegisterUserService {
       .pipe(catchError(err => of(this.genericFailedResponse())));
   }
 
-  genericFailedResponse() {
+  private genericFailedResponse() {
       const failedResponse = new RegistrationResponse()
       failedResponse.error = true;
       failedResponse.resultMessage = 'User registration failed';
