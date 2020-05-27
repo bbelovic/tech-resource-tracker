@@ -13,7 +13,7 @@ describe('RegisterUserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule]
+      imports: [HttpClientTestingModule], providers: [RegisterUserService]
     })
       httpClient = TestBed.inject(HttpClient);
       httpClientController = TestBed.inject(HttpTestingController);
@@ -25,16 +25,20 @@ describe('RegisterUserService', () => {
   });
 
   it('should respond with generic failed registration message, when registration fails', () => {
-    const req = httpClientController.expectOne('/register')
-    const service: RegisterUserService = TestBed.get(RegisterUserService);
+
+    const service: RegisterUserService = TestBed.inject(RegisterUserService);
     const actual = service.registerNewUser(new UserRegistration('jdoe', 'a', 'x'))
+    actual.subscribe(res => {
+      expect(res.error).toBeTrue()
+      expect(res.resultMessage).toEqual('User registration failed')
+    });
 
+    const req = httpClientController.expectOne('/register')
 
-    expect(actual).toEqual(this.failedRegistrationResponse())
     req.flush('error', {status: 404, statusText: 'Bad request'})
   })
 
   function failedRegistrationResponse() {
-    of(new RegistrationResponse())
+    return of(new RegistrationResponse())
   }
 });
