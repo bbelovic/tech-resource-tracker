@@ -4,8 +4,6 @@ import { RegisterUserService } from './register-user.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 import { UserRegistration } from 'app/shared/user-registration';
-import { of } from 'rxjs';
-import { RegistrationResponse } from 'app/shared/registration-response';
 
 describe('RegisterUserService', () => {
   let httpClient: HttpClient;
@@ -24,7 +22,20 @@ describe('RegisterUserService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should respond with generic failed registration message, when registration fails', () => {
+  it('should respond with success registration response, when registration succeeds', () => {
+    const service: RegisterUserService = TestBed.inject(RegisterUserService);
+    const actual = service.registerNewUser(new UserRegistration('jdoe', 'secret', 'secret'))
+    actual.subscribe(res => {
+      expect(res.error).toBeFalse()
+      expect(res.resultMessage).toEqual('New user [jdoe] registered.')
+    });
+
+    const req = httpClientController.expectOne('/register')
+
+    req.flush({error: false, resultMessage: 'New user [jdoe] registered.'}, {status: 201, statusText: 'Created'})
+  });
+
+  it('should respond with failed registration response, when registration fails', () => {
 
     const service: RegisterUserService = TestBed.inject(RegisterUserService);
     const actual = service.registerNewUser(new UserRegistration('jdoe', 'a', 'x'))
@@ -36,9 +47,6 @@ describe('RegisterUserService', () => {
     const req = httpClientController.expectOne('/register')
 
     req.flush('error', {status: 404, statusText: 'Bad request'})
-  })
+  });
 
-  function failedRegistrationResponse() {
-    return of(new RegistrationResponse())
-  }
 });
