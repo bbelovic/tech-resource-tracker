@@ -46,7 +46,23 @@ describe('RegisterUserService', () => {
 
     const req = httpClientController.expectOne('/register')
 
-    req.flush('error', {status: 404, statusText: 'Bad request'})
+    req.flush('error', {status: 400, statusText: 'Bad request'})
   });
 
+  const testParameters = [
+    {description: 'should respond with success registration response, when registration succeeds',
+      response: {error: false, resultMessage: 'New user [jdoe] registered.'},
+      statusDetails: {status: 201, statusText: 'Created'} },
+    {description: 'should respond with failed registration response, when registration fails',
+      response: {error: false, resultMessage: 'User registration failed',
+      statusDetails: {status: 400, statusText: 'Bad request'}}
+  }
+
+  ];
+
+  testParameters.forEach((x) => {
+    it(x.description, () => {
+      
+    })
+  })
 });
