@@ -8,6 +8,8 @@ addons:
   chrome: stable
 script:
 - mvn clean test
+after_success:
+  docker build -f frontend/src/main/frontend/Dockerfile -t bbelovic/tech-resource-tracker-fe:latest .
 deploy:
   provider: heroku
   api_key:
