@@ -1,13 +1,14 @@
 import {TechResource} from './tech-resource';
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../environments/environment'
 
 
 import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 
 @Injectable()
 export class TechResourceService {
-    private readonly url: string = '/tech-resources';
+    private readonly url: string = `${environment.apiUrl}/tech-resources`;
     constructor(private http: HttpClient) {
     }
 
@@ -32,32 +33,32 @@ export class TechResourceService {
             .then(data => data as TechResource);
     }
 
-    postNewTechResource(resource: TechResource): Promise<TechResource> { 
-        console.log("Creating new resource [" + JSON.stringify(resource) + "] through "+ this.url);  
-        return this.http.post(this.url, JSON.stringify(resource), 
+    postNewTechResource(resource: TechResource): Promise<TechResource> {
+        console.log('Creating new resource [' + JSON.stringify(resource) + '] through ' + this.url);
+        return this.http.post(this.url, JSON.stringify(resource),
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise()
         .then(res => res as TechResource );
     }
 
     updateResource(resource: TechResource): Promise<TechResource> {
-        console.log("Updating resource ["+ JSON.stringify(resource) +"]."); 
-        return this.http.put(this.url, JSON.stringify(resource), 
+        console.log('Updating resource [' + JSON.stringify(resource) + '].');
+        return this.http.put(this.url, JSON.stringify(resource),
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise()
         .then(res => res as TechResource);
     }
 
     markResourceAsRead(resourceId: number): Promise<Object> {
-        console.log("Marking resource ["+ resourceId +"] as read.");
-        return this.http.put('/markAsRead/' + resourceId, 
+        console.log('Marking resource [' + resourceId + '] as read.');
+        return this.http.put('/markAsRead/' + resourceId,
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise();
     }
 
     getPagedTechnologyResources(pageId: number): Promise<TechResourceDetailsDTO[]> {
-        console.log("Getting tech resources page ["+ pageId +"] with size [10].");
-        return this.http.get(this.url + '/page/'+ pageId + '/pageSize/10')
+        console.log(`Getting tech resources page [${pageId}] with size [10].`);
+        return this.http.get(this.url + '/page/' + pageId + '/pageSize/10')
             .toPromise()
             .then(res => res as TechResourceDetailsDTO[]);
 

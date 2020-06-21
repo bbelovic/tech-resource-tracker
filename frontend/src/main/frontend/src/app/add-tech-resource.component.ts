@@ -40,10 +40,10 @@ export class AddTechResourceComponent implements OnInit {
     addNewTag(id: number, name: string): void {
         const foundTag: Tag = this.checkTag(new Tag(id, name));
         if (foundTag === undefined) {
-            console.log('Tag ' + name + ' not yet defined');
+            console.log(`Tag ${name} not yet defined`);
             this.addTag(new Tag(id, name));
         } else {
-            console.log('Tag ' + name + ' already defined');
+            console.log(`Tag ${name} already defined`);
             this.addTag(foundTag);
         }
     }
