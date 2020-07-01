@@ -1,7 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../environments/environment'
+import { from } from 'rxjs';
+
 @Injectable()
 export class AuthenticationService {
+    private readonly userEndpoint = `${environment.apiUrl}/user`;
+    private readonly logoutEndpoint = `${environment.apiUrl}/logout`;
     private authenticated = false;
     constructor(private httpClient: HttpClient) {}
 
@@ -16,7 +21,7 @@ export class AuthenticationService {
     }
 
     logout(): Promise<Object> {
-        return this.httpClient.post('/logout', null)
+        return this.httpClient.post(this.logoutEndpoint, null)
             .toPromise().then(obj => this.logoutAndReport('ok', obj),
             obj => this.logoutAndReport('error', obj));
 
@@ -31,7 +36,7 @@ export class AuthenticationService {
     login(username: string, password: string): Promise<Object> {
         const authHeader: HttpHeaders = new HttpHeaders()
             .set('Authorization', 'Basic ' + btoa(username + ':' + password));
-        return this.httpClient.get('user', {headers: authHeader})
+        return this.httpClient.get(this.userEndpoint, {headers: authHeader})
             .toPromise()
             .then(res => {
                 console.log('Get user succeded.');
