@@ -4,8 +4,10 @@ import { RegisterUserService } from './register-user.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient } from '@angular/common/http';
 import { UserRegistration } from 'app/shared/user-registration';
+import { environment } from '../../environments/environment';
 
 describe('RegisterUserService', () => {
+  const url = environment.apiUrl;
   let httpClient: HttpClient;
   let httpClientController: HttpTestingController;
 
@@ -30,7 +32,7 @@ describe('RegisterUserService', () => {
       expect(res.resultMessage).toEqual('New user [jdoe] registered.')
     });
 
-    const req = httpClientController.expectOne('/register')
+    const req = httpClientController.expectOne(url + '/register')
 
     req.flush({error: false, resultMessage: 'New user [jdoe] registered.'}, {status: 201, statusText: 'Created'})
   });
@@ -44,7 +46,7 @@ describe('RegisterUserService', () => {
       expect(res.resultMessage).toEqual('User registration failed')
     });
 
-    const req = httpClientController.expectOne('/register')
+    const req = httpClientController.expectOne(url + '/register')
 
     req.flush('error', {status: 400, statusText: 'Bad request'})
   });
