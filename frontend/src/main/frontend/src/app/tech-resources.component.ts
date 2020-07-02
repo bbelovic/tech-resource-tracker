@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {AuthenticationService} from './authentication-service';
+import {AuthenticationService} from './authentication.service';
 import { TechResourceService } from './tech-resource-service';
 import { TechResource } from './tech-resource';
 import { Router } from '@angular/router';

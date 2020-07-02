@@ -53,9 +53,11 @@ describe('RegisterUserService', () => {
 
   const testParameters = [
     {description: 'should respond with success registration response, when registration succeeds',
+      registration: new UserRegistration('jdoe', 'secret', 'secret'),
       response: {error: false, resultMessage: 'New user [jdoe] registered.'},
       statusDetails: {status: 201, statusText: 'Created'} },
     {description: 'should respond with failed registration response, when registration fails',
+    registration: new UserRegistration('jdoe', 'a', 'x'),
       response: {error: false, resultMessage: 'User registration failed',
       statusDetails: {status: 400, statusText: 'Bad request'}}
   }
@@ -64,7 +66,15 @@ describe('RegisterUserService', () => {
 
   testParameters.forEach((x) => {
     it(x.description, () => {
-      
+      const service: RegisterUserService = TestBed.inject(RegisterUserService);
+    const actual = service.registerNewUser(x.registration)
+    actual.subscribe(res => {
+      expect(res.error).toEqual(x.response.error)
+      expect(res.resultMessage).toEqual(x.response.resultMessage)
+    });
+    const req = httpClientController.expectOne(url + '/register')
+
+    req.flush('error', {status: 400, statusText: 'Bad request'})
     })
   })
 });

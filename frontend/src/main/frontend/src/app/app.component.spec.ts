@@ -1,7 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing'
 import { AppComponent } from './app.component';
-import { AuthenticationService } from './authentication-service';
+import { AuthenticationService } from './authentication.service';
 import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
 import { By } from '@angular/platform-browser';

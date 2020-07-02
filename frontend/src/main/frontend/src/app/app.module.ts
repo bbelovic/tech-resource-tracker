@@ -6,7 +6,7 @@ import { Routes, RouterModule} from '@angular/router';
 import { AppComponent } from './app.component';
 import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
-import { AuthenticationService} from './authentication-service';
+import { AuthenticationService} from './authentication.service';
 import { AddTechResourceComponent } from './add-tech-resource.component';
 import { EditTechResourceComponent } from './edit-tech-resource.component';
 import { TagService } from './tag-service';
