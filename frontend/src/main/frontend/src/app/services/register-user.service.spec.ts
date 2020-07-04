@@ -24,33 +24,6 @@ describe('RegisterUserService', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should respond with success registration response, when registration succeeds', () => {
-    const service: RegisterUserService = TestBed.inject(RegisterUserService);
-    const actual = service.registerNewUser(new UserRegistration('jdoe', 'secret', 'secret'))
-    actual.subscribe(res => {
-      expect(res.error).toBeFalse()
-      expect(res.resultMessage).toEqual('New user [jdoe] registered.')
-    });
-
-    const req = httpClientController.expectOne(url + '/register')
-
-    req.flush({error: false, resultMessage: 'New user [jdoe] registered.'}, {status: 201, statusText: 'Created'})
-  });
-
-  it('should respond with failed registration response, when registration fails', () => {
-
-    const service: RegisterUserService = TestBed.inject(RegisterUserService);
-    const actual = service.registerNewUser(new UserRegistration('jdoe', 'a', 'x'))
-    actual.subscribe(res => {
-      expect(res.error).toBeTrue()
-      expect(res.resultMessage).toEqual('User registration failed')
-    });
-
-    const req = httpClientController.expectOne(url + '/register')
-
-    req.flush('error', {status: 400, statusText: 'Bad request'})
-  });
-
   const testParameters = [
     {description: 'should respond with success registration response, when registration succeeds',
       registration: new UserRegistration('jdoe', 'secret', 'secret'),
@@ -74,7 +47,7 @@ describe('RegisterUserService', () => {
     });
     const req = httpClientController.expectOne(url + '/register')
 
-    req.flush('error', {status: 400, statusText: 'Bad request'})
+    req.flush(x.response, x.statusDetails)
     })
   })
 });
