@@ -16,7 +16,7 @@ export class RegisterUserService {
 
   registerNewUser(userRegistration: UserRegistration): Observable<RegistrationResponse> {
     const httpHeaders = {headers: new HttpHeaders({'Content-Type': 'application/json'})}
-    return this.httpClient.post<RegistrationResponse>('/register', userRegistration, httpHeaders)
+    return this.httpClient.post<RegistrationResponse>(this.registrationEndpoint, userRegistration, httpHeaders)
       .pipe(catchError(err => of(this.genericFailedResponse())));
   }
 
