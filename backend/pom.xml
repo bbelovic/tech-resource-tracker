@@ -63,11 +63,11 @@
             <artifactId>jaxb-api</artifactId>
             <version>${java.xml.bind.version}</version>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.bbelovic.techresourcetracker</groupId>
             <artifactId>tech-resource-tracker-frontend</artifactId>
             <version>${frontend.version}</version>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-kotlin</artifactId>
