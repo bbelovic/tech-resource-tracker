@@ -58,18 +58,34 @@ public class TechResourceTrackerApplication {
         protected void configure(HttpSecurity http) throws Exception {
             http.httpBasic().and()
                     .authorizeRequests()
-                    .antMatchers("/", "/runtime-es2015.js", "/polyfills-es2015.js", "/styles-es2015.js",
-                            "/vendor-es2015.js", "/main-es2015.js", "/scripts.js", "/favicon.ico",
-                            "/runtime", "/register")
+                    .antMatchers("/runtime", "/register")
                     .permitAll()
-                    .anyRequest()
-                    .authenticated()
+//                    .anyRequest().anonymous()
+//                    .authenticated()
                     .and()
                     .logout().logoutSuccessUrl("/")
                     .and()
                     .csrf()
-                    .csrfTokenRepository(withHttpOnlyFalse());
+                    .disable();
         }
+
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http.authorizeRequests()
+//                    .antMatchers("/runtime", "/register")
+//                    .permitAll().anyRequest().authenticated()
+//                    .and()
+//                    .httpBasic()
+//                    .and()
+//                    .authorizeRequests()
+//                    .anyRequest()
+//                    .authenticated()
+//                    .and()
+//                    .logout().logoutSuccessUrl("/")
+//                    .and()
+//                    .csrf()
+//                    .csrfTokenRepository(withHttpOnlyFalse());
+//        }
 
         @Autowired
         public void setDefaultUserDetailsService(UserDetailsService defaultUserDetailsService) {
