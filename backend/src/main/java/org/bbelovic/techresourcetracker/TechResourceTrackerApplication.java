@@ -69,6 +69,7 @@ public class TechResourceTrackerApplication {
                     .permitAll()
                     .and()
                     .logout()
+                    .and().cors()
                     .and()
                     .csrf()
                     .disable();
