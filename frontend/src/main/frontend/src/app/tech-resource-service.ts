@@ -9,6 +9,7 @@ import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 @Injectable()
 export class TechResourceService {
     private readonly url: string = `${environment.apiUrl}/tech-resources`;
+    private readonly tokenUrl = `${environment.apiUrl}/token`;
     constructor(private http: HttpClient) {
     }
 
@@ -21,9 +22,17 @@ export class TechResourceService {
 
     getTechResourceDetailsDTO(): Promise<TechResourceDetailsDTO[]> {
         console.log('Getting 10 newest resources from: [' + this.url + '].');
-        return this.http.get(this.url)
-                .toPromise()
-                .then(data => data as TechResourceDetailsDTO[]);
+        let resources: Promise<TechResourceDetailsDTO[]>;
+        this.http.get(this.tokenUrl).subscribe(data => {
+            const token = data['token'];
+            const hdrs = new HttpHeaders().set('X-Auth-Token', token);
+            this.http.get(this.url, {headers: hdrs}).toPromise().then(res => (res as TechResourceDetailsDTO[]))
+        })
+        return resources;
+
+        // return this.http.get(this.url)
+        //         .toPromise()
+        //         .then(data => data as TechResourceDetailsDTO[]);
     }
 
     getTechResourceById(id: number): Promise<TechResource> {
