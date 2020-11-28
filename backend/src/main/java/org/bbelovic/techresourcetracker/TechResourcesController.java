@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import java.security.Principal;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toList;
@@ -69,15 +66,15 @@ public class TechResourcesController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-    @GetMapping(value = "/user")
-    public Principal user(Principal user) {
-        return user;
-    }
-
-    @GetMapping(value = "/token")
-    public Map<String, String> token(HttpSession httpSession) {
-        return Map.of("token", httpSession.getId());
-    }
+//    @GetMapping(value = "/user")
+//    public Principal user(Principal user) {
+//        return user;
+//    }
+//
+//    @GetMapping(value = "/token")
+//    public Map<String, String> token(HttpSession httpSession) {
+//        return Map.of("token", httpSession.getId());
+//    }
 
     private TechnologyResource convertTechnologyResourceFromDTO(@RequestBody TechnologyResourceDTO resourceDTO) {
         var technologyResource = new TechnologyResource();

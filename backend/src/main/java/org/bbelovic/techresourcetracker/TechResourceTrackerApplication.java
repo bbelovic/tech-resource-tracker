@@ -15,10 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 
 import java.time.LocalDateTime;
-
-import static org.springframework.security.web.csrf.CookieCsrfTokenRepository.withHttpOnlyFalse;
 
 @SpringBootApplication
 public class TechResourceTrackerApplication {
@@ -76,23 +75,32 @@ public class TechResourceTrackerApplication {
                     .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
         }
 
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http.authorizeRequests()
-//                    .antMatchers("/runtime", "/register")
-//                    .permitAll().anyRequest().authenticated()
-//                    .and()
-//                    .httpBasic()
-//                    .and()
-//                    .authorizeRequests()
-//                    .anyRequest()
-//                    .authenticated()
-//                    .and()
-//                    .logout().logoutSuccessUrl("/")
-//                    .and()
-//                    .csrf()
-//                    .csrfTokenRepository(withHttpOnlyFalse());
-//        }
+        protected void configure0(HttpSecurity http) throws Exception {
+            http
+                    .authorizeRequests()
+                    .antMatchers("/**/*.{js,html,css}").permitAll()
+                    .antMatchers("/", "/user").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
+                    .oauth2Login()
+                    .and()
+                    .oauth2ResourceServer().jwt();
+
+            http.requiresChannel()
+                    .requestMatchers(
+                r -> r.getHeader("X-Forwarded-Proto") != null
+            ).requiresSecure();
+
+            http.csrf()
+                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
+            http.headers()
+                    .contentSecurityPolicy("script-src 'self'; report-to /csp-report-endpoint/")
+                    .and()
+                    .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)
+                    .and()
+                    .featurePolicy("accelerometer 'none'; camera 'none'; microphone 'none'");
+        }
 
         @Autowired
         public void setDefaultUserDetailsService(UserDetailsService defaultUserDetailsService) {
