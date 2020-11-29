@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 import {Router} from '@angular/router';
-import { AuthenticationService } from './authentication.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +12,13 @@ export class AppComponent {
   brand = 'Tech resource tracker';
 
   constructor(private router: Router,
-    public authService: AuthenticationService) {}
+    public authService: AuthService) {}
 
-  login(username: string, password: string): void {
-      this.authService.login(username, password)
-          .then(() => this.router.navigateByUrl('/tech-resources'));
+  login(): void {
+      this.authService.login();
   }
 
   logout(): void {
-    this.authService.logout().then(() => this.router.navigateByUrl('/tech-resources'));
+    this.authService.logout();
   }
-
 }

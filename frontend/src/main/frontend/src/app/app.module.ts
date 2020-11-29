@@ -15,10 +15,11 @@ import { FooterComponent } from './footer/footer.component';
 import { RuntimeInformationService } from './services/runtime-information.service';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterUserService } from './services/register-user.service';
+import { AuthService } from './services/auth.service';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
-  {path: 'login2', component: LoginComponent},
+  //{path: 'login2', component: LoginComponent},
   {path: 'tech-resources', component: TechResourcesComponent},
   {path: 'add-tech-resource', component: AddTechResourceComponent},
   {path: 'edit-tech-resource/:id', component: EditTechResourceComponent},
@@ -39,7 +40,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes, {enableTracing: true})
   ],
-  providers: [TechResourceService, TagService, AuthenticationService,
+  providers: [TechResourceService, TagService, AuthService, AuthenticationService,
     RuntimeInformationService, RegisterUserService],
   bootstrap: [AppComponent]
 })
