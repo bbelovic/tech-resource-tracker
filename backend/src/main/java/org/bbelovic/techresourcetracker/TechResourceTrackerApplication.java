@@ -54,28 +54,29 @@ public class TechResourceTrackerApplication {
                     .passwordEncoder(passwordEncoder);
         }
 
+//        @Override
+//        protected void configure(HttpSecurity http) throws Exception {
+//            http.httpBasic().and()
+//                    .authorizeRequests()
+//                    .antMatchers("/runtime", "/register")
+//
+//                    .permitAll().anyRequest()
+//                    .anyRequest().anonymous()
+//                    .authenticated()
+//                    .and()
+//                    .formLogin()
+//                    .loginPage("/login2")
+//                    .permitAll()
+//                    .and()
+//                    .logout()
+//                    .and().cors()
+//                    .and()
+//                    .csrf()
+//                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+//        }
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-            http.httpBasic().and()
-                    .authorizeRequests()
-                    .antMatchers("/runtime", "/register")
-
-                    .permitAll().anyRequest()
-//                    .anyRequest().anonymous()
-                    .authenticated()
-                    .and()
-                    .formLogin()
-                    .loginPage("/login2")
-                    .permitAll()
-                    .and()
-                    .logout()
-                    .and().cors()
-                    .and()
-                    .csrf()
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-        }
-
-        protected void configure0(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
                     .antMatchers("/**/*.{js,html,css}").permitAll()
