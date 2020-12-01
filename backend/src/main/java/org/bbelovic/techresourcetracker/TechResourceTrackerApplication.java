@@ -23,7 +23,7 @@ public class TechResourceTrackerApplication {
     public static void main(String[] args) {
         SpringApplication.run(TechResourceTrackerApplication.class, args);
     }
-    
+
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -73,7 +73,7 @@ public class TechResourceTrackerApplication {
             http
                     .authorizeRequests()
                     .antMatchers("/**/*.{js,html,css}").permitAll()
-                    .antMatchers("/", "/user").permitAll()
+                    .antMatchers("/", "/user","/runtime", "/register").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .oauth2Login()

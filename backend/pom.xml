@@ -306,7 +306,7 @@
         </plugins>
         <resources>
             <resource>
-                <directory>${basedir}/src/main/frontend/dist</directory>
+                <directory>${basedir}/fronted/src/main/frontend/dist</directory>
                 <targetPath>static</targetPath>
             </resource>
             <resource>
