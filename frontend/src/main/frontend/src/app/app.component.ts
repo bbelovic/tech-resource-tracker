@@ -21,4 +21,8 @@ export class AppComponent {
   logout(): void {
     this.authService.logout();
   }
+
+  isAuthenticated() {
+    await this.authService.isAuthenticated()
+  }
 }
