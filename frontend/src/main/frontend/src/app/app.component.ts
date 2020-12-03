@@ -11,6 +11,8 @@ import { AuthService } from './services/auth.service';
 export class AppComponent {
   brand = 'Tech resource tracker';
 
+  authenticated: boolean = false; 
+
   constructor(private router: Router,
     public authService: AuthService) {}
 
@@ -22,7 +24,10 @@ export class AppComponent {
     this.authService.logout();
   }
 
-  isAuthenticated() {
-    await this.authService.isAuthenticated()
+  async onInit() {
+    this.authenticated = await this.authService.isAuthenticated();
+    this.authService.$authenticationState.subscribe(
+      (isAuthenticated: boolean)  => this.authenticated = isAuthenticated
+    );
   }
 }
