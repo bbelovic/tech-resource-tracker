@@ -1,12 +1,9 @@
 <div class="jumbotron">
-    <div *ngIf="!isAuthenticated()" class="container">
-        <h4>Not authenticated, please authenticate.</h4>
-    </div>
-    <div *ngIf="isAuthenticated()" class="container">
+    <div class="container">
         <h4>Showing 10 latest technology resources</h4>
     </div>
 </div>
-<div *ngIf="isAuthenticated()" class="container">
+<div  class="container">
     <div class="row" *ngFor="let detailDto of techResourcesDetailsDTOs">
         <div class="col-md-12">
             <div class="thumbnail">

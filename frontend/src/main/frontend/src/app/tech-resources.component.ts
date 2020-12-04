@@ -5,6 +5,7 @@ import { TechResource } from './tech-resource';
 import { Router } from '@angular/router';
 import { TechResourceStatus } from './tech-resource-status';
 import { TechResourceDetailsDTO } from './tech-resource-details-dto';
+import { AuthService } from './services/auth.service';
 
 @Component(
     {
@@ -16,12 +17,12 @@ import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 export class TechResourcesComponent {
     pageId = 1;
     techResourcesDetailsDTOs: TechResourceDetailsDTO[] = [];
-    constructor(private authenticationService: AuthenticationService,
+    constructor(private authService: AuthService,
         private resourceService: TechResourceService,
         private router: Router) {}
 
     ngOnInit(): void {
-        if (this.authenticationService.isAuthenticated()) {
+        if (this.authService.isAuthenticated()) {
             console.log('Getting resources from remote server.')
             this.resourceService.getTechResourceDetailsDTO()
             .then(result => this.techResourcesDetailsDTOs = result);
