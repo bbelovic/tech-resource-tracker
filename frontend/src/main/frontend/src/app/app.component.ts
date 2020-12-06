@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {Router} from '@angular/router';
 import { AuthService } from './services/auth.service';
 
 @Component({
@@ -8,13 +7,12 @@ import { AuthService } from './services/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   brand = 'Tech resource tracker';
 
   authenticated: boolean = false; 
 
-  constructor(private router: Router,
-    public authService: AuthService) {}
+  constructor(public authService: AuthService) {}
 
   login(): void {
       this.authService.login();
@@ -24,7 +22,7 @@ export class AppComponent {
     this.authService.logout();
   }
 
-  async onInit() {
+  async ngOnInit() {
     this.authenticated = await this.authService.isAuthenticated();
     this.authService.$authenticationState.subscribe(
       (isAuthenticated: boolean)  => this.authenticated = isAuthenticated
