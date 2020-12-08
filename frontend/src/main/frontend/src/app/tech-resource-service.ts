@@ -21,24 +21,17 @@ export class TechResourceService {
     }
 
     getTechResourceDetailsDTO(): Promise<TechResourceDetailsDTO[]> {
-        console.log('Getting 10 newest resources from: [' + this.url + '].');
-        let resources: Promise<TechResourceDetailsDTO[]>;
-        this.http.get(this.tokenUrl).subscribe(data => {
-            const token = data['token'];
-            const hdrs = new HttpHeaders().set('X-Auth-Token', token);
-            this.http.get(this.url, {headers: hdrs}).toPromise().then(res => (res as TechResourceDetailsDTO[]))
-        })
-        return resources;
-
-        // return this.http.get(this.url)
-        //         .toPromise()
-        //         .then(data => data as TechResourceDetailsDTO[]);
+        console.log(`Getting 10 newest resources from: [${this.url}].`);
+        return this.http.get(this.url)
+                 .toPromise()
+                 .then(data => data as TechResourceDetailsDTO[]);
     }
 
     getTechResourceById(id: number): Promise<TechResource> {
-    console.log('Getting technology resource with id [' + id + ']');
+    console.log(`Getting technology resource with id [${id}].`);
         return this.http.get(this.url + '/' + id)
             .toPromise()
+            .then(d => {console.log('JSON: ' + JSON.stringify(d)); return d})
             .then(data => data as TechResource);
     }
 
