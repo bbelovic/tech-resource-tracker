@@ -7,8 +7,13 @@ services:
 addons:
   chrome: stable
 script:
-- mvn clean test
-after_success: docker build -f frontend/src/main/frontend/Dockerfile -t bbelovic/tech-resource-tracker-fe:latest frontend/src/main/frontend
+- mvn -f backend/pom.xml clean package jib:dockerBuild -Pheroku
+after_success:
+  - curl https://cli-assets.heroku.com/install.sh | sh
+  - docker tag bbelovic/tech-resource-tracker registry.heroku.com/tech-resource-tracker/web
+  - echo "$HEROKU_REGISTRY_PASSWORD" | docker login registry.heroku.com -u "$HEROKU_REGISTRY_USERNAME" --password-stdin
+  - docker push registry.heroku.com/tech-resource-tracker/web
+  - /usr/local/bin/heroku container:release web -a tech-resource-tracker -v
 deploy:
   provider: heroku
   api_key:

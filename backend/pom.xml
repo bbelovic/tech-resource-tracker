@@ -170,7 +170,7 @@
                         <version>${jib.version}</version>
                         <configuration>
                             <to>
-                                <image>bbelovic/notes-app</image>
+                                <image>bbelovic/tech-resource-tracker</image>
                             </to>
                         </configuration>
                     </plugin>
@@ -192,7 +192,7 @@
                                 </image>
                             </from>
                             <to>
-                                <image>bbelovic/notes-app</image>
+                                <image>bbelovic/tech-resource-tracker</image>
                             </to>
                             <container>
                                 <entrypoint>
