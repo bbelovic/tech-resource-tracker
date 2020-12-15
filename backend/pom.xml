@@ -30,6 +30,7 @@
         <frontend.plugin.version>1.10.3</frontend.plugin.version>
         <node.version>v12.18.3</node.version>
         <okta.version>1.4.0</okta.version>
+        <jib.version>2.6.0</jib.version>
     </properties>
 
     <dependencyManagement>
