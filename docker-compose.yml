@@ -1,0 +1,22 @@
+version: '3'
+services:
+  db:
+    image: 'postgres:9.6'
+    environment:
+      - POSTGRES_USER=db_user
+      - POSTGRES_PASSWORD=db_pass
+      - POSTGRES_DB=tech_resource_tracker_db
+  tech-resource-tracker-be:
+    image: 'bbelovic/tech-resource-tracker:composed'
+    environment:
+      - SPRING_DATASOURCE_USERNAME=db_user
+      - SPRING_DATASOURCE_PASSWORD=db_pass
+      - DB_NAME=notes_db
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
+      - DB_PORT=5432
+      - FE_PORT=4200
+    depends_on:
+      - db
+    entrypoint: ["./entrypoint.sh"]
+    ports:
+      - "8080:8080"
