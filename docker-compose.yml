@@ -7,7 +7,7 @@ services:
       - POSTGRES_PASSWORD=db_pass
       - POSTGRES_DB=tech_resource_tracker_db
   tech-resource-tracker-be:
-    image: 'bbelovic/tech-resource-tracker:composed'
+    image: 'bbelovic/tech-resource-tracker-composed'
     environment:
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass

@@ -14,8 +14,3 @@ after_success:
   - echo "$HEROKU_REGISTRY_PASSWORD" | docker login registry.heroku.com -u "$HEROKU_REGISTRY_USERNAME" --password-stdin
   - docker push registry.heroku.com/tech-resource-tracker/web
   - /usr/local/bin/heroku container:release web -a tech-resource-tracker -v
-deploy:
-  provider: heroku
-  api_key:
-    secure: fZdq2n8BDw23eCL7v6QCJ0fUV5wOZccUK1eMhX7clSmwI8fUfLP3x5XIe+yBwlgWopg5llsLrW8DALOrubQzYYBqmHKyatXweDryaVB32E8I/Tc8NyhlSzcIH+bWxJxWdozcBRyAALmWU3sXWAvokj+VcMO09CIGkVYsqufLZ9dNqeD0TV7wJi7i5KrsmWLp/wA/aWxTYuvx100Eoo31pf9F4YoIesETWcsDvKsQFcB/1qsW+A61y6seAVAs/9Z5eMRFjxhrrv6rQiP6pcW9tQ9Kc2KemsuKzgc8MwvO4MPAxvUP+xdbn+lLYnEsqbndgHtOdRCavEFUMeMiMhbxjSxtAMO0jpoFXWTd9e5jGMcrpob5lStDLi/pfasULjVaKKr1oeFJ7or4WXRqzZd7q0OyunnjpBxpjG4dkcBPL59WkoVAI8ezUWL9fFoIwnPiUKwUzabvKkNPwownTadOgk51G0Fn+pZM8WeUu+3aTh/xy08ipMxwYQhN5pTFU2fXIcw35pah2RVON5dlxJNGqNTmFhXhaBqSwrRoiQzHDo/jRoKufkoUp6HqaeiEpNLadQ37TqmnKLrZJQsZBVCs2LDaURUmKjcRs9EWDE87n6m5Rh1gfRTP4otjznc552U2k0n5ZBWtmb3Mc22A2NeItEm5uZk5g53mHPDWgahz9Qw=
-  app: tech-resource-tracker
