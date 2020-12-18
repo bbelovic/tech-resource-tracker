@@ -1,26 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {Router} from '@angular/router';
-import { AuthenticationService } from './authentication.service';
+import { AuthService } from './services/auth.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   brand = 'Tech resource tracker';
 
-  constructor(private router: Router,
-    public authService: AuthenticationService) {}
+  authenticated: boolean = false; 
 
-  login(username: string, password: string): void {
-      this.authService.login(username, password)
-          .then(() => this.router.navigateByUrl('/tech-resources'));
+  constructor(public authService: AuthService) {}
+
+  login(): void {
+      this.authService.login();
   }
 
   logout(): void {
-    this.authService.logout().then(() => this.router.navigateByUrl('/tech-resources'));
+    this.authService.logout();
   }
 
+  async ngOnInit() {
+    this.authenticated = await this.authService.isAuthenticated();
+    this.authService.$authenticationState.subscribe(
+      (isAuthenticated: boolean)  => this.authenticated = isAuthenticated
+    );
+  }
 }

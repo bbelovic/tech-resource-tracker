@@ -14,7 +14,7 @@ import { TagService } from './tag-service';
     styleUrls: ['./edit-tech-resource.component.css']
 })
 export class EditTechResourceComponent implements OnInit {
-    public resource: TechResource;
+    public resource: TechResource = new TechResource(0, '', '', '', TechResourceStatus.New, TechResourceType.Article);
     public existingTags: Array<Tag> = [];
     public assignedTags: Array<Tag> = [];
     constructor(private techResourceService: TechResourceService,

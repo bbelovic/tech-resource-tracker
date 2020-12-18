@@ -1,9 +1,6 @@
-import {Component} from '@angular/core';
-import {AuthenticationService} from './authentication.service';
+import { Component } from '@angular/core';
 import { TechResourceService } from './tech-resource-service';
-import { TechResource } from './tech-resource';
 import { Router } from '@angular/router';
-import { TechResourceStatus } from './tech-resource-status';
 import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 
 @Component(
@@ -16,28 +13,20 @@ import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 export class TechResourcesComponent {
     pageId = 1;
     techResourcesDetailsDTOs: TechResourceDetailsDTO[] = [];
-    constructor(private authenticationService: AuthenticationService,
-        private resourceService: TechResourceService,
-        private router: Router) {}
+    constructor(private resourceService: TechResourceService,
+        private router: Router) { }
 
     ngOnInit(): void {
-        if (this.authenticationService.isAuthenticated()) {
-            console.log('Getting resources from remote server.')
-            this.resourceService.getTechResourceDetailsDTO()
+        console.log('Getting resources from remote server.')
+        this.resourceService.getTechResourceDetailsDTO()
             .then(result => this.techResourcesDetailsDTOs = result);
-        } else {
-            console.log('Skipping getting  resources - not authenticated');
-        }
+
     }
 
     markAsRead(resourceId: number): void {
         console.log('Marking resource [' + resourceId + '] as read.');
         this.resourceService.markResourceAsRead(resourceId)
-            .then(res => this.reload());
-    }
-
-    isAuthenticated(): boolean {
-        return this.authenticationService.isAuthenticated();
+            .then(() => this.reload());
     }
 
     navigateToEdit(resourceId: number): void {
@@ -58,17 +47,9 @@ export class TechResourcesComponent {
         }
     }
 
-    private updateTechResource(resource: TechResource): TechResource {
-        const updatedResource: TechResource =
-            new TechResource(resource.id, resource.title, resource.link,
-                resource.createdOn, TechResourceStatus.Processed, resource.type);
-        updatedResource.tags = [];
-        return updatedResource;
-    }
-
     private reload(): void {
         console.log('Reloading resource after update');
         this.resourceService.getTechResourceDetailsDTO()
-        .then(result => this.techResourcesDetailsDTOs = result);
+            .then(result => this.techResourcesDetailsDTOs = result);
     }
 }

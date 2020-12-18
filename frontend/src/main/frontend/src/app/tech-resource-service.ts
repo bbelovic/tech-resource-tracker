@@ -9,27 +9,29 @@ import { TechResourceDetailsDTO } from './tech-resource-details-dto';
 @Injectable()
 export class TechResourceService {
     private readonly url: string = `${environment.apiUrl}/tech-resources`;
+    private readonly tokenUrl = `${environment.apiUrl}/token`;
     constructor(private http: HttpClient) {
     }
 
     getTechResource(): Promise<TechResource[]> {
-    console.log('Getting 10 newest resources from: [' + this.url + '].');
+    console.log(`Getting 10 newest resources from: [${this.url}].`);
     return this.http.get(this.url)
             .toPromise()
             .then(data => data as TechResource[])
     }
 
     getTechResourceDetailsDTO(): Promise<TechResourceDetailsDTO[]> {
-        console.log('Getting 10 newest resources from: [' + this.url + '].');
+        console.log(`Getting 10 newest resources from: [${this.url}].`);
         return this.http.get(this.url)
-                .toPromise()
-                .then(data => data as TechResourceDetailsDTO[]);
+                 .toPromise()
+                 .then(data => data as TechResourceDetailsDTO[]);
     }
 
     getTechResourceById(id: number): Promise<TechResource> {
-    console.log('Getting technology resource with id [' + id + ']');
+    console.log(`Getting technology resource with id [${id}].`);
         return this.http.get(this.url + '/' + id)
             .toPromise()
+            .then(d => {console.log('JSON: ' + JSON.stringify(d)); return d})
             .then(data => data as TechResource);
     }
 

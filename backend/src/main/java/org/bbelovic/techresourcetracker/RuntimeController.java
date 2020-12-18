@@ -2,9 +2,9 @@ package org.bbelovic.techresourcetracker;
 
 import org.springframework.boot.info.BuildProperties;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -21,6 +21,7 @@ public class RuntimeController {
     }
 
     @GetMapping(value = "/runtime", produces = APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/runtime", produces = APPLICATION_JSON_VALUE)
     public RuntimeInformation getRuntimeInformation() {
         var runtimeName = System.getProperty("java.runtime.name");
         int featureVersion = Runtime.version().feature();
