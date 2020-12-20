@@ -42,7 +42,7 @@ class RegisterUserControllerTest {
             contentType = APPLICATION_JSON
             content = payload
         }.andExpect {
-            status { isCreated }
+            status { isCreated() }
             jsonPath("$.error", equalTo(false))
             jsonPath("$.resultMessage", equalTo("New user [jdoe] registered."))
         }
@@ -59,7 +59,7 @@ class RegisterUserControllerTest {
             contentType = APPLICATION_JSON
             content = invalidPayload
         }.andExpect {
-            status { isBadRequest }
+            status { isBadRequest() }
             jsonPath("$.error", equalTo(true))
             jsonPath("$.resultMessage", equalTo("User registration failed."))
         }
