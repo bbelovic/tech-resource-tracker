@@ -182,6 +182,9 @@
                                 <jvmFlags>
                                     <jvmFlag>--enable-preview</jvmFlag>
                                 </jvmFlags>
+                                <creationTime>
+                                    USE_CURRENT_TIMESTAMP
+                                </creationTime>
                             </container>
                         </configuration>
                     </plugin>
@@ -209,6 +212,9 @@
                                 <entrypoint>
                                     entrypoint.sh
                                 </entrypoint>
+                                <creationTime>
+                                    USE_CURRENT_TIMESTAMP
+                                </creationTime>
                             </container>
                             <extraDirectories>
                                 <paths>src/main/jib</paths>
