@@ -1,17 +1,12 @@
 package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
 
@@ -25,11 +20,6 @@ public class TechResourceTrackerApplication {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public SimpleModule iso8601Serializers() {
         SimpleModule module = new SimpleModule();
         module.addSerializer(LocalDateTime.class, new ISO8601LocalDateTimeSerializer());
@@ -39,14 +29,6 @@ public class TechResourceTrackerApplication {
 
     @Configuration
     public static class SecurityAdapter extends WebSecurityConfigurerAdapter {
-        private UserDetailsService defaultUserDetailsService;
-        private PasswordEncoder passwordEncoder;
-        @Override
-        protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.userDetailsService(defaultUserDetailsService)
-                    .passwordEncoder(passwordEncoder);
-        }
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
@@ -73,16 +55,6 @@ public class TechResourceTrackerApplication {
                     .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)
                     .and()
                     .featurePolicy("accelerometer 'none'; camera 'none'; microphone 'none'");
-        }
-
-        @Autowired
-        public void setDefaultUserDetailsService(UserDetailsService defaultUserDetailsService) {
-            this.defaultUserDetailsService = defaultUserDetailsService;
-        }
-
-        @Autowired
-        public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-            this.passwordEncoder = passwordEncoder;
         }
     }
 }
