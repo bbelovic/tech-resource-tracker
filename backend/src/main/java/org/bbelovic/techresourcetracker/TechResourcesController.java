@@ -66,16 +66,6 @@ public class TechResourcesController {
         return new ResponseEntity<>(NO_CONTENT);
     }
 
-//    @GetMapping(value = "/user")
-//    public Principal user(Principal user) {
-//        return user;
-//    }
-//
-//    @GetMapping(value = "/token")
-//    public Map<String, String> token(HttpSession httpSession) {
-//        return Map.of("token", httpSession.getId());
-//    }
-
     private TechnologyResource convertTechnologyResourceFromDTO(@RequestBody TechnologyResourceDTO resourceDTO) {
         var technologyResource = new TechnologyResource();
         technologyResource.setId(resourceDTO.id());
