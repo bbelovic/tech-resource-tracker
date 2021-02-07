@@ -91,4 +91,7 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet id="11" author="bbelovic">
+        <dropTable tableName="user_details" />
+    </changeSet>
 </databaseChangeLog>

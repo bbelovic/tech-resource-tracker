@@ -11,10 +11,7 @@ services:
     environment:
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass
-      - DB_NAME=notes_db
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
-      - DB_PORT=5432
-      - FE_PORT=4200
     depends_on:
       - db
     entrypoint: ["./entrypoint.sh"]
