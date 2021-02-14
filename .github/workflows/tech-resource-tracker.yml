@@ -1,5 +1,6 @@
 name: tech-resource-tracker-ci-actions
 on:
+  workflow_dispatch:
   push:
     branches:
       - '!master'
