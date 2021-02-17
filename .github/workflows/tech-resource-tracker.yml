@@ -1,4 +1,4 @@
-name: tech-resource-tracker-ci-actions
+name: tech-resource-tracker
 on:
   workflow_dispatch:
   push:
