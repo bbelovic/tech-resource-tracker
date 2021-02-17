@@ -1,9 +1,5 @@
 name: tech-resource-tracker
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - '!master'
+on: [workflow_dispatch]
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
