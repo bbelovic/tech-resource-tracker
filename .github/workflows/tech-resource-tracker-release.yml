@@ -1,10 +1,9 @@
 name: tech-resource-tracker-release
 on:
   schedule:
-    - cron:  '* 22 * * *'
+    - cron: '10 22 * * *'
   push:
-    branches:
-      - 'master'
+
 jobs:
   test-and-build:
     runs-on: ubuntu-latest
