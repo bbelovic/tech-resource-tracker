@@ -16,5 +16,8 @@ jobs:
 #      - name: Build with Maven
 #        run: mvn -B clean package --file backend/pom.xml
       - name: Run build script
+        env:
+         HEROKU_REGISTRY_PASSWORD: ${{ secrets.HEROKU_REGISTRY_PASSWORD }}
+         HEROKU_REGISTRY_USERNAME: ${{ secrets.HEROKU_REGISTRY_USERNAME }}
         run: ./.github/scripts/deploy-to-heroku.sh
         shell: bash
