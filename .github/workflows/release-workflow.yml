@@ -19,5 +19,6 @@ jobs:
         env:
          HEROKU_REGISTRY_PASSWORD: ${{ secrets.HEROKU_REGISTRY_PASSWORD }}
          HEROKU_REGISTRY_USERNAME: ${{ secrets.HEROKU_REGISTRY_USERNAME }}
+         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: ./.github/scripts/deploy-to-heroku.sh
         shell: bash
