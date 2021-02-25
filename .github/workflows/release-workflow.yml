@@ -9,12 +9,16 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-#      - name: Set up JDK
-#        uses: actions/setup-java@v1
-#        with:
-#          java-version: 15
-#      - name: Build with Maven
-#        run: mvn -B clean package --file backend/pom.xml
+      - name: Set up JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 15
+      - name: Build with Maven
+        run: mvn -f backend/pom.xml -B clean package jib:dockerBuild -Pheroku
       - name: Run build script
+        env:
+         HEROKU_REGISTRY_PASSWORD: ${{ secrets.HEROKU_REGISTRY_PASSWORD }}
+         HEROKU_REGISTRY_USERNAME: ${{ secrets.HEROKU_REGISTRY_USERNAME }}
+         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: ./.github/scripts/deploy-to-heroku.sh
         shell: bash
