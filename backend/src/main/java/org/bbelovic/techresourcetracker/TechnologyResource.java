@@ -44,6 +44,7 @@ public class TechnologyResource implements Serializable {
             joinColumns = @JoinColumn(name = "resource_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags = new HashSet<>();
+    private String username;
 
     public Long getId() {
         return id;
@@ -106,6 +107,14 @@ public class TechnologyResource implements Serializable {
         tag.getTechnologyResources().add(this);
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -116,17 +125,18 @@ public class TechnologyResource implements Serializable {
                 Objects.equals(link, that.link) &&
                 Objects.equals(createdOn, that.createdOn) &&
                 status == that.status &&
-                type == that.type;
+                type == that.type &&
+                Objects.equals(username, that.username);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, link, createdOn, status, type);
+        return Objects.hash(id, title, link, createdOn, status, type, username);
     }
 
     @Override
     public String toString() {
-        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s', type='%s', tags='%s']",
-                id, title, link, createdOn, status, type, tags);
+        return format("TechnologyResource[id=%d, title='%s', link='%s', createdOn='%s', status='%s', type='%s', tags='%s', username='%s']",
+                id, title, link, createdOn, status, type, tags, username);
     }
 }

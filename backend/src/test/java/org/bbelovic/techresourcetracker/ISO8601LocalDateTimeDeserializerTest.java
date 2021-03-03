@@ -18,7 +18,7 @@ public class ISO8601LocalDateTimeDeserializerTest {
                 """
                 {"id":10,"title":"test title",
                 "link":"www.blabol.com","createdOn":"2018-01-01T10:20:30", "type":"PRESENTATION",
-                "status":"NEW", "tags":[{"id":1, "name":"java"}]}
+                "status":"NEW", "tags":[{"id":1, "name":"java"}], "username": "user"}
                """;
         var mapper = new ObjectMapper();
         var module = new SimpleModule();
@@ -26,7 +26,7 @@ public class ISO8601LocalDateTimeDeserializerTest {
         mapper.registerModule(module);
 
         var expected = new TechnologyResourceDTO(10L, "test title", "www.blabol.com",
-                LocalDateTime.of(2018, 1, 1, 10, 20, 30), NEW, PRESENTATION,
+                LocalDateTime.of(2018, 1, 1, 10, 20, 30), NEW, PRESENTATION, "user",
                 Set.of(new TagDTO(1L, "java")));
         Object dtoValue = mapper.readerFor(TechnologyResourceDTO.class).readValue(json);
         assertThat(dtoValue).isEqualTo(expected);

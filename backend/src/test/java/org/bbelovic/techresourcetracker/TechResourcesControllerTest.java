@@ -72,7 +72,7 @@ public class TechResourcesControllerTest {
     public void should_create_new_resource_post_request() throws Exception {
         var requestPayload = """
                 {"id":0,"title":"new title","link":"http://www.blabol.com","createdOn":"2018-01-01T10:20:30",
-                 "status":"NEW","type":"PRESENTATION","tags":[{"id":0, "name":"kotlin"}]}";
+                 "status":"NEW","type":"PRESENTATION","tags":[{"id":0, "name":"kotlin"}],"username":"user"}";
                 """;
 
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
@@ -88,6 +88,7 @@ public class TechResourcesControllerTest {
                 .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
                 .andExpect(jsonPath("$.status", equalTo(NEW.name())))
                 .andExpect(jsonPath("$.type", equalTo(PRESENTATION.name())))
+                .andExpect(jsonPath("$.username", equalTo("user")))
                 .andExpect(jsonPath("$.tags", hasSize(1)))
                 .andExpect(jsonPath("$.tags.[0].id", greaterThan(0)))
                 .andExpect(jsonPath("$.tags.[0].name", equalTo("kotlin")));

@@ -74,6 +74,7 @@ public class TechResourcesController {
         technologyResource.setCreatedOn(resourceDTO.createdOn());
         technologyResource.setLink(resourceDTO.link());
         technologyResource.setTitle(resourceDTO.title());
+        technologyResource.setUsername(resourceDTO.username());
         resourceDTO.tags().forEach(tagDTO -> {
             var tag = new Tag();
             tag.setId(tagDTO.id());
@@ -90,7 +91,7 @@ public class TechResourcesController {
                 .collect(toSet());
         return new TechnologyResourceDTO(persistedResource.getId(),
                 persistedResource.getTitle(), persistedResource.getLink(), persistedResource.getCreatedOn(),
-                persistedResource.getStatus(), persistedResource.getType(), tagDTOs);
+                persistedResource.getStatus(), persistedResource.getType(), persistedResource.getUsername(), tagDTOs);
     }
 
     private TechResourceDetailsDTO convertToDetailsDTO(TechResourceDetails details) {

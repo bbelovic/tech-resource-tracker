@@ -11,5 +11,6 @@ public record TechnologyResourceDTO(@JsonProperty("id") Long id,
                                     @JsonProperty("createdOn") LocalDateTime createdOn,
                                     @JsonProperty("status") TechnologyResourceStatus status,
                                     @JsonProperty("type") TechnologyResourceType type,
+                                    @JsonProperty("username") String username,
                                     @JsonProperty("tags") Set<TagDTO> tags) {
 }
