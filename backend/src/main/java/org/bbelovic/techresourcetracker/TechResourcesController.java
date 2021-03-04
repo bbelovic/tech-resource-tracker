@@ -2,6 +2,8 @@ package org.bbelovic.techresourcetracker;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -46,7 +48,9 @@ public class TechResourcesController {
     }
 
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
-    public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resourceDTO) {
+    public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resourceDTO,
+                                                                             @AuthenticationPrincipal OidcUser user) {
+        var name = user.getName();
         var resourceToSave = convertTechnologyResourceFromDTO(resourceDTO);
         var persistedResource = techResourceService.save(resourceToSave);
         var responseDTO = convertTechnologyResourceToDTO(persistedResource);

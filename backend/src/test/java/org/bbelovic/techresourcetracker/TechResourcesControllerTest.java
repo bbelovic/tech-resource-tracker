@@ -72,7 +72,7 @@ public class TechResourcesControllerTest {
     public void should_create_new_resource_post_request() throws Exception {
         var requestPayload = """
                 {"id":0,"title":"new title","link":"http://www.blabol.com","createdOn":"2018-01-01T10:20:30",
-                 "status":"NEW","type":"PRESENTATION","tags":[{"id":0, "name":"kotlin"}],"username":"user"}";
+                 "status":"NEW","type":"PRESENTATION","tags":[{"id":0, "name":"kotlin"}]}";
                 """;
 
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
