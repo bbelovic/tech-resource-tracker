@@ -17,7 +17,7 @@ RES=$(./wait-for-it.sh $hostname --timeout=5 -q)
 RES=$?
 
 if [[ $RES -eq 0 ]]; then
-	java --enable-preview -cp /app/resources:/app/classes:/app/libs/* org.bbelovic.techresourcetracker.TechResourceTrackerApplication
+	java --enable-preview -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -cp /app/resources:/app/classes:/app/libs/* org.bbelovic.techresourcetracker.TechResourceTrackerApplication
 else
 	echo "Unable to ping: $hostname"
 fi	

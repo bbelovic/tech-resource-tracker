@@ -16,4 +16,5 @@ services:
       - db
     entrypoint: ["./entrypoint.sh"]
     ports:
+      - "5005:5005"
       - "8080:8080"
