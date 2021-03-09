@@ -76,8 +76,7 @@ public class TechResourcesControllerTest {
 
         mockMvc.perform(post(TECH_RESOURCES_BASIC_URI)
                 .with(csrf().asHeader())
-                .with(oauth2Client("xx"))
-//                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .with(oidcLogin())
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                 .content(requestPayload))
                 .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))

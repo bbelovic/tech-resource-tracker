@@ -50,8 +50,8 @@ public class TechResourcesController {
     @PostMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
     public ResponseEntity<TechnologyResourceDTO> createNewTechnologyResource(@RequestBody TechnologyResourceDTO resourceDTO,
                                                                              @AuthenticationPrincipal OidcUser user) {
-        var name = user.getName();
         var resourceToSave = convertTechnologyResourceFromDTO(resourceDTO);
+        resourceToSave.setUsername(user.getName());
         var persistedResource = techResourceService.save(resourceToSave);
         var responseDTO = convertTechnologyResourceToDTO(persistedResource);
         return new ResponseEntity<>(responseDTO, CREATED);
