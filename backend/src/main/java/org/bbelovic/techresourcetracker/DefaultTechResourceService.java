@@ -35,7 +35,7 @@ public class DefaultTechResourceService implements TechResourceService {
     @Transactional(readOnly = true)
     public List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status,
                                                                                             String username, int pageId, int pageSize) {
-        log.info("Getting [{}] resources on page [{}] with status [{}] ordered by creation date descending.", pageSize, pageId, status);
+        log.info("Getting [{}] resources on page [{}] for user [{}] with status [{}] ordered by creation date descending.", pageSize, pageId, username, status);
         final var detailsList = resourceRepository.findTechResourceDetailsByStatusOrderByCreatedOnDesc(status, username, PageRequest.of(pageId, pageSize));
         for (final var detail: detailsList) {
             final var newResource = new TechnologyResource();

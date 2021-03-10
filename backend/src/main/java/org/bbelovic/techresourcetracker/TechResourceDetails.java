@@ -8,11 +8,11 @@ import java.util.Objects;
 import static java.lang.String.format;
 
 public class TechResourceDetails {
-    private Long id;
-    private String username;
-    private String title;
-    private String link;
-    private List<Tag> tags;
+    private final Long id;
+    private final String username;
+    private final String title;
+    private final String link;
+    private final List<Tag> tags;
 
     public TechResourceDetails(Long id, String username, String title, String link) {
         this.id = id;
