@@ -9,7 +9,7 @@ public interface TechResourceService {
     @Transactional(readOnly = true)
     Optional<TechnologyResource> getTechResourceById(Long id);
 
-    List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, int pageId, int pageSize);
+    List<TechResourceDetails> getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, String username, int pageId, int pageSize);
     /**
      * Persists resource into underlying persistent storage.
      * @param technologyResource resource to be persisted.

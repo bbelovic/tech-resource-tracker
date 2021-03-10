@@ -12,9 +12,10 @@ import java.util.List;
 @Repository
 public interface TechnologyResourceRepository extends JpaRepository<TechnologyResource, Long> {
 
-    @Query("select new org.bbelovic.techresourcetracker.TechResourceDetails(t.id, t.title, t.link) from TechnologyResource t " +
-            "where status = :status order by t.createdOn desc")
-    List<TechResourceDetails> findTechResourceDetailsByStatusOrderByCreatedOnDesc(@Param("status") TechnologyResourceStatus status, Pageable pageable);
+    @Query("select new org.bbelovic.techresourcetracker.TechResourceDetails(t.id, t.username, t.title, t.link) from TechnologyResource t " +
+            "where status = :status and username = :username order by t.createdOn desc")
+    List<TechResourceDetails> findTechResourceDetailsByStatusOrderByCreatedOnDesc(@Param("status") TechnologyResourceStatus status,
+                                                                                  @Param("username") String username, Pageable pageable);
 
     Page<TechnologyResource> findByStatusOrderByCreatedOnDesc(TechnologyResourceStatus status, Pageable pageable);
 }

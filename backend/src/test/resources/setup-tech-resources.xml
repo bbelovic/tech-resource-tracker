@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <tags />
-    <technology_resources title="Some title 2" link="https://www.abc.com" created_on="2018-1-1 0:2:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 3" link="https://www.abc.com" created_on="2018-1-1 0:3:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 4" link="https://www.abc.com" created_on="2018-1-1 0:4:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 5" link="https://www.abc.com" created_on="2018-1-1 0:5:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 6" link="https://www.abc.com" created_on="2018-1-1 0:6:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 7" link="https://www.abc.com" created_on="2018-1-1 0:7:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 8" link="https://www.abc.com" created_on="2018-1-1 0:8:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 9" link="https://www.abc.com" created_on="2018-1-1 0:9:0" status="PROCESSED" type="ARTICLE"/>
-    <technology_resources title="Some title 10" link="https://www.abc.com" created_on="2018-1-1 0:10:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 11" link="https://www.abc.com" created_on="2018-1-1 0:11:0" status="PROCESSED" type="ARTICLE"/>
-    <technology_resources title="Some title 12" link="https://www.abc.com" created_on="2018-1-1 0:12:0" status="NEW" type="ARTICLE"/>
-    <technology_resources title="Some title 13" link="https://www.abc.com" created_on="2018-1-1 0:13:0" status="NEW" type="ARTICLE"/>
+    <technology_resources title="Some title 2" link="https://www.abc.com" created_on="2018-1-1 0:2:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 3" link="https://www.abc.com" created_on="2018-1-1 0:3:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 4" link="https://www.abc.com" created_on="2018-1-1 0:4:0" status="NEW" type="ARTICLE" username="other_user"/>
+    <technology_resources title="Some title 5" link="https://www.abc.com" created_on="2018-1-1 0:5:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 6" link="https://www.abc.com" created_on="2018-1-1 0:6:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 7" link="https://www.abc.com" created_on="2018-1-1 0:7:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 8" link="https://www.abc.com" created_on="2018-1-1 0:8:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 9" link="https://www.abc.com" created_on="2018-1-1 0:9:0" status="PROCESSED" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 10" link="https://www.abc.com" created_on="2018-1-1 0:10:0" status="NEW" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 11" link="https://www.abc.com" created_on="2018-1-1 0:11:0" status="PROCESSED" type="ARTICLE" username="user"/>
+    <technology_resources title="Some title 12" link="https://www.abc.com" created_on="2018-1-1 0:12:0" status="NEW" type="ARTICLE" username="other_user"/>
+    <technology_resources title="Some title 13" link="https://www.abc.com" created_on="2018-1-1 0:13:0" status="NEW" type="ARTICLE" username="user"/>
 </dataset>

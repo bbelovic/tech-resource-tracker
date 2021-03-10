@@ -55,14 +55,15 @@ public class TechResourcesControllerTest {
     @Test
     public void should_return_top_10_tech_resource_details_ordered_by_creation_date() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get(TECH_RESOURCES_BASIC_URI)
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .with(oidcLogin())
                 .accept(CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CONTENT_TYPE_HEADER_VALUE))
-                .andExpect(jsonPath("$.length()", is(10)))
+                .andExpect(jsonPath("$.length()", is(equalTo(8))))
                 .andExpect(jsonPath("$.[0].id", greaterThan(0)))
-                .andExpect(jsonPath("$.[0].title", is("Some title 13")))
-                .andExpect(jsonPath("$.[0].link", is("https://www.abc.com")))
+                .andExpect(jsonPath("$.[0].username", is(equalTo(TEST_USER))))
+                .andExpect(jsonPath("$.[0].title", is(equalTo("Some title 13"))))
+                .andExpect(jsonPath("$.[0].link", is(equalTo("https://www.abc.com"))))
                 .andExpect(jsonPath("$.[0].tagDTOs", hasSize(0)));
     }
 

@@ -25,8 +25,8 @@ public class TechResourcesController {
     }
 
     @GetMapping(value = "/tech-resources")
-    public ResponseEntity<List<TechResourceDetailsDTO>> resources() {
-        var resourceDetails = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, 0, 10);
+    public ResponseEntity<List<TechResourceDetailsDTO>> resources(@AuthenticationPrincipal OidcUser user) {
+        var resourceDetails = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, user.getName(), 0, 10);
         var resourceDetailsDTOs = resourceDetails.stream()
                 .map(this::convertToDetailsDTO).collect(toList());
         return new ResponseEntity<>(resourceDetailsDTOs, OK);
@@ -41,8 +41,9 @@ public class TechResourcesController {
     }
 
     @GetMapping(value = "/tech-resources/page/{pageId}/pageSize/{size}")
-    public ResponseEntity<List<TechResourceDetailsDTO>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size) {
-        List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, pageId, size);
+    public ResponseEntity<List<TechResourceDetailsDTO>> getPagedTechnologyResources(@PathVariable int pageId, @PathVariable int size,
+                                                                                    @AuthenticationPrincipal OidcUser user) {
+        List<TechResourceDetails> details = techResourceService.getTechResourceDetailsPageByStatusOrderByCreatedOnDesc(NEW, user.getName(), pageId, size);
         List<TechResourceDetailsDTO> resourceDetailsDTOs = details.stream().map(this::convertToDetailsDTO).collect(toList());
         return new ResponseEntity<>(resourceDetailsDTOs, OK);
     }
@@ -103,6 +104,6 @@ public class TechResourcesController {
                 .stream()
                 .map(tag -> new TagDTO(tag.getId(), tag.getName()))
                 .collect(toList());
-        return new TechResourceDetailsDTO(details.getId(), details.getTitle(), details.getLink(), tagDTOs);
+        return new TechResourceDetailsDTO(details.getId(), details.getUsername(), details.getTitle(), details.getLink(), tagDTOs);
     }
 }

@@ -7,12 +7,15 @@ import static java.lang.String.format;
 
 public final class TechResourceDetailsDTO {
     private final long id;
+    private final String username;
     private final String title;
     private final String link;
+
     private final Collection<TagDTO> tagDTOs;
 
-    public TechResourceDetailsDTO(long id, String title, String link, Collection<TagDTO> tagDTOs) {
+    public TechResourceDetailsDTO(long id, String username, String title, String link, Collection<TagDTO> tagDTOs) {
         this.id = id;
+        this.username = username;
         this.title = title;
         this.link = link;
         this.tagDTOs = tagDTOs;
@@ -43,6 +46,10 @@ public final class TechResourceDetailsDTO {
 
     public long getId() {
         return id;
+    }
+
+    public String getUsername() {
+        return username;
     }
 
     public String getTitle() {
