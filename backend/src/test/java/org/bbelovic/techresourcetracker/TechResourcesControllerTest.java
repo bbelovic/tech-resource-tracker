@@ -177,8 +177,8 @@ public class TechResourcesControllerTest {
     @Test
     public void
     should_load_next_page_of_resources_upon_request() throws Exception {
-        var expectedResourceTitleIds = List.of(List.of(13, 12, 10, 8),
-                List.of(7, 6, 5, 4), List.of(3, 2));
+        var expectedResourceTitleIds = List.of(List.of(13, 10, 8, 7),
+                List.of(6, 5, 3, 2));
         assertPagedResources(expectedResourceTitleIds);
 
     }
@@ -189,7 +189,7 @@ public class TechResourcesControllerTest {
             var urlTemplate = format("/tech-resources/page/%d/pageSize/%d", i, 4);
             var resultActions = mockMvc.perform(get(urlTemplate)
                     .with(csrf().asHeader())
-                    .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                    .with(oidcLogin())
                     .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                     .andDo(response -> log.info("Result: [{}]", response.getResponse().getContentAsString()))
                     .andExpect(status().isOk())

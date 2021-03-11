@@ -16,7 +16,7 @@ public class ISO8601LocalDateTimeSerializerTest {
     public void should_serialize_local_date_time_to_json_string() throws Exception {
         var expected =
                 """
-                {"id":10,"title":"test title","link":"www.blabol.com","createdOn":"2018-01-01T10:20:30","status":"PROCESSED","type":"ARTICLE","tags":[{"id":1,"name":"java"}]}
+                {"id":10,"title":"test title","link":"www.blabol.com","createdOn":"2018-01-01T10:20:30","status":"PROCESSED","type":"ARTICLE","tags":[{"id":1,"name":"java"}],"username":"jdoe"}
                 """.strip();
         var mapper = new ObjectMapper();
         var module = new SimpleModule();
@@ -35,6 +35,7 @@ public class ISO8601LocalDateTimeSerializerTest {
         resource.setStatus(PROCESSED);
         resource.setType(ARTICLE);
         resource.setTags(Collections.singleton(tag));
+        resource.setUsername("jdoe");
         var actual = mapper.writeValueAsString(resource);
         assertThat(actual).isEqualTo(expected);
     }
