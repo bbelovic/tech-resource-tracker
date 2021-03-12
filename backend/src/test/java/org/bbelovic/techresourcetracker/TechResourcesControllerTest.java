@@ -59,11 +59,11 @@ public class TechResourcesControllerTest {
                 .accept(CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(CONTENT_TYPE_HEADER_VALUE))
-                .andExpect(jsonPath("$.length()", is(equalTo(8))))
+                .andExpect(jsonPath("$.length()", is(8)))
                 .andExpect(jsonPath("$.[0].id", greaterThan(0)))
-                .andExpect(jsonPath("$.[0].username", is(equalTo(TEST_USER))))
-                .andExpect(jsonPath("$.[0].title", is(equalTo("Some title 13"))))
-                .andExpect(jsonPath("$.[0].link", is(equalTo("https://www.abc.com"))))
+                .andExpect(jsonPath("$.[0].username", is(TEST_USER)))
+                .andExpect(jsonPath("$.[0].title", is("Some title 13")))
+                .andExpect(jsonPath("$.[0].link", is("https://www.abc.com")))
                 .andExpect(jsonPath("$.[0].tagDTOs", hasSize(0)));
     }
 
@@ -85,13 +85,13 @@ public class TechResourcesControllerTest {
                 .andExpect(jsonPath("$.id", greaterThan(0)))
                 .andExpect(jsonPath("$.title", is("new title")))
                 .andExpect(jsonPath("$.link", is("http://www.blabol.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T10:20:30")))
-                .andExpect(jsonPath("$.status", equalTo(NEW.name())))
-                .andExpect(jsonPath("$.type", equalTo(PRESENTATION.name())))
-                .andExpect(jsonPath("$.username", equalTo("user")))
+                .andExpect(jsonPath("$.createdOn", is("2018-01-01T10:20:30")))
+                .andExpect(jsonPath("$.status", is(NEW.name())))
+                .andExpect(jsonPath("$.type", is(PRESENTATION.name())))
+                .andExpect(jsonPath("$.username", is("user")))
                 .andExpect(jsonPath("$.tags", hasSize(1)))
                 .andExpect(jsonPath("$.tags.[0].id", greaterThan(0)))
-                .andExpect(jsonPath("$.tags.[0].name", equalTo("kotlin")));
+                .andExpect(jsonPath("$.tags.[0].name", is("kotlin")));
     }
 
     @Test
@@ -102,7 +102,7 @@ public class TechResourcesControllerTest {
             try {
                 mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
                         .with(csrf().asHeader())
-                        .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+//                        .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                         .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                         .content(requestPayload))
                         .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
@@ -140,7 +140,7 @@ public class TechResourcesControllerTest {
                 "createdOn":"2018-01-01T10:20:30", "status":"PROCESSED", "type":"BLOG", "tags":[]}
                 """;
         mockMvc.perform(put("/markAsRead/1").with(csrf().asHeader())
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+//                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                 .content(requestPayload))
                 .andExpect(status().isNoContent());
@@ -151,25 +151,26 @@ public class TechResourcesControllerTest {
     public void should_return_technology_resource_by_its_id() throws Exception {
         mockMvc.perform(get("/tech-resources/1")
                 .with(csrf().asHeader())
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .with(oidcLogin())
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id", equalTo(1)))
-                .andExpect(jsonPath("$.title", equalTo("Some title 1")))
-                .andExpect(jsonPath("$.link", equalTo("https://www.abc.com")))
-                .andExpect(jsonPath("$.createdOn", equalTo("2018-01-01T00:01:00")))
-                .andExpect(jsonPath("$.status", equalTo(NEW.name())))
-                .andExpect(jsonPath("$.type", equalTo(ARTICLE.name())))
+                .andExpect(jsonPath("$.id", is(1)))
+                .andExpect(jsonPath("$.title", is("Some title 1")))
+                .andExpect(jsonPath("$.link", is("https://www.abc.com")))
+                .andExpect(jsonPath("$.createdOn", is("2018-01-01T00:01:00")))
+                .andExpect(jsonPath("$.status", is(NEW.name())))
+                .andExpect(jsonPath("$.type", is(ARTICLE.name())))
+                .andExpect(jsonPath("$.username", is(TEST_USER)))
                 .andExpect(jsonPath("$.tags", hasSize(1)))
-                .andExpect(jsonPath("$.tags.[0].id", equalTo(2)))
-                .andExpect(jsonPath("$.tags.[0].name", equalTo("java")));
+                .andExpect(jsonPath("$.tags.[0].id", is(2)))
+                .andExpect(jsonPath("$.tags.[0].name", is("java")));
     }
 
     @Test
     public void should_return_404_not_found_status_when_resource_cant_be_found_by_id() throws Exception {
         mockMvc.perform(get("/tech-resources/20")
                 .with(csrf().asHeader())
-                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+//                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isNotFound());
     }

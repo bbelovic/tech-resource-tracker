@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <technology_resources id="1" title="Some title 1" link="https://www.abc.com" created_on="2018-1-1 0:1:0" status="NEW" type="ARTICLE"/>
+    <technology_resources id="1" title="Some title 1" link="https://www.abc.com" created_on="2018-1-1 0:1:0" status="NEW" type="ARTICLE" username="user"/>
     <technology_resources id="2" title="Some title 2" link="https://www.abc.com" created_on="2018-1-1 0:2:0" status="NEW" type="ARTICLE"/>
     <technology_resources id="3" title="Some title 3" link="https://www.abc.com" created_on="2018-1-1 0:3:0" status="NEW" type="ARTICLE"/>
     <tags id="1" name="kotlin"/>
