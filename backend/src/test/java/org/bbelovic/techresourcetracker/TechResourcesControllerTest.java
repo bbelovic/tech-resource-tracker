@@ -24,7 +24,8 @@ import static org.bbelovic.techresourcetracker.TechnologyResourceType.ARTICLE;
 import static org.bbelovic.techresourcetracker.TechnologyResourceType.PRESENTATION;
 import static org.hamcrest.Matchers.*;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace.NONE;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.oidcLogin;
 import static org.springframework.test.context.TestExecutionListeners.MergeMode.MERGE_WITH_DEFAULTS;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -45,8 +46,6 @@ public class TechResourcesControllerTest {
     private static final Logger log = LoggerFactory.getLogger(TechResourcesControllerTest.class);
     private static final String TECH_RESOURCES_BASIC_URI = "/tech-resources";
     private static final String TEST_USER = "user";
-    private static final String TEST_PASSWORD = "passwd";
-    private static final String TEST_ROLE = "admin";
     private static final String CONTENT_TYPE_HEADER_NAME = "Content-Type";
     private static final String CONTENT_TYPE_HEADER_VALUE = "application/json;charset=UTF-8";
 
@@ -88,7 +87,7 @@ public class TechResourcesControllerTest {
                 .andExpect(jsonPath("$.createdOn", is("2018-01-01T10:20:30")))
                 .andExpect(jsonPath("$.status", is(NEW.name())))
                 .andExpect(jsonPath("$.type", is(PRESENTATION.name())))
-                .andExpect(jsonPath("$.username", is("user")))
+                .andExpect(jsonPath("$.username", is(TEST_USER)))
                 .andExpect(jsonPath("$.tags", hasSize(1)))
                 .andExpect(jsonPath("$.tags.[0].id", greaterThan(0)))
                 .andExpect(jsonPath("$.tags.[0].name", is("kotlin")));
@@ -102,7 +101,7 @@ public class TechResourcesControllerTest {
             try {
                 mockMvc.perform(put(TECH_RESOURCES_BASIC_URI)
                         .with(csrf().asHeader())
-//                        .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                        .with(oidcLogin())
                         .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                         .content(requestPayload))
                         .andDo(result -> log.info("Response: [{}].", result.getResponse().getContentAsString()))
@@ -137,10 +136,10 @@ public class TechResourcesControllerTest {
     public void should_mark_tech_resource_as_read() throws Exception {
         var requestPayload = """
                 {"id":1,"title":"new title","link":"http://www.blabol.com",
-                "createdOn":"2018-01-01T10:20:30", "status":"PROCESSED", "type":"BLOG", "tags":[]}
+                "createdOn":"2018-01-01T10:20:30", "status":"PROCESSED", "type":"BLOG", "tags":[], "username": "user"}
                 """;
         mockMvc.perform(put("/markAsRead/1").with(csrf().asHeader())
-//                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .with(oidcLogin())
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE)
                 .content(requestPayload))
                 .andExpect(status().isNoContent());
@@ -170,7 +169,7 @@ public class TechResourcesControllerTest {
     public void should_return_404_not_found_status_when_resource_cant_be_found_by_id() throws Exception {
         mockMvc.perform(get("/tech-resources/20")
                 .with(csrf().asHeader())
-//                .with(user(TEST_USER).password(TEST_PASSWORD).roles(TEST_ROLE))
+                .with(oidcLogin())
                 .header(CONTENT_TYPE_HEADER_NAME, CONTENT_TYPE_HEADER_VALUE))
                 .andExpect(status().isNotFound());
     }
