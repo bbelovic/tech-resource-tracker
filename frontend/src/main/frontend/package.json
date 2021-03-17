@@ -49,6 +49,7 @@
     "karma-verbose-reporter": "0.0.6",
     "protractor": "^5.4.3",
     "rxjs-tslint": "^0.1.7",
+    "testcontainers": "^7.6.0",
     "ts-node": "~2.0.0",
     "tslint": "^6.0.0",
     "typescript": "3.8.3",
