@@ -116,7 +116,8 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "dummy:serve"
+            "devServerTarget": "dummy:serve",
+            "port": 8080
           }
         },
         "lint": {
