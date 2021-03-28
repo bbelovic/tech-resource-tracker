@@ -10,6 +10,7 @@ export class DummyPage {
   }
 
   getParagraphText() {
-    return element(by.css('app-root navbar-brand')).getText();
+    // by.className
+    return element(by.className('navbar-brand')).getText();
   }
 }
