@@ -9,6 +9,8 @@ describe('dummy App', () => {
 
   it('should display message saying app works', () => {
     page.navigateTo();
-    page.getParagraphText().then(text => expect(text).toEqual('Tech resource tracker!'));
+    console.log('before');
+    page.getParagraphText().then(text => expect(text).toEqual('Tech resource tracker'));
+    //console.log('XXX');
   });
 });
