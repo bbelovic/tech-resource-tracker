@@ -9,8 +9,7 @@ export class DummyPage {
     return browser.get('/');
   }
 
-  getParagraphText() {
-    // by.className
+  getParagraphText() {    
     return element(by.className('navbar-brand')).getText();
   }
 }
