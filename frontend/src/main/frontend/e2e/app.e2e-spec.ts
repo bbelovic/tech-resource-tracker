@@ -22,10 +22,10 @@ describe('dummy App', () => {
       expect(name).toBe('Foo');
     });*/
 
-    const text = page.getParagraphText();
-    expect(text).toEqual('Tech resource tracker');
-    //page.getParagraphText().then(text => expect(text).toEqual('Tech resource tracker'));
-    //console.log('XXX');
-    // done();
+    // const text = page.getParagraphText();
+    // expect(text).toEqual('Tech resource tracker');
+    page.getParagraphText().then(text => expect(text).toEqual('Tech resource tracker'));
+    console.log('XXX');
+    //done();
   });
 });

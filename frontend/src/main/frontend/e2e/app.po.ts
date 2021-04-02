@@ -6,6 +6,7 @@ import { DockerComposeEnvironment } from 'testcontainers'
 
 export class DummyPage {
   navigateTo() {
+    //browser.waitForAngularEnabled(false);
     return browser.get('/');
   }
 
