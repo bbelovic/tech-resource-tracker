@@ -5,12 +5,14 @@ import { browser, element, by } from 'protractor';
 import { DockerComposeEnvironment } from 'testcontainers'
 
 export class DummyPage {
-  navigateTo() {
-    //browser.waitForAngularEnabled(false);
-    return browser.get('/');
+
+  getParagraphText(): Promise<string>{    
+    return element(by.className('navbar-brand')).getText() as Promise<string>;
   }
 
-  getParagraphText() {    
-    return element(by.className('navbar-brand')).getText();
+  navigateTo(): Promise<unknown> {
+    browser.waitForAngularEnabled(false);
+    return browser.get(browser.baseUrl) as Promise<unknown>;
   }
+
 }
