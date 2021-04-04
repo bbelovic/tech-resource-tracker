@@ -13,7 +13,7 @@ describe('dummy App', () => {
     page.navigateTo();
 
     const text = page.getParagraphText();
-    expect(text).toEqual('Tech resource tracker111');
+    expect(text).toEqual('Tech resource tracker');
     //page.getParagraphText().then(text => expect(text).toEqual('Tech resource tracker'));
 
   });

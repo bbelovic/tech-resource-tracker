@@ -1,5 +1,9 @@
 version: '3'
 services:
+  selenium:
+    image: 'selenium/standalone-chrome:4.0.0-beta-2-20210317'
+    ports:
+      - "4444:4444"
   db:
     image: 'postgres:9.6'
     environment:
@@ -14,6 +18,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
     depends_on:
       - db
+      - selenium
     entrypoint: ["./entrypoint.sh"]
     ports:
       - "8080:8080"

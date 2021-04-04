@@ -12,7 +12,7 @@ exports.config = {
     'browserName': 'chrome'
   },
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  baseUrl: 'http://localhost:8080',
+  baseUrl: 'http://tech-resource-tracker-be:8080',
   
   framework: 'jasmine',
   jasmineNodeOpts: {
