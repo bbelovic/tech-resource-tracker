@@ -18,7 +18,7 @@ jobs:
       with:
         java-version: 15
     - name: Build with Maven
-      run: mvn -B clean package --file backend/pom.xml
+      run: mvn -B clean package jib:dockerBuild -Pcompose --file backend/pom.xml
     - name: Docker compose up
       run: docker-compose up -d
     - name: Docker status
