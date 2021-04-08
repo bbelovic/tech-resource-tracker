@@ -23,6 +23,8 @@ jobs:
       run: docker-compose up -d
     - name: Docker status
       run: docker ps -a
+    - name: Run e2e tests
+      run: mvn -B clean verify -DskipTests --file backend/pom.xml
     - name: Docker compose down
       run: docker-compose down
 
