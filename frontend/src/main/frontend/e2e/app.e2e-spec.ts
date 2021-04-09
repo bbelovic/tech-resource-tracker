@@ -11,16 +11,11 @@ describe('dummy App', () => {
   beforeAll( () => {
     const composeFilePath = path.resolve(__dirname, "../../../../..");
     const composeFile = "docker-compose.yml";
-
-    console.log("Current dir: " + __dirname);
-    console.log("Compose file: "+ composeFilePath);
     //environment = await new DockerComposeEnvironment(composeFilePath, composeFile).up();
 
     // let tracker = environment.getContainer("tech-resource-tracker-be_1");
-    console.log("xxx");
     // console.log("host: " + tracker.getHost() );
 
-    
   });
 
   
@@ -39,7 +34,4 @@ describe('dummy App', () => {
 
   });
 
- /* afterAll(async () => {
-    await environment.down();
-  });*/
 });
