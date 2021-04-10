@@ -13,7 +13,7 @@ fi
 
 parse_hostname $SPRING_DATASOURCE_URL
 
-RES=$(./wait-for-it.sh $hostname --timeout=5 -q)
+RES=$(./wait-for-it.sh $hostname --timeout=50 -q)
 RES=$?
 
 if [[ $RES -eq 0 ]]; then

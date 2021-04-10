@@ -1,11 +1,18 @@
 import { browser, element, by } from 'protractor';
 
+//const { DockerComposeEnvironment } = require("testcontainers")
+
+import { DockerComposeEnvironment } from 'testcontainers'
+
 export class DummyPage {
-  navigateTo() {
-    return browser.get('/');
+
+  getParagraphText(): Promise<string>{    
+    return element(by.className('navbar-brand')).getText() as Promise<string>;
   }
 
-  getParagraphText() {
-    return element(by.css('app-root h1')).getText();
+  navigateTo(): Promise<unknown> {
+    browser.waitForAngularEnabled(false);
+    return browser.get(browser.baseUrl) as Promise<unknown>;
   }
+
 }

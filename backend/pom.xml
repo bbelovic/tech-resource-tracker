@@ -378,18 +378,18 @@
                             <arguments>run build</arguments>
                         </configuration>
                     </execution>
-                    <!--execution>
-                        <id>npm run test</id>
+                    <execution>
+                        <id>npm run e2e</id>
                         <goals>
                             <goal>
                                 npm
                             </goal>
                         </goals>
-                        <phase>test</phase>
+                        <phase>verify</phase>
                         <configuration>
-                            <arguments>run test</arguments>
+                            <arguments>run e2e</arguments>
                         </configuration>
-                    </execution-->
+                    </execution>
                 </executions>
             </plugin>
 
