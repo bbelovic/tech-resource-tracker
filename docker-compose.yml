@@ -1,5 +1,11 @@
 version: '3'
 services:
+  e2e-tests:
+    build: frontend/src/main/frontend
+    volumes:
+      - ./frontend/src/main/frontend:/opt/protractor
+    depends_on:
+      - selenium
   selenium:
     image: 'selenium/standalone-chrome:4.0.0-beta-2-20210317'
     ports:
