@@ -247,6 +247,21 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <argLine>--enable-preview</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
             </plugin>
             <plugin>
@@ -378,18 +393,18 @@
                             <arguments>run build</arguments>
                         </configuration>
                     </execution>
-                    <execution>
-                        <id>npm run e2e</id>
-                        <goals>
-                            <goal>
-                                npm
-                            </goal>
-                        </goals>
-                        <phase>verify</phase>
-                        <configuration>
-                            <arguments>run e2e</arguments>
-                        </configuration>
-                    </execution>
+<!--                    <execution>-->
+<!--                        <id>npm run e2e</id>-->
+<!--                        <goals>-->
+<!--                            <goal>-->
+<!--                                npm-->
+<!--                            </goal>-->
+<!--                        </goals>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <configuration>-->
+<!--                            <arguments>run e2e</arguments>-->
+<!--                        </configuration>-->
+<!--                    </execution>-->
                 </executions>
             </plugin>
 
@@ -401,6 +416,10 @@
             </resource>
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
+            </resource>
+            <resource>
+                <directory>${basedir}/src/main/jib</directory>
+                <targetPath>${basedir}/../frontend/src/main/frontend</targetPath>
             </resource>
         </resources>
     </build>
