@@ -3,7 +3,7 @@ services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
-      - SPRING_DATASOURCE_URL=http://localhost:8080
+      - TECH_RESOURCE_TRACKER_URL=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/opt/protractor
     depends_on:
