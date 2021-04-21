@@ -9,6 +9,7 @@ import org.testcontainers.containers.output.ToStringConsumer;
 import org.testcontainers.containers.output.WaitingConsumer;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.function.Consumer;
 
@@ -21,13 +22,14 @@ public class AngularE2EIT {
 
         DockerComposeContainer composeContainer = null;
         try {
+            File composeFile = Paths.get("../docker-compose.yml").toFile();
             ToStringConsumer toStringConsumer = new ToStringConsumer();
             WaitingConsumer waitingConsumer = new WaitingConsumer();
             Consumer<OutputFrame> composedConsumer = toStringConsumer.andThen(waitingConsumer);
-            composeContainer = new DockerComposeContainer(new File("/home/bbelovic/DEVEL/tech-resource-tracker/docker-compose.yml"))
+            composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("spec SUCCESS in"), 1, MINUTES);
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("spec SUCCESS in"), 30, MINUTES);
 
             String utf8String = toStringConsumer.toUtf8String();
             long actual = Arrays.stream(utf8String.split("\n"))
