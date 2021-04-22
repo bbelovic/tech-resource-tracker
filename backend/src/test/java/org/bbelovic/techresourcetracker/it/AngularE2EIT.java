@@ -4,16 +4,14 @@ package org.bbelovic.techresourcetracker.it;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.DockerComposeContainer;
-import org.testcontainers.containers.output.OutputFrame;
 import org.testcontainers.containers.output.ToStringConsumer;
 import org.testcontainers.containers.output.WaitingConsumer;
 
-import java.io.File;
 import java.nio.file.Paths;
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class AngularE2EIT {
 
@@ -22,20 +20,20 @@ public class AngularE2EIT {
 
         DockerComposeContainer composeContainer = null;
         try {
-            File composeFile = Paths.get("../docker-compose.yml").toFile();
-            ToStringConsumer toStringConsumer = new ToStringConsumer();
-            WaitingConsumer waitingConsumer = new WaitingConsumer();
-            Consumer<OutputFrame> composedConsumer = toStringConsumer.andThen(waitingConsumer);
+            var composeFile = Paths.get("../docker-compose.yml").toFile();
+            var toStringConsumer = new ToStringConsumer();
+            var waitingConsumer = new WaitingConsumer();
+            var composedConsumer = toStringConsumer.andThen(waitingConsumer);
             composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
             waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("spec SUCCESS in"), 30, MINUTES);
 
-            String utf8String = toStringConsumer.toUtf8String();
-            long actual = Arrays.stream(utf8String.split("\n"))
+            var utf8String = toStringConsumer.toUtf8String();
+            var actual = Arrays.stream(utf8String.split("\n"))
                     .filter(s -> s.matches("Executed (\\d+) of (\\d+) spec SUCCESS in.*"))
                     .count();
-            Assertions.assertEquals(1, actual, "Expected exactly 1 line with success message in output");
+            assertEquals(1L, actual, "Expected exactly 1 line with success message in output");
 
         } catch (Exception e) {
             Assertions.fail("Test failed unexpectedly", e);
