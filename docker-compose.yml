@@ -3,7 +3,7 @@ services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
-      - TECH_RESOURCE_TRACKER_URL=http://tech-resource-tracker-be:8080
+      - URL_TO_WAIT=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/opt/protractor
     depends_on:
@@ -26,6 +26,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
+      - URL_TO_WAIT=jdbc:postgresql://db:5432/tech_resource_tracker_db
     depends_on:
       - db
       - selenium

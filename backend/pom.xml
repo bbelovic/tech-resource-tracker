@@ -393,18 +393,33 @@
                             <arguments>run build</arguments>
                         </configuration>
                     </execution>
-<!--                    <execution>-->
-<!--                        <id>npm run e2e</id>-->
-<!--                        <goals>-->
-<!--                            <goal>-->
-<!--                                npm-->
-<!--                            </goal>-->
-<!--                        </goals>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <configuration>-->
-<!--                            <arguments>run e2e</arguments>-->
-<!--                        </configuration>-->
-<!--                    </execution>-->
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-to-frontend</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>
+                                copy-resources
+                            </goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/../frontend/src/main/frontend</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/../scripts</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <filters>
+                                <filter>${basedir}/src/main/filters/frontend.properties</filter>
+                            </filters>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 
@@ -417,9 +432,13 @@
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
             </resource>
+<!--            <resource>-->
+<!--                <directory>${basedir}/../scripts</directory>-->
+<!--                <targetPath>${basedir}/../frontend/src/main/frontend</targetPath>-->
+<!--            </resource>-->
             <resource>
-                <directory>${basedir}/src/main/jib</directory>
-                <targetPath>${basedir}/../frontend/src/main/frontend</targetPath>
+                <directory>${basedir}/../scripts</directory>
+                <targetPath>${basedir}/src/main/jib</targetPath>
             </resource>
         </resources>
     </build>
