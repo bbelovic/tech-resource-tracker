@@ -199,6 +199,14 @@
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
                         <version>${jib.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>dockerBuild</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                         <configuration>
                             <from>
                                 <image>
@@ -441,7 +449,6 @@
                             </filters>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
 
@@ -454,14 +461,6 @@
             <resource>
                 <directory>${basedir}/src/main/resources</directory>
             </resource>
-<!--            <resource>-->
-<!--                <directory>${basedir}/../scripts</directory>-->
-<!--                <targetPath>${basedir}/../frontend/src/main/frontend</targetPath>-->
-<!--            </resource>-->
-<!--            <resource>-->
-<!--                <directory>${basedir}/../scripts</directory>-->
-<!--                <targetPath>${basedir}/src/main/jib</targetPath>-->
-<!--            </resource>-->
         </resources>
     </build>
 </project>
