@@ -11,7 +11,6 @@ describe('dummy App', () => {
   it('should display message saying app works',() => {
      page.navigateTo();
 
-    //console.log('in test');
     const text = page.getParagraphText();
     expect(text).toEqual('Tech resource tracker');
   });

@@ -11,7 +11,7 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome'
   },
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+  seleniumAddress: 'http://selenium:4444/wd/hub',
   baseUrl: 'http://tech-resource-tracker-be:8080',
   
   framework: 'jasmine',

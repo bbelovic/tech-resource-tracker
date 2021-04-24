@@ -1,5 +1,15 @@
 version: '3'
 services:
+  e2e-tests:
+    build: frontend/src/main/frontend
+    environment:
+      - URL_TO_WAIT=http://tech-resource-tracker-be:8080
+    volumes:
+      - ./frontend/src/main/frontend:/opt/protractor
+    depends_on:
+      - tech-resource-tracker-be
+      - selenium
+    entrypoint: ["./entrypoint.sh"]
   selenium:
     image: 'selenium/standalone-chrome:4.0.0-beta-2-20210317'
     ports:
@@ -16,6 +26,7 @@ services:
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
+      - URL_TO_WAIT=jdbc:postgresql://db:5432/tech_resource_tracker_db
     depends_on:
       - db
       - selenium

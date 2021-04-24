@@ -10,9 +10,12 @@ target/
 .settings
 .springBeans
 
+backend/src/main/jib
 src/main/frontend/node_modules/
 src/main/frontend/dist/
 frontend/src/main/frontend/package-lock.json
+frontend/src/main/frontend/*.sh
+frontend/src/main/frontend/node
 ### IntelliJ IDEA ###
 .idea
 *.iws

@@ -199,6 +199,14 @@
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
                         <version>${jib.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>dockerBuild</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                         <configuration>
                             <from>
                                 <image>
@@ -244,6 +252,21 @@
                 <configuration>
                     <argLine>--enable-preview</argLine>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <configuration>
+                    <argLine>--enable-preview</argLine>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -378,16 +401,52 @@
                             <arguments>run build</arguments>
                         </configuration>
                     </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
                     <execution>
-                        <id>npm run e2e</id>
+                        <id>copy-to-frontend</id>
+                        <phase>process-resources</phase>
                         <goals>
                             <goal>
-                                npm
+                                copy-resources
                             </goal>
                         </goals>
-                        <phase>verify</phase>
                         <configuration>
-                            <arguments>run e2e</arguments>
+                            <outputDirectory>${basedir}/../frontend/src/main/frontend</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/../scripts</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <filters>
+                                <filter>${basedir}/src/main/filters/frontend.properties</filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>copy-to-backend</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>
+                                copy-resources
+                            </goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/jib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/../scripts</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <filters>
+                                <filter>${basedir}/src/main/filters/backend.properties</filter>
+                            </filters>
                         </configuration>
                     </execution>
                 </executions>
