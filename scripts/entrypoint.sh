@@ -3,7 +3,7 @@
 source ./helpers.sh
 hostname="n/a"
 
-cmdToExecute=@cmdToExecute@
+cmdToExecute="@cmdToExecute@"
 
 parse_hostname $URL_TO_WAIT
 
