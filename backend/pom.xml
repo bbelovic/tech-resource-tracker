@@ -420,6 +420,28 @@
                             </filters>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copy-to-backend</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>
+                                copy-resources
+                            </goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${basedir}/src/main/jib</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/../scripts</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                            <filters>
+                                <filter>${basedir}/src/main/filters/backend.properties</filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+
                 </executions>
             </plugin>
 
@@ -436,10 +458,10 @@
 <!--                <directory>${basedir}/../scripts</directory>-->
 <!--                <targetPath>${basedir}/../frontend/src/main/frontend</targetPath>-->
 <!--            </resource>-->
-            <resource>
-                <directory>${basedir}/../scripts</directory>
-                <targetPath>${basedir}/src/main/jib</targetPath>
-            </resource>
+<!--            <resource>-->
+<!--                <directory>${basedir}/../scripts</directory>-->
+<!--                <targetPath>${basedir}/src/main/jib</targetPath>-->
+<!--            </resource>-->
         </resources>
     </build>
 </project>

@@ -17,7 +17,6 @@ if [[ $RES -eq 0 ]]; then
   cmdToRun=($2)
   echo "Running: $cmdToRun"
   ${cmdToRun[@]}
-#	java --enable-preview -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005 -cp /app/resources:/app/classes:/app/libs/* org.bbelovic.techresourcetracker.TechResourceTrackerApplication
 else
 	echo "Unable to ping: $1"
 fi
