@@ -169,6 +169,14 @@
                         <groupId>com.google.cloud.tools</groupId>
                         <artifactId>jib-maven-plugin</artifactId>
                         <version>${jib.version}</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>dockerBuild</goal>
+                                </goals>
+                            </execution>
+                        </executions>
                         <configuration>
                             <to>
                                 <image>bbelovic/tech-resource-tracker</image>
@@ -239,6 +247,55 @@
                             </extraDirectories>
                         </configuration>
                     </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>copy-to-frontend</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>
+                                        copy-resources
+                                    </goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/../frontend/src/main/frontend</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/../scripts</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <filters>
+                                        <filter>${basedir}/src/main/filters/frontend.properties</filter>
+                                    </filters>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-to-backend</id>
+                                <phase>process-resources</phase>
+                                <goals>
+                                    <goal>
+                                        copy-resources
+                                    </goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/src/main/jib</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/../scripts</directory>
+                                            <filtering>true</filtering>
+                                        </resource>
+                                    </resources>
+                                    <filters>
+                                        <filter>${basedir}/src/main/filters/backend.properties</filter>
+                                    </filters>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                 </plugins>
             </build>
         </profile>
@@ -399,54 +456,6 @@
                         </goals>
                         <configuration>
                             <arguments>run build</arguments>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>copy-to-frontend</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>
-                                copy-resources
-                            </goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/../frontend/src/main/frontend</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}/../scripts</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                            <filters>
-                                <filter>${basedir}/src/main/filters/frontend.properties</filter>
-                            </filters>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>copy-to-backend</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>
-                                copy-resources
-                            </goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${basedir}/src/main/jib</outputDirectory>
-                            <resources>
-                                <resource>
-                                    <directory>${basedir}/../scripts</directory>
-                                    <filtering>true</filtering>
-                                </resource>
-                            </resources>
-                            <filters>
-                                <filter>${basedir}/src/main/filters/backend.properties</filter>
-                            </filters>
                         </configuration>
                     </execution>
                 </executions>

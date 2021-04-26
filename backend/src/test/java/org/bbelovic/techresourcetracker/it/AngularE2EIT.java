@@ -1,7 +1,6 @@
 package org.bbelovic.techresourcetracker.it;
 
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.DockerComposeContainer;
 import org.testcontainers.containers.output.ToStringConsumer;
@@ -9,9 +8,12 @@ import org.testcontainers.containers.output.WaitingConsumer;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.regex.Pattern;
 
+import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class AngularE2EIT {
 
@@ -32,15 +34,31 @@ public class AngularE2EIT {
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
                     .filter(s -> s.matches("Executed (\\d+) of (\\d+) spec SUCCESS in.*"))
-                    .count();
-            assertEquals(1L, actual, "Expected exactly 1 line with success message in output");
+                    .findFirst();
+            actual.ifPresentOrElse(this::assertContainerOutput, this::failSuccessMessageNotFound);
+
 
         } catch (Exception e) {
-            Assertions.fail("Test failed unexpectedly", e);
+            fail("Test failed unexpectedly", e);
         } finally {
             if (composeContainer != null) {
                 composeContainer.stop();
             }
         }
+    }
+
+    private void assertContainerOutput(String logOutput) {
+        var pattern = Pattern.compile("Executed (\\d+) of (\\d+) spec SUCCESS in.*");
+        var matcher = pattern.matcher(logOutput);
+        if (matcher.matches()) {
+            var executedCount = matcher.group(1);
+            var totalCount = matcher.group(2);
+            assertEquals(executedCount, totalCount,
+                    format("Executed test count [%s] should be equal to total test count [%s]", executedCount, totalCount));
+        }
+    }
+
+    private void failSuccessMessageNotFound() {
+        fail("Test execution success message not found in container output!");
     }
 }
