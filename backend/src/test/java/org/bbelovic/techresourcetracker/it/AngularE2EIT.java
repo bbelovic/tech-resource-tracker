@@ -17,6 +17,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class AngularE2EIT {
 
+    private static final String TESTS_EXECUTED_REGEX = "Executed (\\d+) of (\\d+) spec SUCCESS in.*";
+
     @Test
     public void executeAngularE2ETest() {
 
@@ -29,14 +31,13 @@ public class AngularE2EIT {
             composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("spec SUCCESS in"), 30, MINUTES);
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("spec SUCCESS in"), 10, MINUTES);
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
-                    .filter(s -> s.matches("Executed (\\d+) of (\\d+) spec SUCCESS in.*"))
+                    .filter(s -> s.matches(TESTS_EXECUTED_REGEX))
                     .findFirst();
             actual.ifPresentOrElse(this::assertContainerOutput, this::failSuccessMessageNotFound);
-
 
         } catch (Exception e) {
             fail("Test failed unexpectedly", e);
@@ -48,7 +49,7 @@ public class AngularE2EIT {
     }
 
     private void assertContainerOutput(String logOutput) {
-        var pattern = Pattern.compile("Executed (\\d+) of (\\d+) spec SUCCESS in.*");
+        var pattern = Pattern.compile(TESTS_EXECUTED_REGEX);
         var matcher = pattern.matcher(logOutput);
         if (matcher.matches()) {
             var executedCount = matcher.group(1);
