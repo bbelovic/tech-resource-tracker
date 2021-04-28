@@ -15,4 +15,10 @@ describe('dummy App', () => {
     expect(text).toEqual('Tech resource tracker');
   });
 
+  it('should be able to log into application', () => {
+    page.navigateTo();
+    const btnLabel = page.getSignInButton();
+    expect(btnLabel).toEqual('Sign in');
+  })
+
 });
