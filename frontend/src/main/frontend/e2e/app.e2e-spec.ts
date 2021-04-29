@@ -19,6 +19,8 @@ describe('dummy App', () => {
     page.navigateTo();
     const btnLabel = page.getSignInButton();
     expect(btnLabel).toEqual('Sign in');
+    const result = page.clickSignInButton();
+    expect(result).toEqual('input');
   })
 
 });

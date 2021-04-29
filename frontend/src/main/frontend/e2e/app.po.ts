@@ -15,6 +15,24 @@ export class DummyPage {
 
   }
 
+  clickSignInButton(): Promise<string>  {
+    element(by.className('btn-default')).click();
+    browser.wait(browser.getCurrentUrl()
+    .then((url) => {console.log('@@@ url='+ (url === 'https://dev-775522')); return url ==='https://dev-775522'} ), 40000);
+        //browser.getCurrentUrl()
+    //browser.wait()
+    //#okta-signin-username
+
+    //dev-775522.okta.com
+
+   // https://dev-775522.okta.com/
+
+
+    return element(by.id('#okta-signin-username')).getTagName() as Promise<string>;
+  }
+
+
+
   navigateTo(): Promise<unknown> {
     browser.waitForAngularEnabled(false);
     return browser.get(browser.baseUrl) as Promise<unknown>;
