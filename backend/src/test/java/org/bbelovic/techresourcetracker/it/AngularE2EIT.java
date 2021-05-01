@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class AngularE2EIT {
 
-    private static final String TESTS_EXECUTED_REGEX = "Executed (\\d+) of (\\d+) spec SUCCESS in.*";
+    private static final String TESTS_EXECUTED_REGEX = "Executed (\\d+) of (\\d+) specs? SUCCESS in.*";
 
     @Test
     public void executeAngularE2ETest() {
@@ -31,7 +31,7 @@ public class AngularE2EIT {
             composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("spec SUCCESS in"), 10, MINUTES);
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("SUCCESS in"), 5, MINUTES);
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))

@@ -15,12 +15,10 @@ describe('dummy App', () => {
     expect(text).toEqual('Tech resource tracker');
   });
 
-  it('should be able to log into application', () => {
+  it('should return 400 Bad request when clicked sign in button', () => {
     page.navigateTo();
-    const btnLabel = page.getSignInButton();
-    expect(btnLabel).toEqual('Sign in');
     const result = page.clickSignInButton();
-    expect(result).toEqual('input');
+    expect(result).toEqual('BAD REQUEST');
   })
 
 });

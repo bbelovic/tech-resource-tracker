@@ -19,13 +19,8 @@ export class DummyPage {
   clickSignInButton(): Promise<string>  {
     element(by.className('btn-default')).click();
     var EC = protractor.ExpectedConditions;
-    //EC.urlIs('https://dev-775522')
-    //EC.urlContains
-    browser.wait(EC.urlContains('https://dev-775522.okta.com'), 20000, 'URL was: ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
-
-
-
-    return element(by.id('#okta-signin-username')).getTagName() as Promise<string>;
+    browser.wait(EC.urlContains('https://dev-775522.okta.com'), 20000);
+    return element(by.className('error-title')).getText() as Promise<string>;
   }
 
 
