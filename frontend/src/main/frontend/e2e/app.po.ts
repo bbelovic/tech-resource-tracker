@@ -1,4 +1,5 @@
 import { browser, element, by, ElementFinder } from 'protractor';
+import { protractor } from 'protractor/built/ptor';
 
 //const { DockerComposeEnvironment } = require("testcontainers")
 
@@ -17,15 +18,11 @@ export class DummyPage {
 
   clickSignInButton(): Promise<string>  {
     element(by.className('btn-default')).click();
-    browser.wait(browser.getCurrentUrl()
-    .then((url) => {console.log('@@@ url='+ (url === 'https://dev-775522')); return url ==='https://dev-775522'} ), 40000);
-        //browser.getCurrentUrl()
-    //browser.wait()
-    //#okta-signin-username
+    var EC = protractor.ExpectedConditions;
+    //EC.urlIs('https://dev-775522')
+    //EC.urlContains
+    browser.wait(EC.urlContains('https://dev-775522.okta.com'), 20000, 'URL was: ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
 
-    //dev-775522.okta.com
-
-   // https://dev-775522.okta.com/
 
 
     return element(by.id('#okta-signin-username')).getTagName() as Promise<string>;
