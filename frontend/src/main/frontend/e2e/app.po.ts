@@ -38,6 +38,8 @@ export class DummyPage {
     element(by.id('okta-signin-username')).sendKeys(username);
     element(by.id('okta-signin-password')).sendKeys(password);
     element(by.id('okta-signin-submit')).click();
+    browser.sleep(3000);
+    browser.wait(EC.urlIs('http://tech-resource-tracker-be:8080/'), 20000, ' ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
   }
 
 
