@@ -17,15 +17,10 @@ describe('dummy App', () => {
 
   it('should log into application and then logout', () => {
     page.loginIntoApplication('hideo.k@seznam.cz', 'Bb85sa!@');
-
+    const logoutBtnText = page.getLogoutButtonText();
+    expect(logoutBtnText).toEqual('Logout');
+    page.logoutFromApplication();
+    //const loginBtnText = page.getLoginButtonText();
+    //expect(loginBtnText).toEqual('Sign in');
   })
-
-  /*
-  it('should return 400 Bad request when clicked sign in button', () => {
-    page.navigateTo();
-    const result = page.clickSignInButton();
-    expect(result).toEqual('Sign In');
-  })
-  */
-
 });
