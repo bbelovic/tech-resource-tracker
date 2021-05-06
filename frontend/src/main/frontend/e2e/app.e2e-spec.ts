@@ -20,7 +20,7 @@ describe('dummy App', () => {
     const logoutBtnText = page.getLogoutButtonText();
     expect(logoutBtnText).toEqual('Logout');
     page.logoutFromApplication();
-    //const loginBtnText = page.getLoginButtonText();
-    //expect(loginBtnText).toEqual('Sign in');
+    const loginBtnText = page.getLoginButtonText();
+    expect(loginBtnText).toEqual('Sign in');
   })
 });
