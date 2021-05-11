@@ -22,5 +22,6 @@ describe('dummy App', () => {
     page.logoutFromApplication();
     const loginBtnText = page.getLoginButtonText();
     expect(loginBtnText).toEqual('Sign in');
+   console.log(`TEST_ENV=${process.env.TEST_ENV}`);
   })
 });
