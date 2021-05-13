@@ -16,7 +16,9 @@ describe('dummy App', () => {
   });
 
   it('should log into application and then logout', () => {
-    page.loginIntoApplication('hideo.k@seznam.cz', 'Bb85sa!@');
+    //page.loginIntoApplication('hideo.k@seznam.cz', 'Bb85sa!@');
+    //Yabadabadoo
+    page.loginIntoApplication('test_name@blabol.com', 'Y4badabadoo');
     const logoutBtnText = page.getLogoutButtonText();
     expect(logoutBtnText).toEqual('Logout');
     page.logoutFromApplication();
