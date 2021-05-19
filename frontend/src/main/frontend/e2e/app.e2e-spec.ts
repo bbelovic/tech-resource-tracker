@@ -16,14 +16,13 @@ describe('dummy App', () => {
   });
 
   it('should log into application and then logout', () => {
-    //page.loginIntoApplication('hideo.k@seznam.cz', 'Bb85sa!@');
-    //Yabadabadoo
-    page.loginIntoApplication('test_name@blabol.com', 'Y4badabadoo');
+    const username = process.env.OKTA_TEST_USERNAME;
+    const passwd = process.env.OKTA_TEST_PASSWORD;
+    page.loginIntoApplication(username, passwd);
     const logoutBtnText = page.getLogoutButtonText();
     expect(logoutBtnText).toEqual('Logout');
     page.logoutFromApplication();
     const loginBtnText = page.getLoginButtonText();
     expect(loginBtnText).toEqual('Sign in');
-   console.log(`TEST_ENV=${process.env.TEST_ENV}`);
   })
 });
