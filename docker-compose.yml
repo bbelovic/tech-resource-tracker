@@ -3,6 +3,8 @@ services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
+      - OKTA_TEST_USERNAME=test_name@blabol.com
+      - OKTA_TEST_PASSWORD=Y4badabadoo
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/opt/protractor
