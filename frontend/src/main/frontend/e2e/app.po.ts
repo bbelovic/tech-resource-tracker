@@ -32,7 +32,11 @@ export class DummyPage {
   }
 
   getLogoutButtonText(): Promise<string> {
-    return element(by.className('btn-default')).getText() as Promise<string>
+    return element(by.id('btn-logout')).getText() as Promise<string>
+  }
+
+  getResourcesText(): Promise<string> {
+    return element(by.tagName('h4')).getText() as Promise<string>
   }
 
   logoutFromApplication() {
