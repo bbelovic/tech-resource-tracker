@@ -27,10 +27,10 @@
         <dbunit.version>2.4.9</dbunit.version>
         <kotlin.version>1.6.21</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
-        <frontend.plugin.version>1.11.3</frontend.plugin.version>
+        <frontend.plugin.version>1.12.1</frontend.plugin.version>
         <node.version>v12.18.3</node.version>
         <okta.version>2.0.0</okta.version>
-        <jib.version>3.1.1</jib.version>
+        <jib.version>3.2.1</jib.version>
     </properties>
 
     <dependencyManagement>
