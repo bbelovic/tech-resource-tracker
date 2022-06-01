@@ -36,7 +36,7 @@ public class AngularE2EIT {
             composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("SUCCESS in"), 8, MINUTES);
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("SUCCESS in"), 2, MINUTES);
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
