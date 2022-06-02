@@ -36,10 +36,12 @@ export class DummyPage {
   }
 
   getResourcesText(): Promise<string> {
+    console.log('Looking for h4');
     return element(by.tagName('h4')).getText() as Promise<string>
   }
 
   logoutFromApplication() {
+    console.log('logout from app');
     element(by.className('btn-default')).click();
     const EC = protractor.ExpectedConditions;
     browser.wait(EC.urlIs('http://tech-resource-tracker-be:8080/'), 20000, ' ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
