@@ -18,12 +18,12 @@ describe('dummy App', () => {
   it('should log into application and then logout', async () => {
     const username = process.env.OKTA_TEST_USERNAME;
     const passwd = process.env.OKTA_TEST_PASSWORD;
-    page.loginIntoApplication(username, passwd);
+    await page.loginIntoApplication(username, passwd);
     //const logoutBtnText = await page.getLogoutButtonText();
     const resText = await page.getResourcesText();
     expect(resText).toContain('Showing');
     //expect(logoutBtnText).toEqual('Logout');
-    page.logoutFromApplication();
+    await page.logoutFromApplication();
     const loginBtnText = await page.getLoginButtonText();
     expect(loginBtnText).toEqual('Sign in');
   })
