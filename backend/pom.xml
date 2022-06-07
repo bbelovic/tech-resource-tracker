@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.0</version>
+        <version>2.7.0</version>
         <relativePath/>
     </parent>
 
@@ -21,16 +21,16 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>15</java.version>
-        <testcontainers.version>1.15.3</testcontainers.version>
+        <testcontainers.version>1.17.2</testcontainers.version>
         <kotlin.jvmTarget>15</kotlin.jvmTarget>
         <java.xml.bind.version>2.3.1</java.xml.bind.version>
         <dbunit.version>2.4.9</dbunit.version>
-        <kotlin.version>1.4.20</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
-        <frontend.plugin.version>1.11.3</frontend.plugin.version>
+        <frontend.plugin.version>1.12.1</frontend.plugin.version>
         <node.version>v12.18.3</node.version>
         <okta.version>2.0.0</okta.version>
-        <jib.version>3.1.1</jib.version>
+        <jib.version>3.2.1</jib.version>
     </properties>
 
     <dependencyManagement>

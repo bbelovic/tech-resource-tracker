@@ -12,7 +12,7 @@
                       <div class="form-group" *ngIf="!authenticated">
                           <button class="btn btn-default" (click)="login()">Sign in</button>
                       </div>
-                  <button *ngIf="authenticated" (click)="logout()" class="btn btn-default navbar-btn">Logout</button>
+                  <button *ngIf="authenticated" (click)="logout()" class="btn btn-default navbar-btn" id="btn-logout">Logout</button>
                   <a routerLink='/register-new-user'>Register</a>
                 </div>
           </div>

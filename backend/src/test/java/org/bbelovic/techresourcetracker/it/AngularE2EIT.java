@@ -2,7 +2,10 @@ package org.bbelovic.techresourcetracker.it;
 
 
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testcontainers.containers.DockerComposeContainer;
+import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.output.ToStringConsumer;
 import org.testcontainers.containers.output.WaitingConsumer;
 
@@ -17,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 public class AngularE2EIT {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AngularE2EIT.class);
     private static final String TESTS_EXECUTED_REGEX = "Executed (\\d+) of (\\d+) specs? SUCCESS in.*";
 
     @Test
@@ -24,14 +28,15 @@ public class AngularE2EIT {
 
         DockerComposeContainer composeContainer = null;
         try {
+            Slf4jLogConsumer slf4jLogConsumer = new Slf4jLogConsumer(LOGGER);
             var composeFile = Paths.get("../docker-compose.yml").toFile();
             var toStringConsumer = new ToStringConsumer();
             var waitingConsumer = new WaitingConsumer();
-            var composedConsumer = toStringConsumer.andThen(waitingConsumer);
+            var composedConsumer = toStringConsumer.andThen(slf4jLogConsumer).andThen(waitingConsumer);
             composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("SUCCESS in"), 5, MINUTES);
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("SUCCESS in"), 2, MINUTES);
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
