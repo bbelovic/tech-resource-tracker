@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.0</version>
+        <version>2.7.3</version>
         <relativePath/>
     </parent>
 
@@ -218,7 +218,7 @@
                         <configuration>
                             <from>
                                 <image>
-                                    openjdk:15.0.1-jdk
+                                    openjdk:18.0.2-jdk-slim-buster
                                 </image>
                             </from>
                             <to>
