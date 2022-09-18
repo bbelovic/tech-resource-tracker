@@ -1,0 +1,17 @@
+.page-title {
+    margin-left: 0.5rem;
+}
+
+.menu {
+    list-style-type: none;
+    line-height: 2.5;
+    margin: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+li {
+    border: 1px coral solid;
+    margin-right: 1rem;
+    text-transform: uppercase;
+}
