@@ -1,4 +1,4 @@
-FROM node:12.22-buster
+FROM node:14.20-buster
 LABEL maintainer="bbelovic@gmail.com" \
       version="0.1"
 
