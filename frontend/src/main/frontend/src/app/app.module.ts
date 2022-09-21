@@ -17,6 +17,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterUserService } from './services/register-user.service';
 import { AuthService } from './services/auth.service';
 import { HeaderComponent } from './header/header.component';
+import { ResourceItemComponent } from './resource-item/resource-item.component';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -34,7 +35,8 @@ const routes: Routes = [
     LoginComponent,
     FooterComponent,
     RegisterUserComponent,
-    HeaderComponent
+    HeaderComponent,
+    ResourceItemComponent
   ],
   imports: [
     BrowserModule,
