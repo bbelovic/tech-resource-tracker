@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
+import { TechResourceService } from 'app/tech-resource-service';
 
 @Component({
   selector: 'app-resource-list',
@@ -7,9 +10,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResourceListComponent implements OnInit {
 
-  constructor() { }
+  techResourcesDetailsDTOs: TechResourceDetailsDTO[] = [];
+    constructor(private resourceService: TechResourceService,
+        private router: Router) { }
 
-  ngOnInit(): void {
-  }
+    ngOnInit(): void {
+        console.log('Getting resources from remote server.')
+        this.resourceService.getTechResourceDetailsDTO()
+            .then(result => this.techResourcesDetailsDTOs = result);
+
+    }
 
 }
