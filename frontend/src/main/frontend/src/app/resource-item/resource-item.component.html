@@ -1,5 +1,5 @@
 <div class="resource-item">
-    <h1>Resource title 2</h1>
+    <h1>{{dto.title}}</h1>
     <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec eros sed tortor iaculis faucibus venenatis a arcu. 
         Fusce convallis aliquam nunc, vel commodo erat posuere ac. Proin vehicula efficitur turpis ut dictum. Duis hendrerit justo quis metus aliquet, 
@@ -8,12 +8,8 @@
         sem dictum molestie. 
         Proin quam lectus, ultricies at dolor quis, rhoncus bibendum erat. Nunc gravida posuere nunc, malesuada lobortis erat mattis vel.
     </p>
-    <div class="tags">
-        <div class="resource-tag">preview-java</div>
-        <div class="resource-tag">kotlin</div>
-        <div class="resource-tag">virtual threads</div>
-        <div class="resource-tag">investing</div>
-        <div class="resource-tag">css hacks</div>
+    <div class="tags" *ngFor="let tag of dto.tags">
+        <div class="resource-tag">{{tag.name}}</div>
     </div>
     <div class="control-buttons">
         <button class="control-button">Mark as read</button>

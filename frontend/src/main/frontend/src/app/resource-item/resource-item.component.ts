@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 
 @Component({
   selector: 'app-resource-item',
@@ -7,6 +8,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ResourceItemComponent implements OnInit {
 
+  @Input()
+  dto: TechResourceDetailsDTO;
   constructor() { }
 
   ngOnInit(): void {

@@ -18,7 +18,6 @@ export class ResourceListComponent implements OnInit {
         console.log('Getting resources from remote server.')
         this.resourceService.getTechResourceDetailsDTO()
             .then(result => this.techResourcesDetailsDTOs = result);
-
     }
 
 }
