@@ -50,6 +50,6 @@ const routes: Routes = [
   ],
   providers: [TechResourceService, TagService, AuthService, AuthenticationService,
     RuntimeInformationService, RegisterUserService],
-  bootstrap: [AppComponent]
+  bootstrap: [MainComponent]
 })
 export class AppModule { }
