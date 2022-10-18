@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
+  authenticated: boolean = false;
   constructor() { }
 
   ngOnInit(): void {

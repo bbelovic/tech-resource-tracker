@@ -17,7 +17,7 @@ describe('MainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('not authenticated by default', () => {
+    expect(component.authenticated).toBeFalse();
   });
 });

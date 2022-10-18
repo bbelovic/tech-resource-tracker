@@ -1,4 +1,9 @@
 <div class="container">
     <app-header></app-header>
-    <app-resource-list></app-resource-list>
+    <div *ngIf="authenticated; then isAuthenticated else notAuthenticated"></div>
+    <ng-template #isAuthenticated>
+        <app-resource-list></app-resource-list>
+    </ng-template>
+    <ng-template #notAuthenticated>Please login</ng-template>
+    
 </div>
