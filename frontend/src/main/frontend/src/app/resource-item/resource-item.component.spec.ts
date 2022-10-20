@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 
 import { ResourceItemComponent } from './resource-item.component';
@@ -25,6 +26,10 @@ describe('ResourceItemComponent', () => {
 
   it('should create with single dto set', () => {
     expect(component.dto).toEqual(new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', []));
+
+
+    fixture.debugElement.query(By.css(`data-testid=""`))
+
   });
 
 });
