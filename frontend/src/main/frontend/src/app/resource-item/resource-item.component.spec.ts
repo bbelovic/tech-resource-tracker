@@ -7,41 +7,24 @@ import { ResourceItemComponent } from './resource-item.component';
 describe('ResourceItemComponent', () => {
   let component: ResourceItemComponent;
   let fixture: ComponentFixture<ResourceItemComponent>;
-  let testHostComponent: TestHostComponent;
-  let testHostFixture: ComponentFixture<TestHostComponent>;
+  // let testHostComponent: TestHostComponent;
+  // let testHostFixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResourceItemComponent, TestHostComponent ]
+      declarations: [ ResourceItemComponent]
     })
     .compileComponents();
-
     
-    testHostFixture = TestBed.createComponent(TestHostComponent);
-    testHostComponent = testHostFixture.componentInstance;
-    testHostComponent.testDto = new TechResourceDetailsDTO(1, 'title1', 'http://blabol.com', []);
-    testHostFixture.detectChanges();
-
-    
-    //fixture = TestBed.createComponent(ResourceItemComponent);
-    //component = fixture.componentInstance;
-    //fixture.detectChanges();
+    fixture = TestBed.createComponent(ResourceItemComponent);
+    component = fixture.componentInstance;
+    component.dto = new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', []);
+    fixture.detectChanges();
 
   });
 
-  it('should create', () => {
-    expect(testHostFixture.nativeElement.querySelector('h1').innerText).toEqual('title1');
-    //expect(component.dto).toBeUndefined();
+  it('should create with single dto set', () => {
+    expect(component.dto).toEqual(new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', []));
   });
 
-  @Component({
-    selector: `test-host-component`,
-    template: `<app-resource-item [dto]="testDto"></app-resource-item>`
-  })
-  class TestHostComponent {
-    testDto: TechResourceDetailsDTO;
-    constructor() {
-      //this.testDto = new TechResourceDetailsDTO(1, 'title1', 'http://blabol.com', []);
-    }
-  }
 });
