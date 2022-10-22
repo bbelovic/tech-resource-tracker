@@ -28,7 +28,10 @@ describe('ResourceItemComponent', () => {
     expect(component.dto).toEqual(new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', []));
 
 
-    fixture.debugElement.query(By.css(`data-testid=""`))
+    const debugElement = fixture.debugElement.query(By.css(`[data-testid="resource-title"]`));
+    const nativeElement = debugElement.nativeElement;
+    expect(nativeElement.textContent).toEqual('test title');
+    
 
   });
 
