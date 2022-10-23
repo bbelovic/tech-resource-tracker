@@ -7,7 +7,7 @@ import { RuntimeInformationService } from './services/runtime-information.servic
 import { By } from '@angular/platform-browser';
 import { runtimeInformationObservable } from './shared/runtime-information';
 
-describe('AppComponent', () => {
+xdescribe('AppComponent', () => {
   let authService: jasmine.SpyObj<AuthenticationService>;
   let runtimeService: jasmine.SpyObj<RuntimeInformationService>;
 
