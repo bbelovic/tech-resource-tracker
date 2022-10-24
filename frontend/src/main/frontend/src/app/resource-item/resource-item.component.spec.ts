@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TagDTO } from 'app/tag-dto';
@@ -26,13 +26,17 @@ describe('ResourceItemComponent', () => {
 
   it('creates with single dto set', () => {
     expect(component.dto).toEqual(new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')]));
-    const debugElement = fixture.debugElement.query(By.css(`[data-testid="resource-title"]`));
+    const debugElement = findEl(fixture, "resource-title");
     const nativeElement = debugElement.nativeElement;
     expect(nativeElement.textContent).toEqual(testDto.title);
-    const tagElement = fixture.debugElement.query(By.css(`[data-testid="resource-tag"]`));
+    const tagElement = findEl(fixture, "resource-tag");
     expect(tagElement.nativeElement.textContent).toEqual('java');
-    const markAsReadBtnElement = fixture.debugElement.query(By.css(`[data-testid="mark-as-read-btn"]`));
+    const markAsReadBtnElement = findEl(fixture, "mark-as-read-btn");
     expect(markAsReadBtnElement.nativeElement).toBeTruthy();
   });
 
 });
+
+function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugElement {
+  return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
+}
