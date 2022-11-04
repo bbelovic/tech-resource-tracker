@@ -11,12 +11,15 @@ import { ResourceItemComponent } from 'app/resource-item/resource-item.component
 describe('ResourceListComponent', () => {
   let component: ResourceListComponent;
   let fixture: ComponentFixture<ResourceListComponent>;
-  const dtos = [new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])];
-  const spiedResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', {getTechResourceDetailsDTO: Promise.resolve(dtos)});
+  Promise.resolve()
+  
+  const dtos = Promise.resolve([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
+  const spiedResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', {getTechResourceDetailsDTO: dtos});
+    //['getTechResource','getTechResourceDetailsDTO', 'getTechResourceById', 'postNewTechResource', 'updateResource', 'markResourceAsRead', 'getPagedTechnologyResources']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResourceListComponent , ResourceItemComponent],
+      declarations: [ ResourceListComponent /*, ResourceItemComponent*/],
       providers: [
         {provide: TechResourceService, useValue: spiedResourceService}
       ]
@@ -29,6 +32,7 @@ describe('ResourceListComponent', () => {
   });
 
   it('creates component', () => {
+    //spiedResourceService.getTechResourceDetailsDTO.and.returnValue(Promise.resolve(dtos));
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
     const childComponent = debugElement.query(By.directive(ResourceItemComponent));
