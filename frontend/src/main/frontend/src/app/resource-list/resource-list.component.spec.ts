@@ -15,11 +15,10 @@ describe('ResourceListComponent', () => {
   
   const dtos = Promise.resolve([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
   const spiedResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', {getTechResourceDetailsDTO: dtos});
-    //['getTechResource','getTechResourceDetailsDTO', 'getTechResourceById', 'postNewTechResource', 'updateResource', 'markResourceAsRead', 'getPagedTechnologyResources']);
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ResourceListComponent /*, ResourceItemComponent*/],
+      declarations: [ ResourceListComponent , ResourceItemComponent],
       providers: [
         {provide: TechResourceService, useValue: spiedResourceService}
       ]
@@ -31,12 +30,10 @@ describe('ResourceListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('creates component', () => {
-    //spiedResourceService.getTechResourceDetailsDTO.and.returnValue(Promise.resolve(dtos));
+  fit('creates component', () => {
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
-    const childComponent = debugElement.query(By.directive(ResourceItemComponent));
-    //const childComponent = debugElement.query(By.css('resource-item'));
+    const childComponent = debugElement.query(By.css('app-resource-item'));
     expect(childComponent).toBeTruthy();
   });
 });
