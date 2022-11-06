@@ -1,3 +1,5 @@
+<p data-testid="data-length">{{techResourcesDetailsDTOs[0].title}}</p>
 <div class="resource-list" *ngFor="let detailDto of techResourcesDetailsDTOs">
+    <!--p data-testid="app-resource-item">{{detailDto.title}}</p-->
     <app-resource-item [dto]="detailDto"></app-resource-item>
 </div>

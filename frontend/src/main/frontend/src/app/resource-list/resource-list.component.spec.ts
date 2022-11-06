@@ -7,6 +7,7 @@ import { By } from '@angular/platform-browser';
 
 import { ResourceListComponent } from './resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
+import { DebugElement } from '@angular/core';
 
 describe('ResourceListComponent', () => {
   let component: ResourceListComponent;
@@ -32,8 +33,14 @@ describe('ResourceListComponent', () => {
 
   fit('creates component', () => {
     expect(component).toBeTruthy();
+    expect(component.techResourcesDetailsDTOs.length).toEqual(1);
     const { debugElement } = fixture;
-    const childComponent = debugElement.query(By.css('app-resource-item'));
-    expect(childComponent).toBeTruthy();
+    const childComponent = debugElement.query(By.css('app-resource-item'))
+    expect(component.techResourcesDetailsDTOs.length).toEqual(1);
+    expect(childComponent).toBeTruthy()
   });
 });
+
+function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugElement {
+  return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
+}
