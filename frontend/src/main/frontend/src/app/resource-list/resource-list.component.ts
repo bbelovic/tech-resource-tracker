@@ -13,9 +13,14 @@ export class ResourceListComponent implements OnInit {
   techResourcesDetailsDTOs: TechResourceDetailsDTO[] = [];
     constructor(private resourceService: TechResourceService) { }
 
-    async ngOnInit() {
+     async ngOnInit() {
         console.log('Getting resources from remote server.')
         this.techResourcesDetailsDTOs = await this.resourceService.getTechResourceDetailsDTO();      
+        //this.techResourcesDetailsDTOs = [];
+        /*for (const each of temp) {
+          this.techResourcesDetailsDTOs
+            .push(new TechResourceDetailsDTO(each.id, each.title, each.title, each.tagDTOs));
+        }*/
         //this.techResourcesDetailsDTOs  = [new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]
         console.log(`Received ${this.techResourcesDetailsDTOs.length} dtos.`);
     }
