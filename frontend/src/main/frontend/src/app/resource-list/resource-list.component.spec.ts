@@ -33,7 +33,7 @@ describe('ResourceListComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('creates component', () => {
+  it('creates component', () => {
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
     const childComponent = debugElement.query(By.css('app-resource-item'))
