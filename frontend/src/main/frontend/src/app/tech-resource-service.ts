@@ -27,6 +27,12 @@ export class TechResourceService {
                  .then(data => data as TechResourceDetailsDTO[]);
     }
 
+    getTechResourceDetailsDTO2() {
+        console.log(`Getting 10 newest resources from: [${this.url}].`);
+        return this.http.get(this.url);
+                 
+    }
+
     getTechResourceById(id: number): Promise<TechResource> {
     console.log(`Getting technology resource with id [${id}].`);
         return this.http.get(this.url + '/' + id)

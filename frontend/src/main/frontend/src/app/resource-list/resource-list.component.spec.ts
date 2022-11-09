@@ -8,14 +8,16 @@ import { By } from '@angular/platform-browser';
 import { ResourceListComponent } from './resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
 import { DebugElement } from '@angular/core';
+import { of } from 'rxjs';
 
 describe('ResourceListComponent', () => {
   let component: ResourceListComponent;
   let fixture: ComponentFixture<ResourceListComponent>;
   Promise.resolve()
   
-  const dtos = Promise.resolve([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
-  const spiedResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', {getTechResourceDetailsDTO: dtos});
+  const dtos = of([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
+  const spiedResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', 
+    {getTechResourceDetailsDTO2: dtos});
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -33,11 +35,10 @@ describe('ResourceListComponent', () => {
 
   fit('creates component', () => {
     expect(component).toBeTruthy();
-    expect(component.techResourcesDetailsDTOs.length).toEqual(1);
     const { debugElement } = fixture;
     const childComponent = debugElement.query(By.css('app-resource-item'))
-    expect(component.techResourcesDetailsDTOs.length).toEqual(1);
-    expect(childComponent).toBeTruthy()
+    expect(childComponent).toBeTruthy();
+    
   });
 });
 
