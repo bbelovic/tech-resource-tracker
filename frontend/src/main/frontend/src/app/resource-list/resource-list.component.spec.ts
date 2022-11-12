@@ -33,11 +33,17 @@ describe('ResourceListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('creates component', () => {
+  fit('creates component', () => {
     expect(component).toBeTruthy();
     const { debugElement } = fixture;
-    const childComponent = debugElement.query(By.css('app-resource-item'))
+    const childComponent = debugElement.query(By.directive(ResourceItemComponent));
     expect(childComponent).toBeTruthy();
+    const aDto = childComponent.properties.dto;
+    
+    for (const [key, value] of Object.entries(childComponent.properties)) { 
+      console.log(`$key: ${key} => ${value}`);
+  }
+    expect(aDto).toBeTruthy();
     
   });
 });

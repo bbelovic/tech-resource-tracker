@@ -8,6 +8,7 @@ import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 })
 export class ResourceItemComponent implements OnInit {
 
+  id: number;
   @Input()
   dto: TechResourceDetailsDTO;
   constructor() { }
