@@ -38,12 +38,12 @@ describe('ResourceListComponent', () => {
     const { debugElement } = fixture;
     const childComponent = debugElement.query(By.directive(ResourceItemComponent));
     expect(childComponent).toBeTruthy();
-    const aDto = childComponent.properties.dto;
+    const aDto = childComponent.properties.id;
     
-    for (const [key, value] of Object.entries(childComponent.properties)) { 
+    /*for (const [key, value] of Object.entries(childComponent.properties)) { 
       console.log(`$key: ${key} => ${value}`);
-  }
-    expect(aDto).toBeTruthy();
+    }*/
+    expect(aDto).toBe(100);
     
   });
 });
