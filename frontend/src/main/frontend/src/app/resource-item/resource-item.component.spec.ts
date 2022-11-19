@@ -1,6 +1,5 @@
-import { DebugElement } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { findEl } from 'app/shared/test-helper';
 import { TagDTO } from 'app/tag-dto';
 import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 
@@ -36,7 +35,3 @@ describe('ResourceItemComponent', () => {
   });
 
 });
-
-function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugElement {
-  return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
-}

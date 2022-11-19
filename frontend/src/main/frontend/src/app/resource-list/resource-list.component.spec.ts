@@ -7,13 +7,11 @@ import { By } from '@angular/platform-browser';
 
 import { ResourceListComponent } from './resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
-import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
 describe('ResourceListComponent', () => {
   let component: ResourceListComponent;
   let fixture: ComponentFixture<ResourceListComponent>;
-  Promise.resolve()
   
   const dtos = of([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
   const spiedResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', 
@@ -40,7 +38,3 @@ describe('ResourceListComponent', () => {
     expect(childComponent).toBeTruthy();
   });
 });
-
-function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugElement {
-  return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
-}
