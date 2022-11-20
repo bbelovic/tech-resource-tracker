@@ -8,6 +8,7 @@ import { By } from '@angular/platform-browser';
 import { ResourceListComponent } from './resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
 import { of } from 'rxjs';
+import { findComponent } from 'app/shared/test-helper';
 
 describe('ResourceListComponent', () => {
   let component: ResourceListComponent;
@@ -33,8 +34,7 @@ describe('ResourceListComponent', () => {
 
   it('creates component with child component', () => {
     expect(component).toBeTruthy();
-    const { debugElement } = fixture;
-    const childComponent = debugElement.query(By.css('app-resource-item'));
+    const childComponent = findComponent(fixture, 'app-resource-item');
     expect(childComponent).toBeTruthy();
   });
 });
