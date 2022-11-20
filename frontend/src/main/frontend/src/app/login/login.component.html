@@ -1,20 +1,5 @@
 
-<p>Please log in</p>
-<div class="container">
-  <form>
-    <h3>Register new user</h3>
-      <div class="form-group">
-        <label for="username">Username </label>
-        <input type="text" name="username" placeholder="Username" #username class="form-control"/>
-    </div>
-
-    <div class="form-group">
-        <label for="password">Password </label>
-        <input type="password" name="password" placeholder="Password" #password class="form-control"/>
-    </div>
-
-    <div class="form-group">
-        <button class="btn btn-default" (click)="login(username.value, password.value)">Log in</button>
-    </div>
-  </form>
+<div class="not-authenticated-alert">
+  <h4>Not authenticated</h4>
+  <p>To see your saved resources, please <a class="login-link" (click)="login()">log in</a>.</p>
 </div>

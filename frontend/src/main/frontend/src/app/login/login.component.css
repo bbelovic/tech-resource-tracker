@@ -1,0 +1,8 @@
+.not-authenticated-alert {
+    margin-left: 0.5rem;
+}
+
+.login-link {
+    cursor: pointer;
+    color: coral;
+}
