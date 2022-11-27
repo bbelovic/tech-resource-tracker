@@ -1,11 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { AuthService } from 'app/services/auth.service';
 import { findComponent } from 'app/shared/test-helper';
+import { BehaviorSubject } from 'rxjs';
 
 import { MainComponent } from './main.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
+  let authService = jasmine.createSpyObj<AuthService>('AuthService', [], {$authenticationState: new BehaviorSubject<boolean>(false)})
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,6 +31,8 @@ describe('MainComponent', () => {
     expect(component.authenticated).toBeFalse();
     const listComponent = findComponent(fixture, 'app-resource-list');
     expect(listComponent).toBe(null);
+    const loginComponent = findComponent(fixture, 'app-login');
+    expect(loginComponent).toBeTruthy();
   });
 
 });

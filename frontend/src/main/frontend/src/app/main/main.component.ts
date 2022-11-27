@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  authenticated: boolean = false;
+  authenticated = new BehaviorSubject<boolean>(false);
   constructor() { }
 
   ngOnInit(): void {
