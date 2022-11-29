@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'app/services/auth.service';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -9,9 +10,10 @@ import { BehaviorSubject } from 'rxjs';
 export class MainComponent implements OnInit {
 
   authenticated = new BehaviorSubject<boolean>(false);
-  constructor() { }
+  constructor(public authService: AuthService) { }
 
   ngOnInit(): void {
+    this.authenticated = this.authService.$authenticationState;
   }
 
 }

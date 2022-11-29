@@ -12,7 +12,8 @@ describe('MainComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainComponent ]
+      declarations: [ MainComponent ],
+        providers: [{provide: AuthService, useValue: authService}]
     })
     .compileComponents();
 
@@ -22,13 +23,13 @@ describe('MainComponent', () => {
   });
 
   it('header is always present', () => {
-    expect(component.authenticated).toBeFalse();
+    expect(component.authenticated.value).toBeFalse();
     const headerComponent = findComponent(fixture, 'app-header');
     expect(headerComponent).toBeTruthy();
   });
 
   it('resource list is present only when user is authenticated', () => {
-    expect(component.authenticated).toBeFalse();
+    expect(component.authenticated.value).toBeFalse();
     const listComponent = findComponent(fixture, 'app-resource-list');
     expect(listComponent).toBe(null);
     const loginComponent = findComponent(fixture, 'app-login');
