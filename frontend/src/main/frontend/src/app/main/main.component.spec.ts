@@ -8,10 +8,11 @@ import { MainComponent } from './main.component';
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
-  const authState$ = new BehaviorSubject<boolean>(false);
-  let authService = jasmine.createSpyObj<AuthService>('AuthService', [], {$authenticationState: authState$});
+  let authState$: BehaviorSubject<boolean>;
 
   beforeEach(async () => {
+    authState$ = new BehaviorSubject<boolean>(false);
+    const authService = jasmine.createSpyObj<AuthService>('AuthService', [], {$authenticationState: authState$});
     await TestBed.configureTestingModule({
       declarations: [ MainComponent ],
         providers: [{provide: AuthService, useValue: authService}]
@@ -37,15 +38,32 @@ describe('MainComponent', () => {
     expect(loginComponent).toBeTruthy();
   });
 
+  xit('resource list is displayed only for authenticated users', () => {
+    expect(component.authenticated.value).toBeFalse();
+    let resourceListComponent = findComponent(fixture, 'app-resource-list');
+    expect(resourceListComponent).toBe(null);
+    let loginComponent = findComponent(fixture, 'app-login');
+    expect(loginComponent).toBeTruthy();
+    
+    authState$.next(true);
+
+    expect(component.authenticated.value).toBeTrue();
+    fixture.detectChanges()
+    resourceListComponent = findComponent(fixture, 'app-resource-list');
+    expect(resourceListComponent).toBeTruthy();
+    loginComponent = findComponent(fixture, 'app-login');
+    expect(loginComponent).toBe(null);
+
+  });
+
   it('resource list is present when user is authenticated', () => {
     authState$.next(true);
     fixture.detectChanges();
     expect(component.authenticated.value).toBeTrue();
-    /*const resourceListComponent = findComponent(fixture, 'app-resource-list');
+    const resourceListComponent = findComponent(fixture, 'app-resource-list');
     expect(resourceListComponent).toBeTruthy();
     const loginComponent = findComponent(fixture, 'app-login');
-    expect(loginComponent).toBe(null);*/
-
+    expect(loginComponent).toBe(null);
   });
 
 });
