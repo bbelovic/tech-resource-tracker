@@ -2,6 +2,7 @@ version: '3'
 services:
   e2e-tests:
     build: frontend/src/main/frontend
+    profiles: ["e2e"]
     environment:
       - OKTA_TEST_USERNAME=test_name@blabol.com
       - OKTA_TEST_PASSWORD=Y4badabadoo
@@ -9,11 +10,11 @@ services:
     volumes:
       - ./frontend/src/main/frontend:/opt/protractor
     depends_on:
-      - tech-resource-tracker-be
       - selenium
     entrypoint: ["./entrypoint.sh"]
   selenium:
     image: 'selenium/standalone-chrome:4.0.0-beta-2-20210317'
+    profiles: ["e2e"]
     ports:
       - "4444:4444"
   db:
@@ -31,7 +32,6 @@ services:
       - URL_TO_WAIT=jdbc:postgresql://db:5432/tech_resource_tracker_db
     depends_on:
       - db
-      - selenium
     entrypoint: ["./entrypoint.sh"]
     ports:
       - "8080:8080"
