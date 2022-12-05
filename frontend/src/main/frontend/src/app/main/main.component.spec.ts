@@ -10,10 +10,11 @@ describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
   let authState$: BehaviorSubject<boolean>;
+  let authService: jasmine.SpyObj<AuthService>;
 
   beforeEach(async () => {
     authState$ = new BehaviorSubject<boolean>(false);
-    const authService = jasmine.createSpyObj<AuthService>('AuthService', [], {$authenticationState: authState$});
+    authService = jasmine.createSpyObj<AuthService>('AuthService', ['isAuthenticated'], {$authenticationState: authState$});
     await TestBed.configureTestingModule({
       declarations: [ MainComponent ],
         schemas: [NO_ERRORS_SCHEMA],
@@ -30,6 +31,7 @@ describe('MainComponent', () => {
     expect(component.authenticated.value).toBeFalse();
     const headerComponent = findComponent(fixture, 'app-header');
     expect(headerComponent).toBeTruthy();
+    expect(authService.isAuthenticated).toHaveBeenCalledTimes(1);
   });
 
   it('resource list is not present when user is not authenticated', () => {
@@ -38,6 +40,7 @@ describe('MainComponent', () => {
     expect(resourceListComponent).toBe(null);
     const loginComponent = findComponent(fixture, 'app-login');
     expect(loginComponent).toBeTruthy();
+    expect(authService.isAuthenticated).toHaveBeenCalledTimes(1);
   });
 
   it('resource list is present when user is authenticated', () => {
@@ -48,6 +51,7 @@ describe('MainComponent', () => {
     expect(resourceListComponent).toBeTruthy();
     const loginComponent = findComponent(fixture, 'app-login');
     expect(loginComponent).toBe(null);
+    expect(authService.isAuthenticated).toHaveBeenCalledTimes(1);
   });
 
 });
