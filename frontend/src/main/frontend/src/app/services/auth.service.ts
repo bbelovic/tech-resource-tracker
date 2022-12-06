@@ -28,7 +28,7 @@ export class AuthService {
     );
   }
 
-  isAuthenticated(): Promise<boolean> {
+  handleLogin(): Promise<boolean> {
     return this.getUser().toPromise().then((user: User) => { 
       return user !== undefined;
     }).catch(() => {
