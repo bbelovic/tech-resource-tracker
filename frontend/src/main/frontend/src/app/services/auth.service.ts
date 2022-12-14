@@ -18,6 +18,7 @@ export class AuthService {
   }
 
   getUser(): Observable<User> {
+    console.log(`GET ${environment.apiUrl}/user`);
     return this.http.get<User>(`${environment.apiUrl}/user`, {headers}).pipe(
       map((response: User) => {
         if (response !== null) {
@@ -30,8 +31,10 @@ export class AuthService {
 
   handleLogin(): Promise<boolean> {
     return this.getUser().toPromise().then((user: User) => { 
+      console.log(`Handle login: ${user?.fullName}`);
       return user !== undefined;
     }).catch(() => {
+      console.error(`Error in handleLogin`)
       return false;
     })
   }
