@@ -10,6 +10,7 @@ describe('empty spec', () => {
     cy.loginToOkta('hideo.k@seznam.cz','Bb85sa!@')
     //cy.visit('/user')
 
+    cy.request()
     cy.get('div').should('have.class', 'resource-list')
   })
 })
