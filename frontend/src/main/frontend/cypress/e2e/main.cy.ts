@@ -13,6 +13,17 @@ describe('empty spec', () => {
     console.log(Cypress.config().baseUrl)
     cy.loginToOkta('hideo.k@seznam.cz','Bb85sa!@')
     
+    cy.url({timeout: 15000}).should((result) => {
+
+      expect(result).to.contain('localhost:8080')
+
+    })
+
+    cy.request('/user').should((response) => {
+      expect(response.status).to.have.eq(200);
+      expect(response.body).to.be.a('Object').that.has.property('givenName').eq('Hideo');
+    });
+    
     
   })
 })
