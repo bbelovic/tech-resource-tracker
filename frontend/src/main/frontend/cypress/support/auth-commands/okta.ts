@@ -1,5 +1,4 @@
 export const loginToOkta = (username: string, password: string) => {
-    //cy.visit('http://localhost:8080')
     cy.visit('/')
     cy.get('a').click()
 

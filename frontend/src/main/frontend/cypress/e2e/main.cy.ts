@@ -23,7 +23,10 @@ describe('empty spec', () => {
       expect(response.status).to.have.eq(200);
       expect(response.body).to.be.a('Object').that.has.property('givenName').eq('Hideo');
     });
-    
+    cy.get('a').click();
+    cy.get('h1').should('have.class', 'page-title')
+        .and('be.visible');
+    cy.get('ul').should('be.visible')
     
   })
 })
