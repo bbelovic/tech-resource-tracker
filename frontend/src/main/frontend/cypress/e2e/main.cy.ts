@@ -15,7 +15,7 @@ describe('empty spec', () => {
     
     cy.url({timeout: 15000}).should((result) => {
 
-      expect(result).to.contain('localhost:8080')
+      expect(result).to.contain('tech-resource-tracker-be:8080')
 
     })
 
