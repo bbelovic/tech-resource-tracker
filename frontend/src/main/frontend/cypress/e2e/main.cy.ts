@@ -13,9 +13,12 @@ describe('empty spec', () => {
     console.log(Cypress.config().baseUrl)
     cy.loginToOkta('hideo.k@seznam.cz','Bb85sa!@')
     
+    cy.log('ENV: ' + Cypress.env('baseUrl'))
+    console.log('ENV: '+ Cypress.env('baseUrl'))
     cy.url({timeout: 15000}).should((result) => {
 
-      expect(result).to.contain('tech-resource-tracker-be:8080')
+      
+      expect(result).to.contain(Cypress.env('HOST_XXX'))
 
     })
 
