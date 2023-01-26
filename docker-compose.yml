@@ -7,8 +7,7 @@ services:
       #- OKTA_TEST_USERNAME=test_name@blabol.com
       #- OKTA_TEST_PASSWORD=Y4badabadoo
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
-      - CYPRESS_baseUrl=http://tech-resource-tracker-be:8080
-      - CYPRESS_HOST_XXX=http://tech-resource-tracker-be:8080
+      - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/e2e
         #depends_on:
