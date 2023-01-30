@@ -1,4 +1,4 @@
-describe('empty spec', () => {
+describe('Smoke E2E test', () => {
   it(`Display 'Not authenticated' message when user is not authenticated.`, () => {
     cy.visit('/')
     cy.get('h1').contains('Tech resource tracker')

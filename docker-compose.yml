@@ -10,20 +10,12 @@ services:
       - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/e2e
-        #depends_on:
-        #- selenium
     entrypoint: ["./entrypoint.sh"]
-  selenium:
-    image: 'selenium/standalone-chrome:4.0.0-beta-2-20210317'
-    profiles: ["e2e"]
-    ports:
-      - "4444:4444"
   db:
     image: 'postgres:12'
     environment:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=db_pass
-      - POSTGRES_DB=tech_resource_tracker_db
     volumes:
       - ./misc/tracker-dump.sql:/docker-entrypoint-initdb.d/tracker-dump.sql
   tech-resource-tracker-be:
