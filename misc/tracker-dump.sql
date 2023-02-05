@@ -16,6 +16,28 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: tech_resource_tracker_db; Type: DATABASE; Schema: -; Owner: db_user
+--
+
+CREATE DATABASE tech_resource_tracker_db WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'en_US.utf8' LC_CTYPE = 'en_US.utf8';
+
+
+ALTER DATABASE tech_resource_tracker_db OWNER TO db_user;
+
+\connect tech_resource_tracker_db
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -171,7 +193,7 @@ COPY public.databasechangelog (id, author, filename, dateexecuted, orderexecuted
 8	bbelovic	classpath:/db/changelog/db.changelog-master.xml	2018-02-28 20:16:01.314816	8	EXECUTED	8:3c9599dc776825f2d06b0a5c9a382085	addForeignKeyConstraint baseTableName=technology_resources_tags, constraintName=fk_technology_resources, referencedTableName=technology_resources		\N	3.5.3	\N	\N	9848961242
 9	bbelovic	classpath:/db/changelog/db.changelog-master.xml	2018-02-28 20:16:01.386017	9	EXECUTED	8:1edfca76f888096f8af7c64a53a1ff81	addForeignKeyConstraint baseTableName=technology_resources_tags, constraintName=fk_tags, referencedTableName=tags		\N	3.5.3	\N	\N	9848961242
 10	bbelovic	classpath:/db/changelog/db.changelog-master.xml	2020-05-20 20:26:56.845025	10	EXECUTED	8:f5bfcf1e444b0db266007957cdd560a0	createTable tableName=user_details		\N	3.8.9	\N	\N	0006416753
-12	bbelovic	db/changelog/db.changelog-master.xml	2023-02-02 20:24:22.281655	12	EXECUTED	8:1d961c79f123735e507414a6fd566541	addColumn tableName=technology_resources		\N	4.9.1	\N	\N	5369462213
+12	bbelovic	db/changelog/db.changelog-master.xml	2023-02-05 19:54:01.541158	12	EXECUTED	8:1d961c79f123735e507414a6fd566541	addColumn tableName=technology_resources		\N	4.9.1	\N	\N	5626841447
 \.
 
 

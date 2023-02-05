@@ -2,10 +2,7 @@ version: '3'
 services:
   e2e-tests:
     build: frontend/src/main/frontend
-      # profiles: ["e2e"]
     environment:
-      #- OKTA_TEST_USERNAME=test_name@blabol.com
-      #- OKTA_TEST_PASSWORD=Y4badabadoo
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
       - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
@@ -25,7 +22,6 @@ services:
       - SPRING_DATASOURCE_PASSWORD=db_pass
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
       - URL_TO_WAIT=jdbc:postgresql://db:5432/tech_resource_tracker_db
-      - logging.level.org.bbelovic.techresourcetracker.DefaultTechResourceService=trace
     depends_on:
       - db
     entrypoint: ["./entrypoint.sh"]
