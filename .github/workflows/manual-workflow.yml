@@ -21,6 +21,7 @@ jobs:
       run: mvn -B clean verify -Pcompose --file backend/pom.xml
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
+      if: failure()
       with:
         name: angular-logs
         path: /tmp/**/angular-errors.log
