@@ -1,24 +1,23 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { AuthService } from 'app/services/auth.service';
 
 import { LoginComponent } from './login.component';
-import { AuthenticationService } from 'app/authentication.service';
-import { RouterTestingModule } from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authenticationService: jasmine.SpyObj<AuthenticationService>;
+  let authService: jasmine.SpyObj<AuthService>;
 
-  beforeEach(async(() => {
-    const spy = jasmine.createSpyObj('AuthenticationService', ['login']);
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([])],
+  beforeEach(async() => {
+    authService = jasmine.createSpyObj<AuthService>('AuthService', ['login']);
+    await TestBed.configureTestingModule({
       declarations: [ LoginComponent ],
-      providers: [{provide: AuthenticationService, useValue: spy}]
+      providers: [{provide: AuthService, useValue: authService}]
     })
     .compileComponents();
-    authenticationService = TestBed.inject(AuthenticationService) as jasmine.SpyObj<AuthenticationService>;
-  }));
+    
+  });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
@@ -26,7 +25,12 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create component', () => {
+  it('login component with working login link', () => {
     expect(component).toBeTruthy();
+    const loginLink = fixture.debugElement.queryAll(By.css('[data-testid="login-link"]'));
+    expect(loginLink).toBeTruthy();
+    expect(loginLink.length).toBe(1);
+    loginLink[0].triggerEventHandler('click', null);
+    expect(authService.login).toHaveBeenCalledTimes(1);    
   });
 });

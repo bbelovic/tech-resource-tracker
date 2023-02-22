@@ -1,7 +1,7 @@
-FROM node:14.20-buster
+FROM cypress/included:12.0.2
 LABEL maintainer="bbelovic@gmail.com" \
       version="0.1"
 
-WORKDIR /opt/protractor
+ENV CYPRESS_CACHE_FOLDER=/root/.cache/Cypress
 
-CMD [ "npm", "run", "e2e"]
+WORKDIR /e2e

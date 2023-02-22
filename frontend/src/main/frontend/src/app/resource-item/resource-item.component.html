@@ -1,0 +1,19 @@
+<div class="resource-item">
+    <h1 data-testid="resource-title">{{dto.title}}</h1>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nec eros sed tortor iaculis faucibus venenatis a arcu. 
+        Fusce convallis aliquam nunc, vel commodo erat posuere ac. Proin vehicula efficitur turpis ut dictum. Duis hendrerit justo quis metus aliquet, 
+        a posuere mi pharetra. Donec nec pellentesque justo. Fusce in convallis quam, quis maximus erat. In ac dignissim arcu. Donec a lorem vulputate, 
+        molestie lacus id, molestie eros. Sed sollicitudin in turpis et faucibus. Mauris pellentesque nulla vitae viverra vehicula. Ut condimentum ligula quis 
+        sem dictum molestie. 
+        Proin quam lectus, ultricies at dolor quis, rhoncus bibendum erat. Nunc gravida posuere nunc, malesuada lobortis erat mattis vel.
+    </p>
+    <div class="tags" *ngFor="let tag of dto.tagDTOs" data-testid="resource-tags">
+        <div class="resource-tag" data-testid="resource-tag">{{tag.name}}</div>
+    </div>
+    <div class="control-buttons">
+        <button class="control-button" data-testid="mark-as-read-btn">Mark as read</button>
+        <button class="control-button" data-testid="edit-btn">Edit</button>
+    </div>
+    
+</div>

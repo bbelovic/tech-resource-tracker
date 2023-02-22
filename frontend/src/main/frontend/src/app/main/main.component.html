@@ -1,0 +1,15 @@
+<div class="container">
+    <app-header></app-header>
+    <div *ngIf="(authenticated | async); then isAuthenticated else notAuthenticated"></div>
+    <ng-template #isAuthenticated>
+        <app-resource-list></app-resource-list>
+    </ng-template>
+    <ng-template #notAuthenticated><app-login></app-login></ng-template>
+    
+
+    <!--div *ngIf="(authenticated | async) as xxx; else notAuthenticated">
+        <app-resource-list></app-resource-list>
+    </div>
+    <ng-template #notAuthenticated><app-login></app-login></ng-template-->
+
+</div>

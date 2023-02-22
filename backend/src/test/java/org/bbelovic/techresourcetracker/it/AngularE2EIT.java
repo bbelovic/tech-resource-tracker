@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 public class AngularE2EIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AngularE2EIT.class);
-    private static final String TESTS_EXECUTED_REGEX = "Executed (\\d+) of (\\d+) specs? SUCCESS in.*";
+    private static final String TESTS_EXECUTED_REGEX = ".*(\\d+) passing.*";
 
     @Test
     public void executeAngularE2ETest() {
@@ -36,7 +36,7 @@ public class AngularE2EIT {
             composeContainer = new DockerComposeContainer(composeFile)
                     .withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("SUCCESS in"), 2, MINUTES);
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("Run Finished"), 3, MINUTES);
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
@@ -57,10 +57,10 @@ public class AngularE2EIT {
         var pattern = Pattern.compile(TESTS_EXECUTED_REGEX);
         var matcher = pattern.matcher(logOutput);
         if (matcher.matches()) {
-            var executedCount = matcher.group(1);
-            var totalCount = matcher.group(2);
-            assertEquals(executedCount, totalCount,
-                    format("Executed test count [%s] should be equal to total test count [%s]", executedCount, totalCount));
+            var expectedPassingCount = "2";
+            var actualPassingCount = matcher.group(1);
+            assertEquals(expectedPassingCount, actualPassingCount,
+                    format("Executed test count [%s] should be equal to total test count [%s]", expectedPassingCount, actualPassingCount));
         }
     }
 

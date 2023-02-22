@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit() {
-    this.authenticated = await this.authService.isAuthenticated();
+    this.authenticated = await this.authService.handleLogin();
     this.authService.$authenticationState.subscribe(
       (isAuthenticated: boolean)  => this.authenticated = isAuthenticated
     );

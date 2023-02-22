@@ -16,7 +16,13 @@ jobs:
     - name: Set up JDK
       uses: actions/setup-java@v1
       with:
-        java-version: 15
+        java-version: 17
     - name: Build with Maven
       run: mvn -B clean verify -Pcompose --file backend/pom.xml
+    - name: Archive build artifacts
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: angular-logs
+        path: /tmp/ng-*/angular-errors.log
 

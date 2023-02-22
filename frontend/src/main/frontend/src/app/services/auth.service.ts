@@ -12,28 +12,35 @@ const headers = new HttpHeaders().set('Accept', 'application/json');
   providedIn: 'root'
 })
 export class AuthService {
-  $authenticationState = new BehaviorSubject<boolean>(false);
+  private _$authenticationState = new BehaviorSubject<boolean>(false);
 
   constructor(private http: HttpClient, private location: Location) {
   }
 
   getUser(): Observable<User> {
+    console.log(`GET ${environment.apiUrl}/user`);
     return this.http.get<User>(`${environment.apiUrl}/user`, {headers}).pipe(
       map((response: User) => {
         if (response !== null) {
-          this.$authenticationState.next(true);
+          this._$authenticationState.next(true);
           return response;
         }
       })
     );
   }
 
-  isAuthenticated(): Promise<boolean> {
+  handleLogin(): Promise<boolean> {
     return this.getUser().toPromise().then((user: User) => { 
+      console.log(`Handle login: ${user?.fullName}`);
       return user !== undefined;
     }).catch(() => {
+      console.error(`Error in handleLogin`)
       return false;
     })
+  }
+
+  public get $authenticationState() {
+    return this._$authenticationState;
   }
 
   login(): void { 

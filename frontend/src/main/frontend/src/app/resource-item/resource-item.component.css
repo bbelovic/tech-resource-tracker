@@ -1,0 +1,49 @@
+.resource-item {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    padding-left: 0.5rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+p {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+
+.tags {
+    margin-top: 0.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    border-radius: 0.25rem;
+}
+
+.resource-tag {
+    background-color: coral;
+    font-weight: bold;
+    margin: 0.25rem;
+    border-radius: 0.25rem;
+    padding: 0 0.2rem;
+}
+
+.control-buttons {
+    margin-top: 0.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.control-button {
+    padding: 0.3rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 0.25rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0.35rem;
+    border: none;
+    background-color: coral;
+}

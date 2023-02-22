@@ -20,9 +20,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>18</java.version>
+        <java.version>17</java.version>
         <testcontainers.version>1.17.2</testcontainers.version>
-        <kotlin.jvmTarget>18</kotlin.jvmTarget>
+        <kotlin.jvmTarget>17</kotlin.jvmTarget>
         <java.xml.bind.version>2.3.1</java.xml.bind.version>
         <dbunit.version>2.4.9</dbunit.version>
         <kotlin.version>1.6.21</kotlin.version>
@@ -394,10 +394,12 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+<!--
                     <compilerArgs>
-                        <arg>--enable-preview</arg>
+                        <arg>&#45;&#45;enable-preview</arg>
                         <arg>-Xlint:preview</arg>
                     </compilerArgs>
+-->
                 </configuration>
                 <executions>
                     <execution>
@@ -456,6 +458,18 @@
                         </goals>
                         <configuration>
                             <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm run test</id>
+                        <goals>
+                            <goal>
+                                npm
+                            </goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>run test</arguments>
                         </configuration>
                     </execution>
                 </executions>

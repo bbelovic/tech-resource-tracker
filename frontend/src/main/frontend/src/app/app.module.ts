@@ -16,6 +16,10 @@ import { RuntimeInformationService } from './services/runtime-information.servic
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { RegisterUserService } from './services/register-user.service';
 import { AuthService } from './services/auth.service';
+import { HeaderComponent } from './header/header.component';
+import { ResourceItemComponent } from './resource-item/resource-item.component';
+import { ResourceListComponent } from './resource-list/resource-list.component';
+import { MainComponent } from './main/main.component';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -32,7 +36,11 @@ const routes: Routes = [
     EditTechResourceComponent,
     LoginComponent,
     FooterComponent,
-    RegisterUserComponent
+    RegisterUserComponent,
+    HeaderComponent,
+    ResourceItemComponent,
+    ResourceListComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -42,6 +50,6 @@ const routes: Routes = [
   ],
   providers: [TechResourceService, TagService, AuthService, AuthenticationService,
     RuntimeInformationService, RegisterUserService],
-  bootstrap: [AppComponent]
+  bootstrap: [MainComponent]
 })
 export class AppModule { }
