@@ -183,7 +183,7 @@
                             </to>
                             <from>
                                 <image>
-                                    openjdk:15-alpine
+                                    openjdk:17-jdk-alpine
                                 </image>
                             </from>
                             <container>
