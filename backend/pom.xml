@@ -179,7 +179,7 @@
                         </executions>
                         <configuration>
                             <to>
-				<image>ghcr.io/bbelovic/tech-resource-tracker</image>
+                                <image>ghcr.io/bbelovic/tech-resource-tracker</image>
                             </to>
                             <from>
                                 <image>
