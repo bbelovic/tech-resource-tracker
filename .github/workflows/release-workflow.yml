@@ -22,4 +22,4 @@ jobs:
         env:
          GITHUB_REGISTRY_USERNAME: ${{ github.actor }}
          GITHUB_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -f backend/pom.xml -B clean package jib:build -Pheroku -Djib.to.auth.password=$GITHUB_REGISTRY_PASSWORD -Djib.to.auth.username=$GITHUB_REGISTRY_USERNAME
+        run: mvn -f backend/pom.xml -B clean package jib:build -Pheroku -Djib.to.tags=${{ inputs.releaseTag }} -Djib.to.auth.password=$GITHUB_REGISTRY_PASSWORD -Djib.to.auth.username=$GITHUB_REGISTRY_USERNAME
