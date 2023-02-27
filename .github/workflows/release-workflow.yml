@@ -2,6 +2,11 @@ name: Release on demand
 
 on:
   workflow_dispatch:
+    inputs:
+      releaseTag:
+        description: "Input image tage:"
+        type: "string"
+        default: "latest"
 
 jobs:
   build:
