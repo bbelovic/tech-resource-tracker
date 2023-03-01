@@ -8,8 +8,8 @@
         sem dictum molestie. 
         Proin quam lectus, ultricies at dolor quis, rhoncus bibendum erat. Nunc gravida posuere nunc, malesuada lobortis erat mattis vel.
     </p>
-    <div class="tags" *ngFor="let tag of dto.tagDTOs" data-testid="resource-tags">
-        <div class="resource-tag" data-testid="resource-tag">{{tag.name}}</div>
+    <div class="tags" data-testid="resource-tags">
+        <div *ngFor="let tag of dto.tagDTOs" class="resource-tag" data-testid="resource-tag">{{tag.name}}</div>
     </div>
     <div class="control-buttons">
         <button class="control-button" data-testid="mark-as-read-btn">Mark as read</button>
