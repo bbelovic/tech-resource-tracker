@@ -1,8 +1,8 @@
 describe('Smoke E2E test', () => {
-  it(`Display 'Not authenticated' message when user is not authenticated.`, () => {
+  it(`Display 'welcome-screen' with log in link when user is not authenticated.`, () => {
     cy.visit('/')
-    cy.get('h1').contains('Tech resource tracker')
-    cy.get('h4').contains('Not authenticated')    
+    cy.get('h1').contains('Technology resource tracker')
+    cy.get('a').contains('log in')    
     cy.request('/user').should((response) => {
       expect(response.status).to.have.eq(200);
       expect(response.body).to.be.a('string').that.is.empty;
