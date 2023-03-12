@@ -24,5 +24,7 @@ describe('HeaderComponent', () => {
     const appMenu = findEl(fixture, 'app-menu');
     expect(appMenu).toBeTruthy();
     expect(appMenu.childNodes.length).toBe(3);
+    const logoutLink = findEl(fixture, 'logout-link');
+    expect(logoutLink).toBeTruthy();
   });
 });
