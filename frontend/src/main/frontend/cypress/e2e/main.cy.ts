@@ -12,7 +12,9 @@ describe('Smoke E2E test', () => {
   it(`Log in using Okta credentials`, () => {
     cy.loginToOkta('hideo.k@seznam.cz','Bb85sa!@')
     verifyMenuIsVisible()
-    cy.get('li[data-testid="logout-link"]').click()
+    cy.get('li')
+      .last()
+    .click()
     cy.request('/user').should((response) => {
       expect(response.status).to.have.eq(200);
       expect(response.body).to.be.a('string').that.is.empty;
