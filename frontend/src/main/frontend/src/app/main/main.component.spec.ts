@@ -27,23 +27,17 @@ describe('MainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('resource list is present when user is authenticated', () => {
+  it('header and resource list is present when user is authenticated', () => {
     expect(component.authenticated.value).toBeTrue();
+    const headerComponent = findComponent(fixture, 'app-header');
+    expect(headerComponent).toBeTruthy();
     const resourceListComponent = findComponent(fixture, 'app-resource-list');
     expect(resourceListComponent).toBeTruthy();
     const loginComponent = findComponent(fixture, 'app-login');
     expect(loginComponent).toBe(null);
     expect(authService.handleLogin).toHaveBeenCalledTimes(1);
   });
-
-  it('header is always present', () => {
-    expect(component.authenticated.value).toBeTrue();
-    const headerComponent = findComponent(fixture, 'app-header');
-    expect(headerComponent).toBeTruthy();
-    expect(authService.handleLogin).toHaveBeenCalledTimes(1);
-  });
 });
-
 
 describe('MainComponent negative', () => {
   let component: MainComponent;
@@ -66,17 +60,12 @@ describe('MainComponent negative', () => {
     fixture.detectChanges();
   });
 
-  it('header is always present', () => {
-    expect(component.authenticated.value).toBeFalse();
-    const headerComponent = findComponent(fixture, 'app-header');
-    expect(headerComponent).toBeTruthy();
-    expect(authService.handleLogin).toHaveBeenCalledTimes(1);
-  });
-
-  it('resource list is not present when user is not authenticated', () => {
+  it('header and resource list is not present when user is not authenticated', () => {
     expect(component.authenticated.value).toBeFalse();
     const resourceListComponent = findComponent(fixture, 'app-resource-list');
     expect(resourceListComponent).toBe(null);
+    const headerComponent = findComponent(fixture, 'app-header');
+    expect(headerComponent).toBe(null);
     const loginComponent = findComponent(fixture, 'app-login');
     expect(loginComponent).toBeTruthy();
     expect(authService.handleLogin).toHaveBeenCalledTimes(1);

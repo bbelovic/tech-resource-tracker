@@ -1,6 +1,15 @@
-.not-authenticated-alert {
-    margin-left: 0.5rem;
-}
+.login-screen-title {
+    margin-top: 2em;
+    margin-bottom: 0.3em;
+ }
+ 
+ .login-screen-par {
+     padding-top: 1.1em;
+     padding-bottom: 1.1em;
+     line-height: 1.5;
+     font-size: 1em
+ }
+ 
 
 .login-link {
     cursor: pointer;
