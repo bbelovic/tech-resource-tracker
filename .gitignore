@@ -10,6 +10,7 @@ target/
 .settings
 .springBeans
 
+okta_username.txt
 backend/src/main/jib
 src/main/frontend/node_modules/
 src/main/frontend/dist/
