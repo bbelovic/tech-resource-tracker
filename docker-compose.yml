@@ -10,6 +10,7 @@ services:
     build: frontend/src/main/frontend
     environment:
       - OKTA_USERNAME=/run/secrets/okta_username
+      - OKTA_PASSWORD=/run/secrets/okta_password
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
       - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
