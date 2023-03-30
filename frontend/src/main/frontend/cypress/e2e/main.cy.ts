@@ -9,7 +9,7 @@ describe('Smoke E2E test', () => {
     });
   })
 
-  it(`Log in using Okta credentials XXXX`, () => {
+  it(`Log in using Okta credentials`, () => {
     cy.loginToOkta(Cypress.env('OKTA_USERNAME'), Cypress.env('OKTA_PASSWORD'));
     verifyMenuIsVisible()
     cy.get('li')

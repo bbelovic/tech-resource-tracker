@@ -11,6 +11,7 @@ target/
 .springBeans
 
 okta_username.txt
+okta_password.txt
 backend/src/main/jib
 src/main/frontend/node_modules/
 src/main/frontend/dist/
