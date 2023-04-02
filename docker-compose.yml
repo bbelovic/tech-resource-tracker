@@ -1,25 +1,16 @@
 version: '3.9'
-secrets:
-  abc:
-    external: true
-  okta_username:
-    file: ./okta_username.txt
-  okta_password:
-    file: ./okta_password.txt
-  
 services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
-      CYPRESS_OKTA_USERNAME: /run/secrets/abc
-      CYPRESS_OKTA_PASSWORD: /run/secrets/okta_password
+      CYPRESS_OKTA_USERNAME_FILE: /run/secrets/okta_username
+      CYPRESS_OKTA_PASSWORD_FILE: /run/secrets/okta_password
       URL_TO_WAIT: http://tech-resource-tracker-be:8080
       CYPRESS_APP_HOST: http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/e2e
     entrypoint: ["./entrypoint.sh"]
     secrets:
-      - abc
       - okta_username
       - okta_password
   db:
@@ -43,3 +34,10 @@ services:
     entrypoint: ["./entrypoint.sh"]
     ports:
       - "8080:8080"
+
+secrets:
+  okta_username:
+    file: ./okta_username.txt
+  okta_password:
+    file: ./okta_password.txt
+
