@@ -10,18 +10,7 @@ describe('Smoke E2E test', () => {
   })
 
   it(`Log in using Okta credentials`, () => {
-
-    let username = 'blabol';
-    const ss = cy.readFile(Cypress.env('OKTA_USERNAME_FILE')).then((s) => {
-
-      return s;
-    })
-
-    ss.$$.
-
-
-
-    cy.loginToOkta(username, 'password');
+    cy.loginToOkta();
     verifyMenuIsVisible()
     cy.get('li')
       .last()
