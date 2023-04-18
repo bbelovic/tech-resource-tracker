@@ -2,13 +2,13 @@ export const loginToOkta = () => {
     cy.visit('/')
     cy.get('a').click()
 
-    cy.origin('https://dev-775522.okta.com/', () => {
+    cy.origin(Cypress.env('OKTA_URL'), () => {
         cy.readFile(Cypress.env('OKTA_USERNAME_FILE')).then( (valueFromFile) => {
-          cy.get('input[name="username"]').type(valueFromFile)
+          cy.get('input[name="identifier"]').type(valueFromFile)
         });
         
         cy.readFile(Cypress.env('OKTA_PASSWORD_FILE')).then( (valueFromFile) => {
-          cy.get('input[name="password"]').type(valueFromFile)
+          cy.get('input[name="credentials.passcode"]').type(valueFromFile)
         });
         cy.get('[type="submit"]').click()
     })
@@ -19,7 +19,7 @@ export const loginToOkta = () => {
   
       cy.request('/user').should((response) => {
         expect(response.status).to.have.eq(200);
-        expect(response.body).to.be.a('Object').that.has.property('givenName').eq('Hideo');
+        expect(response.body).to.be.a('Object').that.has.property('givenName').eq('bbelovic');
       })
     
 }

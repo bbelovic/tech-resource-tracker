@@ -3,10 +3,11 @@ services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
-      CYPRESS_OKTA_USERNAME_FILE: /run/secrets/okta_username
-      CYPRESS_OKTA_PASSWORD_FILE: /run/secrets/okta_password
-      URL_TO_WAIT: http://tech-resource-tracker-be:8080
-      CYPRESS_APP_HOST: http://tech-resource-tracker-be:8080
+      - CYPRESS_OKTA_URL=https://dev-98149190.okta.com
+      - CYPRESS_OKTA_USERNAME_FILE=/run/secrets/okta_username
+      - CYPRESS_OKTA_PASSWORD_FILE=/run/secrets/okta_password
+      - URL_TO_WAIT=http://tech-resource-tracker-be:8080
+      - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/e2e
     entrypoint: ["./entrypoint.sh"]
@@ -25,6 +26,7 @@ services:
   tech-resource-tracker-be:
     image: 'bbelovic/tech-resource-tracker-composed'
     environment:
+      - OKTA_URL=https://dev-98149190.okta.com
       - OKTA_OAUTH2_ISSUER=https://dev-98149190.okta.com/oauth2/default
       - OKTA_OAUTH2_CLIENT_ID=0oa93y5a0oEZYXdby5d7
       - OKTA_OAUTH2_CLIENT_SECRET=FI8n-GdLivebsqL3ei6-MopdCc_c2zdgGFV0fO0_
