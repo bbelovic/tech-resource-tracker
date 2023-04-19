@@ -19,7 +19,7 @@ export const loginToOkta = () => {
   
       cy.request('/user').should((response) => {
         expect(response.status).to.have.eq(200);
-        expect(response.body).to.be.a('Object').that.has.property('givenName').eq('bbelovic');
+        expect(response.body).to.be.a('Object').that.has.property('givenName').eq('Hideo');
       })
     
 }
