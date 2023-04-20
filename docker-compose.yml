@@ -16,8 +16,6 @@ services:
       - okta_password
   db:
     image: 'postgres:12'
-    secrets:
-      - okta_username
     environment:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=db_pass
@@ -28,8 +26,6 @@ services:
     environment:
       - OKTA_URL=https://dev-98149190.okta.com
       - OKTA_OAUTH2_ISSUER=https://dev-98149190.okta.com/oauth2/default
-      - OKTA_OAUTH2_CLIENT_ID=0oa93y5a0oEZYXdby5d7
-      - OKTA_OAUTH2_CLIENT_SECRET=FI8n-GdLivebsqL3ei6-MopdCc_c2zdgGFV0fO0_
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
@@ -37,6 +33,9 @@ services:
     depends_on:
       - db
     entrypoint: ["./entrypoint.sh"]
+    secrets:
+      - okta_client_id
+      - okta_client_secret
     ports:
       - "8080:8080"
 
@@ -45,4 +44,8 @@ secrets:
     file: ./okta_username.txt
   okta_password:
     file: ./okta_password.txt
+  okta_client_id:
+    file: ./okta_client_id.txt
+  okta_client_secret:
+    file: ./okta_client_secret.txt
 
