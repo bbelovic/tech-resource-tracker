@@ -31,12 +31,17 @@ jobs:
        pwd
     - name: Build with Maven
       run: mvn -B clean verify -Pcompose --file backend/pom.xml
-    - name: Archive build artifacts
+    - name: Archive Cypress artifacts
       uses: actions/upload-artifact@v3
       if: failure()
       with:
-        name: artifact-for-troubleshooting
-        path: |
-          /tmp/ng-*/angular-errors.log
-          ./cypress/videos/main.cy.ts.mp4
-
+        name: archive-cypress-video
+        path: /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/videos/main.cy.ts.mp4
+        retention-days: 5
+    - name: Archive Angular artifacts
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: archive-angular-log
+        path: /tmp/ng-*/angular-errors.log
+        retention-days: 5
