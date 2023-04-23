@@ -33,6 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
+        "okta_client_id=test-client-id",
+        "okta_client_secret=test-client-secret",
         "spring.datasource.username=postgres",
         "logging.level.org.hibernate.type.descriptor.sql=trace",
         "spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver",

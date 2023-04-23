@@ -12,6 +12,8 @@ target/
 
 okta_username.txt
 okta_password.txt
+okta_client_id.txt
+okta_client_secret.txt
 backend/src/main/jib
 src/main/frontend/node_modules/
 src/main/frontend/dist/
