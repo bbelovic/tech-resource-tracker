@@ -28,12 +28,15 @@ jobs:
        echo "$CYPRESS_PASSWORD" > okta_password.txt
        echo "$OKTA_CLIENT_ID" > okta_client_id.txt
        echo "$OKTA_CLIENT_SECRET" > okta_client_secret.txt
+       pwd
     - name: Build with Maven
       run: mvn -B clean verify -Pcompose --file backend/pom.xml
     - name: Archive build artifacts
       uses: actions/upload-artifact@v3
       if: failure()
       with:
-        name: angular-logs
-        path: /tmp/ng-*/angular-errors.log
+        name: artifact-for-troubleshooting
+        path: |
+          /tmp/ng-*/angular-errors.log
+          ./cypress/videos/main.cy.ts.mp4
 
