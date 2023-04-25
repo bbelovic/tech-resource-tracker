@@ -1,13 +1,19 @@
-version: '3'
+version: '3.9'
 services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
+      - CYPRESS_OKTA_URL=https://dev-98149190.okta.com
+      - CYPRESS_OKTA_USERNAME_FILE=/run/secrets/okta_username
+      - CYPRESS_OKTA_PASSWORD_FILE=/run/secrets/okta_password
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
       - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
       - ./frontend/src/main/frontend:/e2e
     entrypoint: ["./entrypoint.sh"]
+    secrets:
+      - okta_username
+      - okta_password
   db:
     image: 'postgres:12'
     environment:
@@ -18,6 +24,8 @@ services:
   tech-resource-tracker-be:
     image: 'bbelovic/tech-resource-tracker-composed'
     environment:
+      - OKTA_URL=https://dev-98149190.okta.com
+      - OKTA_OAUTH2_ISSUER=https://dev-98149190.okta.com/oauth2/default
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/tech_resource_tracker_db
@@ -25,5 +33,19 @@ services:
     depends_on:
       - db
     entrypoint: ["./entrypoint.sh"]
+    secrets:
+      - okta_client_id
+      - okta_client_secret
     ports:
       - "8080:8080"
+
+secrets:
+  okta_username:
+    file: ./okta_username.txt
+  okta_password:
+    file: ./okta_password.txt
+  okta_client_id:
+    file: ./okta_client_id.txt
+  okta_client_secret:
+    file: ./okta_client_secret.txt
+

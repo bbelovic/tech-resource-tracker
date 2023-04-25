@@ -1,10 +1,15 @@
-export const loginToOkta = (username: string, password: string) => {
+export const loginToOkta = () => {
     cy.visit('/')
     cy.get('a').click()
 
-    cy.origin('https://dev-775522.okta.com/', {args: {username: 'hideo.k@seznam.cz', password: 'Bb85sa!@'}}, ({username, password}) => {
-        cy.get('input[name="username"]').type(username)
-        cy.get('input[name="password"]').type(password)
+    cy.origin(Cypress.env('OKTA_URL'), () => {
+        cy.readFile(Cypress.env('OKTA_USERNAME_FILE')).then( (valueFromFile) => {
+          cy.get('input[name="identifier"]').type(valueFromFile)
+        });
+        
+        cy.readFile(Cypress.env('OKTA_PASSWORD_FILE')).then( (valueFromFile) => {
+          cy.get('input[name="credentials.passcode"]').type(valueFromFile)
+        });
         cy.get('[type="submit"]').click()
     })
 

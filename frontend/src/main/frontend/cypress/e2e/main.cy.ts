@@ -10,7 +10,7 @@ describe('Smoke E2E test', () => {
   })
 
   it(`Log in using Okta credentials`, () => {
-    cy.loginToOkta('hideo.k@seznam.cz','Bb85sa!@')
+    cy.loginToOkta();
     verifyMenuIsVisible()
     cy.get('li')
       .last()
