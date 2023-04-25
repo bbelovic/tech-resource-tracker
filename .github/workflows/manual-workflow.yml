@@ -28,7 +28,6 @@ jobs:
        echo "$CYPRESS_PASSWORD" > okta_password.txt
        echo "$OKTA_CLIENT_ID" > okta_client_id.txt
        echo "$OKTA_CLIENT_SECRET" > okta_client_secret.txt
-       pwd
     - name: Build with Maven
       run: mvn -B clean verify -Pcompose --file backend/pom.xml
     - name: Archive Cypress artifacts
