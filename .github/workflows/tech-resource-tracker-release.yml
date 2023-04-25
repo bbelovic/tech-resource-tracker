@@ -13,5 +13,24 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 17
+      - name: Dump secrets into file
+      env:
+        CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
+        CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWD }}
+        OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
+        OKTA_CLIENT_SECRET: ${{ secrets.OKTA_CLIENT_SECRET }}
+      run: |
+       echo "$CYPRESS_USERNAME" > okta_username.txt
+       echo "$CYPRESS_PASSWORD" > okta_password.txt
+       echo "$OKTA_CLIENT_ID" > okta_client_id.txt
+       echo "$OKTA_CLIENT_SECRET" > okta_client_secret.txt
       - name: Build with Maven
         run: mvn -B clean verify -Pcompose --file backend/pom.xml
+      - name: Archive Cypress artifacts
+      uses: actions/upload-artifact@v3
+      if: failure()
+      with:
+        name: archive-cypress-video
+        path: /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/videos/main.cy.ts.mp4
+        retention-days: 5
+
