@@ -33,7 +33,7 @@ Cypress.Commands.add('loginToOkta', (username: string, password: string) => { re
 declare global {
   namespace Cypress {
     interface Chainable {
-      loginToOkta(username: string, password: string): Chainable<void>
+      loginToOkta(): Chainable<void>
     }
   }
 }
