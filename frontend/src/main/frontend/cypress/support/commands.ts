@@ -12,10 +12,11 @@
 //
 
 export {}
-import {loginToOkta} from './auth-commands/okta';
+import {loginToOkta, logoutFromOkta} from './auth-commands/okta';
 
 // -- This is a parent command --
-Cypress.Commands.add('loginToOkta', (username: string, password: string) => { return loginToOkta(username, password) })
+Cypress.Commands.add('loginToOkta', () => { return loginToOkta() })
+Cypress.Commands.add('logoutFromOkta', () => {return logoutFromOkta() })
 //
 //
 // -- This is a child command --
@@ -34,6 +35,7 @@ declare global {
   namespace Cypress {
     interface Chainable {
       loginToOkta(): Chainable<void>
+      logoutFromOkta(): Chainable<void>
     }
   }
 }

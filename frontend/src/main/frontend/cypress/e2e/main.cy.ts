@@ -9,16 +9,10 @@ describe('Smoke E2E test', () => {
     });
   })
 
-  it(`Log in using Okta credentials`, () => {
+  it(`Crawl tech. resource list page`, () => {
     cy.loginToOkta();
-    verifyMenuIsVisible()
-    cy.get('li')
-      .last()
-    .click()
-    cy.request('/user').should((response) => {
-      expect(response.status).to.have.eq(200);
-      expect(response.body).to.be.a('string').that.is.empty;
-    });
+    verifyMenuIsVisible();
+    cy.logoutFromOkta();
   })
 
   function verifyMenuIsVisible() {
