@@ -20,6 +20,7 @@ import { HeaderComponent } from './header/header.component';
 import { ResourceItemComponent } from './resource-item/resource-item.component';
 import { ResourceListComponent } from './resource-list/resource-list.component';
 import { MainComponent } from './main/main.component';
+import { AddResourceComponent } from './add-resource/add-resource.component';
 
 const routes: Routes = [
   {path: '', component: TechResourcesComponent},
@@ -40,7 +41,8 @@ const routes: Routes = [
     HeaderComponent,
     ResourceItemComponent,
     ResourceListComponent,
-    MainComponent
+    MainComponent,
+    AddResourceComponent
   ],
   imports: [
     BrowserModule,

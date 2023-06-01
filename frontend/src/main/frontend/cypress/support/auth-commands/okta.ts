@@ -23,3 +23,13 @@ export const loginToOkta = () => {
       })
     
 }
+
+export const logoutFromOkta = () => {
+  cy.get('li')
+    .last()
+    .click()
+  cy.request('/user').should((response) => {
+    expect(response.status).to.have.eq(200)
+    expect(response.body).to.be.a('string').that.is.empty
+  });
+}
