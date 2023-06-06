@@ -2,13 +2,13 @@ package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import static jakarta.persistence.GenerationType.SEQUENCE;
 import static java.lang.String.format;
-import static javax.persistence.GenerationType.SEQUENCE;
 
 @Entity
 @Table(name = "tags", schema = "public")

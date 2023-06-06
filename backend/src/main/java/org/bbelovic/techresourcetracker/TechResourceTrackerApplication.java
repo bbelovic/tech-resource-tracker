@@ -6,11 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 import java.time.LocalDateTime;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @SpringBootApplication
 public class TechResourceTrackerApplication {
@@ -28,33 +31,20 @@ public class TechResourceTrackerApplication {
     }
 
     @Configuration
-    public static class SecurityAdapter extends WebSecurityConfigurerAdapter {
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-                    .authorizeRequests()
-                    .antMatchers("/**/*.{js,html,css}").permitAll()
-                    .antMatchers("/", "/user","/runtime", "/register").permitAll()
-                    .anyRequest().authenticated()
-                    .and()
-                    .oauth2Login()
-                    .and()
-                    .oauth2ResourceServer().jwt();
+    public static class SecurityConfiguration {
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+            http.authorizeHttpRequests((authz) -> authz
+                            .requestMatchers("/", "/user", "/index.html", "*.ico", "*.css", "*.js", "/runtime").permitAll()
+                            .anyRequest().authenticated())
+                    .oauth2Login(withDefaults())
+                    .oauth2ResourceServer((oauth2) -> oauth2.jwt(withDefaults()))
+                    .csrf((csrf) -> csrf
+                            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                            .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
+                    .addFilterAfter(new CookieCsrfFilter(), BasicAuthenticationFilter.class);
 
-            http.requiresChannel()
-                    .requestMatchers(
-                r -> r.getHeader("X-Forwarded-Proto") != null
-            ).requiresSecure();
-
-            http.csrf()
-                    .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
-
-            http.headers()
-                    .contentSecurityPolicy("script-src 'self'; report-to /csp-report-endpoint/")
-                    .and()
-                    .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.SAME_ORIGIN)
-                    .and()
-                    .featurePolicy("accelerometer 'none'; camera 'none'; microphone 'none'");
+            return http.build();
         }
     }
 }

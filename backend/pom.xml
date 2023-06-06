@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.7.12</version>
+        <version>3.0.7</version>
         <relativePath/>
     </parent>
 
@@ -29,9 +29,9 @@
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
         <frontend.plugin.version>1.12.1</frontend.plugin.version>
         <node.version>v14.20.0</node.version>
-        <okta.version>2.0.0</okta.version>
+        <okta.version>3.0.4</okta.version>
         <jib.version>3.2.1</jib.version>
-        <spring-security.version>5.8.3</spring-security.version>
+<!--        <spring-security.version>5.8.3</spring-security.version>-->
     </properties>
 
     <dependencyManagement>
@@ -47,6 +47,11 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-properties-migrator</artifactId>
+            <scope>runtime</scope>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
