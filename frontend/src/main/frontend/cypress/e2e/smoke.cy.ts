@@ -2,7 +2,7 @@ describe('Smoke E2E test', () => {
   it(`Display 'welcome-screen' with log in link when user is not authenticated.`, () => {
     cy.visit('/')
     cy.get('h1').contains('Technology resource tracker')
-    cy.get('a').contains('log in')    
+    cy.get('a').contains('log in')
     cy.request('/user').should((response) => {
       expect(response.status).to.have.eq(200);
       expect(response.body).to.be.a('string').that.is.empty;
@@ -13,6 +13,8 @@ describe('Smoke E2E test', () => {
     cy.loginToOkta();
     verifyMenuIsVisible();
     cy.logoutFromOkta();
+    cy.get('a').contains('log in');
+
   })
 
   function verifyMenuIsVisible() {
