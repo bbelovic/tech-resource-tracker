@@ -31,7 +31,6 @@
         <node.version>v14.20.0</node.version>
         <okta.version>3.0.4</okta.version>
         <jib.version>3.2.1</jib.version>
-<!--        <spring-security.version>5.8.3</spring-security.version>-->
     </properties>
 
     <dependencyManagement>
@@ -70,6 +69,11 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
         <dependency>
