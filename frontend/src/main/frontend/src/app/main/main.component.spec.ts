@@ -5,18 +5,28 @@ import { findComponent } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
 
 import { MainComponent } from './main.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Routes } from '@angular/router';
+import { AddResourceComponent } from 'app/add-resource/add-resource.component';
+import { Location } from '@angular/common';
 
 describe('MainComponent', () => {
   let component: MainComponent;
   let fixture: ComponentFixture<MainComponent>;
   let authState$: BehaviorSubject<boolean>;
   let authService: jasmine.SpyObj<AuthService>;
+  let location: Location;
 
   beforeEach(async () => {
     authState$ = new BehaviorSubject<boolean>(true);
     authService = jasmine.createSpyObj<AuthService>('AuthService', {handleLogin: authState$.toPromise()}, {$authenticationState: authState$});
+    const routes: Routes = [
+      {path: 'add-tech-resource', component: AddResourceComponent}
+    ];
     await TestBed.configureTestingModule({
-      declarations: [ MainComponent ],
+      imports: [RouterTestingModule.withRoutes(routes)],
+      declarations: [ MainComponent, AddResourceComponent ],
+
         schemas: [NO_ERRORS_SCHEMA],
         providers: [{provide: AuthService, useValue: authService}]
     })
@@ -24,6 +34,7 @@ describe('MainComponent', () => {
 
     fixture = TestBed.createComponent(MainComponent);
     component = fixture.componentInstance;
+    location = TestBed.inject(Location);
     fixture.detectChanges();
   });
 
