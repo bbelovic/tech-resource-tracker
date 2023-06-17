@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
-import { findComponent } from 'app/shared/test-helper';
+import { findComponent, findEl } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
 
 import { MainComponent } from './main.component';
@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Routes } from '@angular/router';
 import { AddResourceComponent } from 'app/add-resource/add-resource.component';
 import { Location } from '@angular/common';
+import { By } from '@angular/platform-browser';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -42,6 +43,14 @@ describe('MainComponent', () => {
     expect(component.authenticated.value).toBeTrue();
     const headerComponent = findComponent(fixture, 'app-header');
     expect(headerComponent).toBeTruthy();
+    
+    const actual = headerComponent.queryAll(By.css(`[data-testid="add-tech-resource"]`));
+
+    expect(actual).toBeTruthy();
+
+
+    
+
     const resourceListComponent = findComponent(fixture, 'app-resource-list');
     expect(resourceListComponent).toBeTruthy();
     const loginComponent = findComponent(fixture, 'app-login');
