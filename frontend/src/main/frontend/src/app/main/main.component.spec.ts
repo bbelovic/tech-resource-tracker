@@ -1,15 +1,16 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
 import { findComponent, findEl } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
 
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Routes } from '@angular/router';
+import { Router, Routes } from '@angular/router';
 import { AddResourceComponent } from 'app/add-resource/add-resource.component';
 import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
+import { HeaderComponent } from 'app/header/header.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -26,7 +27,7 @@ describe('MainComponent', () => {
     ];
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes)],
-      declarations: [ MainComponent, AddResourceComponent ],
+      declarations: [ MainComponent, AddResourceComponent, HeaderComponent ],
 
         schemas: [NO_ERRORS_SCHEMA],
         providers: [{provide: AuthService, useValue: authService}]
@@ -43,11 +44,18 @@ describe('MainComponent', () => {
     expect(component.authenticated.value).toBeTrue();
     const headerComponent = findComponent(fixture, 'app-header');
     expect(headerComponent).toBeTruthy();
+
+    const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
+
+    expect(addResourceLink).toBeTruthy();
+    //expect(actual.length).toBe(1);
+
+    /*
+    const router = TestBed.inject(Router);
+    fixture.ngZone.run(() => router.initialNavigation())
+    tick();
+    fixture.detectChanges();*/
     
-    const actual = headerComponent.queryAll(By.css(`[data-testid="add-tech-resource"]`));
-
-    expect(actual).toBeTruthy();
-
 
     
 
