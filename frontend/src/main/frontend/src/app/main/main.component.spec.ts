@@ -48,13 +48,16 @@ describe('MainComponent', () => {
     const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
 
     expect(addResourceLink).toBeTruthy();
-    //expect(actual.length).toBe(1);
+  
+    addResourceLink.triggerEventHandler('click', {button: 0})
 
-    /*
+    fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', {button: 0}))
+
+  
     const router = TestBed.inject(Router);
     fixture.ngZone.run(() => router.initialNavigation())
     tick();
-    fixture.detectChanges();*/
+    fixture.detectChanges();
     
 
     
