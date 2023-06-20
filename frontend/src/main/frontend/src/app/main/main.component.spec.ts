@@ -48,20 +48,12 @@ describe('MainComponent', () => {
   
     const router = TestBed.inject(Router);
     fixture.ngZone.run(() => router.initialNavigation())
-    tick();
-    fixture.detectChanges();
-
-    const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
-
-    expect(addResourceLink).toBeTruthy();
-  
-
-    fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', {button: 0}));
+    advance();
+    clickAddResource();
 
     
 
-    tick();
-    fixture.detectChanges();
+    advance();
     expect(location.path()).toBe('/add-tech-resource');
 
     const form = fixture.debugElement.query(By.css('form'));
@@ -73,6 +65,18 @@ describe('MainComponent', () => {
     expect(loginComponent).toBe(null);
     expect(authService.handleLogin).toHaveBeenCalledTimes(1);
   }));
+
+  function advance() {
+    tick();
+    fixture.detectChanges();
+  }
+  
+  function clickAddResource() {
+    const headerComponent = findComponent(fixture, 'app-header');
+    const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
+    expect(addResourceLink).toBeTruthy();
+    fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', { button: 0 }));
+  }
 });
 
 describe('MainComponent negative', () => {
