@@ -1,5 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
 import { findComponent, findEl } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
@@ -40,34 +40,39 @@ describe('MainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('header and resource list is present when user is authenticated', () => {
+  it('header and resource list is present when user is authenticated', fakeAsync( () => {
     expect(component.authenticated.value).toBeTrue();
     const headerComponent = findComponent(fixture, 'app-header');
     expect(headerComponent).toBeTruthy();
-
-    const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
-
-    expect(addResourceLink).toBeTruthy();
-  
-    addResourceLink.triggerEventHandler('click', {button: 0})
-
-    fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', {button: 0}))
 
   
     const router = TestBed.inject(Router);
     fixture.ngZone.run(() => router.initialNavigation())
     tick();
     fixture.detectChanges();
-    
+
+    const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
+
+    expect(addResourceLink).toBeTruthy();
+  
+
+    fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', {button: 0}));
 
     
+
+    tick();
+    fixture.detectChanges();
+    expect(location.path()).toBe('/add-tech-resource');
+
+    const form = fixture.debugElement.query(By.css('form'));
+    expect(form).toBeTruthy();
 
     const resourceListComponent = findComponent(fixture, 'app-resource-list');
     expect(resourceListComponent).toBeTruthy();
     const loginComponent = findComponent(fixture, 'app-login');
     expect(loginComponent).toBe(null);
     expect(authService.handleLogin).toHaveBeenCalledTimes(1);
-  });
+  }));
 });
 
 describe('MainComponent negative', () => {
