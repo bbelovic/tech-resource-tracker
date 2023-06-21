@@ -3,7 +3,6 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { AuthService } from 'app/services/auth.service';
 import { findComponent, findEl } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
-
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router, Routes } from '@angular/router';
@@ -11,6 +10,9 @@ import { AddResourceComponent } from 'app/add-resource/add-resource.component';
 import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 import { HeaderComponent } from 'app/header/header.component';
+import { TechResourcesComponent } from 'app/tech-resources.component';
+import { TechResourceService } from 'app/tech-resource-service';
+import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -22,15 +24,24 @@ describe('MainComponent', () => {
   beforeEach(async () => {
     authState$ = new BehaviorSubject<boolean>(true);
     authService = jasmine.createSpyObj<AuthService>('AuthService', {handleLogin: authState$.toPromise()}, {$authenticationState: authState$});
+
+
+    const arr: TechResourceDetailsDTO[] = [];
+    const fakeTechResourceService = {
+      
+      getTechResourceDetailsDTO() {return Promise.resolve(arr)},
+    } as Partial<TechResourceService>
+
     const routes: Routes = [
-      {path: 'add-tech-resource', component: AddResourceComponent}
+      {path: 'add-tech-resource', component: AddResourceComponent},
+      {path: '', component: TechResourcesComponent}
     ];
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes)],
       declarations: [ MainComponent, AddResourceComponent, HeaderComponent ],
 
         schemas: [NO_ERRORS_SCHEMA],
-        providers: [{provide: AuthService, useValue: authService}]
+        providers: [{provide: AuthService, useValue: authService}, {provide: TechResourceService, useValue: fakeTechResourceService}]
     })
     .compileComponents();
 
@@ -47,11 +58,12 @@ describe('MainComponent', () => {
 
   
     const router = TestBed.inject(Router);
-    fixture.ngZone.run(() => router.initialNavigation())
+    fixture.ngZone.run(() => router.initialNavigation());
     advance();
 
 
-    
+    const formGroups = fixture.debugElement.queryAll(By.css('.form-group'));
+    expect(formGroups.length).toBe(6)
 
     clickAddResource();
 
