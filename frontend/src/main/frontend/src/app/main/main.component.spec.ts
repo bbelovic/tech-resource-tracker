@@ -49,15 +49,21 @@ describe('MainComponent', () => {
     const router = TestBed.inject(Router);
     fixture.ngZone.run(() => router.initialNavigation())
     advance();
-    clickAddResource();
+
 
     
+
+    clickAddResource();
 
     advance();
     expect(location.path()).toBe('/add-tech-resource');
 
     const form = fixture.debugElement.query(By.css('form'));
     expect(form).toBeTruthy();
+
+    const label = fixture.debugElement.query(By.css('label'));
+    expect(label).toBeTruthy();
+    expect(label.nativeElement.textContent).toEqual('Title:')
 
     const resourceListComponent = findComponent(fixture, 'app-resource-list');
     expect(resourceListComponent).toBeTruthy();
