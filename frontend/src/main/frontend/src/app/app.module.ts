@@ -23,10 +23,11 @@ import { MainComponent } from './main/main.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
 
 const routes: Routes = [
-  {path: '', component: TechResourcesComponent},
-  //{path: 'login2', component: LoginComponent},
-  {path: 'tech-resources', component: TechResourcesComponent},
-  {path: 'add-tech-resource', component: AddTechResourceComponent},
+  //{path: '', component: TechResourcesComponent},
+  {path: '', component: ResourceListComponent},
+  //{path: 'tech-resources', component: TechResourcesComponent},
+  {path: 'tech-resources', component: ResourceListComponent},
+  {path: 'add-tech-resource', component: AddResourceComponent},
   {path: 'edit-tech-resource/:id', component: EditTechResourceComponent},
   {path: 'register-new-user', component: RegisterUserComponent}
 ];

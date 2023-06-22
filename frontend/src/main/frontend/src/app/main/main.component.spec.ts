@@ -2,7 +2,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
 import { findComponent, findEl } from 'app/shared/test-helper';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router, Routes } from '@angular/router';
@@ -13,6 +13,8 @@ import { HeaderComponent } from 'app/header/header.component';
 import { TechResourcesComponent } from 'app/tech-resources.component';
 import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
+import { ResourceListComponent } from 'app/resource-list/resource-list.component';
+import { TagDTO } from 'app/tag-dto';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -26,19 +28,18 @@ describe('MainComponent', () => {
     authService = jasmine.createSpyObj<AuthService>('AuthService', {handleLogin: authState$.toPromise()}, {$authenticationState: authState$});
 
 
-    const arr: TechResourceDetailsDTO[] = [];
-    const fakeTechResourceService = {
-      
-      getTechResourceDetailsDTO() {return Promise.resolve(arr)},
+    const dtos = of([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
+    const fakeTechResourceService = {     
+      getTechResourceDetailsDTO2() {return dtos},
     } as Partial<TechResourceService>
 
     const routes: Routes = [
       {path: 'add-tech-resource', component: AddResourceComponent},
-      {path: '', component: TechResourcesComponent}
+      {path: '', component: ResourceListComponent}
     ];
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes)],
-      declarations: [ MainComponent, AddResourceComponent, HeaderComponent ],
+      declarations: [ MainComponent, AddResourceComponent, HeaderComponent, ResourceListComponent ],
 
         schemas: [NO_ERRORS_SCHEMA],
         providers: [{provide: AuthService, useValue: authService}, {provide: TechResourceService, useValue: fakeTechResourceService}]
@@ -56,29 +57,14 @@ describe('MainComponent', () => {
     const headerComponent = findComponent(fixture, 'app-header');
     expect(headerComponent).toBeTruthy();
 
-  
     const router = TestBed.inject(Router);
     fixture.ngZone.run(() => router.initialNavigation());
     advance();
-
-
-    const formGroups = fixture.debugElement.queryAll(By.css('.form-group'));
-    expect(formGroups.length).toBe(6)
+    resourceListLoaded();
 
     clickAddResource();
-
     advance();
-    expect(location.path()).toBe('/add-tech-resource');
-
-    const form = fixture.debugElement.query(By.css('form'));
-    expect(form).toBeTruthy();
-
-    const label = fixture.debugElement.query(By.css('label'));
-    expect(label).toBeTruthy();
-    expect(label.nativeElement.textContent).toEqual('Title:')
-
-    const resourceListComponent = findComponent(fixture, 'app-resource-list');
-    expect(resourceListComponent).toBeTruthy();
+    addResourceFormPresent();
     const loginComponent = findComponent(fixture, 'app-login');
     expect(loginComponent).toBe(null);
     expect(authService.handleLogin).toHaveBeenCalledTimes(1);
@@ -88,12 +74,26 @@ describe('MainComponent', () => {
     tick();
     fixture.detectChanges();
   }
+
+  function resourceListLoaded() {
+    const resourceList = fixture.debugElement.queryAll(By.css('.resource-list'));
+    expect(resourceList.length).toBe(1)
+  }
   
   function clickAddResource() {
     const headerComponent = findComponent(fixture, 'app-header');
     const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
     expect(addResourceLink).toBeTruthy();
     fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', { button: 0 }));
+  }
+
+  function addResourceFormPresent() {
+    expect(location.path()).toBe('/add-tech-resource');  
+    const form = fixture.debugElement.query(By.css('form'));
+    expect(form).toBeTruthy();
+    const label = fixture.debugElement.query(By.css('label'));
+    expect(label).toBeTruthy();
+    expect(label.nativeElement.textContent).toEqual('Title:');
   }
 });
 
