@@ -43,22 +43,21 @@ describe('MainComponent', () => {
     fixture.detectChanges();
   });
 
-  it('header and resource list is present when user is authenticated', fakeAsync( () => {
-    expect(component.authenticated.value).toBeTrue();
-    const headerComponent = findComponent(fixture, 'app-header');
-    expect(headerComponent).toBeTruthy();
-
-    const router = TestBed.inject(Router);
-    fixture.ngZone.run(() => router.initialNavigation());
+  it('header and resource list is present when user is authenticated', fakeAsync(() => {
+    headerPresent(component, fixture);
+    initNavigation();
     advance();
     resourceListLoaded();
+    loginScreenNotVisible(fixture, authService);
+  }));
 
+  it('can navigate to add new tech resource form', fakeAsync(() => {
+    initNavigation();
+    advance();
+    resourceListLoaded();
     clickAddResource();
     advance();
     addResourceFormPresent();
-    const loginComponent = findComponent(fixture, 'app-login');
-    expect(loginComponent).toBe(null);
-    expect(authService.handleLogin).toHaveBeenCalledTimes(1);
   }));
 
   function advance() {
@@ -69,6 +68,10 @@ describe('MainComponent', () => {
   function resourceListLoaded() {
     const resourceList = fixture.debugElement.queryAll(By.css('.resource-list'));
     expect(resourceList.length).toBe(1)
+    /*const l = resourceList[0].queryAll(By.css('div'));
+    console.log(`length = ${l.length}`)
+    const items = fixture.debugElement.queryAll(By.css('.resource-item'));
+    expect(items.length).toBe(1);*/
   }
   
   function clickAddResource() {
@@ -85,6 +88,11 @@ describe('MainComponent', () => {
     const label = fixture.debugElement.query(By.css('label'));
     expect(label).toBeTruthy();
     expect(label.nativeElement.textContent).toEqual('Title:');
+  }
+
+  function initNavigation() {
+    const router = TestBed.inject(Router);
+    fixture.ngZone.run(() => router.initialNavigation());
   }
 });
 
@@ -120,3 +128,15 @@ describe('MainComponent negative', () => {
     expect(authService.handleLogin).toHaveBeenCalledTimes(1);
   });
 });
+
+function loginScreenNotVisible(fixture: ComponentFixture<MainComponent>, authService: jasmine.SpyObj<AuthService>) {
+  const loginComponent = findComponent(fixture, 'app-login');
+  expect(loginComponent).toBe(null);
+  expect(authService.handleLogin).toHaveBeenCalledTimes(1);
+}
+
+function headerPresent(component: MainComponent, fixture: ComponentFixture<MainComponent>) {
+  expect(component.authenticated.value).toBeTrue();
+  const headerComponent = findComponent(fixture, 'app-header');
+  expect(headerComponent).toBeTruthy();
+}
