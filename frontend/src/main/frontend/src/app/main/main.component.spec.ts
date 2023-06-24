@@ -1,8 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
-import { findComponent, findEl } from 'app/shared/test-helper';
-import { BehaviorSubject, of } from 'rxjs';
+import { fakeTechResourceService, findComponent } from 'app/shared/test-helper';
+import { BehaviorSubject } from 'rxjs';
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router, Routes } from '@angular/router';
@@ -10,11 +10,8 @@ import { AddResourceComponent } from 'app/add-resource/add-resource.component';
 import { Location } from '@angular/common';
 import { By } from '@angular/platform-browser';
 import { HeaderComponent } from 'app/header/header.component';
-import { TechResourcesComponent } from 'app/tech-resources.component';
 import { TechResourceService } from 'app/tech-resource-service';
-import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 import { ResourceListComponent } from 'app/resource-list/resource-list.component';
-import { TagDTO } from 'app/tag-dto';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -26,12 +23,6 @@ describe('MainComponent', () => {
   beforeEach(async () => {
     authState$ = new BehaviorSubject<boolean>(true);
     authService = jasmine.createSpyObj<AuthService>('AuthService', {handleLogin: authState$.toPromise()}, {$authenticationState: authState$});
-
-
-    const dtos = of([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])]);
-    const fakeTechResourceService = {     
-      getTechResourceDetailsDTO2() {return dtos},
-    } as Partial<TechResourceService>
 
     const routes: Routes = [
       {path: 'add-tech-resource', component: AddResourceComponent},
