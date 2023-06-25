@@ -17,6 +17,9 @@ export function findComponent<T>(
     return fixture.debugElement.query(By.css(selector));
   }
 
+export const testResourceTagDTO = new TagDTO(2, 'java');
+export const testResourceDetailsDTO = new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [testResourceTagDTO]);
+
 export const fakeTechResourceService = {     
-      getTechResourceDetailsDTO2() {return of([new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java')])])},
+      getTechResourceDetailsDTO2() {return of([testResourceDetailsDTO])},
     } as Partial<TechResourceService>

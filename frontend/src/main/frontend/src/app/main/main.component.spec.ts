@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
-import { fakeTechResourceService, findComponent } from 'app/shared/test-helper';
+import { fakeTechResourceService, findComponent, findEl, testResourceDetailsDTO, testResourceTagDTO } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -12,6 +12,7 @@ import { By } from '@angular/platform-browser';
 import { HeaderComponent } from 'app/header/header.component';
 import { TechResourceService } from 'app/tech-resource-service';
 import { ResourceListComponent } from 'app/resource-list/resource-list.component';
+import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -30,7 +31,7 @@ describe('MainComponent', () => {
     ];
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes)],
-      declarations: [ MainComponent, AddResourceComponent, HeaderComponent, ResourceListComponent ],
+      declarations: [ MainComponent, AddResourceComponent, HeaderComponent, ResourceListComponent, ResourceItemComponent ],
 
         schemas: [NO_ERRORS_SCHEMA],
         providers: [{provide: AuthService, useValue: authService}, {provide: TechResourceService, useValue: fakeTechResourceService}]
@@ -67,11 +68,13 @@ describe('MainComponent', () => {
 
   function resourceListLoaded() {
     const resourceList = fixture.debugElement.queryAll(By.css('.resource-list'));
-    expect(resourceList.length).toBe(1)
-    /*const l = resourceList[0].queryAll(By.css('div'));
-    console.log(`length = ${l.length}`)
+    expect(resourceList.length).toBe(1);
     const items = fixture.debugElement.queryAll(By.css('.resource-item'));
-    expect(items.length).toBe(1);*/
+    expect(items.length).toBe(1);
+    const titleEl = findEl(fixture, 'resource-title')
+    expect(titleEl.nativeElement.textContent).toEqual(testResourceDetailsDTO.title);
+    const tagEl = findEl(fixture, 'resource-tag');
+    expect(tagEl.nativeElement.textContent).toEqual(testResourceTagDTO.name);
   }
   
   function clickAddResource() {
