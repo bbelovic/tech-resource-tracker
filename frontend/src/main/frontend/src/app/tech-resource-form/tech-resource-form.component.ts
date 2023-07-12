@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-tech-resource-form',
@@ -8,11 +8,17 @@ import { FormControl } from '@angular/forms';
 })
 export class TechResourceFormComponent implements OnInit {
 
-  title = new FormControl('');
-  link = new FormControl('');
-  constructor() { }
+  techResourceForm = this.fb.group({
+    title: [''],
+    link: ['']
+  });
+
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
 
+  onSubmit(): void {
+    
+  }
 }
