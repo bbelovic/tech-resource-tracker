@@ -10,6 +10,10 @@ export function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugEl
     return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
 }
 
+export function setElementValue(element: HTMLInputElement, value: string) {
+    element.value = value;
+}
+
 export function findComponent<T>(
     fixture: ComponentFixture<T>,
     selector: string,
