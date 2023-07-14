@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { TechResourceFormComponent } from './tech-resource-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { fakeTechResourceService, findEl, setElementValue } from 'app/shared/test-helper';
+import { findEl, setElementValue } from 'app/shared/test-helper';
 import { TechResourceService } from 'app/tech-resource-service';
 import { TechResource } from 'app/tech-resource';
 import { TechResourceStatus } from 'app/tech-resource-status';
@@ -11,11 +11,16 @@ import { TechResourceType } from 'app/tech-resource-type';
 describe('TechResourceFormComponent', () => {
   let component: TechResourceFormComponent;
   let fixture: ComponentFixture<TechResourceFormComponent>;
+  let techResourceService: jasmine.SpyObj<TechResourceService>;
 
   beforeEach(async () => {
+    techResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', 
+      [
+        'postNewTechResource'
+      ]);
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      providers: [{provide: TechResourceService, useValue: fakeTechResourceService}],
+      providers: [{provide: TechResourceService, useValue: techResourceService}],
       declarations: [ TechResourceFormComponent ]
     })
     .compileComponents();
@@ -34,9 +39,12 @@ describe('TechResourceFormComponent', () => {
     setElementValue(titleEl, "blabol title");
     const linkEl = findEl(fixture, "link").nativeElement;
     setElementValue(linkEl, "blabol link");
+    console.log('@@@ value=' + linkEl.value)
     const form = findEl(fixture, "form");
     form.triggerEventHandler('submit', {});
-    expect(fakeTechResourceService.postNewTechResource)
+    fixture.detectChanges();
+    expect(techResourceService.postNewTechResource)
+        //.toHaveBeenCalledTimes(1);
       .toHaveBeenCalledWith(new TechResource(0, 'blabol title', 'blabol link', '', TechResourceStatus.New, TechResourceType.Article));
 
 

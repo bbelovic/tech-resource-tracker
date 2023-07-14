@@ -1,4 +1,4 @@
-<form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit" data-testid="form">
+<form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
     <label for="name" class="add-resource-label">Title:</label>
     <input type="text" name="title" id="title" formControlName="title" data-testid="title">
     <label for="link" class="add-resource-label">Link:</label>
