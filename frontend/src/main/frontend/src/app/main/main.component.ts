@@ -14,8 +14,6 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.authenticated = this.authService.$authenticationState;
-    this.authService.handleLogin().then(res => console.log(`Authenticated... ${res}`));
-    
+    this.authService.handleLogin().then(res => console.log(`Authenticated... ${res}`));    
   }
-
 }
