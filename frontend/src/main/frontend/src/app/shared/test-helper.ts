@@ -15,9 +15,8 @@ export function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugEl
 
 export function setElementValue(element: HTMLInputElement, value: string) {
     element.value = value;
-    const event = document.createEvent('Event');
-    event.initEvent('input', true, false);
-    element.dispatchEvent(event)
+    const event = new InputEvent('input');
+    element.dispatchEvent(event);
 }
 
 export function findComponent<T>(
