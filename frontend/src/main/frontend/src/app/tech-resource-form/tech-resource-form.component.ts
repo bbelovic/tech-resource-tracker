@@ -22,10 +22,9 @@ export class TechResourceFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(): void {
-    const title = this.techResourceForm.value['title'];
-    const link = this.techResourceForm.value['link'];
-    console.log('@@@ in component value=' + link)
+  onSubmit() {
+    const title = this.techResourceForm.value.title
+    const link = this.techResourceForm.value.link
     const techResource = new TechResource(0, title, link, '', TechResourceStatus.New, TechResourceType.Article)
     this.techService.postNewTechResource(techResource);
     
