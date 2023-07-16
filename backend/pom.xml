@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.7</version>
+        <version>3.1.1</version>
         <relativePath/>
     </parent>
 
@@ -25,7 +25,7 @@
         <kotlin.jvmTarget>17</kotlin.jvmTarget>
         <java.xml.bind.version>2.3.1</java.xml.bind.version>
         <dbunit.version>2.4.9</dbunit.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.8.20</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
         <frontend.plugin.version>1.12.1</frontend.plugin.version>
         <node.version>v14.20.0</node.version>
@@ -404,12 +404,6 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-<!--
-                    <compilerArgs>
-                        <arg>&#45;&#45;enable-preview</arg>
-                        <arg>-Xlint:preview</arg>
-                    </compilerArgs>
--->
                 </configuration>
                 <executions>
                     <execution>
