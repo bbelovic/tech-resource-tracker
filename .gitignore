@@ -2,6 +2,13 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 *.log
 .mvn/
+frontend/src/main/frontend/cypress/videos/
+roadmap.txt
+tracker-dump.sql
+
+### VSCODE ###
+.vscode
+
 ### STS ###
 .apt_generated
 .classpath
