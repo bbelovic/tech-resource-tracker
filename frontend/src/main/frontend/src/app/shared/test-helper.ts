@@ -13,9 +13,10 @@ export function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugEl
     return fixture.debugElement.query(By.css(`[data-testid="${testId}"]`));
 }
 
-export function setElementValue(element: HTMLInputElement, value: string) {
+export function setElementValue(element: HTMLInputElement | HTMLSelectElement, value: string) {
     element.value = value;
-    const event = new InputEvent('input');
+    const isSelect = element instanceof HTMLSelectElement;
+    const event = new InputEvent(isSelect ? 'change' :'input');
     element.dispatchEvent(event);
 }
 

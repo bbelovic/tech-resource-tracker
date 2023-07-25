@@ -14,7 +14,8 @@ export class TechResourceFormComponent implements OnInit {
 
   techResourceForm = this.fb.group({
     title: [''],
-    link: ['']
+    link: [''],
+    resourceType: ['']
   });
 
   constructor(private fb: FormBuilder, private techService: TechResourceService) { }
@@ -25,7 +26,8 @@ export class TechResourceFormComponent implements OnInit {
   onSubmit() {
     const title = this.techResourceForm.value.title
     const link = this.techResourceForm.value.link
-    const techResource = new TechResource(0, title, link, '', TechResourceStatus.New, TechResourceType.Article)
+    const resourceType = this.techResourceForm.value.resourceType;
+    const techResource = new TechResource(0, title, link, '', TechResourceStatus.New, TechResourceType[resourceType]);
     this.techService.postNewTechResource(techResource);
     
   }

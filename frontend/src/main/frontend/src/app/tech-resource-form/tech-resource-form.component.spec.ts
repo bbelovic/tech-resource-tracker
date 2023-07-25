@@ -38,6 +38,8 @@ describe('TechResourceFormComponent', () => {
     setElementValue(titleEl, "blabol title");
     const linkEl = findEl(fixture, "link").nativeElement;
     setElementValue(linkEl, "blabol link");
+    const resourceTypeEl = findEl(fixture, "resource-type").nativeElement;
+    setElementValue(resourceTypeEl, "ARTICLE");
     const form = findEl(fixture, "form");
     form.triggerEventHandler('submit', {});
     fixture.detectChanges();
