@@ -16,7 +16,7 @@ export function findEl<T>(fixture: ComponentFixture<T>, testId: string): DebugEl
 export function setElementValue(element: HTMLInputElement | HTMLSelectElement, value: string) {
     element.value = value;
     const isSelect = element instanceof HTMLSelectElement;
-    const event = new InputEvent(isSelect ? 'change' :'input');
+    const event = isSelect ? new Event('change') : new InputEvent('input');
     element.dispatchEvent(event);
 }
 
