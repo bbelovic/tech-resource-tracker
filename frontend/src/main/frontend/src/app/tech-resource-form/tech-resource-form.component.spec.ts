@@ -43,7 +43,11 @@ describe('TechResourceFormComponent', () => {
     const form = findEl(fixture, "form");
     form.triggerEventHandler('submit', {});
     fixture.detectChanges();
+
+
+    const expectedDate = '2222-12-31T10:00:00.000Z';
+
     expect(techResourceService.postNewTechResource)
-      .toHaveBeenCalledWith(new TechResource(0, 'blabol title', 'blabol link', '', TechResourceStatus.New, TechResourceType.Article));
+      .toHaveBeenCalledWith(new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article));
   });
 });
