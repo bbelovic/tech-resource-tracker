@@ -22,6 +22,7 @@ import { ResourceListComponent } from './resource-list/resource-list.component';
 import { MainComponent } from './main/main.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
 import { TechResourceFormComponent } from './tech-resource-form/tech-resource-form.component';
+import { DateTimeService } from './services/date-time.service';
 
 const routes: Routes = [
   //{path: '', component: TechResourcesComponent},
@@ -55,7 +56,7 @@ const routes: Routes = [
     ReactiveFormsModule
   ],
   providers: [TechResourceService, TagService, AuthService, AuthenticationService,
-    RuntimeInformationService, RegisterUserService],
+    RuntimeInformationService, RegisterUserService, DateTimeService],
   bootstrap: [MainComponent]
 })
 export class AppModule { }

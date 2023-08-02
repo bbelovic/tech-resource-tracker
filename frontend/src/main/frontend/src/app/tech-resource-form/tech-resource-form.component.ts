@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { DateTimeService } from 'app/services/date-time.service';
 import { TechResource } from 'app/tech-resource';
 import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceStatus } from 'app/tech-resource-status';
@@ -18,7 +19,7 @@ export class TechResourceFormComponent implements OnInit {
     resourceType: ['']
   });
 
-  constructor(private fb: FormBuilder, private techService: TechResourceService) { }
+  constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
 
   ngOnInit(): void {
   }
@@ -27,7 +28,8 @@ export class TechResourceFormComponent implements OnInit {
     const title = this.techResourceForm.value.title
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
-    const techResource = new TechResource(0, title, link, '', TechResourceStatus.New, TechResourceType[resourceType]);
+    const createdOn = this.dateTimeService.createdOn();
+    const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     this.techService.postNewTechResource(techResource);
     
   }

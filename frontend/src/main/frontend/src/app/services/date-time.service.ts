@@ -1,4 +1,9 @@
-export interface DateTimeService {
+import { Injectable } from "@angular/core";
 
-    now(): string;
+@Injectable()
+export class DateTimeService {
+    createdOn(): string {
+        const now: string = new Date().toISOString();
+        return now.substring(0, now.indexOf('.'));
+    };
 }
