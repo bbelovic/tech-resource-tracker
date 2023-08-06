@@ -59,6 +59,6 @@ public class AngularE2EIT {
     }
 
     private void failSuccessMessageNotFound() {
-        fail("Test execution success message not found in container output!");
+        fail("Test execution success message [%s] not detected in container output!".formatted(ALL_SPECS_PASSED_REGEX));
     }
 }
