@@ -1,7 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { AuthService } from 'app/services/auth.service';
-import { fakeTechResourceService, findComponent, findEl, testResourceDetailsDTO, testResourceTagDTO } from 'app/shared/test-helper';
+import { fakeTechResourceService, findComponent, findEl, fixedDateTimeService, testResourceDetailsDTO, testResourceTagDTO } from 'app/shared/test-helper';
 import { BehaviorSubject } from 'rxjs';
 import { MainComponent } from './main.component';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -13,6 +13,9 @@ import { HeaderComponent } from 'app/header/header.component';
 import { TechResourceService } from 'app/tech-resource-service';
 import { ResourceListComponent } from 'app/resource-list/resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
+import { TechResourceFormComponent } from 'app/tech-resource-form/tech-resource-form.component';
+import { DateTimeService } from 'app/services/date-time.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('MainComponent', () => {
   let component: MainComponent;
@@ -30,11 +33,12 @@ describe('MainComponent', () => {
       {path: '', component: ResourceListComponent}
     ];
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes)],
-      declarations: [ MainComponent, AddResourceComponent, HeaderComponent, ResourceListComponent, ResourceItemComponent ],
+      imports: [RouterTestingModule.withRoutes(routes), ReactiveFormsModule],
+      declarations: [ MainComponent, AddResourceComponent, TechResourceFormComponent, HeaderComponent, ResourceListComponent, ResourceItemComponent ],
 
-        schemas: [NO_ERRORS_SCHEMA],
-        providers: [{provide: AuthService, useValue: authService}, {provide: TechResourceService, useValue: fakeTechResourceService}]
+        //schemas: [NO_ERRORS_SCHEMA],
+        providers: [{provide: AuthService, useValue: authService}, {provide: DateTimeService, useValue: fixedDateTimeService},
+          {provide: TechResourceService, useValue: fakeTechResourceService}]
     })
     .compileComponents();
 

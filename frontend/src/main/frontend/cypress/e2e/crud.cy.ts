@@ -6,7 +6,7 @@ describe('Exercise CRUD operation on tech. resource', () => {
         cy.get('li').first().click();
         cy.get('input[name="title"]').type('Test title');
         cy.get('input[name="link"]').type('Test link');
-        cy.get('input[type="submit"]').click();
+        cy.get('button[name="submitBtn"]').click();
         cy.logoutFromOkta();
     });
 });

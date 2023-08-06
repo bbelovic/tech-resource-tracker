@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { TechResourceFormComponent } from './tech-resource-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { findEl, setElementValue } from 'app/shared/test-helper';
+import { findEl, fixedDateTimeService, setElementValue } from 'app/shared/test-helper';
 import { TechResourceService } from 'app/tech-resource-service';
 import { TechResource } from 'app/tech-resource';
 import { TechResourceStatus } from 'app/tech-resource-status';
@@ -12,11 +12,6 @@ describe('TechResourceFormComponent', () => {
   let component: TechResourceFormComponent;
   let fixture: ComponentFixture<TechResourceFormComponent>;
   let techResourceService: jasmine.SpyObj<TechResourceService>;
-  const fixedDateTimeService = {
-    createdOn(): string {
-      return '2222-01-01T10:00:00';
-    }
-  } as Partial<DateTimeService>;
 
   beforeEach(async () => {
     techResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', 
@@ -51,9 +46,11 @@ describe('TechResourceFormComponent', () => {
     fixture.detectChanges();
 
 
-    const expectedDate = '2222-01-01T10:00:00';
+    const expectedDate = '2222-01-01:10:00:00';
+    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article);
+    expectedResource.tags = [];
 
     expect(techResourceService.postNewTechResource)
-      .toHaveBeenCalledWith(new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article));
+      .toHaveBeenCalledWith(expectedResource);
   });
 });

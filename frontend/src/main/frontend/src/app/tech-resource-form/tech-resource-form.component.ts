@@ -25,12 +25,13 @@ export class TechResourceFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(`@@@ clicked`);
     const title = this.techResourceForm.value.title
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
-    this.techService.postNewTechResource(techResource);
-    
+    techResource.tags = [];
+    this.techService.postNewTechResource(techResource);    
   }
 }
