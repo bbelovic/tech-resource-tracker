@@ -13,6 +13,7 @@ import { TechResourceType } from 'app/tech-resource-type';
 })
 export class TechResourceFormComponent implements OnInit {
 
+  showMessage = false;
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
@@ -24,14 +25,14 @@ export class TechResourceFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() {
-    console.log(`@@@ clicked`);
+  async onSubmit() {
     const title = this.techResourceForm.value.title
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    this.techService.postNewTechResource(techResource);    
+    const submittedResource = await this.techService.postNewTechResource(techResource);
+    this.showMessage = submittedResource.id > 0 ? true : false;
   }
 }

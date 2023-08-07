@@ -46,11 +46,15 @@ describe('TechResourceFormComponent', () => {
     fixture.detectChanges();
 
 
-    const expectedDate = '2222-01-01:10:00:00';
+
+    const expectedDate = '2222-01-01T10:00:00';
     const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article);
     expectedResource.tags = [];
 
     expect(techResourceService.postNewTechResource)
       .toHaveBeenCalledWith(expectedResource);
+
+    expect(component.showMessage).toEqual(true);
+    expect(component.message).toEqual('Resource submitted');
   });
 });

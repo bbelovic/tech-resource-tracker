@@ -36,7 +36,6 @@ describe('MainComponent', () => {
       imports: [RouterTestingModule.withRoutes(routes), ReactiveFormsModule],
       declarations: [ MainComponent, AddResourceComponent, TechResourceFormComponent, HeaderComponent, ResourceListComponent, ResourceItemComponent ],
 
-        //schemas: [NO_ERRORS_SCHEMA],
         providers: [{provide: AuthService, useValue: authService}, {provide: DateTimeService, useValue: fixedDateTimeService},
           {provide: TechResourceService, useValue: fakeTechResourceService}]
     })

@@ -33,7 +33,7 @@ export const testResourceDetailsDTO = new TechResourceDetailsDTO(1, 'test title'
 
 export const fixedDateTimeService = {
   createdOn(): string {
-    return '2222-01-01:10:00:00';
+    return '2222-01-01T10:00:00';
   }
 } as Partial<DateTimeService>;
 
