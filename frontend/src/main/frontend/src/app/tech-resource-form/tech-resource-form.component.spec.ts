@@ -13,11 +13,19 @@ describe('TechResourceFormComponent', () => {
   let fixture: ComponentFixture<TechResourceFormComponent>;
   let techResourceService: jasmine.SpyObj<TechResourceService>;
 
+  const expectedDate = '2222-01-01T10:00:00';
+    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article);
+    expectedResource.tags = [];
+
   beforeEach(async () => {
+    const responseResource = new TechResource(1, 
+      expectedResource.title, expectedResource.link, expectedDate, expectedResource.status, expectedResource.type);
+
+    const mockedMethods = {'postNewTechResource': Promise.resolve(responseResource)}
+
+
     techResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', 
-      [
-        'postNewTechResource'
-      ]);
+      mockedMethods);
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
       providers: [{provide: TechResourceService, useValue: techResourceService}, {provide: DateTimeService, useValue: fixedDateTimeService}],
@@ -34,7 +42,7 @@ describe('TechResourceFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('tech resource form successful submission', () => {
+  it('tech resource form successful submission', async () => {
     const titleEl = findEl(fixture, "title").nativeElement;   
     setElementValue(titleEl, "blabol title");
     const linkEl = findEl(fixture, "link").nativeElement;
@@ -45,16 +53,10 @@ describe('TechResourceFormComponent', () => {
     form.triggerEventHandler('submit', {});
     fixture.detectChanges();
 
-
-
-    const expectedDate = '2222-01-01T10:00:00';
-    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article);
-    expectedResource.tags = [];
-
     expect(techResourceService.postNewTechResource)
       .toHaveBeenCalledWith(expectedResource);
 
-    expect(component.showMessage).toEqual(true);
-    expect(component.message).toEqual('Resource submitted');
+    const resourceId = (await component.submittedResource).id;
+    expect(resourceId).toEqual(1);
   });
 });
