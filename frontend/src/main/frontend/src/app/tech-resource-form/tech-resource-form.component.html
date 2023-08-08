@@ -1,3 +1,4 @@
+<div *ngIf="(submittedResource | async)?.id > 0" data-testid="result-message">Success</div>
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
     <label for="title" class="add-resource-label">Title:</label>
     <input type="text" name="title" id="title" formControlName="title" data-testid="title">

@@ -13,7 +13,7 @@ import { TechResourceType } from 'app/tech-resource-type';
 })
 export class TechResourceFormComponent implements OnInit {
 
-  submittedResource: Promise<TechResource>;
+  submittedResource: Promise<TechResource> = Promise.resolve(null);
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
