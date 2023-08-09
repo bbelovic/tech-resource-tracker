@@ -33,3 +33,7 @@ Run technology resource tracker in Docker container (requires previous step).
 ```
 docker-compose up tech-resource-tracker-be
 ```
+To quickly rebuild docker container without running tests use
+```
+mvn -f backend/pom.xml clean compile jib:dockerBuild -Pcompose -DskipTests
+```
