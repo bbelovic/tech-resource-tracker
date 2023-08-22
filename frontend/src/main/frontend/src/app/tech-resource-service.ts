@@ -5,6 +5,7 @@ import {environment} from '../environments/environment'
 
 
 import { TechResourceDetailsDTO } from './tech-resource-details-dto';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TechResourceService {
@@ -47,6 +48,12 @@ export class TechResourceService {
         {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
         .toPromise()
         .then(res => res as TechResource );
+    }
+
+    postNewTechResource2(resource: TechResource): Observable<Object> {
+        console.log('Creating new resource [' + JSON.stringify(resource) + '] through ' + this.url);
+        return this.http.post(this.url, JSON.stringify(resource),
+            {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')});
     }
 
     updateResource(resource: TechResource): Promise<TechResource> {

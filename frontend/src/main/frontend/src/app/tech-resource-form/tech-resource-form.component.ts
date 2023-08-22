@@ -5,6 +5,8 @@ import { TechResource } from 'app/tech-resource';
 import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceStatus } from 'app/tech-resource-status';
 import { TechResourceType } from 'app/tech-resource-type';
+import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tech-resource-form',
@@ -13,7 +15,8 @@ import { TechResourceType } from 'app/tech-resource-type';
 })
 export class TechResourceFormComponent implements OnInit {
 
-  submittedResource: Promise<TechResource> = Promise.resolve(null);
+  submittedResource: TechResource;
+  submittedResourceState = new BehaviorSubject<ResourceSubmissionStatus>(ResourceSubmissionStatus.Unknown);
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
@@ -32,6 +35,19 @@ export class TechResourceFormComponent implements OnInit {
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    this.submittedResource = this.techService.postNewTechResource(techResource);
+    this.techService.postNewTechResource2(techResource)
+      .pipe(map((res: TechResource) => {
+        if (res.id > 0) {
+          this.submittedResourceState.next(ResourceSubmissionStatus.Created);
+        } else {
+          this.submittedResourceState.next(ResourceSubmissionStatus.NotCreated);
+        }
+      }));
   }
+}
+
+enum ResourceSubmissionStatus {
+  Unknown = 'UNKNOWN',
+  Created = 'CREATED',
+  NotCreated = 'NOT_CREATED'
 }
