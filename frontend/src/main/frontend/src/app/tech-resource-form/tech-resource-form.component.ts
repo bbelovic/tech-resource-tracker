@@ -15,7 +15,7 @@ import { map } from 'rxjs/operators';
 })
 export class TechResourceFormComponent implements OnInit {
 
-  submittedResource: TechResource;
+  //submittedResource: TechResource;
   submittedResourceState = new BehaviorSubject<ResourceSubmissionStatus>(ResourceSubmissionStatus.Unknown);
   techResourceForm = this.fb.group({
     title: [''],
@@ -46,8 +46,8 @@ export class TechResourceFormComponent implements OnInit {
   }
 }
 
-enum ResourceSubmissionStatus {
-  Unknown = 'UNKNOWN',
-  Created = 'CREATED',
-  NotCreated = 'NOT_CREATED'
+export enum ResourceSubmissionStatus {
+  Unknown = 'Unknown',
+  Created = 'Created',
+  NotCreated = 'NotCreated'
 }

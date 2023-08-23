@@ -1,4 +1,11 @@
-<div *ngIf="(submittedResource | async)?.id > 0" data-testid="result-message">Success</div>
+<!--div *ngIf="(submittedResource | async)?.id > 0" data-testid="result-message">Success</div-->
+
+<div [ngSwitch]="(submittedResourceState | async)">
+    <div *ngSwitchCase="Created" data-testid="result-message">Success</div>
+    <div *ngSwitchCase="NotCreated" data-testid="result-message">Failure</div>
+    <div *ngSwitchDefault data-testid="result-message">na</div>
+</div>
+
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
     <label for="title" class="add-resource-label">Title:</label>
     <input type="text" name="title" id="title" formControlName="title" data-testid="title">
