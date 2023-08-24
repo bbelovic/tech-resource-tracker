@@ -15,8 +15,6 @@ import { map } from 'rxjs/operators';
 })
 export class TechResourceFormComponent implements OnInit {
 
-  //submittedResource: TechResource;
-  //submittedResourceState = new BehaviorSubject<ResourceSubmissionStatus>(ResourceSubmissionStatus.Unknown);
   submittedResourceState = new BehaviorSubject<string>('Unknown');
   techResourceForm = this.fb.group({
     title: [''],
@@ -36,17 +34,15 @@ export class TechResourceFormComponent implements OnInit {
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    console.log(`@@@ >>> onSubmit`)
     this.techService.postNewTechResource2(techResource)
       .pipe(map((res: TechResource) => {
-        console.log(`@@@ res.id = ${res.id}`)
         if (res.id > 0) {
           this.submittedResourceState.next('Created');
         } else {
           this.submittedResourceState.next('NotCreated');
         }
         return res;
-      })).subscribe(x => console.log(`Subscribed: ${x.id}`));
+      })).subscribe(x => console.log(`Resource created with id: [${x.id}]`));
   }
 }
 

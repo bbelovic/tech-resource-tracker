@@ -1,5 +1,3 @@
-<!--div *ngIf="(submittedResource | async)?.id > 0" data-testid="result-message">Success</div-->
-
 <div [ngSwitch]="(submittedResourceState | async).value">
     <div *ngSwitchCase="Created" data-testid="result-message">Success</div>
     <div *ngSwitchCase="NotCreated" data-testid="result-message">Failure</div>
