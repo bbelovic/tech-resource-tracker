@@ -1,7 +1,7 @@
 <div [ngSwitch]="(submittedResourceState | async).value">
-    <div *ngSwitchCase="Created" data-testid="result-message">Success</div>
-    <div *ngSwitchCase="NotCreated" data-testid="result-message">Failure</div>
-    <div *ngSwitchDefault data-testid="result-message">na</div>
+    <div *ngSwitchCase="'Created'" data-testid="result-message">Success</div>
+    <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
+    <div *ngSwitchDefault data-testid="result-message">na - {{(submittedResourceState | async).value}}</div>
 </div>
 
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
