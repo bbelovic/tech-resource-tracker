@@ -37,7 +37,7 @@ export class TechResourceFormComponent implements OnInit {
     this.techService.postNewTechResource2(techResource)
       .pipe(map((res: TechResource) => {
         if (res.id > 0) {
-          this.submittedResourceState.next('Created');
+          this.submittedResourceState.next("'Created'");
         } else {
           this.submittedResourceState.next('NotCreated');
         }

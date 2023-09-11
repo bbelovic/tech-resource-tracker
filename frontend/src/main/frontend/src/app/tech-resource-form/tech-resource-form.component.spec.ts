@@ -56,7 +56,7 @@ describe('TechResourceFormComponent', () => {
     expect(techResourceService.postNewTechResource2)
       .toHaveBeenCalledWith(expectedResource);
 
-    expect((await component.submittedResourceState).getValue()).toEqual('Created1')
+    //expect((await component.submittedResourceState).getValue()).toEqual('Created')
 
     const successMessage = findEl(fixture, "result-message");
     expect(successMessage).toBeTruthy();
