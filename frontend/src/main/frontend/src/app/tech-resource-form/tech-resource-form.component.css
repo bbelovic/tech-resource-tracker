@@ -13,3 +13,12 @@
     margin-top: 0.3em;
     margin-bottom: 0.3em;
  }
+
+ .form-submission-success {
+   background-color: green;
+   font-weight: bold;
+   margin-top: 0.55rem;
+   margin-bottom: 0.55rem;
+   border-radius: 0.25rem;
+   padding: 0.5rem 0.5rem;
+}
