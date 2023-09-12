@@ -6,6 +6,7 @@ import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceStatus } from 'app/tech-resource-status';
 import { TechResourceType } from 'app/tech-resource-type';
 import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs-compat';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -16,6 +17,7 @@ import { map } from 'rxjs/operators';
 export class TechResourceFormComponent implements OnInit {
 
   submittedResourceState = new BehaviorSubject<string>('Unknown');
+  obs: Observable<string>;
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
@@ -34,15 +36,15 @@ export class TechResourceFormComponent implements OnInit {
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    this.techService.postNewTechResource2(techResource)
+    this.obs = this.techService.postNewTechResource2(techResource)
       .pipe(map((res: TechResource) => {
         if (res.id > 0) {
-          this.submittedResourceState.next("'Created'");
+          return 'Created';
         } else {
-          this.submittedResourceState.next('NotCreated');
+          return 'NotCreated';
         }
-        return res;
-      })).subscribe(x => console.log(`Resource created with id: [${x.id}]`));
+        //return res;
+      }));//.subscribe(x => console.log(`Resource created with id: [${x.id}]`));
   }
 }
 
