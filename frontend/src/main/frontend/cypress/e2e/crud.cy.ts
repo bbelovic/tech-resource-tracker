@@ -1,14 +1,21 @@
 describe('Exercise CRUD operation on tech. resource', () => {
-    it('CRUD test for tech. resource', () => {
+
+    before(() => {
         cy.loginToOkta();
+    });
+
+    it('Add new technology resource', () => {
         cy.get('a').click();
         cy.get('li').first().should('have.text', 'Add new resource')
         cy.get('li').first().click();
-        cy.get('input[name="title"]').type('Test title');
-        cy.get('input[name="link"]').type('Test link');
+        cy.get('[data-testid="title"]').type('Test title');
+        cy.get('[data-testid="link"]').type('Test link');
         cy.get('[data-cy="resource-type"]').select('Article')
         cy.get('button[name="submitBtn"]').click();
-        cy.get('[data-cy="result-message"]').should('be.visible').and('have.text', 'Success');
+        cy.get('[data-cy="result-message"]').should('be.visible').and('have.text', 'Success');        
+    });
+
+    after(() => {
         cy.logoutFromOkta();
     });
 });

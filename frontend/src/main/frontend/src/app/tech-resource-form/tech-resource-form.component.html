@@ -1,7 +1,7 @@
-<div [ngSwitch]="(obs | async)">
+<div [ngSwitch]="(submittedResourceObservable | async)">
     <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">Success</div>
     <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
-    <div *ngSwitchDefault data-testid="result-message">na - {{(obs | async)}}</div>
+    <div *ngSwitchDefault data-testid="result-message">na - {{(submittedResourceObservable | async)}}</div>
 </div>
 
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
