@@ -10,12 +10,12 @@
     <label for="link" class="add-resource-label">Link:</label>
     <input type="text" name="link" id="link" formControlName="link" data-testid="link">
     <label for="resource-type">Resource type:</label>
-    <select id="resource-type" formControlName="resourceType" data-testid="resource-type" data-cy="resource-type">
+    <select id="resource-type" formControlName="resourceType" data-testid="resource-type">
         <option>Article</option>
         <option>Presentation</option>
         <option>Blog</option>
     </select>
     <label for="intro" class="add-resource-label">Intro:</label>
     <textarea name="intro" rows="10"></textarea><br>
-    <button type="submit" class="control-button" name="submitBtn">Submit</button>
+    <button type="submit" class="control-button" name="submitBtn" data-testid="submit-btn">Submit</button>
 </form>

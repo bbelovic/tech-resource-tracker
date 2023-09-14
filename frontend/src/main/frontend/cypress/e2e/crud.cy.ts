@@ -10,9 +10,9 @@ describe('Exercise CRUD operation on tech. resource', () => {
         cy.get('li').first().click();
         cy.get('[data-testid="title"]').type('Test title');
         cy.get('[data-testid="link"]').type('Test link');
-        cy.get('[data-cy="resource-type"]').select('Article')
-        cy.get('button[name="submitBtn"]').click();
-        cy.get('[data-cy="result-message"]').should('be.visible').and('have.text', 'Success');        
+        cy.get('[data-testid="resource-type"]').select('Article')
+        cy.get('[data-testid="submit-btn"]').click();
+        cy.get('[data-testid="result-message"]').should('be.visible').and('have.text', 'Success');        
     });
 
     after(() => {
