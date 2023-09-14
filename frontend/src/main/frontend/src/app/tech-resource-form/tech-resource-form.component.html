@@ -1,10 +1,9 @@
-<div [ngSwitch]="(submittedResourceObservable | async)">
-    <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">Success</div>
-    <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
-    <div *ngSwitchDefault data-testid="result-message">na - {{(submittedResourceObservable | async)}}</div>
-</div>
-
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
+    <div [ngSwitch]="(submittedResourceObservable | async)">
+        <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">Success</div>
+        <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
+        <div *ngSwitchDefault data-testid="result-message">na - {{(submittedResourceObservable | async)}}</div>
+    </div>
     <label for="title" class="add-resource-label">Title:</label>
     <input type="text" name="title" id="title" formControlName="title" data-testid="title">
     <label for="link" class="add-resource-label">Link:</label>
