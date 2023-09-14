@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
 import { AppComponent } from './app.component';
@@ -21,12 +21,15 @@ import { ResourceItemComponent } from './resource-item/resource-item.component';
 import { ResourceListComponent } from './resource-list/resource-list.component';
 import { MainComponent } from './main/main.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
+import { TechResourceFormComponent } from './tech-resource-form/tech-resource-form.component';
+import { DateTimeService } from './services/date-time.service';
 
 const routes: Routes = [
-  {path: '', component: TechResourcesComponent},
-  //{path: 'login2', component: LoginComponent},
-  {path: 'tech-resources', component: TechResourcesComponent},
-  {path: 'add-tech-resource', component: AddTechResourceComponent},
+  //{path: '', component: TechResourcesComponent},
+  {path: '', component: ResourceListComponent},
+  //{path: 'tech-resources', component: TechResourcesComponent},
+  {path: 'tech-resources', component: ResourceListComponent},
+  {path: 'add-tech-resource', component: AddResourceComponent},
   {path: 'edit-tech-resource/:id', component: EditTechResourceComponent},
   {path: 'register-new-user', component: RegisterUserComponent}
 ];
@@ -42,16 +45,18 @@ const routes: Routes = [
     ResourceItemComponent,
     ResourceListComponent,
     MainComponent,
-    AddResourceComponent
+    AddResourceComponent,
+    TechResourceFormComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(routes, {enableTracing: true})
+    RouterModule.forRoot(routes, {enableTracing: true}),
+    ReactiveFormsModule
   ],
   providers: [TechResourceService, TagService, AuthService, AuthenticationService,
-    RuntimeInformationService, RegisterUserService],
+    RuntimeInformationService, RegisterUserService, DateTimeService],
   bootstrap: [MainComponent]
 })
 export class AppModule { }

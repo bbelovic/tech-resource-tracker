@@ -1,7 +1,6 @@
 package org.bbelovic.techresourcetracker;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 
@@ -21,7 +20,7 @@ public class ISO8601LocalDateTimeDeserializer extends StdDeserializer<LocalDateT
     }
 
     @Override
-    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
+    public LocalDateTime deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException {
         return LocalDateTime.parse(jsonParser.getText(), ISO_LOCAL_DATE_TIME);
     }
 }

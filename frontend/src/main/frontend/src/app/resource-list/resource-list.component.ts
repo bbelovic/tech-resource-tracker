@@ -17,5 +17,4 @@ export class ResourceListComponent implements OnInit {
         this.techResourcesDetailsDTOs = this.resourceService.getTechResourceDetailsDTO2();      
         console.log(`Received ${this.techResourcesDetailsDTOs} dtos.`);
     }
-
 }

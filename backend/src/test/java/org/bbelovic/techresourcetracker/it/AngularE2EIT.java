@@ -13,15 +13,14 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.regex.Pattern;
 
-import static java.lang.String.format;
 import static java.util.concurrent.TimeUnit.MINUTES;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class AngularE2EIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AngularE2EIT.class);
-    private static final String TESTS_EXECUTED_REGEX = ".*(\\d+) passing.*";
+    private static final String ALL_SPECS_PASSED_REGEX = ".*All specs passed!.*";
 
     @Test
     public void executeAngularE2ETest() {
@@ -40,7 +39,7 @@ public class AngularE2EIT {
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
-                    .filter(s -> s.matches(TESTS_EXECUTED_REGEX))
+                    .filter(s -> s.matches(ALL_SPECS_PASSED_REGEX))
                     .findFirst();
             actual.ifPresentOrElse(this::assertContainerOutput, this::failSuccessMessageNotFound);
 
@@ -54,17 +53,12 @@ public class AngularE2EIT {
     }
 
     private void assertContainerOutput(String logOutput) {
-        var pattern = Pattern.compile(TESTS_EXECUTED_REGEX);
+        var pattern = Pattern.compile(ALL_SPECS_PASSED_REGEX);
         var matcher = pattern.matcher(logOutput);
-        if (matcher.matches()) {
-            var expectedPassingCount = "2";
-            var actualPassingCount = matcher.group(1);
-            assertEquals(expectedPassingCount, actualPassingCount,
-                    format("Executed test count [%s] should be equal to total test count [%s]", expectedPassingCount, actualPassingCount));
-        }
+        assertTrue(matcher.matches(), "Expected all specs to pass, but some failed.");
     }
 
     private void failSuccessMessageNotFound() {
-        fail("Test execution success message not found in container output!");
+        fail("Test execution success message [%s] not detected in container output!".formatted(ALL_SPECS_PASSED_REGEX));
     }
 }

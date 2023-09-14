@@ -3,6 +3,7 @@ target/
 *.log
 .mvn/
 frontend/src/main/frontend/cypress/videos/
+frontend/src/main/frontend/cypress/screenshots
 roadmap.txt
 tracker-dump.sql
 
