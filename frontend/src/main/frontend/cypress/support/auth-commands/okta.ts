@@ -11,23 +11,27 @@ export const loginToOkta = () => {
           cy.get('input[name="credentials.passcode"]').type(valueFromFile)
         });
         cy.get('[type="submit"]').click()
-    })
+    });
 
     cy.url({timeout: 15000}).should((result) => {     
         expect(result).to.contain(Cypress.env('APP_HOST'))
-      })
+      });
   
       cy.request('/user').should((response) => {
         expect(response.status).to.have.eq(200);
         expect(response.body).to.be.a('Object').that.has.property('givenName').eq('Hideo');
-      })
+      });
     
 }
 
 export const logoutFromOkta = () => {
-  cy.get('li')
-    .last()
-    .click()
+  cy.get('[data-testid="logout-link"]')
+    .click();
+  
+  cy.url({timeout: 15000}).should((result) => {     
+      expect(result).to.contain(Cypress.env('APP_HOST'))
+  });
+
   cy.request('/user').should((response) => {
     expect(response.status).to.have.eq(200)
     expect(response.body).to.be.a('string').that.is.empty
