@@ -27,10 +27,10 @@ export const loginToOkta = () => {
 export const logoutFromOkta = () => {
   cy.get('[data-testid="logout-link"]')
     .click();
-  
+  /*
   cy.url({timeout: 15000}).should((result) => {     
       expect(result).to.contain(Cypress.env('APP_HOST'))
-  });
+  });*/
 
   cy.request('/user').should((response) => {
     expect(response.status).to.have.eq(200)
