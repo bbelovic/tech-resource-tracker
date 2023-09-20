@@ -34,6 +34,9 @@ public class AngularE2EIT {
 
             var utf8String = toStringConsumer.toUtf8String();
             var actual = Arrays.stream(utf8String.split("\n"))
+                    .peek(s -> {
+                        System.out.printf("Looking for [All specs passed] in [%s] -> result: [%s]%n", s, s.contains("All specs passed"));
+                    })
                     .filter(s -> s.contains("All specs passed"))
                     .findFirst();
             assertTrue(actual.isPresent(), "Expected all specs to pass, but some failed.");
