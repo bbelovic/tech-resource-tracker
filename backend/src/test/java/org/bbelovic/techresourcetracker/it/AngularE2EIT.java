@@ -10,10 +10,8 @@ import org.testcontainers.containers.output.ToStringConsumer;
 import org.testcontainers.containers.output.WaitingConsumer;
 
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class AngularE2EIT {
@@ -30,17 +28,7 @@ public class AngularE2EIT {
             var composedConsumer = toStringConsumer.andThen(slf4jLogConsumer).andThen(waitingConsumer);
             composeContainer.withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("Run Finished"), 3, MINUTES);
-
-            var utf8String = toStringConsumer.toUtf8String();
-            var actual = Arrays.stream(utf8String.split("\n"))
-                    .peek(s -> {
-                        System.out.printf("Looking for [All specs passed] in [%s] -> result: [%s]%n", s, s.contains("All specs passed"));
-                    })
-                    .filter(s -> s.contains("All specs passed"))
-                    .findFirst();
-            assertTrue(actual.isPresent(), "Expected all specs to pass, but some failed.");
-
+            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("All specs passed"), 3, MINUTES);
         } catch (Exception e) {
             fail("Test failed unexpectedly", e);
         }
