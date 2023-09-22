@@ -53,11 +53,12 @@ describe('TechResourceFormComponent', () => {
     form.triggerEventHandler('submit', {});
     fixture.detectChanges();
 
+    expect(techResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
     expect(techResourceService.postNewTechResource2)
       .toHaveBeenCalledWith(expectedResource);
 
     const successMessage = findEl(fixture, "result-message");
     expect(successMessage).toBeTruthy();
-    expect(successMessage.nativeElement.textContent).toEqual('Success');
+    expect(successMessage.nativeElement.textContent).toContain('Resource created');
   });
 });

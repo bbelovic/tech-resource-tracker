@@ -1,6 +1,8 @@
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
     <div [ngSwitch]="(submittedResourceObservable | async)">
-        <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">Success</div>
+        <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
+        Resource created. <a data-testid="resource-list-link"  routerLink='/tech-resources'>Go to resource list.</a>
+        </div>
         <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
         <div *ngSwitchDefault data-testid="result-message">na - {{(submittedResourceObservable | async)}}</div>
     </div>
