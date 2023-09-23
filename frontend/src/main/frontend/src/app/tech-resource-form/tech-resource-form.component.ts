@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators';
 export class TechResourceFormComponent implements OnInit {
 
   submittedResourceObservable: Observable<string>;
+  result: string = 'na';
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
@@ -35,14 +36,15 @@ export class TechResourceFormComponent implements OnInit {
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    this.submittedResourceObservable = this.techService.postNewTechResource2(techResource)
+    //this.submittedResourceObservable = 
+    this.techService.postNewTechResource2(techResource)
       .pipe(map((res: TechResource) => {
         if (res.id > 0) {
           return 'Created';
         } else {
           return 'NotCreated';
         }
-      }));
+      })).subscribe(s => this.result = s);
   }
 }
 
