@@ -5,8 +5,6 @@ import { TechResource } from 'app/tech-resource';
 import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceStatus } from 'app/tech-resource-status';
 import { TechResourceType } from 'app/tech-resource-type';
-import { BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs-compat';
 import { map } from 'rxjs/operators';
 
 @Component({
@@ -16,7 +14,6 @@ import { map } from 'rxjs/operators';
 })
 export class TechResourceFormComponent implements OnInit {
 
-  submittedResourceObservable: Observable<string>;
   result: string = 'na';
   techResourceForm = this.fb.group({
     title: [''],
@@ -36,7 +33,6 @@ export class TechResourceFormComponent implements OnInit {
     const createdOn = this.dateTimeService.createdOn();
     const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    //this.submittedResourceObservable = 
     this.techService.postNewTechResource2(techResource)
       .pipe(map((res: TechResource) => {
         if (res.id > 0) {

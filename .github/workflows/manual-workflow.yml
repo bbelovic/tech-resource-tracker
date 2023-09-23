@@ -35,7 +35,9 @@ jobs:
       if: failure()
       with:
         name: archive-cypress-video
-        path: /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/videos/smoke.cy.ts.mp4
+        path: |
+          /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/screenshots/smoke.cy.ts
+          /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/screenshots/crud.cy.ts
         retention-days: 5
     - name: Archive Angular artifacts
       uses: actions/upload-artifact@v3

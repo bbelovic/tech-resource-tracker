@@ -20,7 +20,6 @@ describe('Exercise CRUD operation on tech. resource', () => {
         cy.get('[data-testid="resource-title"]').first().should('have.text', 'Test title - ' + id);         
     });
 
-    // cypress/screenshots/crud.cy.ts
     after(() => {
         cy.logoutFromOkta();
     });
