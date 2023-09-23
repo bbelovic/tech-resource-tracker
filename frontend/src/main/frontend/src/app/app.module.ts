@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
 import { AppComponent } from './app.component';
 import { TechResourcesComponent } from './tech-resources.component';
@@ -25,9 +25,7 @@ import { TechResourceFormComponent } from './tech-resource-form/tech-resource-fo
 import { DateTimeService } from './services/date-time.service';
 
 const routes: Routes = [
-  //{path: '', component: TechResourcesComponent},
   {path: '', component: ResourceListComponent},
-  //{path: 'tech-resources', component: TechResourcesComponent},
   {path: 'tech-resources', component: ResourceListComponent},
   {path: 'add-tech-resource', component: AddResourceComponent},
   {path: 'edit-tech-resource/:id', component: EditTechResourceComponent},
