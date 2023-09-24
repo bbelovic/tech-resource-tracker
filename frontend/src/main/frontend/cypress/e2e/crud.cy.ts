@@ -20,6 +20,14 @@ describe('Exercise CRUD operation on tech. resource', () => {
         cy.get('[data-testid="resource-title"]').first().should('have.text', 'Test title - ' + id);         
     });
 
+    it('Edit existing technology resource', () => {
+        cy.get('[data-testid="resource-title"]')
+            .filter(':contains("Validation with Spring Boot")')
+            .siblings()
+            .find('[data-testid="edit-btn"]')
+            .click();
+    });
+
     after(() => {
         cy.logoutFromOkta();
     });
