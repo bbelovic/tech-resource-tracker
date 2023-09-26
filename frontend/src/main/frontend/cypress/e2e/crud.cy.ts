@@ -6,7 +6,7 @@ describe('Exercise CRUD operation on tech. resource', () => {
     });
 
     it('Add new technology resource', () => {        
-        cy.get('a').click();
+        //cy.get('a').click();
         cy.get('li').first().should('have.text', 'Add new resource');
         cy.get('li').first().click();
         const id = randomId();
@@ -21,6 +21,8 @@ describe('Exercise CRUD operation on tech. resource', () => {
     });
 
     it('Edit existing technology resource', () => {
+        //cy.visit('/tech-resources')
+        
         cy.get('[data-testid="resource-title"]')
             .filter(':contains("Validation with Spring Boot")')
             .siblings()
