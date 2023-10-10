@@ -28,6 +28,8 @@ describe('Exercise CRUD operation on tech. resource', () => {
             .siblings()
             .find('[data-testid="edit-btn"]')
             .click();
+        cy.get('[data-testid="title"]').should('have.text', 'Validation with Spring Boot');
+        
     });
 
     after(() => {
