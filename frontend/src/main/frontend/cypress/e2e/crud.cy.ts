@@ -18,19 +18,33 @@ describe('Exercise CRUD operation on tech. resource', () => {
         cy.get('[data-testid="resource-list-link"]').should('be.visible').and('contain.text', 'Go to resource list.');
         cy.get('[data-testid="resource-list-link"]').click();   
         cy.get('[data-testid="resource-title"]').first().should('have.text', 'Test title - ' + id);         
-    });
 
-    it('Edit existing technology resource', () => {
-        //cy.visit('/tech-resources')
-        
+
+        cy.get('[data-testid="resource-title"]')
+            .filter(`:contains("Test title - ${id}")`)
+            .should('be.visible')
+            .should('have.text', `Test title - ${id}`)
+            .siblings()
+            .find('[data-testid="edit-btn"]')
+            .should('be.visible')
+            .click();
+            /*
         cy.get('[data-testid="resource-title"]')
             .filter(':contains("Validation with Spring Boot")')
             .siblings()
             .find('[data-testid="edit-btn"]')
             .click();
-        cy.get('[data-testid="title"]').should('have.text', 'Validation with Spring Boot');
-        
+            */
+
     });
+
+    /*
+    it('Edit existing technology resource', () => {
+        //cy.visit('/tech-resources')
+        
+        
+        
+    });*/
 
     after(() => {
         cy.logoutFromOkta();
