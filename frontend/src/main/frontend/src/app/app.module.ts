@@ -28,7 +28,7 @@ const routes: Routes = [
   {path: '', component: ResourceListComponent},
   //{path: '/tech-resources', component: ResourceListComponent},
   {path: 'add-tech-resource', component: AddResourceComponent},
-  {path: 'edit-tech-resource/:id', component: EditTechResourceComponent},
+  {path: 'edit-tech-resource/:id', component: AddResourceComponent},
   {path: 'register-new-user', component: RegisterUserComponent}
 ];
 
