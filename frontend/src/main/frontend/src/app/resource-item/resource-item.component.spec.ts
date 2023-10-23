@@ -5,14 +5,18 @@ import { TagDTO } from 'app/tag-dto';
 import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 
 import { ResourceItemComponent } from './resource-item.component';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Routes } from '@angular/router';
 
 describe('ResourceItemComponent', () => {
   let component: ResourceItemComponent;
   let fixture: ComponentFixture<ResourceItemComponent>;
   const testDto = new TechResourceDetailsDTO(1, 'test title', 'https://abc.com', [new TagDTO(2, 'java'), new TagDTO(3, 'spring')]);
+  const routes: Routes = [];
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes(routes)],
       declarations: [ ResourceItemComponent]
     })
     .compileComponents();
