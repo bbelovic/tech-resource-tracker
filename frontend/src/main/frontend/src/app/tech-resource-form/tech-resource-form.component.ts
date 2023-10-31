@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 })
 export class TechResourceFormComponent implements OnInit {
 
+  updatedResource: TechResource;
   result: string = 'na';
   techResourceForm = this.fb.group({
     title: [''],
