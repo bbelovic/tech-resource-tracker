@@ -6,6 +6,7 @@ import { TechResourceService } from 'app/tech-resource-service';
 import { fakeTechResourceService, findComponent, fixedDateTimeService } from 'app/shared/test-helper';
 import { DateTimeService } from 'app/services/date-time.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideRouter } from '@angular/router';
 
 describe('AddResourceComponent', () => {
   let component: AddResourceComponent;
@@ -15,7 +16,10 @@ describe('AddResourceComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
       declarations: [ AddResourceComponent, TechResourceFormComponent ],
-      providers: [{provide: TechResourceService, useValue: fakeTechResourceService}, {provide: DateTimeService, useValue: fixedDateTimeService}]
+      providers: [
+        provideRouter([{path: 'edit-tech-resource/:id', component: AddResourceComponent}]),
+        {provide: TechResourceService, useValue: fakeTechResourceService},        
+        {provide: DateTimeService, useValue: fixedDateTimeService}]
     })
     .compileComponents();
 
