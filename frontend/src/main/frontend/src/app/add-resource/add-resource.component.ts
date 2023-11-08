@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TechResource } from 'app/tech-resource';
+import { TechResourceService } from 'app/tech-resource-service';
 
 @Component({
   selector: 'app-add-resource',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddResourceComponent implements OnInit {
 
-  constructor() { }
+  editedResource: TechResource;
+
+  constructor(private techResourceService: TechResourceService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    const id: number = +this.route.snapshot.paramMap.get('id');
+        this.techResourceService.getTechResourceById(id)
+            .then(res => this.editedResource = res);
   }
 
 }
