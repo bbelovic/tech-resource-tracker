@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateTimeService } from 'app/services/date-time.service';
 import { TechResource } from 'app/tech-resource';
@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 })
 export class TechResourceFormComponent implements OnInit {
 
+  @Input()
   updatedResource: TechResource;
   result: string = 'na';
   techResourceForm = this.fb.group({
@@ -25,6 +26,8 @@ export class TechResourceFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
 
   ngOnInit(): void {
+    console.log(`$$$ ${this.updatedResource.title} $$$`)
+    this.techResourceForm.value.title = this.updatedResource?.title;
   }
 
   onSubmit() {

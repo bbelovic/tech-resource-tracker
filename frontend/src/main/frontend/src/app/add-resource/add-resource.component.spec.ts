@@ -8,6 +8,7 @@ import { DateTimeService } from 'app/services/date-time.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
 describe('AddResourceComponent', () => {
   let component: AddResourceComponent;
@@ -37,9 +38,16 @@ describe('AddResourceComponent', () => {
 
   it('should load resource for editing and set it into child component', async () => {
     const harness = await RouterTestingHarness.create();
-    const component = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
+    const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
     harness.detectChanges();
-    expect(component.editedResource).toBeTruthy();
-    expect(component.editedResource.id).toEqual(123);
+    expect(addResourceCmp.editedResource).toBeTruthy();
+    expect(addResourceCmp.editedResource.id).toEqual(123);
+    expect(addResourceCmp.editedResource.title).toEqual('some title');
+    expect(harness.routeNativeElement).toBeTruthy();
+
+    expect(harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement.value).toEqual('some title');
+
+    console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
+
   });
 });
