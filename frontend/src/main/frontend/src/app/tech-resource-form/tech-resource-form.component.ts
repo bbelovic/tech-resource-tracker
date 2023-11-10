@@ -26,8 +26,13 @@ export class TechResourceFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
 
   ngOnInit(): void {
-    console.log(`$$$ ${this.updatedResource.title} $$$`)
-    this.techResourceForm.value.title = this.updatedResource?.title;
+    if (this.updatedResource !== null && this.updatedResource !== undefined) {
+      console.log(`$$$ ${this.updatedResource.title} $$$`)
+      this.techResourceForm.value.title = this.updatedResource.title;
+    } else {
+      console.log(`### => ${this.updatedResource}`);
+    }
+    
   }
 
   onSubmit() {

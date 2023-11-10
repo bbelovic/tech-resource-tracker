@@ -14,10 +14,12 @@ export class AddResourceComponent implements OnInit {
 
   constructor(private techResourceService: TechResourceService, private route: ActivatedRoute) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     const id: number = +this.route.snapshot.paramMap.get('id');
-        this.techResourceService.getTechResourceById(id)
-            .then(res => this.editedResource = res);
+    this.editedResource = await this.techResourceService.getTechResourceById(id)
+
+    console.log(`!!! got resource with title: ${this.editedResource.title}`)
+            //.then(res => this.editedResource = res);
   }
 
 }
