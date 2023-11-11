@@ -27,10 +27,10 @@ export class TechResourceFormComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.updatedResource !== null && this.updatedResource !== undefined) {
-      console.log(`$$$ ${this.updatedResource.title} $$$`)
-      this.techResourceForm.value.title = this.updatedResource.title;
-    } else {
-      console.log(`### => ${this.updatedResource}`);
+      this.techResourceForm.controls['title'].setValue(this.updatedResource.title);
+      this.techResourceForm.controls['link'].setValue(this.updatedResource.link);
+      this.techResourceForm.controls['resourceType'].setValue(TechResourceType[this.updatedResource.type]);
+      console.log(`---> ${this.updatedResource.type}, ${TechResourceType[this.updatedResource.type]}`)
     }
     
   }

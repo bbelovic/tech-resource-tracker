@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TechResource } from 'app/tech-resource';
 import { TechResourceService } from 'app/tech-resource-service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-resource',
@@ -10,16 +11,13 @@ import { TechResourceService } from 'app/tech-resource-service';
 })
 export class AddResourceComponent implements OnInit {
 
-  editedResource: TechResource;
+  editedResource: Observable<Object>;
 
   constructor(private techResourceService: TechResourceService, private route: ActivatedRoute) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit() {
     const id: number = +this.route.snapshot.paramMap.get('id');
-    this.editedResource = await this.techResourceService.getTechResourceById(id)
-
-    console.log(`!!! got resource with title: ${this.editedResource.title}`)
-            //.then(res => this.editedResource = res);
+    this.editedResource = this.techResourceService.getTechResourceById2(id);
   }
 
 }

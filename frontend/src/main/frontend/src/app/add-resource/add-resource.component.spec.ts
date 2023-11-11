@@ -40,13 +40,15 @@ describe('AddResourceComponent', () => {
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
     harness.detectChanges();
-    const actual = /*await*/ addResourceCmp.editedResource;
+    /*const actual = await addResourceCmp.editedResource;
     expect(actual).toBeTruthy();
     expect(actual.id).toEqual(123);
     expect(actual.title).toEqual('some title');
-    expect(harness.routeNativeElement).toBeTruthy();
+    expect(harness.routeNativeElement).toBeTruthy();*/
 
     expect(harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement.value).toEqual('some title');
+    expect(harness.routeDebugElement.query(By.css(`[data-testid="link"]`)).nativeElement.value).toEqual('some link');
+    expect(harness.routeDebugElement.query(By.css(`[data-testid="resource-type"]`)).nativeElement.value).toEqual('Article');
 
     console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
 
