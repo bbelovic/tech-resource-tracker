@@ -26,6 +26,7 @@ export class TechResourceFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
 
   ngOnInit(): void {
+    console.log(`Got: ${this.updatedResource}`);
     if (this.updatedResource !== null && this.updatedResource !== undefined) {
       this.techResourceForm.controls['title'].setValue(this.updatedResource.title);
       this.techResourceForm.controls['link'].setValue(this.updatedResource.link);

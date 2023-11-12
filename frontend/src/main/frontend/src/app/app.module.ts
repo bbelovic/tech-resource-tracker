@@ -8,7 +8,6 @@ import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication.service';
 import { AddTechResourceComponent } from './add-tech-resource.component';
-import { EditTechResourceComponent } from './edit-tech-resource.component';
 import { TagService } from './tag-service';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
@@ -26,7 +25,6 @@ import { DateTimeService } from './services/date-time.service';
 
 const routes: Routes = [
   {path: '', component: ResourceListComponent},
-  //{path: '/tech-resources', component: ResourceListComponent},
   {path: 'add-tech-resource', component: AddResourceComponent},
   {path: 'edit-tech-resource/:id', component: AddResourceComponent},
   {path: 'register-new-user', component: RegisterUserComponent}
@@ -35,7 +33,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     AppComponent, TechResourcesComponent, AddTechResourceComponent,
-    EditTechResourceComponent,
     LoginComponent,
     FooterComponent,
     RegisterUserComponent,

@@ -6,7 +6,6 @@ describe('Exercise CRUD operation on tech. resource', () => {
     });
 
     it('Add new technology resource', () => {        
-        //cy.get('a').click();
         cy.get('li').first().should('have.text', 'Add new resource');
         cy.get('li').first().click();
         const id = randomId();
@@ -28,13 +27,11 @@ describe('Exercise CRUD operation on tech. resource', () => {
             .find('[data-testid="edit-btn"]')
             .should('be.visible')
             .click();
-            /*
-        cy.get('[data-testid="resource-title"]')
-            .filter(':contains("Validation with Spring Boot")')
-            .siblings()
-            .find('[data-testid="edit-btn"]')
-            .click();
-            */
+            
+        cy.get('[data-testid="title"]')
+            .should('have.text', `Test title - ${id}`)
+            cy.get('[data-testid="link"]')
+            .should('have.text', `Test link - ${id}`)
 
     });
 
