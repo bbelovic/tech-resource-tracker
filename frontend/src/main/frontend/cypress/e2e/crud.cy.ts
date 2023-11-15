@@ -30,8 +30,12 @@ describe('Exercise CRUD operation on tech. resource', () => {
             
         cy.get('[data-testid="title"]')
             .should('have.text', `Test title - ${id}`)
-            cy.get('[data-testid="link"]')
+            .type(`Test title - ${id} - [updated]`);
+        cy.get('[data-testid="link"]')
             .should('have.text', `Test link - ${id}`)
+            .type(`Test link - ${id} - [updated]`);
+        cy.get('[data-testid="submit-btn"]')
+            .click();
 
     });
 

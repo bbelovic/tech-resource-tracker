@@ -26,7 +26,8 @@ export class TechResourceFormComponent implements OnInit {
   constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
 
   ngOnInit(): void {
-    console.log(`Got: ${this.updatedResource}`);
+    // TODO: remove this
+    console.log(`Got: ${this.updatedResource} ### REMOVE THIS ngOnit call ###`);
     if (this.updatedResource !== null && this.updatedResource !== undefined) {
       this.techResourceForm.controls['title'].setValue(this.updatedResource.title);
       this.techResourceForm.controls['link'].setValue(this.updatedResource.link);
@@ -41,7 +42,15 @@ export class TechResourceFormComponent implements OnInit {
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
     const createdOn = this.dateTimeService.createdOn();
-    const techResource = new TechResource(0, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
+
+
+    const isUpdate = this.updatedResource !== null;
+
+    console.log(`isUpdate = ${isUpdate}, type = ${resourceType}, id = ${this.updatedResource.id}`);
+    const id = isUpdate ? this.updatedResource.id : 0;
+
+
+    const techResource = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
     this.techService.postNewTechResource2(techResource)
       .pipe(map((res: TechResource) => {
