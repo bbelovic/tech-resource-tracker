@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddResourceComponent } from './add-resource.component';
 import { TechResourceFormComponent } from 'app/tech-resource-form/tech-resource-form.component';
 import { TechResourceService } from 'app/tech-resource-service';
-import { fakeTechResourceService, findComponent, fixedDateTimeService } from 'app/shared/test-helper';
+import { fakeTechResourceService, findComponent, fixedDateTimeService, setElementValue } from 'app/shared/test-helper';
 import { DateTimeService } from 'app/services/date-time.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
@@ -46,9 +46,17 @@ describe('AddResourceComponent', () => {
     expect(actual.title).toEqual('some title');
     expect(harness.routeNativeElement).toBeTruthy();*/
 
-    expect(harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement.value).toEqual('some title');
-    expect(harness.routeDebugElement.query(By.css(`[data-testid="link"]`)).nativeElement.value).toEqual('some link');
-    expect(harness.routeDebugElement.query(By.css(`[data-testid="resource-type"]`)).nativeElement.value).toEqual('Article');
+    const titleDebugEl = harness.routeDebugElement.query(By.css(`[data-testid="title"]`));
+    expect(titleDebugEl.nativeElement.value).toEqual('some title');
+
+    const linkDebugEl = harness.routeDebugElement.query(By.css(`[data-testid="link"]`));
+    expect(linkDebugEl.nativeElement.value).toEqual('some link');
+    
+    const resourceTypeDebugEl = harness.routeDebugElement.query(By.css(`[data-testid="resource-type"]`));
+    expect(resourceTypeDebugEl.nativeElement.value).toEqual('Article');
+
+    setElementValue(titleDebugEl.nativeElement, 'some title - updated');
+    setElementValue(linkDebugEl.nativeElement, 'some link - updated')
 
     console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
 
