@@ -3,12 +3,16 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AddResourceComponent } from './add-resource.component';
 import { TechResourceFormComponent } from 'app/tech-resource-form/tech-resource-form.component';
 import { TechResourceService } from 'app/tech-resource-service';
-import { fakeTechResourceService, findComponent, fixedDateTimeService, setElementValue } from 'app/shared/test-helper';
+import { fakeTechResourceService, findComponent, findEl, fixedDateTimeService, setElementValue } from 'app/shared/test-helper';
 import { DateTimeService } from 'app/services/date-time.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { provideRouter } from '@angular/router';
 import { RouterTestingHarness } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
+import { TechResource } from 'app/tech-resource';
+import { TechResourceStatus } from 'app/tech-resource-status';
+import { TechResourceType } from 'app/tech-resource-type';
 
 describe('AddResourceComponent', () => {
   let component: AddResourceComponent;
@@ -37,6 +41,7 @@ describe('AddResourceComponent', () => {
   });
 
   it('should load resource for editing and set it into child component', async () => {
+    spyOn(fakeTechResourceService, 'postNewTechResource2').and.returnValue(of(new TechResource(10, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.Article)));
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
     harness.detectChanges();
@@ -56,7 +61,16 @@ describe('AddResourceComponent', () => {
     expect(resourceTypeDebugEl.nativeElement.value).toEqual('Article');
 
     setElementValue(titleDebugEl.nativeElement, 'some title - updated');
-    setElementValue(linkDebugEl.nativeElement, 'some link - updated')
+    setElementValue(linkDebugEl.nativeElement, 'some link - updated');
+    setElementValue(resourceTypeDebugEl.nativeElement, 'Blog');
+
+
+    const form = findEl(fixture, "form");
+    form.triggerEventHandler('submit', {});
+    fixture.detectChanges();
+
+    
+    expect(fakeTechResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
 
     console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
 
