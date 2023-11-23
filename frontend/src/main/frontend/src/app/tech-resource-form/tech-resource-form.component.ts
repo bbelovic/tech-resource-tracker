@@ -27,7 +27,7 @@ export class TechResourceFormComponent implements OnInit {
 
   ngOnInit(): void {
     // TODO: remove this
-    console.log(`Got: ${this.updatedResource} ### REMOVE THIS ngOnit call ###`);
+    console.log(`Got: ${this.updatedResource.id}, title: ${this.updatedResource.title} ### REMOVE THIS ngOnit call ###`);
     if (this.updatedResource !== null && this.updatedResource !== undefined) {
       this.techResourceForm.controls['title'].setValue(this.updatedResource.title);
       this.techResourceForm.controls['link'].setValue(this.updatedResource.link);

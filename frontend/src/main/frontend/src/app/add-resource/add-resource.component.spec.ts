@@ -41,15 +41,11 @@ describe('AddResourceComponent', () => {
   });
 
   it('should load resource for editing and set it into child component', async () => {
-    spyOn(fakeTechResourceService, 'postNewTechResource2').and.returnValue(of(new TechResource(10, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.Article)));
+    const techResource = new TechResource(10, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.Article);
+    spyOn(fakeTechResourceService, 'postNewTechResource2').and.returnValue(of(techResource));
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
     harness.detectChanges();
-    /*const actual = await addResourceCmp.editedResource;
-    expect(actual).toBeTruthy();
-    expect(actual.id).toEqual(123);
-    expect(actual.title).toEqual('some title');
-    expect(harness.routeNativeElement).toBeTruthy();*/
 
     const titleDebugEl = harness.routeDebugElement.query(By.css(`[data-testid="title"]`));
     expect(titleDebugEl.nativeElement.value).toEqual('some title');
@@ -71,6 +67,8 @@ describe('AddResourceComponent', () => {
 
     
     expect(fakeTechResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
+    expect(fakeTechResourceService.postNewTechResource2)
+        .toHaveBeenCalledWith(new TechResource(10, 'some title - updated', 'some link - updated', '', TechResourceStatus.New, TechResourceType.Blog));
 
     console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
 
