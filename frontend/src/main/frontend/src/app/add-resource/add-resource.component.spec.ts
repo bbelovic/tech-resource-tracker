@@ -43,6 +43,7 @@ describe('AddResourceComponent', () => {
   it('should load resource for editing and set it into child component', async () => {
     const techResource = new TechResource(10, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.Article);
     spyOn(fakeTechResourceService, 'postNewTechResource2').and.returnValue(of(techResource));
+    spyOn(fakeTechResourceService, 'getTechResourceById2').and.returnValue(of(techResource));
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
     harness.detectChanges();
