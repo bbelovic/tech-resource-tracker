@@ -72,9 +72,9 @@ describe('AddResourceComponent', () => {
 
     const form = findEl(fixture, "form");
     
-    fixture.detectChanges();
+    harness.detectChanges();
     form.triggerEventHandler('submit', {});
-    
+    // harness.detectChanges();
 
     
     expect(spiedTechResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
