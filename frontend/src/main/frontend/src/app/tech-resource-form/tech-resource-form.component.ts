@@ -46,7 +46,8 @@ export class TechResourceFormComponent implements OnInit {
 
     const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
 
-    console.log(`isUpdate = ${isUpdate}, type = ${resourceType}, id = ${this.updatedResource?.id}, updatedtuitle = ${this.techResourceForm.value.title}`);
+    console.log(`isUpdate = ${isUpdate}, type = ${resourceType}, id = ${this.updatedResource?.id}, 
+    updatedtuitle = ${this.techResourceForm.value.title}, get() ${this.techResourceForm.get('title').value}`);
     const id = isUpdate ? this.updatedResource.id : 0;
 
 

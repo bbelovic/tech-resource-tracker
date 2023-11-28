@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 
 import { AddResourceComponent } from './add-resource.component';
 import { TechResourceFormComponent } from 'app/tech-resource-form/tech-resource-form.component';
@@ -45,7 +45,7 @@ describe('AddResourceComponent', () => {
     expect(techResourceFormComponent).toBeTruthy();
   });
 
-  it('should load resource for editing and set it into child component', async () => {
+  it('should load resource for editing and set it into child component', fakeAsync( async () => {
     
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
@@ -71,9 +71,10 @@ describe('AddResourceComponent', () => {
 
 
     const form = findEl(fixture, "form");
-    
-    harness.detectChanges();
     form.triggerEventHandler('submit', {});
+    tick();
+    harness.detectChanges();
+    
     // harness.detectChanges();
 
     
@@ -83,5 +84,5 @@ describe('AddResourceComponent', () => {
 
     console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
 
-  });
+  }))
 });
