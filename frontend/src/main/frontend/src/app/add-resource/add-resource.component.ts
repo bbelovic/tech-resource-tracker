@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TechResource } from 'app/tech-resource';
 import { TechResourceService } from 'app/tech-resource-service';
 import { Observable } from 'rxjs';
 

@@ -44,9 +44,7 @@ export class TechResourceService {
 
     getTechResourceById2(id: number) {
         console.log(`Getting technology resource with id [${id}].`);
-        const resource = this.http.get(this.url + '/' + id);
-        console.log(`Got [${resource}] for id [${id}]`);
-        return resource;
+        return this.http.get(this.url + '/' + id);
     }
         
 
