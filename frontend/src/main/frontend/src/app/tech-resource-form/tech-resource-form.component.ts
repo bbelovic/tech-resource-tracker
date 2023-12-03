@@ -57,6 +57,8 @@ export class TechResourceFormComponent implements OnInit {
       .pipe(map((res: TechResource) => {
         if (res.id > 0) {
           return 'Created';
+        } else if (res.id > 0 && isUpdate) {
+          return 'Updated';
         } else {
           return 'NotCreated';
         }
