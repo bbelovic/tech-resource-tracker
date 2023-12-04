@@ -1,5 +1,5 @@
 export enum TechResourceType {
-    Article,
-    Presentation,
-    Blog,
+    Article = 'ARTICLE',
+    Presentation = 'PRESENTATION',
+    Blog = 'BLOG',
 }

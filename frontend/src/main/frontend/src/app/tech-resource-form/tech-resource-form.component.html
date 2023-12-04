@@ -15,9 +15,9 @@
     <input type="text" name="link" id="link" formControlName="link" data-testid="link" [value]="updatedResource?.link">
     <label for="resource-type">Resource type:</label>
     <select id="resource-type" formControlName="resourceType" data-testid="resource-type">
-        <option [selected]="((updatedResource)?.type) === 'ARTICLE'" [value]="0">Article</option>
-        <option [selected]="((updatedResource)?.type) === 'PRESENTATION'" [value]="1">Presentation</option>
-        <option [selected]="((updatedResource)?.type) === 'BLOG'" [value]="2">Blog</option>
+        <option [selected]="((updatedResource)?.type) === 'ARTICLE'">Article</option>
+        <option [selected]="((updatedResource)?.type) === 'PRESENTATION'">Presentation</option>
+        <option [selected]="((updatedResource)?.type) === 'BLOG'">Blog</option>
     </select>
     <label for="intro" class="add-resource-label">Intro:</label>
     <textarea name="intro" rows="10"></textarea><br>
