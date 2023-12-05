@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DateTimeService } from 'app/services/date-time.service';
 import { TechResource } from 'app/tech-resource';
@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './tech-resource-form.component.html',
   styleUrls: ['./tech-resource-form.component.css']
 })
-export class TechResourceFormComponent implements OnInit {
+export class TechResourceFormComponent implements OnInit, OnChanges {
 
   @Input()
   updatedResource: TechResource;
@@ -24,6 +24,18 @@ export class TechResourceFormComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
+  
+  ngOnChanges(changes: SimpleChanges): void {
+    const firstChange = changes['updatedResource'].isFirstChange();
+    const updatedResourceCurr = changes['updatedResource'].currentValue;
+    if (updatedResourceCurr !== null && updatedResourceCurr !== undefined) {
+      console.log(`firstChange = ${firstChange}, updatedResourceCurr = [id: ${updatedResourceCurr.id}, title: ${updatedResourceCurr.title}, link: ${updatedResourceCurr.link}]`);
+    } else {
+      console.log(`updatedResourceCurr = ${updatedResourceCurr}`)
+    }
+
+    
+  }
 
   ngOnInit(): void {
     // TODO: remove this
