@@ -29,24 +29,18 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
     const firstChange = changes['updatedResource'].isFirstChange();
     const updatedResourceCurr = changes['updatedResource'].currentValue;
     if (updatedResourceCurr !== null && updatedResourceCurr !== undefined) {
-      console.log(`firstChange = ${firstChange}, updatedResourceCurr = [id: ${updatedResourceCurr.id}, title: ${updatedResourceCurr.title}, link: ${updatedResourceCurr.link}]`);
+      console.log(`ngOnChanges: firstChange = ${firstChange}, updatedResourceCurr = [id: ${updatedResourceCurr.id}, title: ${updatedResourceCurr.title}, link: ${updatedResourceCurr.link}]`);
     } else {
-      console.log(`updatedResourceCurr = ${updatedResourceCurr}`)
+      console.log(`ngOnChanges: updatedResourceCurr = [${updatedResourceCurr}]`)
     }
-
-    
   }
 
   ngOnInit(): void {
-    // TODO: remove this
-    console.log(`Got: ${this.updatedResource.id}, title: ${this.updatedResource.title} ### REMOVE THIS ngOnit call ###`);
-    /*if (this.updatedResource !== null && this.updatedResource !== undefined) {
-      this.techResourceForm.controls['title'].setValue(this.updatedResource.title);
-      this.techResourceForm.controls['link'].setValue(this.updatedResource.link);
-      this.techResourceForm.controls['resourceType'].setValue(TechResourceType[this.updatedResource.type]);
-      console.log(`---> ${this.updatedResource.type}, ${TechResourceType[this.updatedResource.type]}`)
-    }*/
-    
+    if (this.updatedResource !== null && this.updatedResource !== undefined) {
+      console.log(`ngOnInit: updatedResource = [id: ${this.updatedResource.id}, title: ${this.updatedResource.title}, link: ${this.updatedResource.link}]`);
+    } else {
+      console.log(`ngOnInit: updatedResource = [${this.updatedResource}]`);
+    }    
   }
 
   onSubmit() {
@@ -58,9 +52,15 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
 
     const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
 
-    console.log(`isUpdate = ${isUpdate}, type = ${resourceType}, id = ${this.updatedResource?.id}, 
-    updatedtuitle = ${this.techResourceForm.value.title}, get() ${this.techResourceForm.get('title').value}`);
-    const id = isUpdate ? this.updatedResource.id : 0;
+    if (isUpdate) {
+      console.log(`onSubmit: isUpdate = ${isUpdate}, id: ${this.updatedResource.id} title: ${this.techResourceForm.value.title}, 
+        link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType}`);
+    } else {
+      console.log(`onSubmit: isUpdate = ${isUpdate}, title: ${this.techResourceForm.value.title}, 
+        link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType}`);
+    }
+    
+    /*const id = isUpdate ? this.updatedResource.id : 0;
 
 
     const techResource = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
@@ -74,7 +74,7 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
         } else {
           return 'NotCreated';
         }
-      })).subscribe(s => this.result = s);
+      })).subscribe(s => this.result = s);*/
   }
 }
 
