@@ -47,20 +47,35 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
     const title = this.techResourceForm.value.title
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
-    const createdOn = this.dateTimeService.createdOn();
+    //const createdOn = this.dateTimeService.createdOn();
 
 
     const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
 
-    if (isUpdate) {
+    /*if (isUpdate) {
+
+      
+      const xx = TechResourceType[resourceType]
       console.log(`onSubmit: isUpdate = ${isUpdate}, id: ${this.updatedResource.id} title: ${this.techResourceForm.value.title}, 
-        link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType}`);
+        link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType} => ${xx}, tags: ${this.updatedResource.tags}`);
     } else {
       console.log(`onSubmit: isUpdate = ${isUpdate}, title: ${this.techResourceForm.value.title}, 
         link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType}`);
-    }
+    }*/
+
+
+    const id = isUpdate ? this.updatedResource.id : 0;
+    const createdOn = isUpdate ? this.updatedResource.createdOn : this.dateTimeService.createdOn();
     
-    /*const id = isUpdate ? this.updatedResource.id : 0;
+
+    const resourceToSubmit = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResource[resourceType]);
+    resourceToSubmit.tags = isUpdate ? this.updatedResource.tags : [];
+    
+
+    console.log(`onSubmit: isUpdate = ${isUpdate}, id: ${resourceToSubmit.id} title: ${resourceToSubmit.title}, 
+        link: ${resourceToSubmit.link} resourceType: ${resourceToSubmit.type} => ${TechResourceType[resourceType]}, tags: ${resourceToSubmit.tags}`);
+
+    /*
 
 
     const techResource = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
