@@ -68,19 +68,17 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
     const createdOn = isUpdate ? this.updatedResource.createdOn : this.dateTimeService.createdOn();
     
 
-    const resourceToSubmit = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResource[resourceType]);
+    const resourceToSubmit = new TechResource(id, title, link, createdOn, TechResourceStatus.New, (resourceType as TechResourceType));
     resourceToSubmit.tags = isUpdate ? this.updatedResource.tags : [];
     
 
     console.log(`onSubmit: isUpdate = ${isUpdate}, id: ${resourceToSubmit.id} title: ${resourceToSubmit.title}, 
-        link: ${resourceToSubmit.link} resourceType: ${resourceToSubmit.type} => ${TechResourceType[resourceType]}, tags: ${resourceToSubmit.tags}`);
+        link: ${resourceToSubmit.link} resourceType: ${resourceType} => ${resourceToSubmit.type} => ${TechResourceType[resourceType]}, tags: ${resourceToSubmit.tags}`);
 
-    /*
-
-
+    
     const techResource = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
     techResource.tags = [];
-    this.techService.postNewTechResource2(techResource)
+    this.techService.postNewTechResource2(resourceToSubmit)
       .pipe(map((res: TechResource) => {
         if (res.id > 0) {
           return 'Created';
@@ -89,7 +87,7 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
         } else {
           return 'NotCreated';
         }
-      })).subscribe(s => this.result = s);*/
+      })).subscribe(s => this.result = s);
   }
 }
 
