@@ -8,10 +8,10 @@ export class TechResource {
     link: string;
     createdOn: string;
     status: TechResourceStatus;
-    type: TechResourceType;
+    type: string;
     tags: Array<Tag>;
     constructor(id: number, title: string, link: string,
-        createdOn: string, status: TechResourceStatus, type: TechResourceType) {
+        createdOn: string, status: TechResourceStatus, type: string) {
         this.id = id;
         this.title = title;
         this.link = link;
