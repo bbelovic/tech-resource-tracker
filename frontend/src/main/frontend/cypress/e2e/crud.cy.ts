@@ -29,13 +29,27 @@ describe('Exercise CRUD operation on tech. resource', () => {
             .click();
             
         cy.get('[data-testid="title"]')
-            .should('have.text', `Test title - ${id}`)
+            .should('have.prop', `value`)
+            .and('not.be.empty')
+        cy.get('[data-testid="title"]')
+            .clear()
             .type(`Test title - ${id} - [updated]`);
         cy.get('[data-testid="link"]')
-            .should('have.text', `Test link - ${id}`)
+            .should('have.prop', `value`)
+            .and('not.be.empty')
+        cy.get('[data-testid="link"]')
+            .clear()
             .type(`Test link - ${id} - [updated]`);
+       
+        //cy.get('[data-testid="resource-type"]').should('have.')
+        cy.get('[data-testid="resource-type"]').select('Blog')
         cy.get('[data-testid="submit-btn"]')
             .click();
+        cy.get('[data-testid="result-message"]').should('be.visible').and('contain.text', 'Resource updated');
+
+        cy.get('[data-testid="resource-list-link"]').should('be.visible').and('contain.text', 'Go to resource list.');
+        cy.get('[data-testid="resource-list-link"]').click();   
+        cy.get('[data-testid="resource-title"]').first().should('have.text', `Test title - ${id} - [updated]`);         
 
     });
 
