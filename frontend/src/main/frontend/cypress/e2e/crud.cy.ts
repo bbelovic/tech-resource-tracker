@@ -41,7 +41,6 @@ describe('Exercise CRUD operation on tech. resource', () => {
             .clear()
             .type(`Test link - ${id} - [updated]`);
        
-        //cy.get('[data-testid="resource-type"]').should('have.')
         cy.get('[data-testid="resource-type"]').select('Blog')
         cy.get('[data-testid="submit-btn"]')
             .click();
@@ -53,13 +52,6 @@ describe('Exercise CRUD operation on tech. resource', () => {
 
     });
 
-    /*
-    it('Edit existing technology resource', () => {
-        //cy.visit('/tech-resources')
-        
-        
-        
-    });*/
 
     after(() => {
         cy.logoutFromOkta();
