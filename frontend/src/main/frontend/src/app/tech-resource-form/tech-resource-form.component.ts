@@ -73,7 +73,7 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
     resourceToSubmit.tags = isUpdate ? this.updatedResource.tags : [];
     
 
-    console.log(`onSubmit: isUpdate = ${isUpdate}, id: ${resourceToSubmit.id} title: ${resourceToSubmit.title}, 
+    console.log(`onSubmit: isUpdate = ${isUpdate}, fb = ${this.fb}, id: ${resourceToSubmit.id} title: ${resourceToSubmit.title}, 
         link: ${resourceToSubmit.link} resourceType: ${resourceType} => ${resourceToSubmit.type} => ${TechResourceType[resourceType]}, tags: ${resourceToSubmit.tags}`);
 
     

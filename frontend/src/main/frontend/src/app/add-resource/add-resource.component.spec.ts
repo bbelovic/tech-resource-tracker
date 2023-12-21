@@ -45,7 +45,7 @@ describe('AddResourceComponent', () => {
     expect(techResourceFormComponent).toBeTruthy();
   });
 
-  xit('should load resource for editing and set it into child component', fakeAsync( async () => {
+  it('should load resource for editing and set it into child component', fakeAsync( async () => {
     
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
@@ -61,6 +61,8 @@ describe('AddResourceComponent', () => {
     expect(resourceTypeDebugEl.nativeElement.value).toEqual('Article');
 
     setElementValue(titleDebugEl.nativeElement, 'some title - updated');
+    fixture.detectChanges()
+    
 
 
     titleDebugEl = harness.routeDebugElement.query(By.css(`[data-testid="title"]`));
@@ -75,7 +77,7 @@ describe('AddResourceComponent', () => {
     tick();
     harness.detectChanges();
     
-    // harness.detectChanges();
+   
 
     
     expect(spiedTechResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
