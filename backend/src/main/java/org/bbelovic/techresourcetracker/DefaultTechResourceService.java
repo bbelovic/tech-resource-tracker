@@ -28,7 +28,9 @@ public class DefaultTechResourceService implements TechResourceService {
     @Transactional(readOnly = true)
     public Optional<TechnologyResource> getTechResourceById(Long id) {
         log.info("Loading technology resource with id [{}].", id);
-        return resourceRepository.findById(id);
+        var resource = resourceRepository.findById(id);
+        log.trace("Returning resource [{}] for id [{}].", resource, id);
+        return resource;
     }
 
     @Override
@@ -51,7 +53,9 @@ public class DefaultTechResourceService implements TechResourceService {
     @Transactional
     public TechnologyResource save(TechnologyResource technologyResource) {
         log.info("Saving resource [{}].", technologyResource);
-        return resourceRepository.save(technologyResource);
+        var persistedResource = resourceRepository.save(technologyResource);
+        log.trace("Saved resource: [{}].", persistedResource);
+        return persistedResource;
     }
 
     @Override

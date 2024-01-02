@@ -42,6 +42,12 @@ export class TechResourceService {
             .then(data => data as TechResource);
     }
 
+    getTechResourceById2(id: number) {
+        console.log(`Getting technology resource with id [${id}].`);
+        return this.http.get(this.url + '/' + id);
+    }
+        
+
     postNewTechResource(resource: TechResource): Promise<TechResource> {
         console.log('Creating new resource [' + JSON.stringify(resource) + '] through ' + this.url);
         return this.http.post(this.url, JSON.stringify(resource),

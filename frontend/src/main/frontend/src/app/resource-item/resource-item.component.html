@@ -13,7 +13,7 @@
     </div>
     <div class="control-buttons">
         <button class="control-button" data-testid="mark-as-read-btn">Mark as read</button>
-        <button class="control-button" data-testid="edit-btn">Edit</button>
+        <button class="control-button" [routerLink]="['edit-tech-resource', dto.id]" data-testid="edit-btn">Edit</button>
     </div>
     
 </div>

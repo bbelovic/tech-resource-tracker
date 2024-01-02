@@ -22,6 +22,8 @@ export const loginToOkta = () => {
         expect(response.body).to.be.a('Object').that.has.property('givenName').eq('Hideo');
       });
     
+    cy.get('a').click();
+    
 }
 
 export const logoutFromOkta = () => {

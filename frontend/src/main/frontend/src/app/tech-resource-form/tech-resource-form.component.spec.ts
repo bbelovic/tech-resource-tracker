@@ -40,6 +40,7 @@ describe('TechResourceFormComponent', () => {
 
   it('should create tech resource form component', () => {
     expect(component).toBeTruthy();
+    expect(component.updatedResource).toBeFalsy();
   });
 
   it('tech resource form successful submission', async () => {

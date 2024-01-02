@@ -3,13 +3,17 @@ import { TechResourceService } from 'app/tech-resource-service';
 import { ResourceListComponent } from './resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
 import { fakeTechResourceService, findComponent } from 'app/shared/test-helper';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Routes } from '@angular/router';
 
 describe('ResourceListComponent', () => {
   let component: ResourceListComponent;
   let fixture: ComponentFixture<ResourceListComponent>;
+  const routes: Routes = [];
   
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule.withRoutes(routes)],
       declarations: [ ResourceListComponent , ResourceItemComponent],
       providers: [
         {provide: TechResourceService, useValue: fakeTechResourceService}

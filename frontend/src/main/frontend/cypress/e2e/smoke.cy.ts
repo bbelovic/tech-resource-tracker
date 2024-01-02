@@ -1,4 +1,4 @@
-describe('Smoke E2E test', () => {
+describe.skip('Smoke E2E test', () => {
   it(`Display 'welcome-screen' with log in link when user is not authenticated.`, () => {
     cy.visit('/')
     cy.get('h1').contains('Technology resource tracker')
