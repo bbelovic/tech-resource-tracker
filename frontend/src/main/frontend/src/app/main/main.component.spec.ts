@@ -64,6 +64,10 @@ describe('MainComponent', () => {
     addResourceFormPresent();
   }));
 
+  it ('can navigate to edit existing tech resource', fakeAsync(() => {
+    initNavigation();
+  }));
+
   function advance() {
     tick();
     fixture.detectChanges();
