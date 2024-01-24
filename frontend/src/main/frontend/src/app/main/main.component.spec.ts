@@ -66,6 +66,9 @@ describe('MainComponent', () => {
 
   it ('can navigate to edit existing tech resource', fakeAsync(() => {
     initNavigation();
+    advance();
+    resourceListLoaded();
+    clickEditResource();
   }));
 
   function advance() {
@@ -89,6 +92,13 @@ describe('MainComponent', () => {
     const addResourceLink = headerComponent.query(By.css(`[data-testid="add-tech-resource"]`));
     expect(addResourceLink).toBeTruthy();
     fixture.ngZone.run(() => addResourceLink.triggerEventHandler('click', { button: 0 }));
+  }
+
+  function clickEditResource() {
+    //edit-btn
+    //findComponent(fixture, '')
+    const editResourceLink = fixture.debugElement.query(By.css(`[data-testid="edit-btn"]`));
+    expect(editResourceLink).toBeTruthy();
   }
 
   function addResourceFormPresent() {
