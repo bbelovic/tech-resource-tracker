@@ -30,6 +30,7 @@ describe('MainComponent', () => {
 
     const routes: Routes = [
       {path: 'add-tech-resource', component: AddResourceComponent},
+      {path: 'edit-tech-resource/:id', component: AddResourceComponent},
       {path: '', component: ResourceListComponent}
     ];
     await TestBed.configureTestingModule({
@@ -69,6 +70,11 @@ describe('MainComponent', () => {
     advance();
     resourceListLoaded();
     clickEditResource();
+    advance();
+    expect(location.path()).toBe('/edit-tech-resource/1');
+    const titleEl = findEl(fixture, 'title');
+    advance()
+    expect(titleEl.nativeElement.textContent).toEqual(testResourceDetailsDTO.title);
   }));
 
   function advance() {
@@ -99,6 +105,7 @@ describe('MainComponent', () => {
     //findComponent(fixture, '')
     const editResourceLink = fixture.debugElement.query(By.css(`[data-testid="edit-btn"]`));
     expect(editResourceLink).toBeTruthy();
+    fixture.ngZone.run(() => editResourceLink.triggerEventHandler('click', { button: 0 }));
   }
 
   function addResourceFormPresent() {
