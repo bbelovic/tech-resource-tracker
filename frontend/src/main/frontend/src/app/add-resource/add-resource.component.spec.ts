@@ -53,7 +53,7 @@ describe('AddResourceComponent', () => {
     harness.detectChanges();
     
 
-    addResourceCmp.editedResource.subscribe(x => console.log(`@@@@@ ==> got [${x}]`))
+    addResourceCmp.editedResource.subscribe(x => console.log(`@@@@@ ==> got [${(x as TechResource).id}]`))
 
     const formCmp = harness.routeDebugElement.query(By.css('app-tech-resource-form'));
     expect(formCmp).toBeTruthy();
