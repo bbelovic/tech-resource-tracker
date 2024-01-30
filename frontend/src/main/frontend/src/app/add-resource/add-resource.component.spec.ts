@@ -45,7 +45,7 @@ describe('AddResourceComponent', () => {
     expect(techResourceFormComponent).toBeTruthy();
   });
 
-  fit('should load resource for editing and set it into child component', fakeAsync( async () => {
+  it('should load resource for editing and set it into child component', fakeAsync( async () => {
     
     const harness = await RouterTestingHarness.create();
     const addResourceCmp = await harness.navigateByUrl('edit-tech-resource/123', AddResourceComponent);
@@ -60,7 +60,7 @@ describe('AddResourceComponent', () => {
 
     expect(formCmp.componentInstance).toBeTruthy();
 
-    let titleDebugEl = harness.routeDebugElement.query(By.css(`[data-testid="title"]`));
+    let titleDebugEl = harness.routeDebugElement.query(By.css(`#title`));
     expect(titleDebugEl.nativeElement.value).toEqual('some title');
 
     const formTitleDebugEl = formCmp.query(By.css(`[data-testid="title"]`));

@@ -65,16 +65,17 @@ describe('MainComponent', () => {
     addResourceFormPresent();
   }));
 
-  it ('can navigate to edit existing tech resource', fakeAsync(() => {
+  fit ('can navigate to edit existing tech resource', fakeAsync(() => {
     initNavigation();
     advance();
     resourceListLoaded();
     clickEditResource();
     advance();
     expect(location.path()).toBe('/edit-tech-resource/1');
-    const titleEl = findEl(fixture, 'title');
+    const titleEl = findEl(fixture, 'xxx');
     advance()
-    expect(titleEl.nativeElement.textContent).toEqual(testResourceDetailsDTO.title);
+    //findComponent
+    expect(titleEl.nativeElement.value).toEqual(testResourceDetailsDTO.title);
   }));
 
   function advance() {
