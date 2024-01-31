@@ -19,6 +19,7 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
   result: string = 'na';
   techResourceForm = this.fb.group({
     title: [''],
+    title2: [''],
     link: [''],
     resourceType: ['']
   });

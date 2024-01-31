@@ -72,9 +72,14 @@ describe('MainComponent', () => {
     clickEditResource();
     advance();
     expect(location.path()).toBe('/edit-tech-resource/1');
-    const titleEl = findEl(fixture, 'xxx');
+    //const titleEl = findEl(fixture, 'xxx');
+    let titleEl = findEl(fixture, 'p-title');
     advance()
     //findComponent
+    expect(titleEl.nativeElement.value).toEqual('some title');
+
+
+    titleEl = findEl(fixture, 'title');
     expect(titleEl.nativeElement.value).toEqual(testResourceDetailsDTO.title);
   }));
 
