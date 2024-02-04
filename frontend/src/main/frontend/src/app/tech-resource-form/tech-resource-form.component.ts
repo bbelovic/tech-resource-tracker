@@ -38,7 +38,13 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     if (this.updatedResource !== null && this.updatedResource !== undefined) {
+
+      
       console.log(`ngOnInit: updatedResource = [id: ${this.updatedResource.id}, title: ${this.updatedResource.title}, link: ${this.updatedResource.link}]`);
+
+      this.techResourceForm.patchValue({title2: 'update title 2'});
+
+
     } else {
       console.log(`ngOnInit: updatedResource = [${this.updatedResource}]`);
     }    
