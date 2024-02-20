@@ -12,7 +12,7 @@ import { map } from 'rxjs/operators';
   templateUrl: './tech-resource-form.component.html',
   styleUrls: ['./tech-resource-form.component.css']
 })
-export class TechResourceFormComponent implements OnInit, OnChanges {
+export class TechResourceFormComponent /*implements OnInit, OnChanges */{
 
   @Input()
   updatedResource: TechResource;
@@ -26,6 +26,7 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
 
   constructor(private fb: FormBuilder, private techService: TechResourceService, private dateTimeService: DateTimeService) { }
   
+  /*
   ngOnChanges(changes: SimpleChanges): void {
     const firstChange = changes['updatedResource'].isFirstChange();
     const updatedResourceCurr = changes['updatedResource'].currentValue;
@@ -34,8 +35,9 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
     } else {
       console.log(`ngOnChanges: updatedResourceCurr = [${updatedResourceCurr}]`)
     }
-  }
+  }*/
 
+  /*
   ngOnInit(): void {
     if (this.updatedResource !== null && this.updatedResource !== undefined) {
 
@@ -48,29 +50,15 @@ export class TechResourceFormComponent implements OnInit, OnChanges {
     } else {
       console.log(`ngOnInit: updatedResource = [${this.updatedResource}]`);
     }    
-  }
+  }*/
 
   onSubmit() {
     const title = this.techResourceForm.value.title
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
-    //const createdOn = this.dateTimeService.createdOn();
 
 
     const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
-
-    /*if (isUpdate) {
-
-      
-      const xx = TechResourceType[resourceType]
-      console.log(`onSubmit: isUpdate = ${isUpdate}, id: ${this.updatedResource.id} title: ${this.techResourceForm.value.title}, 
-        link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType} => ${xx}, tags: ${this.updatedResource.tags}`);
-    } else {
-      console.log(`onSubmit: isUpdate = ${isUpdate}, title: ${this.techResourceForm.value.title}, 
-        link: ${this.techResourceForm.value.link} resourceType: ${this.techResourceForm.value.resourceType}`);
-    }*/
-
-
     const id = isUpdate ? this.updatedResource.id : 0;
     const createdOn = isUpdate ? this.updatedResource.createdOn : this.dateTimeService.createdOn();
     

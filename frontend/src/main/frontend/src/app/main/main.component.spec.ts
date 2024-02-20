@@ -74,7 +74,7 @@ describe('MainComponent', () => {
     addResourceFormPresent();
   }));
 
-  it ('can navigate to edit existing tech resource', fakeAsync(() => {
+  it('can navigate to edit existing tech resource', fakeAsync(() => {
     initNavigation();
     advance();
     resourceListLoaded();
@@ -82,7 +82,7 @@ describe('MainComponent', () => {
     advance();
     expect(location.path()).toBe('/edit-tech-resource/1');
     
-    const titleEl = findEl(fixture, "title").nativeElement;   
+    const titleEl = findEl(fixture, "title").nativeElement;
     setElementValue(titleEl, "blabol title updated");
     const linkEl = findEl(fixture, "link").nativeElement;
     setElementValue(linkEl, "blabol link updated");
