@@ -1,2 +1,29 @@
-<input type="text" data-testid="xxx" value="{{((editedResource | async)?.title)}}">
-<app-tech-resource-form [updatedResource]="editedResource | async"></app-tech-resource-form>
+<!--input type="text" data-testid="xxx" value="{{((editedResource | async)?.title)}}">
+<app-tech-resource-form [updatedResource]="editedResource | async"></app-tech-resource-form-->
+<form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
+    <div [ngSwitch]="result">
+        <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
+        Resource created. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
+        </div>
+        <div *ngSwitchCase="'Updated'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
+            Resource updated. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
+            </div>
+        <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
+        <div *ngSwitchDefault data-testid="result-message">na - {{result}}</div>
+    </div>
+    <!--p data-testid="p-title">{{((updatedResource)?.title)}}</p-->
+    <input type="text" data-testid="p-title"  >
+    <label for="title" class="add-resource-label">Title:</label>
+    <input type="text" name="title" id="title" formControlName="title" data-testid="title" value="{{((editedResource | async)?.title)}}">
+    <label for="link" class="add-resource-label">Link:</label>
+    <input type="text" name="link" id="link" formControlName="link" data-testid="link" [value]="(editedResource | async)?.link">
+    <label for="resource-type">Resource type:</label>
+    <select id="resource-type" formControlName="resourceType" data-testid="resource-type">
+        <option [selected]="((editedResource | async)?.type) === 'ARTICLE'">Article</option>
+        <option [selected]="((editedResource | async)?.type) === 'PRESENTATION'">Presentation</option>
+        <option [selected]="((editedResource | async)?.type) === 'BLOG'">Blog</option>
+    </select>
+    <label for="intro" class="add-resource-label">Intro:</label>
+    <textarea name="intro" rows="10"></textarea><br>
+    <button type="submit" class="control-button" name="submitBtn" data-testid="submit-btn">Submit</button>
+</form>

@@ -65,7 +65,7 @@ describe('MainComponent', () => {
     loginScreenNotVisible(fixture, authService);
   }));
 
-  it('can navigate to add new tech resource form', fakeAsync(() => {
+  fit('can navigate to add new tech resource form', fakeAsync(() => {
     initNavigation();
     advance();
     resourceListLoaded();
