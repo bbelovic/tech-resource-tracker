@@ -17,6 +17,7 @@ import { map } from 'rxjs/operators';
 export class AddResourceComponent implements OnInit {
 
   editedResource: Observable<Object>;
+  isUpdate = false;
   result: string = 'na';
   techResourceForm = this.fb.group({
     title: [''],
@@ -30,7 +31,10 @@ export class AddResourceComponent implements OnInit {
 
   ngOnInit() {
     const id: number = +this.route.snapshot.paramMap.get('id');
-    this.editedResource = this.techResourceService.getTechResourceById2(id);
+    if (id !== null) {
+      this.isUpdate = true;
+      this.editedResource = this.techResourceService.getTechResourceById2(id);
+    }   
   }
 
 
@@ -40,9 +44,12 @@ export class AddResourceComponent implements OnInit {
     const resourceType = this.techResourceForm.value.resourceType;
 
 
-    const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
+    //const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
     const id = isUpdate ? this.updatedResource.id : 0;
     const createdOn = isUpdate ? this.updatedResource.createdOn : this.dateTimeService.createdOn();
+
+    // use behaviour subject?
+    if ()
     
 
     const type = TechResourceType[resourceType];
