@@ -7,7 +7,7 @@ import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceStatus } from 'app/tech-resource-status';
 import { TechResourceType } from 'app/tech-resource-type';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-resource',
@@ -43,31 +43,34 @@ export class AddResourceComponent implements OnInit {
     const link = this.techResourceForm.value.link
     const resourceType = this.techResourceForm.value.resourceType;
 
-
-    //const isUpdate = (this.updatedResource !== null && this.updatedResource !== undefined);
-    const id = isUpdate ? this.updatedResource.id : 0;
-    const createdOn = isUpdate ? this.updatedResource.createdOn : this.dateTimeService.createdOn();
-
-    // use behaviour subject?
-    if ()
-    
-
-    const type = TechResourceType[resourceType];
-    const resourceToSubmit = new TechResource(id, title, link, createdOn, TechResourceStatus.New, type);
-    resourceToSubmit.tags = isUpdate ? this.updatedResource.tags : [];
-    
-    
-    const techResource = new TechResource(id, title, link, createdOn, TechResourceStatus.New, TechResourceType[resourceType]);
-    techResource.tags = [];
-    this.techResourceService.postNewTechResource2(resourceToSubmit)
-      .pipe(map((res: TechResource) => {
-        if (res.id > 0 && isUpdate === false) {
-          return 'Created';
-        } else if (res.id > 0 && isUpdate) {
+    if (this.isUpdate) {
+      this.editedResource.pipe(mergeMap((res: TechResource) => {
+        const type = TechResourceType[resourceType];
+        const resourceToSubmit = new TechResource(res.id, title, link, res.createdOn, TechResourceStatus.New, type);
+        resourceToSubmit.tags = this.isUpdate ? res.tags : [];
+        return this.techResourceService.postNewTechResource2(resourceToSubmit); 
+      })).pipe(map((res: TechResource) => {
+        if (res.id > 0 && this.isUpdate) {
           return 'Updated';
         } else {
-          return 'NotCreated';
+          return 'Update failed';
         }
       })).subscribe(s => this.result = s);
+
+    } else {
+      const createdOn = this.dateTimeService.createdOn();
+      const type = TechResourceType[resourceType];
+      const resourceToSubmit = new TechResource(0, title, link, createdOn, TechResourceStatus.New, type);
+      resourceToSubmit.tags = [];
+      this.techResourceService.postNewTechResource2(resourceToSubmit)
+      .pipe(map((res: TechResource) => {
+        if (res.id > 0 ) {
+          return 'Created';
+        } else {
+          return 'Resource creation failed';
+        }
+      })).subscribe(s => this.result = s);
+    }
+
   }
 }
