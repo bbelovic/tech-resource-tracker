@@ -31,7 +31,7 @@ export class AddResourceComponent implements OnInit {
 
   ngOnInit() {
     const id: number = +this.route.snapshot.paramMap.get('id');
-    if (id !== null) {
+    if (id !== null && id !== 0) {
       this.isUpdate = true;
       this.editedResource = this.techResourceService.getTechResourceById2(id);
     }   
