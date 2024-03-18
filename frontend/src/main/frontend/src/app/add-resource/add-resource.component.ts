@@ -34,6 +34,17 @@ export class AddResourceComponent implements OnInit {
     if (id !== null && id !== 0) {
       this.isUpdate = true;
       this.editedResource = this.techResourceService.getTechResourceById2(id);
+      this.techResourceService.getTechResourceById2(id)
+        .pipe(map((res: TechResource) => {
+          const formData: FormData = new FormData();
+          formData.title = res.title;
+          formData.title2 = res.title;
+          formData.link = res.link;
+          return formData;
+         
+        })).subscribe(s => this.techResourceForm.patchValue(s));
+
+      const actualResource: FormData = this.techResourceForm.value;
     }   
   }
 
@@ -73,4 +84,11 @@ export class AddResourceComponent implements OnInit {
     }
 
   }
+}
+
+export class FormData {
+  title?: string;
+  title2?: string;
+  link?: string;
+  resourceType?: string;
 }
