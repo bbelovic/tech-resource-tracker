@@ -40,11 +40,11 @@ export class AddResourceComponent implements OnInit {
           formData.title = res.title;
           formData.title2 = res.title;
           formData.link = res.link;
+          formData.resourceType = res.type;
           return formData;
          
         })).subscribe(s => this.techResourceForm.patchValue(s));
 
-      const actualResource: FormData = this.techResourceForm.value;
     }   
   }
 
