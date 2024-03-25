@@ -43,7 +43,13 @@ export class AddResourceComponent implements OnInit {
           formData.resourceType = res.type;
           return formData;
          
-        })).subscribe(s => this.techResourceForm.patchValue(s));
+        })).subscribe(s => {
+          this.techResourceForm.patchValue(s)
+        
+          console.log(`type => ${s.resourceType}, ${TechResourceType[s.resourceType]}`)
+
+          this.techResourceForm.controls.resourceType.setValue('Article')
+        });
 
     }   
   }
