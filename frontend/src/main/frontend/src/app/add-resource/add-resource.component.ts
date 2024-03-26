@@ -44,11 +44,8 @@ export class AddResourceComponent implements OnInit {
           return formData;
          
         })).subscribe(s => {
-          this.techResourceForm.patchValue(s)
-        
-          console.log(`type => ${s.resourceType}, ${TechResourceType[s.resourceType]}`)
-
-          this.techResourceForm.controls.resourceType.setValue('Article')
+          this.techResourceForm.patchValue(s);
+          this.techResourceForm.controls.resourceType.setValue(s.resourceType)
         });
 
     }   
@@ -62,7 +59,8 @@ export class AddResourceComponent implements OnInit {
 
     if (this.isUpdate) {
       this.editedResource.pipe(mergeMap((res: TechResource) => {
-        const type = TechResourceType[resourceType];
+        const type = TechResourceType[this.toResourceTypeEnumValue(resourceType)];
+        console.log(`${type} ${resourceType}`)
         const resourceToSubmit = new TechResource(res.id, title, link, res.createdOn, TechResourceStatus.New, type);
         resourceToSubmit.tags = this.isUpdate ? res.tags : [];
         return this.techResourceService.postNewTechResource2(resourceToSubmit); 
@@ -76,7 +74,7 @@ export class AddResourceComponent implements OnInit {
 
     } else {
       const createdOn = this.dateTimeService.createdOn();
-      const type = TechResourceType[resourceType];
+      const type = TechResourceType[this.toResourceTypeEnumValue(resourceType)];
       const resourceToSubmit = new TechResource(0, title, link, createdOn, TechResourceStatus.New, type);
       resourceToSubmit.tags = [];
       this.techResourceService.postNewTechResource2(resourceToSubmit)
@@ -89,6 +87,12 @@ export class AddResourceComponent implements OnInit {
       })).subscribe(s => this.result = s);
     }
 
+  }
+
+  private toResourceTypeEnumValue(valueFromForm: string) {
+    const c = valueFromForm.charAt(0);
+    const rem = valueFromForm.substring(1).toLowerCase()
+    return TechResourceType[`${c} + ${rem}`];
   }
 }
 
