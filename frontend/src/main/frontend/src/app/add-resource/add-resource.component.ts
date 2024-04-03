@@ -60,10 +60,8 @@ export class AddResourceComponent implements OnInit {
 
     if (this.isUpdate) {
       this.editedResource.pipe(mergeMap((res: TechResource) => {
-        const m = this.toResourceTypeEnumValue(resourceType);
-        const type = TechResourceType[this.toResourceTypeEnumValue(resourceType)];
-        console.log(`type = ${type} resourceType = ${resourceType} m = ${m} c = ${TechResourceType[resourceType]}`)
-        const resourceToSubmit = new TechResource(res.id, title, link, res.createdOn, TechResourceStatus.New, type);
+        const type = TechResourceType[resourceType];
+        const resourceToSubmit = new TechResource(res.id, title, link, res.createdOn, res.status, type);
         resourceToSubmit.tags = this.isUpdate ? res.tags : [];
         return this.techResourceService.postNewTechResource2(resourceToSubmit); 
       })).pipe(map((res: TechResource) => {
