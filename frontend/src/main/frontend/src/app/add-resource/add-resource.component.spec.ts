@@ -19,7 +19,7 @@ describe('AddResourceComponent', () => {
   let fixture: ComponentFixture<AddResourceComponent>;
 
 
-  const techResource = new TechResource(10, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.Article);
+  const techResource = new TechResource(10, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.ARTICLE);
   const methodSpies = {getTechResourceById2: of(techResource), postNewTechResource2: of(techResource)}
   const spiedTechResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', methodSpies);
 
@@ -78,7 +78,7 @@ describe('AddResourceComponent', () => {
 
     expect(spiedTechResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
     expect(spiedTechResourceService.postNewTechResource2)
-        .toHaveBeenCalledWith(new TechResource(10, 'some title - updated', 'some link - updated', '', TechResourceStatus.New, TechResourceType.Blog));
+        .toHaveBeenCalledWith(new TechResource(10, 'some title - updated', 'some link - updated', '', TechResourceStatus.New, TechResourceType.BLOG));
 
     //console.log('@@@ = ' + harness.routeDebugElement.query(By.css(`[data-testid="title"]`)).nativeElement)
 

@@ -15,7 +15,7 @@ describe('TechResourceFormComponent', () => {
   let techResourceService: jasmine.SpyObj<TechResourceService>;
 
   const expectedDate = '2222-01-01T10:00:00';
-    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article);
+    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.ARTICLE);
     expectedResource.tags = [];
 
   beforeEach(async () => {

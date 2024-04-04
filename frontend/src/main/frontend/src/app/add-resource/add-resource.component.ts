@@ -74,7 +74,7 @@ export class AddResourceComponent implements OnInit {
 
     } else {
       const createdOn = this.dateTimeService.createdOn();
-      const type = TechResourceType[this.toResourceTypeEnumValue(resourceType)];
+      const type = TechResourceType[resourceType];
       const resourceToSubmit = new TechResource(0, title, link, createdOn, TechResourceStatus.New, type);
       resourceToSubmit.tags = [];
       this.techResourceService.postNewTechResource2(resourceToSubmit)
