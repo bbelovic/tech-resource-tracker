@@ -65,7 +65,7 @@ describe('MainComponent', () => {
     loginScreenNotVisible(fixture, authService);
   }));
 
-  fit('can navigate to add new tech resource form', fakeAsync(() => {
+  it('can navigate to add new tech resource form', fakeAsync(() => {
     initNavigation();
     advance();
     resourceListLoaded();
@@ -87,7 +87,7 @@ describe('MainComponent', () => {
     const linkEl = findEl(fixture, "link").nativeElement;
     setElementValue(linkEl, "blabol link updated");
     const resourceTypeEl = findEl(fixture, "resource-type").nativeElement;
-    setElementValue(resourceTypeEl, "Blog");
+    setElementValue(resourceTypeEl, "BLOG");
     const form = findEl(fixture, "form");
     form.triggerEventHandler('submit', {});
   
