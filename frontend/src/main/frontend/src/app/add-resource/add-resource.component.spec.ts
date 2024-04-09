@@ -39,7 +39,7 @@ describe('AddResourceComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create component', () => {
+  it('should create component', () => {
     expect(component).toBeTruthy();
     //const techResourceFormComponent = findComponent(fixture, 'app-tech-resource-form');
     //expect(techResourceFormComponent).toBeTruthy();
