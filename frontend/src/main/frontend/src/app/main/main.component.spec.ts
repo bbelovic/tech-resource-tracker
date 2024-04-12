@@ -125,8 +125,6 @@ describe('MainComponent', () => {
   }
 
   function clickEditResource() {
-    //edit-btn
-    //findComponent(fixture, '')
     const editResourceLink = fixture.debugElement.query(By.css(`[data-testid="edit-btn"]`));
     expect(editResourceLink).toBeTruthy();
     fixture.ngZone.run(() => editResourceLink.triggerEventHandler('click', { button: 0 }));

@@ -21,8 +21,6 @@ export class AddResourceComponent implements OnInit {
   result: string = 'na';
   techResourceForm = this.fb.group({
     title: [''],
-    // todo: remove
-    title2: [''],
     link: [''],
     resourceType: ['']
   });
@@ -51,7 +49,6 @@ export class AddResourceComponent implements OnInit {
 
     }   
   }
-
 
   onSubmit() {
     const title = this.techResourceForm.value.title
@@ -86,13 +83,6 @@ export class AddResourceComponent implements OnInit {
         }
       })).subscribe(s => this.result = s);
     }
-
-  }
-
-  private toResourceTypeEnumValue(valueFromForm: string) {
-    const c = valueFromForm.charAt(0);
-    const rem = valueFromForm.substring(1).toLowerCase()
-    return `${c} + ${rem}`;
   }
 }
 

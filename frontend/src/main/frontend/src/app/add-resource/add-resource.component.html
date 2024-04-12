@@ -1,5 +1,3 @@
-<!--input type="text" data-testid="xxx" value="{{((editedResource | async)?.title)}}">
-<app-tech-resource-form [updatedResource]="editedResource | async"></app-tech-resource-form-->
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
     <div [ngSwitch]="result">
         <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
@@ -17,9 +15,6 @@
     <input type="text" name="link" id="link" formControlName="link" data-testid="link" >
     <label for="resource-type">Resource type:</label>
     <select id="resource-type" formControlName="resourceType" data-testid="resource-type">
-        <!--option [selected]="((editedResource | async)?.type) === 'ARTICLE'">Article</option>
-        <option [selected]="((editedResource | async)?.type) === 'PRESENTATION'">Presentation</option>
-        <option [selected]="((editedResource | async)?.type) === 'BLOG'">Blog</option-->
         <option value="ARTICLE">Article</option>
         <option value="PRESENTATION">Presentation</option>
         <option value="BLOG">Blog</option>
