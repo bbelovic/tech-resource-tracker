@@ -15,7 +15,7 @@ describe('TechResourceFormComponent', () => {
   let techResourceService: jasmine.SpyObj<TechResourceService>;
 
   const expectedDate = '2222-01-01T10:00:00';
-    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.Article);
+    const expectedResource = new TechResource(0, 'blabol title', 'blabol link', expectedDate, TechResourceStatus.New, TechResourceType.BLOG);
     expectedResource.tags = [];
 
   beforeEach(async () => {
@@ -49,7 +49,7 @@ describe('TechResourceFormComponent', () => {
     const linkEl = findEl(fixture, "link").nativeElement;
     setElementValue(linkEl, "blabol link");
     const resourceTypeEl = findEl(fixture, "resource-type").nativeElement;
-    setElementValue(resourceTypeEl, "Article");
+    setElementValue(resourceTypeEl, "BLOG");
     const form = findEl(fixture, "form");
     form.triggerEventHandler('submit', {});
     fixture.detectChanges();

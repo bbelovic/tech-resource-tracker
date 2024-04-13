@@ -9,15 +9,16 @@
         <div *ngSwitchCase="'NotCreated'" data-testid="result-message">Failure</div>
         <div *ngSwitchDefault data-testid="result-message">na - {{result}}</div>
     </div>
+    <input type="text" data-testid="p-title"  >
     <label for="title" class="add-resource-label">Title:</label>
-    <input type="text" name="title" id="title" formControlName="title" data-testid="title" [value]="updatedResource?.title">
+    <input type="text" name="title" id="title" formControlName="title" data-testid="title" value="{{((updatedResource)?.title)}}">
     <label for="link" class="add-resource-label">Link:</label>
     <input type="text" name="link" id="link" formControlName="link" data-testid="link" [value]="updatedResource?.link">
     <label for="resource-type">Resource type:</label>
     <select id="resource-type" formControlName="resourceType" data-testid="resource-type">
-        <option [selected]="((updatedResource)?.type) === 'ARTICLE'">Article</option>
-        <option [selected]="((updatedResource)?.type) === 'PRESENTATION'">Presentation</option>
-        <option [selected]="((updatedResource)?.type) === 'BLOG'">Blog</option>
+        <option value="ARTICLE">Article</option>
+        <option value="PRESENTATION">Presentation</option>
+        <option value="BLOG">Blog</option>
     </select>
     <label for="intro" class="add-resource-label">Intro:</label>
     <textarea name="intro" rows="10"></textarea><br>
