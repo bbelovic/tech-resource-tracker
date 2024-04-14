@@ -28,7 +28,7 @@
         <kotlin.version>1.8.20</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
         <frontend.plugin.version>1.15.0</frontend.plugin.version>
-        <node.version>v16.20.2</node.version>
+        <node.version>v14.20.0</node.version>
         <okta.version>3.0.4</okta.version>
         <jib.version>3.4.2</jib.version>
     </properties>
