@@ -59,19 +59,19 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "dummy:build",
-            "proxyConfig": "src/proxy.conf.js"
+            "proxyConfig": "src/proxy.conf.js",
+            "buildTarget": "dummy:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "dummy:build:production"
+              "buildTarget": "dummy:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "dummy:build"
+            "buildTarget": "dummy:build"
           }
         },
         "test": {
