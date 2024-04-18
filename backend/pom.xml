@@ -13,7 +13,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.1</version>
+        <version>3.2.4</version>
         <relativePath/>
     </parent>
 
@@ -27,10 +27,10 @@
         <dbunit.version>2.4.9</dbunit.version>
         <kotlin.version>1.8.20</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
-        <frontend.plugin.version>1.13.3</frontend.plugin.version>
-        <node.version>v14.20.0</node.version>
+        <frontend.plugin.version>1.15.0</frontend.plugin.version>
+        <node.version>v18.20.2</node.version>
         <okta.version>3.0.4</okta.version>
-        <jib.version>3.3.2</jib.version>
+        <jib.version>3.4.2</jib.version>
     </properties>
 
     <dependencyManagement>
