@@ -140,5 +140,10 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "cache": {
+      "enabled": false
+    }
   }
 }
