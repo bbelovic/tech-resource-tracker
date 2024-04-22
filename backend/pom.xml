@@ -20,9 +20,9 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
         <testcontainers.version>1.17.2</testcontainers.version>
-        <kotlin.jvmTarget>17</kotlin.jvmTarget>
+        <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
         <java.xml.bind.version>2.3.1</java.xml.bind.version>
         <dbunit.version>2.4.9</dbunit.version>
         <kotlin.version>1.8.20</kotlin.version>
