@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication.service';
-import { AddTechResourceComponent } from './add-tech-resource.component';
 import { TagService } from './tag-service';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
@@ -31,7 +30,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, TechResourcesComponent, AddTechResourceComponent,
+    AppComponent, TechResourcesComponent,
     LoginComponent,
     FooterComponent,
     RegisterUserComponent,
