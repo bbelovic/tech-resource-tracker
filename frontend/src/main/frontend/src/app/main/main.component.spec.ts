@@ -13,7 +13,6 @@ import { HeaderComponent } from 'app/header/header.component';
 import { TechResourceService } from 'app/tech-resource-service';
 import { ResourceListComponent } from 'app/resource-list/resource-list.component';
 import { ResourceItemComponent } from 'app/resource-item/resource-item.component';
-import { TechResourceFormComponent } from 'app/tech-resource-form/tech-resource-form.component';
 import { DateTimeService } from 'app/services/date-time.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TechResource } from 'app/tech-resource';
@@ -44,7 +43,7 @@ describe('MainComponent', () => {
     ];
     await TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), ReactiveFormsModule],
-      declarations: [ MainComponent, AddResourceComponent, TechResourceFormComponent, HeaderComponent, ResourceListComponent, ResourceItemComponent ],
+      declarations: [ MainComponent, AddResourceComponent, HeaderComponent, ResourceListComponent, ResourceItemComponent ],
 
         providers: [{provide: AuthService, useValue: authService}, {provide: DateTimeService, useValue: fixedDateTimeService},
           {provide: TechResourceService, useValue: spiedTechResourceService}]
