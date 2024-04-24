@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
-import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication.service';
 import { TagService } from './tag-service';
@@ -29,7 +28,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    TechResourcesComponent,
     LoginComponent,
     FooterComponent,
     RegisterUserComponent,
