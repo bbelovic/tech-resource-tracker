@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddResourceComponent } from './add-resource.component';
-import { TechResourceFormComponent } from 'app/tech-resource-form/tech-resource-form.component';
 import { TechResourceService } from 'app/tech-resource-service';
 import { fakeTechResourceService, fixedDateTimeService } from 'app/shared/test-helper';
 import { DateTimeService } from 'app/services/date-time.service';
@@ -15,7 +14,7 @@ describe('AddResourceComponent', () => {
   beforeEach(async () => { 
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule],
-      declarations: [ AddResourceComponent, TechResourceFormComponent ],
+      declarations: [ AddResourceComponent ],
       providers: [
         provideRouter([{path: 'edit-tech-resource/:id', component: AddResourceComponent}]),
         {provide: TechResourceService, useValue: fakeTechResourceService},        

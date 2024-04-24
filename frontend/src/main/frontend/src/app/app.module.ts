@@ -3,11 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { Routes, RouterModule} from '@angular/router';
-import { AppComponent } from './app.component';
-import { TechResourcesComponent } from './tech-resources.component';
 import { TechResourceService} from './tech-resource-service';
 import { AuthenticationService} from './authentication.service';
-import { AddTechResourceComponent } from './add-tech-resource.component';
 import { TagService } from './tag-service';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
@@ -20,7 +17,6 @@ import { ResourceItemComponent } from './resource-item/resource-item.component';
 import { ResourceListComponent } from './resource-list/resource-list.component';
 import { MainComponent } from './main/main.component';
 import { AddResourceComponent } from './add-resource/add-resource.component';
-import { TechResourceFormComponent } from './tech-resource-form/tech-resource-form.component';
 import { DateTimeService } from './services/date-time.service';
 
 const routes: Routes = [
@@ -32,7 +28,6 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, TechResourcesComponent, AddTechResourceComponent,
     LoginComponent,
     FooterComponent,
     RegisterUserComponent,
@@ -40,8 +35,7 @@ const routes: Routes = [
     ResourceItemComponent,
     ResourceListComponent,
     MainComponent,
-    AddResourceComponent,
-    TechResourceFormComponent
+    AddResourceComponent
   ],
   imports: [
     BrowserModule,
