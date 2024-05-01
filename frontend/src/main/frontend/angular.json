@@ -21,10 +21,7 @@
               "src/assets",
               "src/favicon.ico"
             ],
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
+            "styles": [],
             "scripts": []
           },
           "configurations": {
@@ -82,10 +79,7 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
             ],
-            "styles": [
-              "src/styles.css",
-              "node_modules/bootstrap/dist/css/bootstrap.min.css"
-            ],
+            "styles": [],
             "assets": [
               "src/assets",
               "src/favicon.ico"
