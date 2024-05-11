@@ -21,39 +21,15 @@ export class TechResourceService {
             .then(data => data as TechResource[])
     }
 
-    getTechResourceDetailsDTO(): Promise<TechResourceDetailsDTO[]> {
-        console.log(`Getting 10 newest resources from: [${this.url}].`);
-        return this.http.get(this.url)
-                 .toPromise()
-                 .then(data => data as TechResourceDetailsDTO[]);
-    }
-
     getTechResourceDetailsDTO2() {
         console.log(`Getting 10 newest resources from: [${this.url}].`);
         return this.http.get(this.url);
                  
     }
 
-    getTechResourceById(id: number): Promise<TechResource> {
-    console.log(`Getting technology resource with id [${id}].`);
-        return this.http.get(this.url + '/' + id)
-            .toPromise()
-            .then(d => {console.log('JSON: ' + JSON.stringify(d)); return d})
-            .then(data => data as TechResource);
-    }
-
     getTechResourceById2(id: number) {
         console.log(`Getting technology resource with id [${id}].`);
         return this.http.get(this.url + '/' + id);
-    }
-        
-
-    postNewTechResource(resource: TechResource): Promise<TechResource> {
-        console.log('Creating new resource [' + JSON.stringify(resource) + '] through ' + this.url);
-        return this.http.post(this.url, JSON.stringify(resource),
-        {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
-        .toPromise()
-        .then(res => res as TechResource );
     }
 
     postNewTechResource2(resource: TechResource): Observable<Object> {
