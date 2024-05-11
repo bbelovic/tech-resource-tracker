@@ -15,7 +15,7 @@ services:
       - okta_username
       - okta_password
   db:
-    image: 'postgres:12'
+    image: 'postgres:13'
     environment:
       - POSTGRES_USER=db_user
       - POSTGRES_PASSWORD=db_pass
