@@ -5,7 +5,7 @@ describe('Exercise CRUD operation on tech. resource', () => {
         cy.loginToOkta();
     });
 
-    it('Add new technology resource', () => {        
+    it('Add and edit technology resource', () => {        
         cy.get('li').first().should('have.text', 'Add new resource');
         cy.get('li').first().click();
         const id = randomId();
