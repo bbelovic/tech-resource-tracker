@@ -73,7 +73,7 @@ public class TechResourcesController {
 
     private TechnologyResource convertTechnologyResourceFromDTO(@RequestBody TechnologyResourceDTO resourceDTO) {
         var technologyResource = new TechnologyResource();
-        technologyResource.setId(resourceDTO.id());
+        technologyResource.setId(normalizeId(resourceDTO.id()));
         technologyResource.setType(resourceDTO.type());
         technologyResource.setStatus(resourceDTO.status());
         technologyResource.setCreatedOn(resourceDTO.createdOn());
@@ -82,11 +82,15 @@ public class TechResourcesController {
         technologyResource.setUsername(resourceDTO.username());
         resourceDTO.tags().forEach(tagDTO -> {
             var tag = new Tag();
-            tag.setId(tagDTO.id());
+            tag.setId(normalizeId(tagDTO.id()));
             tag.setName(tagDTO.name());
             technologyResource.addTag(tag);
         });
         return technologyResource;
+    }
+
+    private Long normalizeId(Long id) {
+        return id != null && id > 0 ? id : null;
     }
 
     private TechnologyResourceDTO convertTechnologyResourceToDTO(TechnologyResource persistedResource) {
