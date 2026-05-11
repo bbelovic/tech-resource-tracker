@@ -13,19 +13,19 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>3.5.14</version>
         <relativePath/>
     </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>21</java.version>
+        <java.version>25</java.version>
         <testcontainers.version>1.17.2</testcontainers.version>
-        <kotlin.compiler.jvmTarget>21</kotlin.compiler.jvmTarget>
+        <kotlin.compiler.jvmTarget>25</kotlin.compiler.jvmTarget>
         <java.xml.bind.version>2.3.1</java.xml.bind.version>
         <dbunit.version>2.4.9</dbunit.version>
-        <kotlin.version>1.8.20</kotlin.version>
+        <kotlin.version>2.3.0</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
         <frontend.plugin.version>1.15.0</frontend.plugin.version>
         <node.version>v18.20.2</node.version>
@@ -193,7 +193,7 @@
                             </to>
                             <from>
                                 <image>
-                                    openjdk:17-jdk-alpine
+                                    openjdk:25-jdk
                                 </image>
                             </from>
                             <container>
@@ -228,7 +228,7 @@
                         <configuration>
                             <from>
                                 <image>
-                                    amazoncorretto:21
+                                    amazoncorretto:25
                                 </image>
                             </from>
                             <to>
@@ -359,7 +359,7 @@
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
-                    <jvmTarget>${kotlin.jvmTarget}</jvmTarget>
+                    <jvmTarget>${kotlin.compiler.jvmTarget}</jvmTarget>
                     <compilerPlugins>
                         <plugin>spring</plugin>
                     </compilerPlugins>
@@ -402,8 +402,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <source>${java.version}</source>
-                    <target>${java.version}</target>
+                    <release>${java.version}</release>
                 </configuration>
                 <executions>
                     <execution>
