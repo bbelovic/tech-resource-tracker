@@ -2,7 +2,7 @@ describe('Exercise CRUD operation on tech. resource', () => {
 
     
     before(() => {
-        cy.loginToOkta();
+        cy.loginToAuth0();
     });
 
     it('Add and edit technology resource', () => {        
@@ -54,7 +54,7 @@ describe('Exercise CRUD operation on tech. resource', () => {
 
 
     after(() => {
-        cy.logoutFromOkta();
+        cy.logoutFromAuth0();
     });
 
     function randomId() {

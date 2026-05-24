@@ -10,9 +10,9 @@ describe.skip('Smoke E2E test', () => {
   })
 
   it(`Crawl tech. resource list page`, () => {
-    cy.loginToOkta();
+    cy.loginToAuth0();
     verifyMenuIsVisible();
-    cy.logoutFromOkta();
+    cy.logoutFromAuth0();
     cy.get('a').contains('log in');
 
   })

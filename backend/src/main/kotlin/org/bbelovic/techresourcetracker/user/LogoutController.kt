@@ -12,12 +12,13 @@ import jakarta.servlet.http.HttpServletRequest
 @RestController
 class LogoutController(val clientRegistrationRepository: ClientRegistrationRepository) {
 
-    val registration: ClientRegistration = clientRegistrationRepository.findByRegistrationId("okta")
+    val registration: ClientRegistration = clientRegistrationRepository.findByRegistrationId("auth0")
 
     @PostMapping("/api/logout")
     fun logout(request: HttpServletRequest,
                @AuthenticationPrincipal(expression = "idToken") idToken: OidcIdToken): ResponseEntity<*> {
         val logoutUrl = this.registration.providerDetails.configurationMetadata["end_session_endpoint"]
+                ?: this.registration.providerDetails.authorizationUri.removeSuffix("/authorize") + "/oidc/logout"
         val logoutDetails: MutableMap<String, String> = HashMap()
         logoutDetails["logoutUrl"] = logoutUrl.toString()
         logoutDetails["idToken"] = idToken.tokenValue

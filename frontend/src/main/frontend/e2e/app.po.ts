@@ -14,20 +14,20 @@ export class DummyPage {
   async clickSignInButton(): Promise<string>  {
     element(by.className('btn-default')).click();
     const EC = protractor.ExpectedConditions;
-    browser.wait(EC.urlContains('https://dev-775522.okta.com'), 20000, 'URL console: ' + browser.driver.getCurrentUrl().then((url) => console.log(url)) );
+    browser.wait(EC.urlContains(process.env.AUTH0_DOMAIN), 20000, 'URL console: ' + browser.driver.getCurrentUrl().then((url) => console.log(url)) );
     browser.sleep(7000);
-    browser.wait(EC.urlIs('https://dev-775522.okta.com/'), 20000, 'URL console: ' + browser.driver.getCurrentUrl().then((url) => console.log(url)) );
+    browser.wait(EC.urlContains(process.env.AUTH0_DOMAIN), 20000, 'URL console: ' + browser.driver.getCurrentUrl().then((url) => console.log(url)) );
     return this.getLoginForm();
   }
 
   async loginIntoApplication(username: string, password: string) {
     element(by.className('btn-default')).click();
     const EC = protractor.ExpectedConditions;
-    await browser.wait(EC.urlIs('https://dev-775522.okta.com/'), 20000, ' ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
+    await browser.wait(EC.urlContains(process.env.AUTH0_DOMAIN), 20000, ' ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
 
-    element(by.id('okta-signin-username')).sendKeys(username);
-    element(by.id('okta-signin-password')).sendKeys(password);
-    element(by.id('okta-signin-submit')).click();
+    element(by.css('input[name="username"], input[name="email"]')).sendKeys(username);
+    element(by.css('input[name="password"]')).sendKeys(password);
+    element(by.css('button[type="submit"], input[type="submit"]')).click();
     await browser.wait(EC.urlIs('http://tech-resource-tracker-be:8080/'), 20000, ' ' + browser.driver.getCurrentUrl().then((url) => console.log(url)));
   }
 
@@ -53,6 +53,6 @@ export class DummyPage {
   }
 
   private async getLoginForm(): Promise<string> {
-    return element(by.id('okta-signin-username')).getTagName() as Promise<string>;
+    return element(by.css('input[name="username"], input[name="email"]')).getTagName() as Promise<string>;
   }
 }

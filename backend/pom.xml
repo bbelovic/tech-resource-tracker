@@ -29,7 +29,6 @@
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
         <frontend.plugin.version>1.15.0</frontend.plugin.version>
         <node.version>v18.20.2</node.version>
-        <okta.version>3.0.4</okta.version>
         <jib.version>3.4.2</jib.version>
     </properties>
 
@@ -83,9 +82,13 @@
         </dependency>
 
         <dependency>
-            <groupId>com.okta.spring</groupId>
-            <artifactId>okta-spring-boot-starter</artifactId>
-            <version>${okta.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
 
         <dependency>
@@ -197,6 +200,7 @@
                                 </image>
                             </from>
                             <container>
+                                <mainClass>org.bbelovic.techresourcetracker.TechResourceTrackerApplication</mainClass>
                                 <jvmFlags>
                                     <jvmFlag>--enable-preview</jvmFlag>
                                 </jvmFlags>
@@ -235,6 +239,7 @@
                                 <image>bbelovic/tech-resource-tracker-composed</image>
                             </to>
                             <container>
+                                <mainClass>org.bbelovic.techresourcetracker.TechResourceTrackerApplication</mainClass>
                                 <entrypoint>
                                     entrypoint.sh
                                 </entrypoint>

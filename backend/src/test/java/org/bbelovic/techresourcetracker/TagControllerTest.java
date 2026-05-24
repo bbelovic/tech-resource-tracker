@@ -23,8 +23,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @AutoConfigureTestDatabase(replace = NONE)
 @SpringBootTest(properties = {
-        "okta_client_id=test-client-id",
-        "okta_client_secret=test-client-secret",
+        "spring.security.oauth2.client.registration.auth0.client-id=test-client-id",
+        "spring.security.oauth2.client.registration.auth0.client-secret=test-client-secret",
+        "spring.security.oauth2.client.registration.auth0.scope=openid,profile,email",
+        "spring.security.oauth2.client.registration.auth0.authorization-grant-type=authorization_code",
+        "spring.security.oauth2.client.registration.auth0.redirect-uri={baseUrl}/login/oauth2/code/{registrationId}",
+        "spring.security.oauth2.client.provider.auth0.authorization-uri=https://auth.example.test/authorize",
+        "spring.security.oauth2.client.provider.auth0.token-uri=https://auth.example.test/oauth/token",
+        "spring.security.oauth2.client.provider.auth0.jwk-set-uri=https://auth.example.test/.well-known/jwks.json",
+        "spring.security.oauth2.client.provider.auth0.user-info-uri=https://auth.example.test/userinfo",
+        "spring.security.oauth2.client.provider.auth0.user-name-attribute=sub",
+        "spring.security.oauth2.resourceserver.jwt.jwk-set-uri=https://auth.example.test/.well-known/jwks.json",
         "spring.datasource.username=postgres",
         "spring.datasource.driver-class-name=org.testcontainers.jdbc.ContainerDatabaseDriver",
         "spring.datasource.url=jdbc:tc:postgresql:13:///integration_testing?TC_INITSCRIPT=file:src/test/resources/init_database.sql"
