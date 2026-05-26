@@ -3,7 +3,7 @@ services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
-      - CYPRESS_AUTH0_DOMAIN=https://your-tenant.eu.auth0.com
+      - CYPRESS_AUTH0_DOMAIN=https://dev-uoxwgcszzu82p8ot.us.auth0.com
       - CYPRESS_AUTH0_USERNAME_FILE=/run/secrets/auth0_username
       - CYPRESS_AUTH0_PASSWORD_FILE=/run/secrets/auth0_password
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
