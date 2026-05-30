@@ -21,10 +21,10 @@ jobs:
           OKTA_CLIENT_ID: ${{ secrets.OKTA_CLIENT_ID }}
           OKTA_CLIENT_SECRET: ${{ secrets.OKTA_CLIENT_SECRET }}
         run: |
-         echo "$CYPRESS_USERNAME" > okta_username.txt
-         echo "$CYPRESS_PASSWORD" > okta_password.txt
-         echo "$OKTA_CLIENT_ID" > okta_client_id.txt
-         echo "$OKTA_CLIENT_SECRET" > okta_client_secret.txt
+         echo "$CYPRESS_USERNAME" > auth0_username.txt
+         echo "$CYPRESS_PASSWORD" > auth0_password.txt
+         echo "$OKTA_CLIENT_ID" > auth0_client_id.txt
+         echo "$OKTA_CLIENT_SECRET" > auth0_client_secret.txt
       - name: Build with Maven
         run: mvn -B clean verify -Pcompose --file backend/pom.xml
       - name: Archive Cypress artifacts
@@ -36,4 +36,3 @@ jobs:
             /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/screenshots/smoke.cy.ts
             /home/runner/work/tech-resource-tracker/tech-resource-tracker/frontend/src/main/frontend/cypress/screenshots/crud.cy.ts
           retention-days: 5
-
