@@ -3,9 +3,6 @@ services:
   e2e-tests:
     build: frontend/src/main/frontend
     environment:
-      - CYPRESS_AUTH0_DOMAIN=https://dev-uoxwgcszzu82p8ot.us.auth0.com
-      - CYPRESS_AUTH0_USERNAME_FILE=/run/secrets/auth0_username
-      - CYPRESS_AUTH0_PASSWORD_FILE=/run/secrets/auth0_password
       - URL_TO_WAIT=http://tech-resource-tracker-be:8080
       - CYPRESS_APP_HOST=http://tech-resource-tracker-be:8080
     volumes:
@@ -24,6 +21,7 @@ services:
   tech-resource-tracker-be:
     image: 'bbelovic/tech-resource-tracker-composed'
     environment:
+      - SPRING_PROFILES_ACTIVE=e2e
       - AUTH0_DOMAIN=https://dev-uoxwgcszzu82p8ot.us.auth0.com
       - SPRING_DATASOURCE_USERNAME=db_user
       - SPRING_DATASOURCE_PASSWORD=db_pass

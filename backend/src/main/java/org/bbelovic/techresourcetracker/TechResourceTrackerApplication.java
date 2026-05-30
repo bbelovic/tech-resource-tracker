@@ -35,11 +35,12 @@ public class TechResourceTrackerApplication {
         @Bean
         public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
             http.authorizeHttpRequests((authz) -> authz
-                            .requestMatchers("/", "/user", "/index.html", "/*.ico", "/*.css", "/*.js", "/runtime").permitAll()
+                            .requestMatchers("/", "/user", "/index.html", "/*.ico", "/*.css", "/*.js", "/runtime", "/test/login", "/test/logout").permitAll()
                             .anyRequest().authenticated())
                     .oauth2Login(withDefaults())
                     .oauth2ResourceServer((oauth2) -> oauth2.jwt(withDefaults()))
                     .csrf((csrf) -> csrf
+                            .ignoringRequestMatchers("/test/login", "/test/logout")
                             .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                             .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler()))
                     .addFilterAfter(new CookieCsrfFilter(), BasicAuthenticationFilter.class);
