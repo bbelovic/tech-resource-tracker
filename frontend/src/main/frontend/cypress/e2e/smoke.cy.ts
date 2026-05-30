@@ -1,4 +1,4 @@
-describe.skip('Smoke E2E test', () => {
+describe('Smoke E2E test', () => {
   it(`Display 'welcome-screen' with log in link when user is not authenticated.`, () => {
     cy.visit('/')
     cy.get('h1').contains('Technology resource tracker')
@@ -18,9 +18,12 @@ describe.skip('Smoke E2E test', () => {
   })
 
   function verifyMenuIsVisible() {
-    cy.get('a').click();
     cy.get('h1').should('have.class', 'page-title')
         .and('be.visible');
-    cy.get('ul').should('be.visible')
+    cy.get('[data-testid="app-menu"]').should('be.visible');
+    cy.get('[data-testid="add-tech-resource"]').should('be.visible')
+        .and('have.text', 'Add new resource');
+    cy.get('[data-testid="logout-link"]').should('be.visible')
+        .and('have.text', 'Logout');
   }
 })
