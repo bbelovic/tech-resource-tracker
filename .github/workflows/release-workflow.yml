@@ -4,23 +4,63 @@ on:
   workflow_dispatch:
     inputs:
       releaseTag:
-        description: "Input image tage:"
+        description: "Input image tag:"
         type: "string"
         default: "latest"
+      deployToCloudRun:
+        description: "Deploy the image to Cloud Run"
+        type: "boolean"
+        default: true
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    env:
+      CLOUD_RUN_REGION: ${{ vars.CLOUD_RUN_REGION }}
+      CLOUD_RUN_SERVICE: ${{ vars.CLOUD_RUN_SERVICE }}
+      GCP_ARTIFACT_REGISTRY_REPOSITORY: ${{ vars.GCP_ARTIFACT_REGISTRY_REPOSITORY }}
+      GCP_PROJECT_ID: ${{ vars.GCP_PROJECT_ID }}
+      IMAGE_NAME: tech-resource-tracker
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '25'
-      - name: Build with Maven
-        env:
-         GITHUB_REGISTRY_USERNAME: ${{ github.actor }}
-         GITHUB_REGISTRY_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -f backend/pom.xml -B clean package jib:build -Pheroku -Djib.to.tags=${{ inputs.releaseTag }} -Djib.to.auth.password=$GITHUB_REGISTRY_PASSWORD -Djib.to.auth.username=$GITHUB_REGISTRY_USERNAME
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ secrets.GCP_SERVICE_ACCOUNT }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ env.GCP_PROJECT_ID }}
+
+      - name: Configure Docker auth for Artifact Registry
+        run: gcloud auth configure-docker "${CLOUD_RUN_REGION}-docker.pkg.dev" --quiet
+
+      - name: Build and publish image
+        run: |
+          mvn -f backend/pom.xml -B clean package jib:build -Pheroku \
+            -Djib.to.image="${CLOUD_RUN_REGION}-docker.pkg.dev/${GCP_PROJECT_ID}/${GCP_ARTIFACT_REGISTRY_REPOSITORY}/${IMAGE_NAME}" \
+            -Djib.to.tags="${{ inputs.releaseTag }}"
+
+      - name: Deploy to Cloud Run
+        if: ${{ inputs.deployToCloudRun }}
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.CLOUD_RUN_SERVICE }}
+          image: ${{ env.CLOUD_RUN_REGION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.GCP_ARTIFACT_REGISTRY_REPOSITORY }}/${{ env.IMAGE_NAME }}:${{ inputs.releaseTag }}
+          region: ${{ env.CLOUD_RUN_REGION }}
+          project_id: ${{ env.GCP_PROJECT_ID }}
