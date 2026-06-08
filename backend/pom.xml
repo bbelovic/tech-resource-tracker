@@ -196,7 +196,7 @@
                             </to>
                             <from>
                                 <image>
-                                    openjdk:25-jdk
+                                    amazoncorretto:25
                                 </image>
                             </from>
                             <container>
