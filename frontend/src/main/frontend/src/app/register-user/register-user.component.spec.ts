@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RegisterUserComponent } from './register-user.component';
 import { RegisterUserService } from 'app/services/register-user.service';
@@ -18,7 +18,7 @@ describe('RegisterUserComponent', () => {
       elementClass: '.alert-danger', registrationResponse: failure()}
   ]
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const spy = jasmine.createSpyObj('RegisterUserService', ['registerNewUser']);
     TestBed.configureTestingModule({
       declarations: [ RegisterUserComponent ],

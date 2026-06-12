@@ -29,6 +29,11 @@ public class AngularE2EIT {
             composeContainer.withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
             waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("All specs passed"), 3, MINUTES);
+
+            var cypressOutput = toStringConsumer.toUtf8String();
+            if (!cypressOutput.contains("All specs passed")) {
+                fail("Cypress tests failed:\n" + cypressOutput);
+            }
         } catch (Exception e) {
             fail("Test failed unexpectedly", e);
         }

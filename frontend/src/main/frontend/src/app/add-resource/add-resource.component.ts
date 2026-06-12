@@ -12,7 +12,8 @@ import { map, mergeMap } from 'rxjs/operators';
 @Component({
   selector: 'app-add-resource',
   templateUrl: './add-resource.component.html',
-  styleUrls: ['./add-resource.component.css']
+  styleUrls: ['./add-resource.component.css'],
+  standalone: false
 })
 export class AddResourceComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { FooterComponent } from './footer.component';
 import { RuntimeInformationService } from 'app/services/runtime-information.service';
@@ -9,7 +9,7 @@ describe('FooterComponent', () => {
   let fixture: ComponentFixture<FooterComponent>;
   let runtimeInformationService: jasmine.SpyObj<RuntimeInformationService>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     const spy = jasmine.createSpyObj('RuntimeInformationService', ['getRuntimeInformation'])
     TestBed.configureTestingModule({
       declarations: [ FooterComponent ],

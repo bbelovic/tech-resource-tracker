@@ -6,7 +6,8 @@ import { RegistrationResponse } from 'app/shared/registration-response';
 @Component({
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
-  styleUrls: ['./register-user.component.css']
+  styleUrls: ['./register-user.component.css'],
+  standalone: false
 })
 export class RegisterUserComponent implements OnInit {
    result = ''

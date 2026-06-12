@@ -28,7 +28,7 @@
         <kotlin.version>2.3.0</kotlin.version>
         <spring.dbunit.version>1.2.1</spring.dbunit.version>
         <frontend.plugin.version>1.15.0</frontend.plugin.version>
-        <node.version>v18.20.2</node.version>
+        <node.version>v22.12.0</node.version>
         <jib.version>3.4.2</jib.version>
     </properties>
 
@@ -477,7 +477,7 @@
                         </goals>
                         <phase>test</phase>
                         <configuration>
-                            <arguments>run test</arguments>
+                            <arguments>run test -- --watch=false --browsers=ChromeHeadless</arguments>
                         </configuration>
                     </execution>
                 </executions>

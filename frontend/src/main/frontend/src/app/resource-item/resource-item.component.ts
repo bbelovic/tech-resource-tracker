@@ -4,7 +4,8 @@ import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 @Component({
   selector: 'app-resource-item',
   templateUrl: './resource-item.component.html',
-  styleUrls: ['./resource-item.component.css']
+  styleUrls: ['./resource-item.component.css'],
+  standalone: false
 })
 export class ResourceItemComponent implements OnInit {
 

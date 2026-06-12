@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-resource-list',
   templateUrl: './resource-list.component.html',
-  styleUrls: ['./resource-list.component.css']
+  styleUrls: ['./resource-list.component.css'],
+  standalone: false
 })
 export class ResourceListComponent implements OnInit {
 
