@@ -36,5 +36,11 @@
     "karma-jasmine-html-reporter": "^1.5.2",
     "puppeteer": "^24.9.0",
     "typescript": "~5.9.3"
+  },
+  "overrides": {
+    "engine.io": "6.6.8",
+    "socket.io-adapter": "2.5.7",
+    "tmp": "0.2.6",
+    "ws": "8.20.1"
   }
 }
