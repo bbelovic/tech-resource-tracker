@@ -82,7 +82,14 @@ export class AddResourceComponent implements OnInit {
         } else {
           return 'Resource creation failed';
         }
-      })).subscribe(s => this.result = s);
+      })).subscribe({
+        next: s => {
+          console.log('Create result mapped to:', s);
+          this.result = s;
+          console.log('Component result is now:', this.result);
+        },
+        error: e => console.error('Create failed in Angular subscription:', e)
+      });
     }
   }
 }

@@ -10,7 +10,13 @@ describe("Exercise CRUD operation on tech. resource", () => {
     cy.get('[data-testid="title"]').type("Test title - " + id);
     cy.get('[data-testid="link"]').type("Test link " + id);
     cy.get('[data-testid="resource-type"]').select("Article");
+    cy.intercept("POST", "/tech-resources").as("createResource");
     cy.get('[data-testid="submit-btn"]').click();
+    cy.wait("@createResource").then(({ response }) => {
+      cy.log(`Create response: ${JSON.stringify(response?.body)}`);
+      expect(response?.statusCode).to.eq(201);
+      expect(response?.body).to.have.property("id");
+    });
     cy.get('[data-testid="result-message"]').should("be.visible").and("contain.text", "Resource created");
     cy.get('[data-testid="resource-list-link"]').should("be.visible").and("contain.text", "Go to resource list.");
     cy.get('[data-testid="resource-list-link"]').click();
