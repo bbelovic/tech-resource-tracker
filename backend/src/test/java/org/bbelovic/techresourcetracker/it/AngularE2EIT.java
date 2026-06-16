@@ -10,6 +10,8 @@ import org.testcontainers.containers.output.ToStringConsumer;
 import org.testcontainers.containers.output.WaitingConsumer;
 
 import java.nio.file.Paths;
+import java.util.concurrent.TimeoutException;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static java.util.concurrent.TimeUnit.MINUTES;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -28,14 +30,43 @@ public class AngularE2EIT {
             var composedConsumer = toStringConsumer.andThen(slf4jLogConsumer).andThen(waitingConsumer);
             composeContainer.withLogConsumer("e2e-tests_1", composedConsumer);
             composeContainer.start();
-            waitingConsumer.waitUntil(outputFrame -> outputFrame.getUtf8String().contains("All specs passed"), 3, MINUTES);
+
+            var cypressStatus = new AtomicReference<CypressStatus>();
+            try {
+                waitingConsumer.waitUntil(outputFrame -> {
+                    var output = outputFrame.getUtf8String();
+                    if (output.contains("All specs passed")) {
+                        cypressStatus.set(CypressStatus.PASSED);
+                        return true;
+                    }
+                    if (isCypressFailure(output)) {
+                        cypressStatus.set(CypressStatus.FAILED);
+                        return true;
+                    }
+                    return false;
+                }, 3, MINUTES);
+            } catch (TimeoutException e) {
+                fail("Timed out waiting for Cypress to finish. Captured output:\n" + toStringConsumer.toUtf8String(), e);
+            }
 
             var cypressOutput = toStringConsumer.toUtf8String();
-            if (!cypressOutput.contains("All specs passed")) {
+            if (cypressStatus.get() != CypressStatus.PASSED) {
                 fail("Cypress tests failed:\n" + cypressOutput);
             }
         } catch (Exception e) {
             fail("Test failed unexpectedly", e);
         }
+    }
+
+    private static boolean isCypressFailure(String output) {
+        return output.contains(" failing")
+                || output.contains("AssertionError")
+                || output.contains("Timed out retrying")
+                || output.contains("CypressError");
+    }
+
+    private enum CypressStatus {
+        PASSED,
+        FAILED
     }
 }

@@ -17,6 +17,7 @@ describe("Exercise CRUD operation on tech. resource", () => {
       expect(response?.statusCode).to.eq(201);
       expect(response?.body).to.have.property("id");
     });
+    cy.get('[data-testid="debug-result"]').should("be.visible").and("contain.text", "result=Created");
     cy.get('[data-testid="result-message"]').should("be.visible").and("contain.text", "Resource created");
     cy.get('[data-testid="resource-list-link"]').should("be.visible").and("contain.text", "Go to resource list.");
     cy.get('[data-testid="resource-list-link"]').click();

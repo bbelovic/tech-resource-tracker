@@ -1,4 +1,5 @@
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
+    <div data-testid="debug-result">result={{result}}</div>
     <div [ngSwitch]="result">
         <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
         Resource created. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
