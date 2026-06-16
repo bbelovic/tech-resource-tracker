@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from 'app/services/date-time.service';
@@ -32,7 +32,6 @@ export class AddResourceComponent implements OnInit {
     private techResourceService: TechResourceService,
     private route: ActivatedRoute,
     private dateTimeService: DateTimeService,
-    private changeDetectorRef: ChangeDetectorRef,
     private ngZone: NgZone,
   ) { }
 
@@ -78,15 +77,11 @@ export class AddResourceComponent implements OnInit {
         }
       })).subscribe({
         next: s => {
-          this.recordZoneStatus('Update');
-          this.result = s;
-          this.changeDetectorRef.detectChanges();
+          this.setResultFromCallback('Update', s);
         },
         error: e => {
-          this.recordZoneStatus('Update error');
           console.error('Update failed in Angular subscription:', e);
-          this.result = 'Update failed';
-          this.changeDetectorRef.detectChanges();
+          this.setResultFromCallback('Update error', 'Update failed');
         }
       });
 
@@ -104,26 +99,25 @@ export class AddResourceComponent implements OnInit {
         }
       })).subscribe({
         next: s => {
-          this.recordZoneStatus('Create');
+          this.setResultFromCallback('Create', s);
           console.log('Create result mapped to:', s);
-          this.result = s;
-          this.changeDetectorRef.detectChanges();
           console.log('Component result is now:', this.result);
         },
         error: e => {
-          this.recordZoneStatus('Create error');
           console.error('Create failed in Angular subscription:', e);
-          this.result = 'Resource creation failed';
-          this.changeDetectorRef.detectChanges();
+          this.setResultFromCallback('Create error', 'Resource creation failed');
         }
       });
     }
   }
 
-  private recordZoneStatus(operation: string) {
+  private setResultFromCallback(operation: string, result: string) {
     const inAngularZone = NgZone.isInAngularZone();
-    this.zoneStatus = `zone=${inAngularZone}`;
-    console.log(`${operation} callback in Angular zone:`, inAngularZone, this.ngZone);
+    console.log(`${operation} callback in Angular zone:`, inAngularZone);
+    this.ngZone.run(() => {
+      this.zoneStatus = `zone=${inAngularZone}`;
+      this.result = result;
+    });
   }
 }
 
