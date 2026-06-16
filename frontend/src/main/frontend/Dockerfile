@@ -1,4 +1,4 @@
-FROM cypress/included:12.0.2
+FROM cypress/included:15.17.0
 LABEL maintainer="bbelovic@gmail.com" \
       version="0.1"
 

@@ -6,6 +6,12 @@ module.exports = defineConfig({
     testIsolation: false,
     baseUrl: "http://localhost:8080",
     setupNodeEvents(on, config) {
+      on("task", {
+        log(message) {
+          console.log(message);
+          return null;
+        },
+      });
       return config;
     },
   },

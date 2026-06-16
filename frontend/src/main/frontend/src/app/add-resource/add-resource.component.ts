@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from 'app/services/date-time.service';
@@ -20,6 +20,7 @@ export class AddResourceComponent implements OnInit {
   editedResource: Observable<Object>;
   isUpdate = false;
   result: string = 'na';
+  zoneStatus: string = 'zone=unknown';
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
@@ -32,6 +33,7 @@ export class AddResourceComponent implements OnInit {
     private route: ActivatedRoute,
     private dateTimeService: DateTimeService,
     private changeDetectorRef: ChangeDetectorRef,
+    private ngZone: NgZone,
   ) { }
 
   ngOnInit() {
@@ -76,10 +78,12 @@ export class AddResourceComponent implements OnInit {
         }
       })).subscribe({
         next: s => {
+          this.recordZoneStatus('Update');
           this.result = s;
           this.changeDetectorRef.detectChanges();
         },
         error: e => {
+          this.recordZoneStatus('Update error');
           console.error('Update failed in Angular subscription:', e);
           this.result = 'Update failed';
           this.changeDetectorRef.detectChanges();
@@ -100,18 +104,26 @@ export class AddResourceComponent implements OnInit {
         }
       })).subscribe({
         next: s => {
+          this.recordZoneStatus('Create');
           console.log('Create result mapped to:', s);
           this.result = s;
           this.changeDetectorRef.detectChanges();
           console.log('Component result is now:', this.result);
         },
         error: e => {
+          this.recordZoneStatus('Create error');
           console.error('Create failed in Angular subscription:', e);
           this.result = 'Resource creation failed';
           this.changeDetectorRef.detectChanges();
         }
       });
     }
+  }
+
+  private recordZoneStatus(operation: string) {
+    const inAngularZone = NgZone.isInAngularZone();
+    this.zoneStatus = `zone=${inAngularZone}`;
+    console.log(`${operation} callback in Angular zone:`, inAngularZone, this.ngZone);
   }
 }
 
