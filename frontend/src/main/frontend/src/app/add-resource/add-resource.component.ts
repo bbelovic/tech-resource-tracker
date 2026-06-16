@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from 'app/services/date-time.service';
@@ -26,7 +26,13 @@ export class AddResourceComponent implements OnInit {
     resourceType: ['']
   });
 
-  constructor(private fb: FormBuilder, private techResourceService: TechResourceService, private route: ActivatedRoute, private dateTimeService: DateTimeService, ) { }
+  constructor(
+    private fb: FormBuilder,
+    private techResourceService: TechResourceService,
+    private route: ActivatedRoute,
+    private dateTimeService: DateTimeService,
+    private changeDetectorRef: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
     const id: number = +this.route.snapshot.paramMap.get('id');
@@ -86,9 +92,14 @@ export class AddResourceComponent implements OnInit {
         next: s => {
           console.log('Create result mapped to:', s);
           this.result = s;
+          this.changeDetectorRef.detectChanges();
           console.log('Component result is now:', this.result);
         },
-        error: e => console.error('Create failed in Angular subscription:', e)
+        error: e => {
+          console.error('Create failed in Angular subscription:', e);
+          this.result = 'Resource creation failed';
+          this.changeDetectorRef.detectChanges();
+        }
       });
     }
   }
