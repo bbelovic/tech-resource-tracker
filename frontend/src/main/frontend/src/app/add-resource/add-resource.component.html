@@ -8,6 +8,7 @@
             Resource updated. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
             </div>
         <div *ngSwitchCase="'Resource creation failed'" data-testid="result-message">Failure</div>
+        <div *ngSwitchCase="'Update failed'" data-testid="result-message">Failure</div>
         <div *ngSwitchDefault data-testid="result-message">na - {{result}}</div>
     </div>
     <label for="title" class="add-resource-label">Title:</label>

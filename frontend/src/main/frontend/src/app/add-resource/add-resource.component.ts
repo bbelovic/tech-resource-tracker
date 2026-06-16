@@ -74,7 +74,17 @@ export class AddResourceComponent implements OnInit {
         } else {
           return 'Update failed';
         }
-      })).subscribe(s => this.result = s);
+      })).subscribe({
+        next: s => {
+          this.result = s;
+          this.changeDetectorRef.detectChanges();
+        },
+        error: e => {
+          console.error('Update failed in Angular subscription:', e);
+          this.result = 'Update failed';
+          this.changeDetectorRef.detectChanges();
+        }
+      });
 
     } else {
       const createdOn = this.dateTimeService.createdOn();

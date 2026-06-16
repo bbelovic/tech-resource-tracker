@@ -47,6 +47,7 @@ describe("Exercise CRUD operation on tech. resource", () => {
 
     cy.get('[data-testid="resource-type"]').select("Blog");
     cy.get('[data-testid="submit-btn"]').click();
+    cy.get('[data-testid="debug-result"]').should("be.visible").and("contain.text", "result=Updated");
     cy.get('[data-testid="result-message"]').should("be.visible").and("contain.text", "Resource updated");
 
     cy.get('[data-testid="resource-list-link"]').should("be.visible").and("contain.text", "Go to resource list.");
