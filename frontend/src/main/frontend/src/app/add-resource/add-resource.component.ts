@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit, signal } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from 'app/services/date-time.service';
@@ -19,8 +19,8 @@ export class AddResourceComponent implements OnInit {
 
   editedResource: Observable<Object>;
   isUpdate = false;
-  result: string = 'na';
-  zoneStatus: string = 'zone=unknown';
+  result = signal('na');
+  zoneStatus = signal('zone=unknown');
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
@@ -32,7 +32,6 @@ export class AddResourceComponent implements OnInit {
     private techResourceService: TechResourceService,
     private route: ActivatedRoute,
     private dateTimeService: DateTimeService,
-    private ngZone: NgZone,
   ) { }
 
   ngOnInit() {
@@ -101,7 +100,7 @@ export class AddResourceComponent implements OnInit {
         next: s => {
           this.setResultFromCallback('Create', s);
           console.log('Create result mapped to:', s);
-          console.log('Component result is now:', this.result);
+          console.log('Component result is now:', this.result());
         },
         error: e => {
           console.error('Create failed in Angular subscription:', e);
@@ -114,10 +113,8 @@ export class AddResourceComponent implements OnInit {
   private setResultFromCallback(operation: string, result: string) {
     const inAngularZone = NgZone.isInAngularZone();
     console.log(`${operation} callback in Angular zone:`, inAngularZone);
-    this.ngZone.run(() => {
-      this.zoneStatus = `zone=${inAngularZone}`;
-      this.result = result;
-    });
+    this.zoneStatus.set(`zone=${inAngularZone}`);
+    this.result.set(result);
   }
 }
 
