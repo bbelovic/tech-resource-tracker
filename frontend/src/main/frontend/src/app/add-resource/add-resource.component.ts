@@ -39,8 +39,8 @@ export class AddResourceComponent implements OnInit {
     const id: number = +this.route.snapshot.paramMap.get('id');
     if (id !== null && id !== 0) {
       this.isUpdate = true;
-      this.editedResource = this.techResourceService.getTechResourceById2(id);
-      this.techResourceService.getTechResourceById2(id)
+      this.editedResource = this.techResourceService.getTechResourceById(id);
+      this.techResourceService.getTechResourceById(id)
         .pipe(map((res: TechResource) => {
           const formData: FormData = new FormData();
           formData.title = res.title;
@@ -68,14 +68,8 @@ export class AddResourceComponent implements OnInit {
         const type = TechResourceType[resourceType];
         const resourceToSubmit = new TechResource(res.id, title, link, res.createdOn, res.status, type);
         resourceToSubmit.tags = this.isUpdate ? res.tags : [];
-        return this.techResourceService.postNewTechResource2(resourceToSubmit); 
-      })).pipe(map((res: TechResource) => {
-        if (res.id > 0 && this.isUpdate) {
-          return 'Updated';
-        } else {
-          return 'Update failed';
-        }
-      })).subscribe({
+        return this.techResourceService.updateResource(resourceToSubmit); 
+      })).pipe(map(() => 'Updated')).subscribe({
         next: s => {
           this.setResultFromCallback('Update', s);
         },
@@ -90,7 +84,7 @@ export class AddResourceComponent implements OnInit {
       const type = TechResourceType[resourceType];
       const resourceToSubmit = new TechResource(0, title, link, createdOn, TechResourceStatus.New, type);
       resourceToSubmit.tags = [];
-      this.techResourceService.postNewTechResource2(resourceToSubmit)
+      this.techResourceService.createTechResource(resourceToSubmit)
       .pipe(map((res: TechResource) => {
         if (res.id > 0 ) {
           return 'Created';

@@ -38,7 +38,8 @@ export const fixedDateTimeService = {
 } as Partial<DateTimeService>;
 
 export const fakeTechResourceService = {
-      getTechResourceById2(id: number) {return of(new TechResource(id, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.ARTICLE))},
-      getTechResourceDetailsDTO2() {return of([testResourceDetailsDTO])},
-      postNewTechResource2(resource: TechResource) {return of(resource)}
+      getTechResourceById(id: number) {return of(new TechResource(id, 'some title', 'some link', '', TechResourceStatus.New, TechResourceType.ARTICLE))},
+      getTechResourceDetails() {return of([testResourceDetailsDTO])},
+      createTechResource(resource: TechResource) {return of(resource)},
+      updateResource(resource: TechResource) {return of()}
     } as Partial<TechResourceService>

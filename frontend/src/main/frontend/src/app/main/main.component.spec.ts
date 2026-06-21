@@ -28,8 +28,8 @@ describe('MainComponent', () => {
 
   const techResource = new TechResource(10, 'some title', 'some link', '2222-01-01T10:00:00', TechResourceStatus.New, TechResourceType.ARTICLE);
   techResource.tags = [];
-  const methodSpies = {getTechResourceById2: of(techResource), 
-    postNewTechResource2: of(techResource), getTechResourceDetailsDTO2: fakeTechResourceService.getTechResourceDetailsDTO2()}
+  const methodSpies = {getTechResourceById: of(techResource), 
+    createTechResource: of(techResource), updateResource: of(), getTechResourceDetails: fakeTechResourceService.getTechResourceDetails()}
   const spiedTechResourceService = jasmine.createSpyObj<TechResourceService>('TechResourceService', methodSpies);
 
   beforeEach(async () => {
@@ -94,8 +94,8 @@ describe('MainComponent', () => {
 
     const expectedResource = new TechResource(techResource.id, 'blabol title updated', 'blabol link updated', expectedDate, TechResourceStatus.New, TechResourceType.BLOG);
     expectedResource.tags = [];
-    expect(spiedTechResourceService.postNewTechResource2).toHaveBeenCalledTimes(1);
-    expect(spiedTechResourceService.postNewTechResource2)
+    expect(spiedTechResourceService.updateResource).toHaveBeenCalledTimes(1);
+    expect(spiedTechResourceService.updateResource)
       .toHaveBeenCalledWith(expectedResource);
 
   }));

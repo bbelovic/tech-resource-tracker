@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { TechResourceDetailsDTO } from 'app/tech-resource-details-dto';
 import { TechResourceService } from 'app/tech-resource-service';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-resource-list',
@@ -10,12 +11,12 @@ import { Observable } from 'rxjs';
 })
 export class ResourceListComponent implements OnInit {
 
-  techResourcesDetailsDTOs: Observable<Object>;
+  techResourcesDetailsDTOs: Observable<TechResourceDetailsDTO[]> = of([]);
     constructor(private resourceService: TechResourceService) { }
 
       ngOnInit() {
         console.log('Getting resources from remote server.')
-        this.techResourcesDetailsDTOs = this.resourceService.getTechResourceDetailsDTO2();      
+        this.techResourcesDetailsDTOs = this.resourceService.getTechResourceDetails();      
         console.log(`Received ${this.techResourcesDetailsDTOs} dtos.`);
     }
 }

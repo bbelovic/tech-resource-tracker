@@ -14,50 +14,37 @@ export class TechResourceService {
     constructor(private http: HttpClient) {
     }
 
-    getTechResource(): Promise<TechResource[]> {
-    console.log(`Getting 10 newest resources from: [${this.url}].`);
-    return this.http.get(this.url)
-            .toPromise()
-            .then(data => data as TechResource[])
-    }
-
-    getTechResourceDetailsDTO2() {
+    getTechResourceDetails(): Observable<TechResourceDetailsDTO[]> {
         console.log(`Getting 10 newest resources from: [${this.url}].`);
-        return this.http.get(this.url);
-                 
+        return this.http.get<TechResourceDetailsDTO[]>(this.url);
     }
 
-    getTechResourceById2(id: number) {
+    getTechResourceById(id: number): Observable<TechResource> {
         console.log(`Getting technology resource with id [${id}].`);
-        return this.http.get(this.url + '/' + id);
+        return this.http.get<TechResource>(this.url + '/' + id);
     }
 
-    postNewTechResource2(resource: TechResource): Observable<Object> {
+    createTechResource(resource: TechResource): Observable<TechResource> {
         console.log('Creating new resource [' + JSON.stringify(resource) + '] through ' + this.url);
-        return this.http.post(this.url, JSON.stringify(resource),
+        return this.http.post<TechResource>(this.url, JSON.stringify(resource),
             {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')});
     }
 
-    updateResource(resource: TechResource): Promise<TechResource> {
+    updateResource(resource: TechResource): Observable<void> {
         console.log('Updating resource [' + JSON.stringify(resource) + '].');
-        return this.http.put(this.url, JSON.stringify(resource),
-        {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
-        .toPromise()
-        .then(res => res as TechResource);
+        return this.http.put<void>(this.url, JSON.stringify(resource),
+        {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')});
     }
 
-    markResourceAsRead(resourceId: number): Promise<Object> {
+    markResourceAsRead(resourceId: number): Observable<void> {
         console.log('Marking resource [' + resourceId + '] as read.');
-        return this.http.put('/markAsRead/' + resourceId,
-        {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')})
-        .toPromise();
+        return this.http.put<void>('/markAsRead/' + resourceId,
+        {headers: new HttpHeaders().set('Content-Type', 'application/json;charset=UTF-8')});
     }
 
-    getPagedTechnologyResources(pageId: number): Promise<TechResourceDetailsDTO[]> {
+    getPagedTechnologyResources(pageId: number): Observable<TechResourceDetailsDTO[]> {
         console.log(`Getting tech resources page [${pageId}] with size [10].`);
-        return this.http.get(this.url + '/page/' + pageId + '/pageSize/10')
-            .toPromise()
-            .then(res => res as TechResourceDetailsDTO[]);
+        return this.http.get<TechResourceDetailsDTO[]>(this.url + '/page/' + pageId + '/pageSize/10');
 
     }
 }
