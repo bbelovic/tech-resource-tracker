@@ -7,7 +7,7 @@ import { TechResourceService } from 'app/tech-resource-service';
 import { TechResourceStatus } from 'app/tech-resource-status';
 import { TechResourceType } from 'app/tech-resource-type';
 import { Observable } from 'rxjs';
-import { map, mergeMap } from 'rxjs/operators';
+import { map, mergeMap, shareReplay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-resource',
@@ -17,7 +17,7 @@ import { map, mergeMap } from 'rxjs/operators';
 })
 export class AddResourceComponent implements OnInit {
 
-  editedResource: Observable<Object>;
+  editedResource: Observable<TechResource>;
   isUpdate = false;
   result: string = 'na';
   zoneStatus: string = 'zone=unknown';
@@ -39,9 +39,10 @@ export class AddResourceComponent implements OnInit {
     const id: number = +this.route.snapshot.paramMap.get('id');
     if (id !== null && id !== 0) {
       this.isUpdate = true;
-      this.editedResource = this.techResourceService.getTechResourceById(id);
-      this.techResourceService.getTechResourceById(id)
-        .pipe(map((res: TechResource) => {
+      this.editedResource = this.techResourceService.getTechResourceById(id).pipe(
+        shareReplay(1)
+      );
+      this.editedResource.pipe(map((res: TechResource) => {
           const formData: FormData = new FormData();
           formData.title = res.title;
           formData.title2 = res.title;
