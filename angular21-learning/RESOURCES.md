@@ -18,6 +18,14 @@
   Use for: understanding `Observable<T>`, `HttpClient.get<T>()`, and typed reusable APIs.
 - [RxJS: firstValueFrom](https://rxjs.dev/api/index/function/firstValueFrom)
   Use for: replacing obsolete `toPromise()` when code truly needs a promise.
+- [Learn RxJS: mergeMap](https://www.learnrxjs.io/learn-rxjs/operators/transformation/mergemap)
+  Use for: understanding concurrent inner subscriptions and why `mergeMap` is often used for writes that should not be cancelled.
+- [Learn RxJS: switchMap](https://www.learnrxjs.io/learn-rxjs/operators/transformation/switchmap)
+  Use for: understanding cancellation of previous inner subscriptions, especially for reads/search/typeahead flows.
+- [Learn RxJS: exhaustMap](https://www.learnrxjs.io/learn-rxjs/operators/transformation/exhaustmap)
+  Use for: submit-button flows where extra triggers should be ignored while one request is already running.
+- [Learn RxJS: concatMap](https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap)
+  Use for: save flows where every request should happen sequentially and in order.
 
 ## Wisdom (Communities)
 

@@ -60,15 +60,9 @@ export class AddResourceComponent implements OnInit {
   }
 
   onSubmit() {
-    const title = this.techResourceForm.value.title
-    const link = this.techResourceForm.value.link
-    const resourceType = this.techResourceForm.value.resourceType;
-
     if (this.isUpdate) {
       this.editedResource.pipe(mergeMap((res: TechResource) => {
-        const type = TechResourceType[resourceType];
-        const resourceToSubmit = new TechResource(res.id, title, link, res.createdOn, res.status, type);
-        resourceToSubmit.tags = this.isUpdate ? res.tags : [];
+        const resourceToSubmit = this.buildUpdatedResource(res);
         return this.techResourceService.updateResource(resourceToSubmit); 
       })).pipe(map(() => 'Updated')).subscribe({
         next: s => {
@@ -81,10 +75,7 @@ export class AddResourceComponent implements OnInit {
       });
 
     } else {
-      const createdOn = this.dateTimeService.createdOn();
-      const type = TechResourceType[resourceType];
-      const resourceToSubmit = new TechResource(0, title, link, createdOn, TechResourceStatus.New, type);
-      resourceToSubmit.tags = [];
+      const resourceToSubmit = this.buildCreatedResource();
       this.techResourceService.createTechResource(resourceToSubmit)
       .pipe(map((res: TechResource) => {
         if (res.id > 0 ) {
@@ -106,6 +97,30 @@ export class AddResourceComponent implements OnInit {
     }
   }
 
+  private buildCreatedResource(): TechResource {
+    const formData = this.getResourceFormData();
+    const createdOn = this.dateTimeService.createdOn();
+    const resourceToSubmit = new TechResource(0, formData.title, formData.link, createdOn, TechResourceStatus.New, formData.type);
+    resourceToSubmit.tags = [];
+    return resourceToSubmit;
+  }
+
+  private buildUpdatedResource(res: TechResource): TechResource {
+    const formData = this.getResourceFormData();
+    const resourceToSubmit = new TechResource(res.id, formData.title, formData.link, res.createdOn, res.status, formData.type);
+    resourceToSubmit.tags = res.tags;
+    return resourceToSubmit;
+  }
+
+  private getResourceFormData(): ResourceFormData {
+    const resourceType = this.techResourceForm.value.resourceType;
+    return {
+      title: this.techResourceForm.value.title,
+      link: this.techResourceForm.value.link,
+      type: TechResourceType[resourceType]
+    };
+  }
+
   private setResultFromCallback(operation: string, result: string) {
     const inAngularZone = NgZone.isInAngularZone();
     console.log(`${operation} callback in Angular zone:`, inAngularZone);
@@ -121,3 +136,9 @@ export class FormData {
   link?: string;
   resourceType?: string;
 }
+
+type ResourceFormData = {
+  title: string;
+  link: string;
+  type: string;
+};

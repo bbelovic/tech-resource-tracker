@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Lesson 2: RxJS Submit Flows</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #172026;
+      --muted: #5b6670;
+      --line: #d8dee4;
+      --panel: #f7f9fb;
+      --accent: #0f766e;
+      --accent-weak: #dff5f1;
+      --warn: #9a3412;
+      --warn-weak: #fff1e8;
+      --ok: #166534;
+    }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: #fff;
+      line-height: 1.55;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 42px 22px 72px;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+      margin: 0 0 12px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 8px;
+    }
+
+    h2 {
+      font-size: 1.35rem;
+      margin-top: 34px;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    p {
+      margin: 0 0 14px;
+    }
+
+    a {
+      color: var(--accent);
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.94em;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 0.1em 0.3em;
+    }
+
+    pre {
+      overflow: auto;
+      background: #101820;
+      color: #f2f7fb;
+      border-radius: 6px;
+      padding: 16px;
+      line-height: 1.45;
+    }
+
+    pre code {
+      background: transparent;
+      border: 0;
+      padding: 0;
+      color: inherit;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 0.96rem;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--panel);
+    }
+
+    .lede {
+      color: var(--muted);
+      max-width: 780px;
+      font-size: 1.05rem;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--panel);
+      padding: 16px;
+      margin: 18px 0;
+    }
+
+    .goal {
+      background: var(--accent-weak);
+      border-color: #b7e6de;
+    }
+
+    .warning {
+      background: var(--warn-weak);
+      border-color: #fed7aa;
+    }
+
+    .practice {
+      display: grid;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    button {
+      width: 100%;
+      text-align: left;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 6px;
+      padding: 12px 14px;
+      color: var(--ink);
+      cursor: pointer;
+      font: inherit;
+    }
+
+    button:hover {
+      border-color: var(--accent);
+      background: #fbfffe;
+    }
+
+    .feedback {
+      min-height: 28px;
+      font-weight: 600;
+    }
+
+    .feedback.ok {
+      color: var(--ok);
+    }
+
+    .feedback.no {
+      color: var(--warn);
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Lesson 2: RxJS Submit Flows</h1>
+  <p class="lede">
+    This lesson teaches how to choose between <code>mergeMap</code>, <code>switchMap</code>, <code>concatMap</code>,
+    and <code>exhaustMap</code> for Angular submit and request flows.
+  </p>
+
+  <section class="panel goal">
+    <h2>Outcome</h2>
+    <p>
+      You should be able to explain why <code>mergeMap</code> works in the current update branch, and when
+      <code>exhaustMap</code>, <code>concatMap</code>, or <code>switchMap</code> would be a better design.
+    </p>
+  </section>
+
+  <h2>The Current Code</h2>
+  <p>
+    The update branch currently starts from the loaded resource, builds an update payload, then calls the service:
+  </p>
+
+  <pre><code>this.editedResource.pipe(
+  mergeMap((res: TechResource) =&gt; {
+    const type = TechResourceType[resourceType];
+    const resourceToSubmit = new TechResource(
+      res.id,
+      title,
+      link,
+      res.createdOn,
+      res.status,
+      type
+    );
+    resourceToSubmit.tags = res.tags;
+    return this.techResourceService.updateResource(resourceToSubmit);
+  }),
+  map(() =&gt; 'Updated')
+).subscribe(...);</code></pre>
+
+  <p>
+    This is a higher-order mapping case: the callback returns another observable,
+    <code>updateResource(...): Observable&lt;void&gt;</code>. A flattening operator decides what to do with that inner observable.
+  </p>
+
+  <h2>The Four Choices</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Operator</th>
+      <th>Behavior</th>
+      <th>Good for</th>
+      <th>Risk</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td><code>mergeMap</code></td>
+      <td>Starts each inner observable and allows several to run at once.</td>
+      <td>Writes that should all complete, where order does not matter.</td>
+      <td>Double-click submit can send multiple updates concurrently.</td>
+    </tr>
+    <tr>
+      <td><code>switchMap</code></td>
+      <td>Switches to the newest inner observable and cancels the previous one.</td>
+      <td>Reads, search boxes, typeahead, route-driven reloads.</td>
+      <td>Can cancel writes, which is usually wrong for save/update.</td>
+    </tr>
+    <tr>
+      <td><code>concatMap</code></td>
+      <td>Queues inner observables and runs them one at a time in order.</td>
+      <td>Every save must happen, and order matters.</td>
+      <td>Can build a backlog if the user submits many times.</td>
+    </tr>
+    <tr>
+      <td><code>exhaustMap</code></td>
+      <td>Runs the first inner observable and ignores new source values until it completes.</td>
+      <td>Submit buttons where double-clicks should be ignored.</td>
+      <td>Later clicks are discarded while the first request is active.</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <section class="panel warning">
+    <h3>Design point</h3>
+    <p>
+      In this component, the source observable is currently <code>editedResource</code>, not a stream of submit clicks.
+      That means changing <code>mergeMap</code> to <code>exhaustMap</code> here would not fully protect against double submit.
+      A full submit-flow refactor would model submit events as a stream.
+    </p>
+  </section>
+
+  <h2>Local Improvement</h2>
+  <p>
+    For the current code shape, <code>mergeMap</code> is acceptable but not very communicative.
+    Since <code>editedResource</code> emits once and completes, the operator choice is not doing much concurrency work.
+    A clearer next refactor is to keep behavior the same while making the flow easier to read:
+  </p>
+
+  <pre><code>this.editedResource.pipe(
+  mergeMap((res: TechResource) =&gt;
+    this.techResourceService.updateResource(this.buildUpdatedResource(res))
+  ),
+  map(() =&gt; 'Updated')
+).subscribe(...);</code></pre>
+
+  <p>
+    That introduces a small helper, <code>buildUpdatedResource(res)</code>, before we redesign submit as an event stream.
+  </p>
+
+  <h2>Practice: Pick The Operator</h2>
+  <p>
+    A user can double-click the submit button. You want the first request to run and extra clicks to be ignored until it finishes.
+    Which operator best matches that behavior if submit clicks are represented as a stream?
+  </p>
+
+  <div class="practice" id="quiz">
+    <button data-correct="false">A. <code>mergeMap</code>, because it lets every click start a request immediately.</button>
+    <button data-correct="false">B. <code>switchMap</code>, because it cancels the previous request and keeps the newest one.</button>
+    <button data-correct="false">C. <code>concatMap</code>, because it queues every click in order.</button>
+    <button data-correct="true">D. <code>exhaustMap</code>, because it ignores extra clicks while the first request is active.</button>
+    <p class="feedback" id="feedback" aria-live="polite"></p>
+  </div>
+
+  <h2>Repo Exercise</h2>
+  <ol>
+    <li>Do not change operators yet.</li>
+    <li>Extract a helper in <code>AddResourceComponent</code>: <code>buildUpdatedResource(res: TechResource): TechResource</code>.</li>
+    <li>Use the helper inside the update branch.</li>
+    <li>Run <code>npm run build</code> and <code>npm test -- --watch=false --browsers=ChromeHeadlessNoSandbox</code>.</li>
+  </ol>
+
+  <h2>Retrieval Prompt</h2>
+  <p>
+    In one sentence: why is <code>switchMap</code> often good for reads but risky for writes?
+  </p>
+
+  <h2>Sources</h2>
+  <ul>
+    <li><a href="https://www.learnrxjs.io/learn-rxjs/operators/transformation/mergemap">Learn RxJS: mergeMap</a></li>
+    <li><a href="https://www.learnrxjs.io/learn-rxjs/operators/transformation/switchmap">Learn RxJS: switchMap</a></li>
+    <li><a href="https://www.learnrxjs.io/learn-rxjs/operators/transformation/exhaustmap">Learn RxJS: exhaustMap</a></li>
+    <li><a href="https://www.learnrxjs.io/learn-rxjs/operators/transformation/concatmap">Learn RxJS: concatMap</a></li>
+  </ul>
+
+  <p class="small">
+    Ask Codex follow-up questions about anything unclear before editing. The goal is to understand the operator choice,
+    not to blindly replace one operator with another.
+  </p>
+</main>
+
+<script>
+  const feedback = document.getElementById('feedback');
+  document.getElementById('quiz').addEventListener('click', (event) => {
+    const button = event.target.closest('button');
+    if (!button) return;
+    const correct = button.dataset.correct === 'true';
+    feedback.className = correct ? 'feedback ok' : 'feedback no';
+    feedback.textContent = correct
+      ? 'Correct. exhaustMap is the operator that ignores new source values while one inner request is active.'
+      : 'Not quite. Think about whether the operator cancels, queues, runs concurrently, or ignores extra source values.';
+  });
+</script>
+</body>
+</html>
