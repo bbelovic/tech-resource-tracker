@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { NonNullableFormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from 'app/services/date-time.service';
 import { TechResource } from 'app/tech-resource';
@@ -24,11 +24,11 @@ export class AddResourceComponent implements OnInit {
   techResourceForm = this.fb.group({
     title: [''],
     link: [''],
-    resourceType: ['']
+    resourceType: ['ARTICLE']
   });
 
   constructor(
-    private fb: FormBuilder,
+    private fb: NonNullableFormBuilder,
     private techResourceService: TechResourceService,
     private route: ActivatedRoute,
     private dateTimeService: DateTimeService,
@@ -113,11 +113,11 @@ export class AddResourceComponent implements OnInit {
   }
 
   private getResourceFormData(): ResourceFormData {
-    const resourceType = this.techResourceForm.value.resourceType;
+    const formValue = this.techResourceForm.getRawValue();
     return {
-      title: this.techResourceForm.value.title,
-      link: this.techResourceForm.value.link,
-      type: TechResourceType[resourceType]
+      title: formValue.title,
+      link: formValue.link,
+      type: TechResourceType[formValue.resourceType],
     };
   }
 
