@@ -1,17 +1,27 @@
 <form class="add-resource-form" [formGroup]="techResourceForm" (ngSubmit)="onSubmit()" data-testid="form">
     <div data-testid="debug-result">result={{result}}</div>
     <div data-testid="debug-zone">{{zoneStatus}}</div>
-    <div [ngSwitch]="result">
-        <div *ngSwitchCase="'Created'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
-        Resource created. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
-        </div>
-        <div *ngSwitchCase="'Updated'" data-testid="result-message" data-cy="result-message" class="form-submission-success">
+    @switch(result) {
+        @case('Created') {
+            <div data-testid="result-message" data-cy="result-message" class="form-submission-success">
+                Resource created. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
+            </div>
+        }
+        @case('Updated') {
+            <div data-testid="result-message" data-cy="result-message" class="form-submission-success">
             Resource updated. <a data-testid="resource-list-link"  routerLink=''>Go to resource list.</a>
             </div>
-        <div *ngSwitchCase="'Resource creation failed'" data-testid="result-message">Failure</div>
-        <div *ngSwitchCase="'Update failed'" data-testid="result-message">Failure</div>
-        <div *ngSwitchDefault data-testid="result-message">na - {{result}}</div>
-    </div>
+        }
+        @case('Resource creation failed') {
+            <div data-testid="result-message">Failure</div>
+        }
+        @case('Update failed') {
+            <div data-testid="result-message">Failure</div>
+        }
+        @default {
+            <div data-testid="result-message">na - {{result}}</div>
+        }
+    }
     <label for="title" class="add-resource-label">Title:</label>
     <input type="text" name="title" id="title" formControlName="title" data-testid="title">
     <label for="link" class="add-resource-label">Link:</label>
