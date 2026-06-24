@@ -19,7 +19,7 @@ export class AddResourceComponent implements OnInit {
 
   editedResource: Observable<TechResource>;
   isUpdate = false;
-  result: string = 'na';
+  result: SaveResult = 'Not submitted';
   zoneStatus: string = 'zone=unknown';
   techResourceForm = this.fb.group({
     title: [''],
@@ -64,9 +64,9 @@ export class AddResourceComponent implements OnInit {
       this.editedResource.pipe(mergeMap((res: TechResource) => {
         const resourceToSubmit = this.buildUpdatedResource(res);
         return this.techResourceService.updateResource(resourceToSubmit); 
-      })).pipe(map(() => 'Updated')).subscribe({
-        next: s => {
-          this.setResultFromCallback('Update', s);
+      })).subscribe({
+        next: () => {
+          this.setResultFromCallback('Update', 'Updated');
         },
         error: e => {
           console.error('Update failed in Angular subscription:', e);
@@ -121,7 +121,7 @@ export class AddResourceComponent implements OnInit {
     };
   }
 
-  private setResultFromCallback(operation: string, result: string) {
+  private setResultFromCallback(operation: string, result: SaveResult) {
     const inAngularZone = NgZone.isInAngularZone();
     console.log(`${operation} callback in Angular zone:`, inAngularZone);
     this.zoneStatus = `zone=${inAngularZone}`;
@@ -142,3 +142,5 @@ type ResourceFormData = {
   link: string;
   type: string;
 };
+
+type SaveResult = 'Created' | 'Updated' | 'Resource creation failed' | 'Update failed' | 'Not submitted';
