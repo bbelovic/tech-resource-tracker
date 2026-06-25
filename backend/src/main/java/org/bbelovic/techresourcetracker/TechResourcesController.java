@@ -59,8 +59,10 @@ public class TechResourcesController {
     }
 
     @PutMapping(value = "/tech-resources", headers = "Content-Type=application/json;charset=UTF-8")
-    public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResourceDTO resourceDTO) {
+    public ResponseEntity<TechnologyResource> updateTechnologyResource(@RequestBody TechnologyResourceDTO resourceDTO,
+                                                                       @AuthenticationPrincipal OidcUser user) {
         var resourceToUpdate = convertTechnologyResourceFromDTO(resourceDTO);
+        resourceToUpdate.setUsername(user.getName());
         techResourceService.save(resourceToUpdate);
         return new ResponseEntity<>(NO_CONTENT);
     }
