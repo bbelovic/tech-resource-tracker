@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DateTimeService } from 'app/services/date-time.service';
@@ -13,6 +13,7 @@ import { map, mergeMap } from 'rxjs/operators';
   selector: 'app-add-resource',
   templateUrl: './add-resource.component.html',
   styleUrls: ['./add-resource.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class AddResourceComponent implements OnInit {

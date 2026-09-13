@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { RegisterUserService } from 'app/services/register-user.service';
 import { UserRegistration } from 'app/shared/user-registration';
 import { RegistrationResponse } from 'app/shared/registration-response';
@@ -7,6 +7,7 @@ import { RegistrationResponse } from 'app/shared/registration-response';
   selector: 'app-register-user',
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.css'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false
 })
 export class RegisterUserComponent implements OnInit {
