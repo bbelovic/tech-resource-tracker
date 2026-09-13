@@ -7,11 +7,7 @@
   "compilerOptions": {
     "noEmit": false,
     "sourceMap": false,
-    "target": "es5",
-    "lib": [
-      "es5",
-      "dom"
-    ],
+    "rootDir": "..",
     "types": [
       "cypress"
     ]
