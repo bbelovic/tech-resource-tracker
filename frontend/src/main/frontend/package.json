@@ -40,7 +40,10 @@
   "overrides": {
     "engine.io": "6.6.8",
     "socket.io-adapter": "2.5.7",
-    "tmp": "0.2.6",
-    "ws": "8.20.1"
+    "tmp": "0.2.7",
+    "ws": "8.21.3",
+    "sockjs": {
+      "uuid": "14.0.0"
+    }
   }
 }
